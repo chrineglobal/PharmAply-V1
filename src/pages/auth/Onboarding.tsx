@@ -1,0 +1,512 @@
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { useNavigate } from "react-router-dom";
+import { signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword } from '../../lib/firebase';
+import { auth, googleProvider, db, handleFirestoreError, OperationType } from '../../lib/firebase';
+import { doc, getDoc, setDoc, serverTimestamp, collection, addDoc } from '../../lib/firebase';
+import { useTranslation } from "react-i18next";
+import { useAuth } from "../../components/AuthProvider";
+import toast from 'react-hot-toast';
+
+const ONBOARDING_SLIDES = [
+  {
+    id: 1,
+    image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?q=80&w=1000",
+    titleKey: "title_1",
+    subtitleKey: "subtitle_1",
+  },
+  {
+    id: 2,
+    image: "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=1000",
+    titleKey: "title_2",
+    subtitleKey: "subtitle_2",
+  },
+  {
+    id: 3,
+    image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1000",
+    titleKey: "title_3",
+    subtitleKey: "subtitle_3",
+  }
+];
+
+import { sendEmail } from '../../lib/email';
+import { DarkModeToggle } from "../../components/DarkModeToggle";
+
+export function Onboarding() {
+  const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
+  const { user, role, loading: authLoading } = useAuth();
+  const [step, setStep] = useState(0); 
+  const [loading, setLoading] = useState(false);
+  const [errorText, setErrorText] = useState("");
+  const [authMode, setAuthMode] = useState<'login' | 'signup'>('login');
+  const [selectedRole, setSelectedRole] = useState<string>("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [showRoleSelect, setShowRoleSelect] = useState(false);
+
+  useEffect(() => {
+    if (!authLoading && user) {
+      if (role === 'admin') navigate("/admin");
+      else if (role === 'pharmacy') navigate("/pharmacist");
+      else if (role === 'driver') navigate("/delivery");
+      else if (role === 'patient') navigate("/patient");
+    }
+  }, [user, role, authLoading, navigate]);
+
+  useEffect(() => {
+    if (step === 0 && !authLoading && (!user || !role)) {
+      const timer = setTimeout(() => {
+        setStep(1);
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [step, authLoading, user, role]);
+
+  const handleNext = () => {
+    if (step < 5) setStep(step + 1);
+  };
+
+  const handleSkip = () => {
+    setStep(5);
+  };
+
+  const handleRoleSelection = (role: string) => {
+    setSelectedRole(role);
+    setStep(6);
+  };
+
+  const handleEmailAuth = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (authMode === 'signup' && selectedRole === 'pharmacy') {
+       navigate("/pharmacist-registration");
+       return;
+    }
+    if (authMode === 'signup' && selectedRole === 'driver') {
+       navigate("/driver-registration");
+       return;
+    }
+    
+    setLoading(true);
+    setErrorText("");
+
+    try {
+      let result;
+      let finalRole = selectedRole;
+
+      if (authMode === 'signup') {
+        result = await createUserWithEmailAndPassword(auth, email, password);
+        const userDocRef = doc(db, 'users', result.user.uid);
+        
+        const userData: any = {
+          email: result.user.email,
+          name: name || result.user.email?.split('@')[0],
+          role: selectedRole,
+          createdAt: serverTimestamp(),
+        };
+
+        if (selectedRole === 'driver') {
+          userData.status = 'pending_verification';
+        }
+
+        await setDoc(userDocRef, userData);
+        
+        // Send Welcome email
+        await sendEmail({
+          to: result.user.email,
+          subject: "Welcome to Pharmap!",
+          html: `<h1>Welcome ${name || 'User'} to Pharmap!</h1><p>We are glad to have you on board. Explore pharmacies around you and order medications with ease.</p>`
+        });
+        
+        // Create in-app Welcome notification
+        try {
+          // Import conditionally or require collection, addDoc
+          await addDoc(collection(db, 'notifications'), {
+             userId: result.user.uid,
+             type: 'welcome',
+             title: 'Welcome to Pharmap!',
+             message: 'We are glad to have you on board. Start exploring!',
+             isRead: false,
+             createdAt: serverTimestamp()
+          });
+        } catch(e) {
+          console.warn("Could not send welcome notification", e);
+        }
+        
+        toast.success("Successfully signed up!");
+      } else {
+        result = await signInWithEmailAndPassword(auth, email, password);
+        const userDocRef = doc(db, 'users', result.user.uid);
+        const userDoc = await getDoc(userDocRef);
+        
+        if (!userDoc.exists()) {
+           toast.error("Account data not found.");
+           setErrorText("Account data not found.");
+           setLoading(false);
+           return;
+         }
+         const dbRole = userDoc.data()?.role;
+         finalRole = result.user.email === 'admin@pharmaply.com' ? 'admin' : dbRole;
+         if (selectedRole && finalRole !== selectedRole && finalRole !== 'admin') {
+            toast.error("Invalid role for this account.");
+            setErrorText("Invalid role for this account.");
+            setLoading(false);
+            return;
+         }
+         toast.success("Successfully logged in!");
+      }
+
+      if (finalRole === 'admin') navigate("/admin");
+      else if (finalRole === 'pharmacy') navigate("/pharmacist");
+      else if (finalRole === 'driver') navigate("/delivery");
+      else navigate("/patient");
+
+    } catch (error: any) {
+      console.error(error);
+      let errMsg = error.message || "Authentication failed";
+      if (error.code === 'auth/email-already-in-use' || errMsg.includes('email-already-in-use')) {
+         errMsg = "This email is already registered. Please log in instead.";
+      } else if (error.code === 'auth/network-request-failed' || errMsg.includes('network-request-failed')) {
+         errMsg = "Network error. This can happen if third-party cookies are blocked by your browser (e.g. Incognito or Safari). Please open the app in a new tab using the top-right button.";
+      }
+      toast.error(errMsg);
+      setErrorText(errMsg);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const activeSlide = step > 1 && step < 5 ? step - 2 : 0;
+
+  return (
+    <div className="flex-1 relative bg-[#6a7bc0] overflow-hidden flex flex-col h-full"> 
+       {/* Dark Mode Toggle in Onboarding */}
+       <div className="absolute top-4 right-4 z-50">
+          <DarkModeToggle className="bg-white/85 dark:bg-zinc-900/90 backdrop-blur-md shadow-lg border border-white/20 dark:border-zinc-700/50" />
+       </div>
+
+       <AnimatePresence>
+         {/* Splash Screen */}
+         {step === 0 && (
+            <motion.div 
+               key="splash"
+               initial={{ opacity: 0 }}
+               animate={{ opacity: 1 }}
+               exit={{ opacity: 0 }}
+               className="absolute inset-0 flex flex-col items-center justify-center bg-[#344fb1] z-50 text-white"
+            >
+               <div className="flex flex-col items-center">
+                  <div className="mb-6 text-white scale-150">
+                     <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M10 6a2 2 0 1 0 4 0v12a2 2 0 1 0-4 0z" />
+                        <path d="M12 2v2" />
+                        <path d="M12 20v2" />
+                        <path d="M19.5 7.5c-3-3-7.5-3-7.5 4.5" />
+                        <path d="M4.5 16.5c3 3 7.5 3 7.5-4.5" />
+                        <path d="M4.5 7.5c3-3 7.5-3 7.5 4.5" />
+                        <path d="M19.5 16.5c-3 3-7.5 3-7.5-4.5" />
+                     </svg>
+                  </div>
+                  <h1 className="text-3xl font-bold tracking-tight">{t('app_name')}</h1>
+               </div>
+            </motion.div>
+         )}
+
+         {/* Language Selection Screen */}
+         {step === 1 && (
+            <motion.div 
+               key="lang-select"
+               initial={{ opacity: 0 }}
+               animate={{ opacity: 1 }}
+               exit={{ opacity: 0 }}
+               className="absolute inset-0 flex flex-col items-center justify-center bg-[#f8f9fc] z-40 p-6"
+            >
+               <div className="mb-10 text-[#344fb1] scale-150">
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                     <path d="M10 6a2 2 0 1 0 4 0v12a2 2 0 1 0-4 0z" />
+                     <path d="M12 2v2" />
+                     <path d="M12 20v2" />
+                     <path d="M19.5 7.5c-3-3-7.5-3-7.5 4.5" />
+                     <path d="M4.5 16.5c3 3 7.5 3 7.5-4.5" />
+                     <path d="M4.5 7.5c3-3 7.5-3 7.5 4.5" />
+                     <path d="M19.5 16.5c-3 3-7.5 3-7.5-4.5" />
+                  </svg>
+               </div>
+               
+               <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{t('choose_language')}</h2>
+               <p className="text-gray-500 mb-10 text-center"> {t('select_your_preferred_language', 'Select your preferred language to get started.')} </p>
+               
+               <div className="w-full max-w-sm space-y-4">
+                  <button
+                     onClick={() => { i18n.changeLanguage('en'); setStep(2); }}
+                     className="w-full flex items-center justify-between p-5 rounded-2xl border-2 transition-all duration-200 border-gray-100 bg-white dark:bg-zinc-950 hover:border-[#344fb1] hover:bg-indigo-50/30"
+                  >
+                     <div className="flex items-center gap-4">
+                        <span className="text-2xl">🇺🇸</span>
+                        <span className="font-bold text-gray-900 dark:text-white text-base"> {t('english', 'English')} </span>
+                     </div>
+                     <div className="w-6 h-6 rounded-full border-2 border-gray-200 flex items-center justify-center"></div>
+                  </button>
+                  
+                  <button
+                     onClick={() => { i18n.changeLanguage('fr'); setStep(2); }}
+                     className="w-full flex items-center justify-between p-5 rounded-2xl border-2 transition-all duration-200 border-gray-100 bg-white dark:bg-zinc-950 hover:border-[#344fb1] hover:bg-indigo-50/30"
+                  >
+                     <div className="flex items-center gap-4">
+                        <span className="text-2xl">🇫🇷</span>
+                        <span className="font-bold text-gray-900 dark:text-white text-base"> {t('fran_ais', 'Français')} </span>
+                     </div>
+                     <div className="w-6 h-6 rounded-full border-2 border-gray-200 flex items-center justify-center"></div>
+                  </button>
+
+                  <button
+                     onClick={() => { i18n.changeLanguage('ar'); setStep(2); }}
+                     className="w-full flex items-center justify-between p-5 rounded-2xl border-2 transition-all duration-200 border-gray-100 bg-white dark:bg-zinc-950 hover:border-[#344fb1] hover:bg-indigo-50/30"
+                  >
+                     <div className="flex items-center gap-4">
+                        <span className="text-2xl">🇦🇪</span>
+                        <span className="font-bold text-gray-900 dark:text-white text-base">العربية</span>
+                     </div>
+                     <div className="w-6 h-6 rounded-full border-2 border-gray-200 flex items-center justify-center"></div>
+                  </button>
+               </div>
+            </motion.div>
+         )}
+
+         {/* Carousel / Role Selection Background Image */}
+         {(step >= 2) && (
+            <motion.div 
+               key={`slide-bg-${activeSlide}`}
+               initial={{ opacity: 0 }}
+               animate={{ opacity: 1 }}
+               transition={{ duration: 0.5 }}
+               className="absolute inset-0 bg-[#344fb1] z-0"
+            >
+               {step < 5 && (
+                 <>
+                   <img 
+                     src={ONBOARDING_SLIDES[activeSlide].image} 
+                     alt="Onboarding Background" 
+                     className="w-full h-full object-cover opacity-60"
+                   />
+                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/20"></div>
+                 </>
+               )}
+            </motion.div>
+         )}
+         
+         {/* Carousel Content */}
+         {(step >= 2 && step < 5) && (
+            <motion.div 
+               key={`slide-content-${activeSlide}`}
+               initial={{ opacity: 0, y: 20 }}
+               animate={{ opacity: 1, y: 0 }}
+               exit={{ opacity: 0, y: -20 }}
+               className="absolute inset-0 z-10 flex flex-col justify-end p-8 pb-12"
+            >
+               <h2 className="text-4xl font-bold text-white mb-4 whitespace-pre-line leading-tight">
+                  {t(ONBOARDING_SLIDES[activeSlide].titleKey)}
+               </h2>
+               <p className="text-white/80 text-lg mb-12 max-w-[280px]">
+                  {t(ONBOARDING_SLIDES[activeSlide].subtitleKey)}
+               </p>
+
+               <div className="flex items-center justify-between w-full">
+                  <button onClick={handleSkip} className="text-white/80 font-medium px-2 py-2">
+                     {t('skip')}
+                  </button>
+                  
+                  <div className="flex bg-white dark:bg-zinc-950/20 rounded-full p-1 backdrop-blur-md">
+                     <button onClick={handleNext} className="w-14 h-14 bg-white dark:bg-zinc-950 text-gray-900 dark:text-white rounded-full flex items-center justify-center hover:bg-gray-100 dark:bg-zinc-800 transition shadow-lg">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                           <path d="m9 18 6-6-6-6"/>
+                        </svg>
+                     </button>
+                  </div>
+                  
+                  <div className="flex gap-2 items-center px-4">
+                     {ONBOARDING_SLIDES.map((_, idx) => (
+                        <div key={idx} className={`h-1.5 rounded-full transition-all duration-300 ${idx === activeSlide ? 'w-6 bg-white dark:bg-zinc-950' : 'w-2 bg-white dark:bg-zinc-950/40'}`}></div>
+                     ))}
+                  </div>
+               </div>
+            </motion.div>
+         )}
+
+         {/* Role Selection Screen */}
+         {step === 5 && (
+            <>
+               <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.1 }}
+                  className="absolute top-[18%] left-0 right-0 flex flex-col items-center justify-center z-10 text-white"
+               >
+                  <div className="mb-4 text-white p-4 bg-white/20 backdrop-blur-md rounded-[2rem] border border-white/20 shadow-xl">
+                     <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M10 6a2 2 0 1 0 4 0v12a2 2 0 1 0-4 0z" />
+                        <path d="M12 2v2" />
+                        <path d="M12 20v2" />
+                        <path d="M19.5 7.5c-3-3-7.5-3-7.5 4.5" />
+                        <path d="M4.5 16.5c3 3 7.5 3 7.5-4.5" />
+                        <path d="M4.5 7.5c3-3 7.5-3 7.5 4.5" />
+                        <path d="M19.5 16.5c-3 3-7.5 3-7.5-4.5" />
+                     </svg>
+                  </div>
+                  <h1 className="text-3xl font-bold tracking-tight">PharmAply</h1>
+               </motion.div>
+
+               <motion.div 
+                  initial={{ y: "100%" }}
+                  animate={{ y: 0 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  className="absolute bottom-0 left-0 right-0 bg-[#f5f7fa] dark:bg-zinc-950 rounded-t-[2.5rem] p-8 pt-10 pb-16 z-20 shadow-[0_-20px_50px_rgba(0,0,0,0.15)]"
+               >
+                  {errorText && (
+                    <div className="mb-4 p-3 bg-red-100 border border-red-200 text-red-700 text-sm rounded-xl text-center">
+                      {errorText}
+                    </div>
+                  )}
+
+                  <h3 className="text-center font-bold text-gray-800 dark:text-gray-200 mb-8 tracking-wide uppercase text-sm">Select User Type:</h3>
+                  
+                  <div className="space-y-4 px-2">
+                     <button
+                        onClick={() => handleRoleSelection('patient')}
+                        disabled={loading}
+                        className="w-full flex items-center justify-center py-4 bg-white text-gray-900 shadow-md shadow-gray-200/50 rounded-[1.5rem] font-bold hover:scale-[1.02] transition-all disabled:opacity-70 text-lg border border-gray-100"
+                     >
+                        Patient
+                     </button>
+                     
+                     <button
+                        onClick={() => handleRoleSelection('pharmacy')}
+                        disabled={loading}
+                        className="w-full flex items-center justify-center py-4 bg-white text-gray-900 shadow-md shadow-gray-200/50 rounded-[1.5rem] font-bold hover:scale-[1.02] transition-all disabled:opacity-70 text-lg border border-gray-100"
+                     >
+                        Pharmacist
+                     </button>
+
+                     <button
+                        onClick={() => handleRoleSelection('driver')}
+                        disabled={loading}
+                        className="w-full flex items-center justify-center py-4 bg-white text-gray-900 shadow-md shadow-gray-200/50 rounded-[1.5rem] font-bold hover:scale-[1.02] transition-all disabled:opacity-70 text-lg border border-gray-100"
+                     >
+                        Delivery
+                     </button>
+                  </div>
+               </motion.div>
+            </>
+         )}
+
+         {/* Email Auth Screen */}
+         {step === 6 && (
+            <div className="fixed inset-0 bg-white dark:bg-zinc-950 z-30 flex flex-col pt-12 overflow-y-auto">
+               <div className="flex flex-col items-center justify-center pt-8 pb-4">
+                  <div className="mb-4 text-gray-900 dark:text-white p-3 rounded-full border-2 border-gray-100 dark:border-zinc-800">
+                     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M10 6a2 2 0 1 0 4 0v12a2 2 0 1 0-4 0z" />
+                        <path d="M12 2v2" />
+                        <path d="M12 20v2" />
+                        <path d="M19.5 7.5c-3-3-7.5-3-7.5 4.5" />
+                        <path d="M4.5 16.5c3 3 7.5 3 7.5-4.5" />
+                        <path d="M4.5 7.5c3-3 7.5-3 7.5 4.5" />
+                        <path d="M19.5 16.5c-3 3-7.5 3-7.5-4.5" />
+                     </svg>
+                  </div>
+                  <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white uppercase mb-1">WELCOME TO PHARMAPLY</h1>
+                  <p className="text-gray-500 text-sm font-medium">Your trusted way to better health</p>
+               </div>
+
+               <div className="px-6 pb-8 flex-1 flex flex-col">
+                  {errorText && (
+                    <div className="mb-4 p-3 bg-red-100 border border-red-200 text-red-700 text-sm rounded-xl text-center">
+                      {errorText}
+                    </div>
+                  )}
+
+                  {selectedRole !== 'pharmacy' && selectedRole !== 'driver' && (
+                     <>
+                     </>
+                  )}
+
+                  <form onSubmit={handleEmailAuth} className="space-y-4 flex-1">
+                     {authMode === 'signup' && (
+                        <div>
+                           <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="w-full border-b-2 border-gray-200 dark:border-zinc-800 p-3 bg-transparent text-gray-900 dark:text-white outline-none focus:border-gray-500 transition placeholder-gray-400" placeholder="Full Name" required />
+                        </div>
+                     )}
+                     <div>
+                        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full border-b-2 border-gray-200 dark:border-zinc-800 p-3 bg-transparent text-gray-900 dark:text-white outline-none focus:border-gray-500 transition placeholder-gray-400" placeholder="Email" required />
+                     </div>
+                     <div>
+                        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full border-b-2 border-gray-200 dark:border-zinc-800 p-3 bg-transparent text-gray-900 dark:text-white outline-none focus:border-gray-500 transition placeholder-gray-400" placeholder="Password" required minLength={6} />
+                     </div>
+                     {authMode === 'signup' && (
+                        <div>
+                           <input type="password" className="w-full border-b-2 border-gray-200 dark:border-zinc-800 p-3 bg-transparent text-gray-900 dark:text-white outline-none focus:border-gray-500 transition placeholder-gray-400" placeholder="Confirm Password" required minLength={6} />
+                        </div>
+                     )}
+                     
+                     {authMode === 'signup' && (
+                        <div className="flex items-center gap-2 mt-4 text-xs text-gray-500">
+                           <input type="checkbox" required className="rounded border-gray-300 w-4 h-4" />
+                           <label>I agree to the processing of <strong>Personal data</strong></label>
+                        </div>
+                     )}
+
+                     {authMode === 'login' && (
+                       <div className="flex justify-end pt-2">
+                         <button 
+                           type="button" 
+                           onClick={() => navigate('/forget-password')} 
+                           className="text-xs font-bold text-gray-500 hover:text-gray-900 dark:hover:text-white transition"
+                         >
+                            Forget Password?
+                         </button>
+                       </div>
+                     )}
+
+                     <button
+                        type="submit"
+                        disabled={loading}
+                        className="w-full flex items-center justify-center py-4 mt-6 bg-[#0a1128] dark:bg-white text-white dark:text-gray-900 rounded-full font-bold hover:bg-black dark:hover:bg-gray-200 transition shadow-lg shadow-gray-200 dark:shadow-none disabled:opacity-70 text-lg uppercase tracking-wide"
+                     >
+                        {loading ? 'Processing...' : (authMode === 'login' ? 'Log In' : 'Sign Up')}
+                     </button>
+                  </form>
+
+                  <div className="mt-8 text-center pb-6">
+                     <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                        {authMode === 'login' ? "Don't have an account?" : "Do you have an account?"}
+                        <button 
+                           type="button" 
+                           onClick={() => {
+                             if (authMode === 'login') {
+                               if (selectedRole === 'driver') navigate('/driver-registration');
+                               else if (selectedRole === 'pharmacy') navigate('/pharmacist-registration');
+                               else setAuthMode('signup');
+                             } else {
+                               setAuthMode('login');
+                             }
+                           }}
+                           className="ml-2 font-bold text-gray-900 dark:text-white hover:underline focus:outline-none"
+                        >
+                           {authMode === 'login' ? 'Sign Up' : 'Login'}
+                        </button>
+                     </p>
+                  </div>
+               </div>
+               
+               <button onClick={() => { setStep(5); setAuthMode('login'); }} className="absolute top-10 left-4 p-2 text-gray-500 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-full transition">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                     <path d="M19 12H5M12 19l-7-7 7-7"/>
+                  </svg>
+               </button>
+            </div>
+         )}
+       </AnimatePresence>
+    </div>
+  );
+}

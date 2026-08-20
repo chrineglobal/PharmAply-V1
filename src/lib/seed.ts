@@ -1,0 +1,65 @@
+import { fetchApi } from './apiClient';
+
+export async function seedProducts(data: any[]) {
+  try {
+    // 1. Validation and Mapping
+    const dataToInsert = data.map((item) => {
+      const dci = item.dci;
+      const nom_commercial = item.nom_commercial || item.commercial_name;
+      
+      if (!dci) {
+        throw new Error(`Validation failed: 'dci' is mandatory. Record: ${JSON.stringify(item)}`);
+      }
+      
+      if (!nom_commercial) {
+        throw new Error(`Validation failed: 'nom_commercial' is mandatory. Record: ${JSON.stringify(item)}`);
+      }
+
+      return {
+        dci: dci,
+        nom_commercial: nom_commercial,
+        commercial_name: nom_commercial,
+        name: nom_commercial,
+        dosage: item.dosage || '',
+        forme: item.forme || item.form || '',
+        form: item.forme || item.form || '',
+        brand: item.brand || item.marque || '',
+        marque: item.brand || item.marque || '',
+        category: item.category || item.categorie || item.categorie_ux || item.ux_category || 'Uncategorized',
+        categorie: item.category || item.categorie || item.categorie_ux || item.ux_category || 'Uncategorized',
+        categorie_ux: item.categorie_ux || item.ux_category || item.category || 'Uncategorized',
+        ux_category: item.categorie_ux || item.ux_category || item.category || 'Uncategorized',
+        ordonnance_requise: Boolean(item.ordonnance_requise ?? item.is_prescription_required ?? false),
+        is_prescription_required: Boolean(item.ordonnance_requise ?? item.is_prescription_required ?? false),
+        image_url: item.image_url || item.imageUrl || item.image || null,
+        price: item.price ? Number(item.price) : 0,
+        stock: item.stock !== undefined ? Number(item.stock) : 0
+      };
+    });
+
+    if (dataToInsert.length === 0) {
+      console.log('No valid data to insert.');
+      return null;
+    }
+
+    // 2. Database Insertion (via backend API with Service Role Key)
+    const response = await fetchApi('/api/admin/seed-products', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ data: dataToInsert })
+    });
+
+    const result = await response.json();
+    
+    if (!result.success) {
+      throw new Error(result.error || 'Failed to seed products via API');
+    }
+
+    return result.data;
+  } catch (error: any) {
+    console.error('Erreur complète:', error);
+    throw error;
+  }
+}
