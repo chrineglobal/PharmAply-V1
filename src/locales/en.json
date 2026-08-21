@@ -89,7 +89,10 @@
     "available": "Available",
     "no_products_category": "No products currently in this category",
     "use_search_or_upload": "Use search or upload your prescription to order your medicines.",
-    "explore_full_catalog": "Explore the full medicine catalog"
+    "explore_full_catalog": "Explore the full medicine catalog",
+    "order_simply": "Medicines in 1 click",
+    "badge_247": "24/7",
+    "badge_avail": "AVAIL"
   },
   "patient_orders": {
     "my_orders": "My Orders",

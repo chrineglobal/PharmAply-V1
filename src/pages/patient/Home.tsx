@@ -29,6 +29,44 @@ export function PatientHome() {
   const { user, userData } = useAuth();
   const theme = useTheme();
   const { t } = useTranslation();
+  const [exactLocation, setExactLocation] = useState<string>('');
+  
+  useEffect(() => {
+    if (userData?.deliveryAddress || userData?.address) {
+       setExactLocation(userData.deliveryAddress || userData.address);
+       return;
+    }
+    
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        try {
+           const { latitude, longitude } = position.coords;
+           const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+           if (!apiKey) return;
+           const res = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${apiKey}`);
+           const data = await res.json();
+           if (data.status === "OK" && data.results.length > 0) {
+             // Try to find a short version (e.g. street + city)
+             const comps = data.results[0].address_components;
+             let route = comps.find(c => c.types.includes('route'))?.long_name;
+             let city = comps.find(c => c.types.includes('locality'))?.long_name;
+             
+             let shortAddr = "";
+             if (route && city) shortAddr = route + ", " + city;
+             else if (city) shortAddr = city;
+             else shortAddr = data.results[0].formatted_address;
+             
+             setExactLocation(shortAddr);
+           }
+        } catch (e) {
+           console.error(e);
+        }
+      }, (err) => {
+         console.warn("Geoloc err:", err);
+      });
+    }
+  }, [userData]);
+
 
   const [categories, setCategories] = useState<CategoryItem[]>([]);
   const [products, setProducts] = useState<GeneralProductItem[]>([]);
@@ -195,7 +233,7 @@ export function PatientHome() {
               <div className="flex items-center text-gray-500 dark:text-gray-400 text-xs mt-0.5">
                 <MapPin size={12} className="text-[var(--app-primary-color)] dark:text-teal-400 mr-1 shrink-0" />
                 <span className="truncate max-w-[200px]">
-                  {userData?.address || t('home_delivery', 'Livraison à domicile')}
+                  {exactLocation || t('home_delivery', 'Recherche de la position...')}
                 </span>
               </div>
             </div>

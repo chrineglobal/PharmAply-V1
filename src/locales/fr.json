@@ -89,7 +89,10 @@
     "available": "Disponible",
     "no_products_category": "Aucun produit actuellement dans cette catégorie",
     "use_search_or_upload": "Utilisez la recherche ou transmettez votre ordonnance pour commander vos médicaments.",
-    "explore_full_catalog": "Explorer tout le catalogue de médicaments"
+    "explore_full_catalog": "Explorer tout le catalogue de médicaments",
+    "order_simply": "Vos médicaments en 1 clic",
+    "badge_247": "24/7",
+    "badge_avail": "DISPO"
   },
   "patient_orders": {
     "my_orders": "Mes Commandes",
