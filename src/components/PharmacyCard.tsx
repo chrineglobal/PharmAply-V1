@@ -34,7 +34,7 @@ export function PharmacyCard({ pharmacy, basePath = "/patient/pharmacy", theme =
       <div className="p-4 relative bg-white dark:bg-zinc-950">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-indigo-50 dark:bg-indigo-900/40 rounded-xl flex items-center justify-center text-indigo-700 dark:text-indigo-400 shrink-0">
+            <div className="w-10 h-10 bg-indigo-50 dark:bg-indigo-900/40 rounded-xl flex items-center justify-center text-[var(--app-primary-color)] dark:text-[var(--app-primary-color)] shrink-0">
                {/* Bowl of Hygieia rough approximation using SVG */}
                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M12 2v20"></path>

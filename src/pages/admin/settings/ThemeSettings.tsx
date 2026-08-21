@@ -150,7 +150,7 @@ export function ThemeSettings() {
                     name="dashboardWelcomeText"
                     value={settings.dashboardWelcomeText}
                     onChange={handleChange}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none"
                   />
                </div>
                <div>
@@ -160,7 +160,7 @@ export function ThemeSettings() {
                     name="dashboardSubtitleText"
                     value={settings.dashboardSubtitleText}
                     onChange={handleChange}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none"
                   />
                </div>
             </div>
@@ -184,7 +184,7 @@ export function ThemeSettings() {
                         name="primaryColor"
                         value={settings.primaryColor}
                         onChange={handleChange}
-                        className="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none uppercase uppercase"
+                        className="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none uppercase uppercase"
                       />
                   </div>
                </div>

@@ -9,7 +9,7 @@ export function PatientPrivacy() {
   return (
     <div className="flex-1 bg-slate-50 dark:bg-black flex flex-col h-full overflow-hidden">
       <div className="bg-white dark:bg-black px-6 pt-12 pb-4 shadow-sm z-10 flex items-center gap-4">
-         <button onClick={() => navigate(-1)} className="p-2 -ml-2 text-indigo-900 border border-gray-100 dark:border-zinc-800 rounded-full bg-white dark:bg-slate-950 shadow-sm hover:bg-gray-50 dark:bg-black transition">
+         <button onClick={() => navigate(-1)} className="p-2 -ml-2 text-[var(--app-primary-color)] border border-gray-100 dark:border-zinc-800 rounded-full bg-white dark:bg-slate-950 shadow-sm hover:bg-gray-50 dark:bg-black transition">
             <ArrowLeft size={20} />
          </button>
          <h1 className="font-bold text-gray-900 dark:text-white text-xl">{t('privacy_security', 'Privacy & Security')}</h1>
@@ -26,7 +26,7 @@ export function PatientPrivacy() {
                      <h3 className="font-bold text-sm text-gray-900 dark:text-white">{t('change_password', 'Change Password')}</h3>
                      <p className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500 mt-1">{t('change_password_desc', 'Update your account password')}</p>
                   </div>
-                  <button className="text-sm font-bold text-indigo-600">{t('update', 'Update')}</button>
+                  <button className="text-sm font-bold text-[var(--app-primary-color)]">{t('update', 'Update')}</button>
                </div>
                
                <div className="flex items-center justify-between border-b border-gray-50 pb-4">

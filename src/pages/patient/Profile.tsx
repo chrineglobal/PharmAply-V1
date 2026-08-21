@@ -93,7 +93,7 @@ export function PatientProfile() {
                  <button 
                    onClick={() => fileInputRef.current?.click()}
                    disabled={uploading}
-                   className="absolute bottom-0 right-0 w-6 h-6 bg-indigo-600 text-white rounded-full flex items-center justify-center border-2 border-white shadow-sm disabled:opacity-50 hover:bg-indigo-700 transition"
+                   className="absolute bottom-0 right-0 w-6 h-6 bg-[var(--app-primary-color)] text-white rounded-full flex items-center justify-center border-2 border-white shadow-sm disabled:opacity-50 hover:bg-[var(--app-primary-color)] transition"
                  >
                    {uploading ? <Loader2 size={12} className="animate-spin" /> : <Camera size={12} />}
                  </button>
@@ -107,16 +107,16 @@ export function PatientProfile() {
                            type="text" 
                            value={displayName} 
                            onChange={e => setDisplayName(e.target.value)}
-                           className="bg-gray-100 dark:bg-zinc-800 text-gray-900 dark:text-white rounded-lg px-2 py-1 text-sm font-bold w-full max-w-[150px] outline-none border border-transparent focus:border-indigo-500"
+                           className="bg-gray-100 dark:bg-zinc-800 text-gray-900 dark:text-white rounded-lg px-2 py-1 text-sm font-bold w-full max-w-[150px] outline-none border border-transparent focus:border-[var(--app-primary-color)]"
                            autoFocus
                         />
-                        <button onClick={handleUpdateName} disabled={uploading} className="bg-indigo-600 text-white rounded-lg px-2 py-1 text-xs font-bold hover:bg-indigo-700">Save</button>
+                        <button onClick={handleUpdateName} disabled={uploading} className="bg-[var(--app-primary-color)] text-white rounded-lg px-2 py-1 text-xs font-bold hover:bg-[var(--app-primary-color)]">Save</button>
                         <button onClick={() => { setIsEditing(false); setDisplayName(auth.currentUser?.displayName || ''); }} className="bg-gray-200 dark:bg-zinc-700 text-gray-700 dark:text-gray-300 rounded-lg px-2 py-1 text-xs font-bold hover:bg-gray-300 dark:hover:bg-zinc-600">Cancel</button>
                      </div>
                   ) : (
                      <div className="flex items-center gap-2">
                         <h2 className="font-bold text-gray-900 dark:text-white text-lg">{auth.currentUser?.displayName || t('user', 'User')}</h2>
-                        <button onClick={() => setIsEditing(true)} className="text-gray-400 hover:text-indigo-600 transition p-1">
+                        <button onClick={() => setIsEditing(true)} className="text-gray-400 hover:text-[var(--app-primary-color)] transition p-1">
                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
                         </button>
                      </div>
@@ -159,7 +159,7 @@ export function PatientProfile() {
 
              <button onClick={() => navigate('/patient/payment-methods')} className="w-full p-4 flex items-center justify-between border-b border-gray-50 dark:border-zinc-800 active:bg-gray-50 dark:bg-black dark:active:bg-slate-700">
                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
+                    <div className="w-8 h-8 rounded-full bg-indigo-50 dark:bg-indigo-900/30 text-[var(--app-primary-color)] dark:text-[var(--app-primary-color)] flex items-center justify-center">
                        <CreditCard size={16} />
                     </div>
                     <span className="font-bold text-sm text-gray-900 dark:text-white dark:text-slate-100">{t('payment_methods', 'Payment Methods')}</span>
@@ -226,7 +226,7 @@ export function PatientProfile() {
                  <div className="flex items-center">
                    <button 
                      onClick={toggleDarkMode}
-                     className={`w-12 h-6 rounded-full transition-colors relative ${isDarkMode ? 'bg-indigo-600' : 'bg-gray-200'}`}
+                     className={`w-12 h-6 rounded-full transition-colors relative ${isDarkMode ? 'bg-[var(--app-primary-color)]' : 'bg-gray-200'}`}
                    >
                       <div className={`w-5 h-5 bg-white dark:bg-black rounded-full absolute top-0.5 transition-transform ${isDarkMode ? 'translate-x-6' : 'translate-x-0.5'}`}></div>
                    </button>

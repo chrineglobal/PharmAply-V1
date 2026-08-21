@@ -115,7 +115,7 @@ Réponds STRICTEMENT par un JSON valide sans formatage Markdown superflu. Exempl
 ]`;
 
       const response = await ai.models.generateContent({
-        model: "gemini-1.5-pro",
+        model: "gemini-2.5-flash",
         contents: [
           { inlineData: { data: imageBase64, mimeType: mimeType || "image/jpeg" } },
           visionPrompt
@@ -610,7 +610,7 @@ Réponds STRICTEMENT par un JSON valide sans formatage Markdown superflu. Exempl
       });
 
       const response = await ai.models.generateContent({
-        model: "gemini-1.5-pro",
+        model: "gemini-2.5-flash",
         contents: [
           { inlineData: { data: imageBase64, mimeType: mimeType || "image/jpeg" } },
           `Tu es un pharmacien expert et auditeur réglementaire DPML (Direction de la Pharmacie, du Médicament et des Laboratoires).

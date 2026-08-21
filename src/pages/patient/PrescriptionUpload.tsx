@@ -182,14 +182,14 @@ export function PatientPrescriptionUpload() {
                    <button 
                      disabled={uploading || scanning}
                      onClick={() => fileInputRef.current?.click()} 
-                     className="bg-white dark:bg-black border-2 border-dashed border-indigo-200 rounded-3xl p-6 flex flex-col items-center justify-center gap-3 hover:bg-indigo-50 transition text-indigo-600 disabled:opacity-50 overflow-hidden relative"
+                     className="bg-white dark:bg-black border-2 border-dashed border-indigo-200 rounded-3xl p-6 flex flex-col items-center justify-center gap-3 hover:bg-indigo-50 transition text-[var(--app-primary-color)] disabled:opacity-50 overflow-hidden relative"
                    >
                       {uploading ? (
                          <div className="flex flex-col items-center w-full px-4">
                             <Loader2 size={32} className="animate-spin mb-3" />
                             <span className="font-bold mb-2">{t('uploading', 'Uploading...')} {Math.round(progress)}%</span>
                             <div className="w-full bg-indigo-100 rounded-full h-2.5">
-                              <div className="bg-indigo-600 h-2.5 rounded-full transition-all duration-300" style={{ width: `${progress}%` }}></div>
+                              <div className="bg-[var(--app-primary-color)] h-2.5 rounded-full transition-all duration-300" style={{ width: `${progress}%` }}></div>
                             </div>
                          </div>
                       ) : (
@@ -203,7 +203,7 @@ export function PatientPrescriptionUpload() {
                    {!uploading && (
                      <button
                        onClick={() => setScanning(!scanning)}
-                       className={`border-2 border-dashed rounded-3xl p-6 flex flex-col items-center justify-center gap-3 transition ${scanning ? 'bg-red-50 border-red-200 text-red-600' : 'bg-white dark:bg-black border-indigo-200 text-indigo-600 hover:bg-indigo-50'}`}
+                       className={`border-2 border-dashed rounded-3xl p-6 flex flex-col items-center justify-center gap-3 transition ${scanning ? 'bg-red-50 border-red-200 text-red-600' : 'bg-white dark:bg-black border-indigo-200 text-[var(--app-primary-color)] hover:bg-indigo-50'}`}
                      >
                        {scanning ? (
                          <>
@@ -237,7 +237,7 @@ export function PatientPrescriptionUpload() {
                 <div className="w-full space-y-3">
                    <button 
                      onClick={() => navigate('/patient')} 
-                     className="w-full bg-indigo-600 text-white font-bold py-4 rounded-xl shadow-lg shadow-indigo-200"
+                     className="w-full bg-[var(--app-primary-color)] text-white font-bold py-4 rounded-xl shadow-lg shadow-indigo-200"
                    >
                       {t('return_to_home', 'Return to Home')}
                    </button>

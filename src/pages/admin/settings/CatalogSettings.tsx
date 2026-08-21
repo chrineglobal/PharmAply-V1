@@ -68,7 +68,7 @@ export function CatalogSettings() {
          <button 
            onClick={handleSave} 
            disabled={loading}
-           className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-sm transition flex items-center gap-2 disabled:opacity-50"
+           className="bg-[var(--app-primary-color)] hover:bg-[var(--app-primary-color)] text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-sm transition flex items-center gap-2 disabled:opacity-50"
          >
             <Save size={16} /> Save Changes
          </button>
@@ -84,7 +84,7 @@ export function CatalogSettings() {
                     name="enforceBatchTracking"
                     checked={settings.enforceBatchTracking}
                     onChange={handleChange}
-                    className="w-5 h-5 text-indigo-600 rounded mt-0.5"
+                    className="w-5 h-5 text-[var(--app-primary-color)] rounded mt-0.5"
                   />
                   <div>
                     <h3 className="font-bold text-gray-900 dark:text-white text-sm block">Enforce Batch Number & Expiry Date Tracking</h3>
@@ -97,7 +97,7 @@ export function CatalogSettings() {
                     name="enableSubstitutions"
                     checked={settings.enableSubstitutions}
                     onChange={handleChange}
-                    className="w-5 h-5 text-indigo-600 rounded mt-0.5"
+                    className="w-5 h-5 text-[var(--app-primary-color)] rounded mt-0.5"
                   />
                   <div>
                     <h3 className="font-bold text-gray-900 dark:text-white text-sm block">Allow Medication Substitution</h3>
@@ -110,7 +110,7 @@ export function CatalogSettings() {
                     name="allowPrescriptionDrugs"
                     checked={settings.allowPrescriptionDrugs}
                     onChange={handleChange}
-                    className="w-5 h-5 text-indigo-600 rounded mt-0.5"
+                    className="w-5 h-5 text-[var(--app-primary-color)] rounded mt-0.5"
                   />
                   <div>
                     <h3 className="font-bold text-gray-900 dark:text-white text-sm block">Allow Sale of Prescription Drugs</h3>
@@ -130,7 +130,7 @@ export function CatalogSettings() {
                     name="priceCapMultiplier"
                     value={settings.priceCapMultiplier} 
                     onChange={handleChange}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none max-w-sm"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none max-w-sm"
                     step="0.1"
                   />
                   <p className="text-xs text-slate-500 mt-1">Limits maximum vendor price. (e.g. 2.0 = Vendor cannot charge more than 2x the base MSRP catalog value).</p>

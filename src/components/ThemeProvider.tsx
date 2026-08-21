@@ -68,29 +68,29 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         --color-primary: var(--app-primary-color);
       }
       .bg-primary-app, 
-      .bg-[#194B4B], 
+      .bg-[var(--app-primary-color)], 
       .bg-[#1a3b8d], 
-      .bg-indigo-600 { 
+      .bg-[var(--app-primary-color)] { 
         background-color: var(--app-primary-color) !important; 
       }
       .text-primary-app, 
-      .text-[#194B4B], 
+      .text-[var(--app-primary-color)], 
       .text-[#1a3b8d], 
-      .text-indigo-600 { 
+      .text-[var(--app-primary-color)] { 
         color: var(--app-primary-color) !important; 
       }
       .border-primary-app, 
-      .border-[#194B4B], 
-      .border-indigo-600 { 
+      .border-[var(--app-primary-color)], 
+      .border-[var(--app-primary-color)] { 
         border-color: var(--app-primary-color) !important; 
       }
       .fill-primary-app, 
-      .fill-[#194B4B], 
-      .fill-indigo-600 { 
+      .fill-[var(--app-primary-color)], 
+      .fill-[var(--app-primary-color)] { 
         fill: var(--app-primary-color) !important; 
       }
       .ring-primary-app, 
-      .ring-indigo-600 { 
+      .ring-[var(--app-primary-color)] { 
         --tw-ring-color: var(--app-primary-color) !important; 
       }
       .accent-primary-app {

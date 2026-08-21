@@ -46,7 +46,7 @@ export function ProductCard({ product, basePath, onClick, showSaleBadge = false,
         {onHeartClick && (
           <button 
             onClick={(e) => onHeartClick(e, product)}
-            className="absolute top-2 right-2 p-1.5 bg-white/80 dark:bg-black/50 backdrop-blur-sm rounded-full text-gray-400 hover:text-red-500 transition-colors z-10 shadow-sm"
+            className="absolute top-2 right-2 p-1.5 bg-white dark:bg-zinc-950/80 dark:bg-black/50 backdrop-blur-sm rounded-full text-gray-400 hover:text-red-500 transition-colors z-10 shadow-sm"
           >
              <Heart size={16} fill={isWishlisted ? "currentColor" : "none"} className={isWishlisted ? "text-red-500" : ""} />
           </button>
@@ -80,7 +80,7 @@ export function ProductCard({ product, basePath, onClick, showSaleBadge = false,
             <h3 className="font-extrabold text-[#1a1f36] dark:text-gray-100 text-sm sm:text-base leading-tight truncate">{title}</h3>
             {subtitle && <p className="text-xs text-gray-500 dark:text-gray-400 truncate mt-0.5">{subtitle}</p>}
           </div>
-          <button className="w-5 h-5 shrink-0 border border-indigo-900/20 dark:border-indigo-400/20 rounded-full flex items-center justify-center text-indigo-900 dark:text-indigo-400 transition-colors">
+          <button className="w-5 h-5 shrink-0 border border-indigo-900/20 dark:border-indigo-400/20 rounded-full flex items-center justify-center text-[var(--app-primary-color)] dark:text-[var(--app-primary-color)] transition-colors">
             {getCategoryIcon(categoryIcon, 10)}
           </button>
         </div>

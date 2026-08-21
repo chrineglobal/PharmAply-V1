@@ -85,7 +85,7 @@ export function RoleSidebar({ role }: RoleSidebarProps) {
   return (
     <aside className="w-full h-full flex flex-col py-8 overflow-y-auto custom-scrollbar border-r border-transparent">
       <div className="px-8 mb-10 flex items-center gap-3 text-slate-900 dark:text-white">
-        <div className="w-10 h-10 rounded-full bg-white border-2 border-gray-100 shadow-sm flex items-center justify-center">
+        <div className="w-10 h-10 rounded-full bg-white dark:bg-zinc-950 border-2 border-gray-100 shadow-sm flex items-center justify-center">
            <HeartPulse size={20} className="text-[#0B3B3C] dark:text-teal-400" />
         </div>
         <h1 className="font-bold text-2xl tracking-tight text-[#0B3B3C] dark:text-white"> {t('pharmacy', 'Pharmacy')} </h1>
@@ -110,7 +110,7 @@ export function RoleSidebar({ role }: RoleSidebarProps) {
                         "flex items-center gap-4 px-4 py-3 rounded-2xl text-sm font-medium transition-all duration-200",
                         isActive
                           ? "bg-[#0B3B3C] text-white shadow-md dark:bg-teal-500/20 dark:text-teal-400"
-                          : "text-gray-500 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-slate-800 dark:hover:text-white"
+                          : "text-gray-500 hover:bg-gray-50 dark:bg-zinc-900 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-slate-800 dark:hover:text-white"
                       )
                     }
                   >
@@ -146,7 +146,7 @@ export function RoleSidebar({ role }: RoleSidebarProps) {
             >
                {t('update_profile', 'Update Profile')}
             </button>
-            <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-white/20 rounded-full blur-2xl"></div>
+            <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-white dark:bg-zinc-950/20 rounded-full blur-2xl"></div>
          </div>
          )}
 

@@ -471,9 +471,9 @@ export function PatientCheckout() {
     }
   };
 
-  if (loading) return <div className="p-8 text-center text-sm text-gray-500 dark:text-gray-400">{t('loading_checkout', 'Loading checkout...')}</div>;
-  if (!isCartCheckout && !product) return <div className="p-8 text-center text-sm text-gray-500">{t('product_not_found', 'Product not found')}</div>;
-  if (isCartCheckout && items.length === 0) return <div className="p-8 text-center text-sm text-gray-500">{t('your_cart_is_empty', 'Your cart is empty')}</div>;
+  if (loading) return <div className="p-8 text-center text-sm text-gray-500 dark:text-zinc-400 dark:text-gray-400 dark:text-zinc-500">{t('loading_checkout', 'Loading checkout...')}</div>;
+  if (!isCartCheckout && !product) return <div className="p-8 text-center text-sm text-gray-500 dark:text-zinc-400">{t('product_not_found', 'Product not found')}</div>;
+  if (isCartCheckout && items.length === 0) return <div className="p-8 text-center text-sm text-gray-500 dark:text-zinc-400">{t('your_cart_is_empty', 'Your cart is empty')}</div>;
 
   const requiresPrescription = isCartCheckout 
     ? items.some((item: any) => item.classification_liste === 'Liste_1' || item.classification_liste === 'Liste_2' || item.classification_liste === 'Stupefiant' || item.is_prescription_required || item.needsPrescription)
@@ -500,10 +500,10 @@ export function PatientCheckout() {
 
   if (hasRecalledItem) {
      return (
-        <div className="p-8 h-full flex flex-col items-center justify-center space-y-4 bg-gray-50 dark:bg-black">
+        <div className="p-8 h-full flex flex-col items-center justify-center space-y-4 bg-gray-50 dark:bg-zinc-800 dark:bg-black">
            <AlertTriangle size={64} className="text-red-500" />
            <h2 className="text-xl font-bold text-gray-900 dark:text-white text-center">Alerte DPML: Achat Bloqué</h2>
-           <p className="text-sm text-gray-500 dark:text-gray-400 text-center max-w-sm">
+           <p className="text-sm text-gray-500 dark:text-zinc-400 dark:text-gray-400 dark:text-zinc-500 text-center max-w-sm">
              Un ou plusieurs articles de votre commande font l'objet d'un retrait officiel de la DPML et ne peuvent plus être vendus pour des raisons de sécurité.
            </p>
            <button onClick={() => navigate(-1)} className="bg-[#0a1128] text-white px-8 py-3 rounded-xl font-bold mt-4">
@@ -514,9 +514,9 @@ export function PatientCheckout() {
   }
 
   return (
-    <div className="flex-1 bg-gray-50 dark:bg-black flex flex-col h-full overflow-hidden relative">
-      <div className="px-6 pt-12 pb-4 flex items-center justify-between bg-white dark:bg-zinc-900 border-b border-gray-100 dark:border-zinc-800 shadow-sm z-10 shrink-0">
-         <button onClick={() => navigate(-1)} className="w-10 h-10 flex items-center justify-center bg-gray-50 dark:bg-black rounded-full touch-manipulation">
+    <div className="flex-1 bg-gray-50 dark:bg-zinc-800 dark:bg-black flex flex-col h-full overflow-hidden relative">
+      <div className="px-6 pt-12 pb-4 flex items-center justify-between bg-white dark:bg-zinc-900 border-b border-gray-100 dark:border-zinc-800 dark:border-zinc-800 shadow-sm z-10 shrink-0">
+         <button onClick={() => navigate(-1)} className="w-10 h-10 flex items-center justify-center bg-gray-50 dark:bg-zinc-800 dark:bg-black rounded-full touch-manipulation">
             <ArrowLeft size={20} className="text-gray-900 dark:text-white" />
          </button>
          <h1 className="font-bold text-gray-900 dark:text-white text-sm">{t('checkout', 'Checkout')}</h1>
@@ -527,7 +527,7 @@ export function PatientCheckout() {
          {/* Multi-Pharmacy Notice if cart spans multiple pharmacies */}
          {isCartCheckout && numPharmacies > 1 && (
             <div className="p-4 bg-indigo-50 dark:bg-indigo-950/30 border border-indigo-200 dark:border-indigo-800/50 rounded-2xl flex items-start gap-3">
-              <div className="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">
+              <div className="w-8 h-8 rounded-xl bg-[var(--app-primary-color)] text-white flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">
                 {numPharmacies}
               </div>
               <div>
@@ -540,29 +540,29 @@ export function PatientCheckout() {
          )}
 
          {/* Order Items */}
-         <div className="bg-white dark:bg-zinc-900 p-5 rounded-2xl border border-gray-100 dark:border-zinc-800 shadow-sm space-y-4">
+         <div className="bg-white dark:bg-zinc-900 p-5 rounded-2xl border border-gray-100 dark:border-zinc-800 dark:border-zinc-800 shadow-sm space-y-4">
             <h3 className="font-bold text-gray-900 dark:text-white border-b border-gray-50 dark:border-zinc-800 pb-3">{t('order_summary', 'Order Summary')}</h3>
             
             {isCartCheckout ? (
                <div className="space-y-6">
                  {Object.entries(itemsByPharmacy).map(([pId, group]) => (
-                   <div key={pId} className="space-y-3 pb-4 border-b border-gray-100 dark:border-zinc-800 last:border-0 last:pb-0">
-                     <div className="flex items-center gap-2 text-xs font-bold text-[#194B4B] dark:text-teal-400 uppercase tracking-wider">
-                       <span className="w-2 h-2 rounded-full bg-[#194B4B] dark:bg-teal-400"></span>
+                   <div key={pId} className="space-y-3 pb-4 border-b border-gray-100 dark:border-zinc-800 dark:border-zinc-800 last:border-0 last:pb-0">
+                     <div className="flex items-center gap-2 text-xs font-bold text-[var(--app-primary-color)] dark:text-teal-400 uppercase tracking-wider">
+                       <span className="w-2 h-2 rounded-full bg-[var(--app-primary-color)] dark:bg-teal-400"></span>
                        {group.name}
                      </div>
                      {group.items.map((item, idx) => (
                        <div key={idx} className="flex gap-4 pl-2">
-                          <div className="w-14 h-14 bg-gray-50 dark:bg-black rounded-xl flex items-center justify-center overflow-hidden shrink-0 border border-gray-100 dark:border-zinc-800">
-                             {item.imageUrl ? <img src={item.imageUrl} className="w-full h-full object-contain p-1" /> : <Package size={18} className="text-gray-400" />}
+                          <div className="w-14 h-14 bg-gray-50 dark:bg-zinc-800 dark:bg-black rounded-xl flex items-center justify-center overflow-hidden shrink-0 border border-gray-100 dark:border-zinc-800 dark:border-zinc-800">
+                             {item.imageUrl ? <img src={item.imageUrl} className="w-full h-full object-contain p-1" /> : <Package size={18} className="text-gray-400 dark:text-zinc-500" />}
                           </div>
                           <div className="flex-1 min-w-0">
                              <div className="flex justify-between items-start gap-2">
                                 <h4 className="font-bold text-gray-900 dark:text-white text-xs truncate">{item.commercial_name || item.name}</h4>
-                                <span className="font-bold text-[#1a3b8d] dark:text-indigo-400 text-xs whitespace-nowrap">{formatCurrency(item.price)}</span>
+                                <span className="font-bold text-[#1a3b8d] dark:text-[var(--app-primary-color)] text-xs whitespace-nowrap">{formatCurrency(item.price)}</span>
                              </div>
                              <div className="flex justify-between mt-1">
-                                 <p className="text-[11px] text-gray-500 dark:text-gray-400">{t('qty', 'Qty')}: {item.quantity}</p>
+                                 <p className="text-[11px] text-gray-500 dark:text-zinc-400 dark:text-gray-400 dark:text-zinc-500">{t('qty', 'Qty')}: {item.quantity}</p>
                              </div>
                           </div>
                        </div>
@@ -572,17 +572,17 @@ export function PatientCheckout() {
                </div>
             ) : (
                <div className="flex gap-4">
-                  <div className="w-16 h-16 bg-gray-50 dark:bg-black rounded-xl flex items-center justify-center overflow-hidden shrink-0 border border-gray-100 dark:border-zinc-800">
-                     {product.imageUrl ? <img src={product.imageUrl} className="w-full h-full object-contain p-1" /> : <Package size={20} className="text-gray-400" />}
+                  <div className="w-16 h-16 bg-gray-50 dark:bg-zinc-800 dark:bg-black rounded-xl flex items-center justify-center overflow-hidden shrink-0 border border-gray-100 dark:border-zinc-800 dark:border-zinc-800">
+                     {product.imageUrl ? <img src={product.imageUrl} className="w-full h-full object-contain p-1" /> : <Package size={20} className="text-gray-400 dark:text-zinc-500" />}
                   </div>
                   <div className="flex-1 min-w-0">
                      <div className="flex justify-between items-start gap-2">
                         <h4 className="font-bold text-gray-900 dark:text-white text-sm truncate">{product.name}</h4>
-                        <span className="font-bold text-[#1a3b8d] dark:text-indigo-400 text-sm whitespace-nowrap">{formatCurrency(product.price)}</span>
+                        <span className="font-bold text-[#1a3b8d] dark:text-[var(--app-primary-color)] text-sm whitespace-nowrap">{formatCurrency(product.price)}</span>
                      </div>
-                     <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{t(product.category?.replace(/\s+/g, '_').toLowerCase(), product.category)}</p>
+                     <p className="text-xs text-gray-500 dark:text-zinc-400 dark:text-gray-400 dark:text-zinc-500 mt-1">{t(product.category?.replace(/\s+/g, '_').toLowerCase(), product.category)}</p>
                      <div className="flex items-center justify-between mt-2">
-                        <p className="text-xs font-medium text-gray-600 dark:text-gray-400">{t('qty', 'Qty')}: 1</p>
+                        <p className="text-xs font-medium text-gray-600 dark:text-gray-400 dark:text-zinc-500">{t('qty', 'Qty')}: 1</p>
                         {requiresPrescription && <span className="text-[10px] bg-red-50 text-red-600 px-2 py-0.5 rounded font-bold border border-red-200">{t('rx_required', 'Rx Required')}</span>}
                      </div>
                   </div>
@@ -618,7 +618,7 @@ export function PatientCheckout() {
                       disabled={uploading}
                       className="w-full bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-900 border-dashed rounded-2xl p-6 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-orange-100/50 transition disabled:opacity-50"
                     >
-                        <div className="w-12 h-12 bg-white dark:bg-black rounded-full flex items-center justify-center shadow-sm text-orange-500 mb-3">
+                        <div className="w-12 h-12 bg-white dark:bg-zinc-900 dark:bg-black rounded-full flex items-center justify-center shadow-sm text-orange-500 mb-3">
                           {uploading ? <Loader2 size={24} className="animate-spin" /> : <UploadCloud size={24} />}
                        </div>
                        <p className="font-bold text-orange-900 dark:text-orange-400 text-sm">{uploading ? "Envoi en cours..." : "Prendre une photo ou importer un fichier"}</p>
@@ -627,7 +627,7 @@ export function PatientCheckout() {
                 ) : (
                     <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-900 rounded-2xl p-4 flex items-center justify-between">
                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 bg-white dark:bg-black rounded-full flex items-center justify-center text-green-600 shadow-sm">
+                          <div className="w-10 h-10 bg-white dark:bg-zinc-900 dark:bg-black rounded-full flex items-center justify-center text-green-600 shadow-sm">
                              <FileText size={18} />
                           </div>
                           <div>
@@ -650,16 +650,16 @@ export function PatientCheckout() {
          {/* Delivery Method */}
          <div>
             <h3 className="font-bold text-gray-900 dark:text-white mb-3 text-sm px-1">{t('delivery_method', 'Delivery Method')}</h3>
-            <div className="flex bg-gray-100 dark:bg-zinc-800 p-1 rounded-xl">
+            <div className="flex bg-gray-100 dark:bg-zinc-800 dark:bg-zinc-800 p-1 rounded-xl">
                <button
                   onClick={() => setDeliveryMethod('delivery')}
-                  className={`flex-1 py-2 text-sm font-bold rounded-lg transition-colors ${deliveryMethod === 'delivery' ? 'bg-white dark:bg-zinc-900 text-gray-900 dark:text-white shadow-sm' : 'text-gray-500'}`}
+                  className={`flex-1 py-2 text-sm font-bold rounded-lg transition-colors ${deliveryMethod === 'delivery' ? 'bg-white dark:bg-zinc-900 text-gray-900 dark:text-white shadow-sm' : 'text-gray-500 dark:text-zinc-400'}`}
                >
                   {t('home_delivery', 'Home Delivery')}
                </button>
                <button
                   onClick={() => setDeliveryMethod('pickup')}
-                  className={`flex-1 py-2 text-sm font-bold rounded-lg transition-colors ${deliveryMethod === 'pickup' ? 'bg-white dark:bg-zinc-900 text-gray-900 dark:text-white shadow-sm' : 'text-gray-500'}`}
+                  className={`flex-1 py-2 text-sm font-bold rounded-lg transition-colors ${deliveryMethod === 'pickup' ? 'bg-white dark:bg-zinc-900 text-gray-900 dark:text-white shadow-sm' : 'text-gray-500 dark:text-zinc-400'}`}
                >
                   {t('store_pickup', 'Store Pickup')}
                </button>
@@ -670,17 +670,17 @@ export function PatientCheckout() {
          {deliveryMethod === 'delivery' && (
            <div>
               <h3 className="font-bold text-gray-900 dark:text-white mb-3 text-sm px-1">{t('delivery_address', 'Delivery Address')}</h3>
-              <div className="bg-white dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800 rounded-2xl p-4 flex items-center justify-between cursor-pointer" onClick={() => setShowAddressEditor(true)}>
+              <div className="bg-white dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800 dark:border-zinc-800 rounded-2xl p-4 flex items-center justify-between cursor-pointer" onClick={() => setShowAddressEditor(true)}>
                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 bg-indigo-50 dark:bg-indigo-900/20 rounded-full flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+                    <div className="w-10 h-10 bg-indigo-50 dark:bg-indigo-900/20 rounded-full flex items-center justify-center text-[var(--app-primary-color)] dark:text-[var(--app-primary-color)]">
                        <MapPin size={20} />
                     </div>
                     <div>
                        <p className="font-bold text-gray-900 dark:text-white text-sm">{userData?.name || t('home', 'Home')}</p>
-                       <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 max-w-[200px] truncate"> {addressLine || t('please_update_address', 'Please set your address')} </p>
+                       <p className="text-xs text-gray-500 dark:text-zinc-400 dark:text-gray-400 dark:text-zinc-500 mt-0.5 max-w-[200px] truncate"> {addressLine || t('please_update_address', 'Please set your address')} </p>
                     </div>
                  </div>
-                 <ChevronRight size={20} className="text-gray-400 dark:text-gray-500" />
+                 <ChevronRight size={20} className="text-gray-400 dark:text-zinc-500 dark:text-gray-500 dark:text-zinc-400" />
               </div>
            </div>
          )}
@@ -690,7 +690,7 @@ export function PatientCheckout() {
             <h3 className="font-bold text-gray-900 dark:text-white mb-3 text-sm px-1">{t('payment_method', 'Payment Method')}</h3>
             <div 
               onClick={() => setShowPaymentSelector(!showPaymentSelector)}
-              className="bg-white dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800 rounded-2xl p-4 flex items-center justify-between cursor-pointer"
+              className="bg-white dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800 dark:border-zinc-800 rounded-2xl p-4 flex items-center justify-between cursor-pointer"
             >
                <div className="flex items-center gap-4">
                   <div className={`w-10 h-10 rounded-full flex items-center justify-center ${paymentMethod === 'Cash on Delivery' ? 'bg-green-50 text-green-600 dark:bg-green-900/20 dark:text-green-400' : 'bg-yellow-50 text-yellow-600 dark:bg-yellow-900/20 dark:text-yellow-400'}`}>
@@ -698,19 +698,19 @@ export function PatientCheckout() {
                   </div>
                   <div>
                      <p className="font-bold text-gray-900 dark:text-white text-sm">{paymentMethod || t('select_payment_method', 'Select Payment Method')}</p>
-                     <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{t('tap_to_change', 'Tap to change')}</p>
+                     <p className="text-xs text-gray-500 dark:text-zinc-400 dark:text-gray-400 dark:text-zinc-500 mt-0.5">{t('tap_to_change', 'Tap to change')}</p>
                   </div>
                </div>
-               <ChevronRight size={20} className={`text-gray-400 dark:text-gray-500 transition transform ${showPaymentSelector ? 'rotate-90' : ''}`} />
+               <ChevronRight size={20} className={`text-gray-400 dark:text-zinc-500 dark:text-gray-500 dark:text-zinc-400 transition transform ${showPaymentSelector ? 'rotate-90' : ''}`} />
             </div>
             
              {showPaymentSelector && (
-              <div className="mt-3 bg-white dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800 rounded-2xl p-2 space-y-1 shadow-sm">
+              <div className="mt-3 bg-white dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800 dark:border-zinc-800 rounded-2xl p-2 space-y-1 shadow-sm">
                  {[
                    { id: "Paiement en ligne", name: "Paiement en ligne (Mobile Money & Carte)", color: "blue", icon: <CreditCard size={16}/> },
                    { id: "Cash on Delivery", name: t('cash_on_delivery', 'Cash on Delivery'), color: "green", icon: <FileText size={16}/> }
                  ].map(method => (
-                    <button key={method.id} onClick={() => { setPaymentMethod(method.id); setShowPaymentSelector(false); }} className={`w-full flex items-center justify-between p-4 min-h-[56px] rounded-xl border-2 transition touch-manipulation ${paymentMethod === method.id ? `border-${method.color}-400 bg-${method.color}-50/30 dark:bg-${method.color}-900/10` : 'border-transparent hover:bg-gray-50 dark:hover:bg-black'}`}>
+                    <button key={method.id} onClick={() => { setPaymentMethod(method.id); setShowPaymentSelector(false); }} className={`w-full flex items-center justify-between p-4 min-h-[56px] rounded-xl border-2 transition touch-manipulation ${paymentMethod === method.id ? `border-${method.color}-400 bg-${method.color}-50/30 dark:bg-${method.color}-900/10` : 'border-transparent hover:bg-gray-50 dark:bg-zinc-800 dark:bg-zinc-900 dark:hover:bg-black'}`}>
                        <div className="flex items-center gap-3">
                           <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs ${typeof method.icon === 'string' ? `bg-${method.color}-400 text-white` : `bg-${method.color}-100 dark:bg-${method.color}-900/30 text-${method.color}-600 dark:text-${method.color}-400`}`}>
                             {method.icon}
@@ -727,19 +727,19 @@ export function PatientCheckout() {
          </div>
 
          {/* Totals */}
-         <div className="bg-white dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800 rounded-2xl p-5 space-y-3">
+         <div className="bg-white dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800 dark:border-zinc-800 rounded-2xl p-5 space-y-3">
             <div className="flex justify-between text-sm">
-               <span className="text-gray-500 dark:text-gray-400">{t('subtotal', 'Subtotal')}</span>
+               <span className="text-gray-500 dark:text-zinc-400 dark:text-gray-400 dark:text-zinc-500">{t('subtotal', 'Subtotal')}</span>
                <span className="font-bold text-gray-900 dark:text-white">{formatCurrency(totalItemsPrice)}</span>
             </div>
             <div className="flex justify-between text-sm">
-               <span className="text-gray-500 dark:text-gray-400">{t('delivery_fee', 'Delivery Fee')}</span>
+               <span className="text-gray-500 dark:text-zinc-400 dark:text-gray-400 dark:text-zinc-500">{t('delivery_fee', 'Delivery Fee')}</span>
                <span className="font-bold text-gray-900 dark:text-white">{formatCurrency(deliveryFee)}</span>
             </div>
-            <div className="h-px bg-gray-100 dark:bg-zinc-800 my-2"></div>
+            <div className="h-px bg-gray-100 dark:bg-zinc-800 dark:bg-zinc-800 my-2"></div>
             <div className="flex justify-between">
                <span className="font-bold text-gray-900 dark:text-white text-lg">{t('total', 'Total')}</span>
-               <span className="font-bold text-[#1a3b8d] dark:text-indigo-400 text-xl">{formatCurrency(totalItemsPrice + deliveryFee)}</span>
+               <span className="font-bold text-[#1a3b8d] dark:text-[var(--app-primary-color)] text-xl">{formatCurrency(totalItemsPrice + deliveryFee)}</span>
             </div>
          </div>
 
@@ -747,7 +747,7 @@ export function PatientCheckout() {
          <div className="h-24"></div>
       </div>
 
-      <div className="sticky bottom-0 left-0 right-0 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-md border-t border-gray-100 dark:border-zinc-800 p-4 px-6 pb-6 z-20 shadow-lg">
+      <div className="sticky bottom-0 left-0 right-0 bg-white dark:bg-zinc-900/95 dark:bg-zinc-900/95 backdrop-blur-md border-t border-gray-100 dark:border-zinc-800 dark:border-zinc-800 p-4 px-6 pb-6 z-20 shadow-lg">
          <button 
            disabled={processing}
            className="w-full text-white rounded-2xl font-bold py-4 min-h-[56px] shadow-sm transition disabled:opacity-50 touch-manipulation cursor-pointer flex items-center justify-center gap-2"
@@ -767,9 +767,9 @@ export function PatientCheckout() {
       {showAddressEditor && (
         <div className="fixed inset-0 bg-black/60 z-50 flex flex-col justify-end">
            <div className="bg-white dark:bg-zinc-900 rounded-t-3xl w-full max-h-[85vh] overflow-hidden flex flex-col shadow-2xl">
-               <div className="p-4 flex items-center justify-between border-b border-gray-100 dark:border-zinc-800">
+               <div className="p-4 flex items-center justify-between border-b border-gray-100 dark:border-zinc-800 dark:border-zinc-800">
                   <h2 className="font-bold text-gray-900 dark:text-white">{t('edit_delivery_address', 'Adresse de livraison')}</h2>
-                  <button onClick={() => setShowAddressEditor(false)} className="w-8 h-8 flex items-center justify-center bg-gray-100 dark:bg-zinc-800 rounded-full text-gray-500 hover:text-gray-900 dark:hover:text-white transition">
+                  <button onClick={() => setShowAddressEditor(false)} className="w-8 h-8 flex items-center justify-center bg-gray-100 dark:bg-zinc-800 dark:bg-zinc-800 rounded-full text-gray-500 dark:text-zinc-400 hover:text-gray-900 dark:text-white dark:hover:text-white transition">
                      <X size={16} />
                   </button>
                </div>
@@ -789,9 +789,9 @@ export function PatientCheckout() {
                  </button>
 
                  <div className="relative flex items-center py-2">
-                    <div className="flex-grow border-t border-gray-200 dark:border-zinc-800"></div>
-                    <span className="shrink-0 mx-4 text-xs text-gray-400 font-bold uppercase">{t('or', 'OU')}</span>
-                    <div className="flex-grow border-t border-gray-200 dark:border-zinc-800"></div>
+                    <div className="flex-grow border-t border-gray-200 dark:border-zinc-800 dark:border-zinc-800"></div>
+                    <span className="shrink-0 mx-4 text-xs text-gray-400 dark:text-zinc-500 font-bold uppercase">{t('or', 'OU')}</span>
+                    <div className="flex-grow border-t border-gray-200 dark:border-zinc-800 dark:border-zinc-800"></div>
                  </div>
 
                  <div>
@@ -810,7 +810,7 @@ export function PatientCheckout() {
                  </div>
 
                  {addressLine && (
-                   <div className="p-3 bg-gray-50 dark:bg-zinc-800/60 rounded-xl border border-gray-100 dark:border-zinc-800 text-xs text-gray-600 dark:text-gray-300 flex items-start gap-2">
+                   <div className="p-3 bg-gray-50 dark:bg-zinc-800 dark:bg-zinc-800/60 rounded-xl border border-gray-100 dark:border-zinc-800 dark:border-zinc-800 text-xs text-gray-600 dark:text-gray-300 flex items-start gap-2">
                      <MapPin size={15} className="shrink-0 mt-0.5" style={{ color: primaryColor }} />
                      <div>
                        <span className="font-bold block text-gray-900 dark:text-white">Adresse sélectionnée :</span>

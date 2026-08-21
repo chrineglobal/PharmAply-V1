@@ -160,7 +160,7 @@ export function FapshiSandboxCheckout() {
       {/* Header bar */}
       <div className="w-full max-w-md bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl">
         {/* Top branded bar */}
-        <div className="bg-[#194B4B] p-6 text-white text-center relative">
+        <div className="bg-[var(--app-primary-color)] p-6 text-white text-center relative">
           <button
             onClick={() => navigate(-1)}
             className="absolute left-4 top-5 w-8 h-8 rounded-full bg-black/20 flex items-center justify-center hover:bg-black/40 text-white"

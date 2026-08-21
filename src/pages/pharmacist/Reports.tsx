@@ -216,7 +216,7 @@ export function PharmacistReports() {
     return (
       <div className="flex-1 bg-transparent flex flex-col h-full overflow-hidden relative">
         <div className="px-8 pt-8 pb-4 flex items-center gap-4 z-10 shrink-0">
-          <button onClick={() => setActiveView('main')} className="w-10 h-10 flex items-center justify-center bg-white dark:bg-slate-800 rounded-full border border-gray-100 dark:border-slate-700 shadow-sm transition-colors hover:bg-gray-50 dark:hover:bg-slate-700">
+          <button onClick={() => setActiveView('main')} className="w-10 h-10 flex items-center justify-center bg-white dark:bg-slate-800 rounded-full border border-gray-100 dark:border-slate-700 shadow-sm transition-colors hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-slate-700">
              <ArrowLeft size={20} className="text-gray-700 dark:text-gray-200" />
           </button>
           <h1 className="font-bold text-gray-900 dark:text-white text-2xl tracking-tight">Medicine Usage Insights</h1>
@@ -228,7 +228,7 @@ export function PharmacistReports() {
                <button 
                  key={tab}
                  onClick={() => setInsightTab(tab)}
-                 className={`flex-1 text-sm font-bold py-2.5 rounded-xl transition-all ${insightTab === tab ? 'bg-white text-[#0B3B3C] shadow-sm' : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'}`}
+                 className={`flex-1 text-sm font-bold py-2.5 rounded-xl transition-all ${insightTab === tab ? 'bg-white dark:bg-zinc-950 text-[#0B3B3C] shadow-sm' : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'}`}
                >
                  {tab}
                </button>
@@ -303,7 +303,7 @@ export function PharmacistReports() {
     return (
       <div className="flex-1 bg-transparent flex flex-col h-full overflow-hidden relative">
         <div className="px-8 pt-8 pb-4 flex items-center gap-4 z-10 shrink-0">
-          <button onClick={() => setActiveView('main')} className="w-10 h-10 flex items-center justify-center bg-white dark:bg-slate-800 rounded-full border border-gray-100 dark:border-slate-700 shadow-sm transition-colors hover:bg-gray-50 dark:hover:bg-slate-700">
+          <button onClick={() => setActiveView('main')} className="w-10 h-10 flex items-center justify-center bg-white dark:bg-slate-800 rounded-full border border-gray-100 dark:border-slate-700 shadow-sm transition-colors hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-slate-700">
             <ArrowLeft size={20} className="text-gray-700 dark:text-gray-200" />
           </button>
           <h1 className="font-bold text-gray-900 dark:text-white text-2xl tracking-tight">Low Stock Trends</h1>
@@ -399,7 +399,7 @@ export function PharmacistReports() {
 
             {/* Low Stock Alert Trends */}
             <div onClick={() => setActiveView('stock')} className="bg-[#0B3B3C] p-6 rounded-3xl shadow-sm flex items-center justify-between cursor-pointer hover:bg-[#082a2b] transition-all relative overflow-hidden group">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-bl-[100px] pointer-events-none group-hover:bg-white/10 transition-colors"></div>
+              <div className="absolute top-0 right-0 w-32 h-32 bg-white dark:bg-zinc-950/5 rounded-bl-[100px] pointer-events-none group-hover:bg-white dark:bg-zinc-950/10 transition-colors"></div>
               <div className="flex items-start gap-4 relative z-10">
                 <div className="w-10 h-10 bg-[#D3F5A8]/10 border border-[#D3F5A8]/20 rounded-xl flex items-center justify-center text-[#D3F5A8] shrink-0">
                    <ShieldAlert size={18} />

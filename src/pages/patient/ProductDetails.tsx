@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { ArrowLeft, Heart, Star, Pill, ShieldAlert, FileText, CheckCircle2, AlertCircle, ShoppingCart } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
-import { doc, getDoc, collection, getDocs, db, auth } from '../../lib/firebase';
+import { doc, getDoc, collection, getDocs, db, auth, query, where, addDoc, deleteDoc } from '../../lib/firebase';
 import { supabase } from '../../lib/supabase';
 import { formatCurrency } from '../../lib/utils';
 import { useTranslation } from "react-i18next";
+import { useAuth } from "../../components/AuthProvider";
 import { getCategoryIcon } from "../../lib/icons";
 import { useCart } from "../../components/CartProvider";
 import { useTheme } from "../../components/ThemeProvider";
@@ -15,6 +16,7 @@ export function PatientProductDetails() {
   const navigate = useNavigate();
   const { id } = useParams();
   const { t } = useTranslation();
+  const { user } = useAuth();
   const { addToCart } = useCart();
   const theme = useTheme();
   const primaryColor = theme.primaryColor || '#194B4B';
@@ -122,20 +124,36 @@ export function PatientProductDetails() {
   }, [id]);
 
   const toggleWishlist = async () => {
-    if (!auth.currentUser || !product) {
-       toast.error(t('login_required', 'Veuillez vous connecter d\'abord'));
+    if (!user || !product) {
+       toast.error(t('login_required', 'Veuillez vous connecter pour ajouter aux favoris'));
        return;
     }
+    
+    const wasWished = isWishlist;
+    setIsWishlist(!isWishlist);
+    
     try {
-      if (isWishlist) {
-         setIsWishlist(false);
-         toast(t('removed_wishlist', 'Retiré des favoris'), { icon: '💔' });
+      if (wasWished) {
+        // Find and delete the favorite doc
+        const q = query(collection(db, 'favorites'), where('userId', '==', user.uid), where('productId', '==', product.id));
+        const snap = await getDocs(q);
+        snap.docs.forEach(async (d) => {
+          await deleteDoc(doc(db, 'favorites', d.id));
+        });
+        toast(t('removed_wishlist', 'Retiré des favoris'), { icon: '💔' });
       } else {
-         setIsWishlist(true);
-         toast(t('added_wishlist', 'Ajouté aux favoris'), { icon: '❤️' });
+        // Add to favorites
+        await addDoc(collection(db, 'favorites'), {
+          userId: user.uid,
+          productId: product.id,
+          product: product,
+          createdAt: new Date().toISOString()
+        });
+        toast(t('added_wishlist', 'Ajouté aux favoris'), { icon: '❤️' });
       }
-    } catch (e) {
-      console.error(e);
+    } catch (err) {
+      console.error('Failed to update favorites', err);
+      setIsWishlist(wasWished); // revert
     }
   };
 
@@ -200,10 +218,10 @@ export function PatientProductDetails() {
   return (
     <div className="flex-1 bg-white dark:bg-zinc-950 flex flex-col h-full overflow-hidden">
       {/* Header */}
-      <div className="px-6 pt-12 pb-4 flex items-center justify-between z-10 sticky top-0 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-md border-b border-gray-100 dark:border-zinc-900">
+      <div className="px-6 pt-12 pb-4 flex items-center justify-between z-10 sticky top-0 bg-white dark:bg-zinc-950/95 dark:bg-zinc-950/95 backdrop-blur-md border-b border-gray-100 dark:border-zinc-900">
          <button
             onClick={() => navigate(-1)}
-            className="w-10 h-10 flex items-center justify-center bg-gray-50 dark:bg-zinc-900 rounded-full border border-gray-200 dark:border-zinc-800 shadow-sm transition hover:bg-gray-100"
+            className="w-10 h-10 flex items-center justify-center bg-gray-50 dark:bg-zinc-900 rounded-full border border-gray-200 dark:border-zinc-800 shadow-sm transition hover:bg-gray-100 dark:bg-zinc-800"
          >
             <ArrowLeft size={20} className="text-gray-900 dark:text-white" />
          </button>
@@ -241,7 +259,7 @@ export function PatientProductDetails() {
                   <span className="text-xs font-semibold mt-2 text-gray-500">{rawCategory}</span>
                </div>
             )}
-            <div className="absolute top-4 right-4 bg-white/90 dark:bg-zinc-800/90 backdrop-blur-md px-3 py-1 rounded-full flex items-center gap-1.5 text-xs font-bold text-gray-800 dark:text-gray-200 border border-gray-100 dark:border-zinc-700 shadow-sm">
+            <div className="absolute top-4 right-4 bg-white dark:bg-zinc-950/90 dark:bg-zinc-800/90 backdrop-blur-md px-3 py-1 rounded-full flex items-center gap-1.5 text-xs font-bold text-gray-800 dark:text-gray-200 border border-gray-100 dark:border-zinc-700 shadow-sm">
                <Star size={13} className="text-amber-500 fill-amber-500" />
                <span>4.9</span>
             </div>

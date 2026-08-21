@@ -80,7 +80,7 @@ export function PharmacistCustomers() {
             if (!custMap.has(patientKey)) {
               custMap.set(patientKey, {
                 id: ord.patientId || ord.id,
-                name: ord.patientName || 'Client PharmaExpress',
+                name: ord.patientName || 'Client PharmAply',
                 phone: ord.patientPhone || '',
                 email: ord.patientEmail || '',
                 photoUrl: ord.patientPhoto || ord.patientPhotoUrl || '',
@@ -205,7 +205,7 @@ export function PharmacistCustomers() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2.5">
-            <div className="p-2.5 bg-teal-50 dark:bg-teal-950/40 rounded-xl text-[#194B4B] dark:text-teal-400">
+            <div className="p-2.5 bg-teal-50 dark:bg-teal-950/40 rounded-xl text-[var(--app-primary-color)] dark:text-teal-400">
               <Users size={24} />
             </div>
             {t('customers', 'Fichier Clients & Patients')}
@@ -217,7 +217,7 @@ export function PharmacistCustomers() {
 
         <button 
           onClick={handleExportCSV}
-          className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl text-xs font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700 transition shadow-xs"
+          className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl text-xs font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-slate-700 transition shadow-xs"
         >
           <Download size={15} />
           {t('export_csv', 'Exporter CSV')}
@@ -227,7 +227,7 @@ export function PharmacistCustomers() {
       {/* Metrics Row */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
         <div className="bg-white dark:bg-slate-800 rounded-3xl p-5 shadow-xs border border-gray-100 dark:border-slate-700 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-teal-50 dark:bg-teal-950/40 text-[#194B4B] dark:text-teal-400 flex items-center justify-center">
+          <div className="w-12 h-12 rounded-2xl bg-teal-50 dark:bg-teal-950/40 text-[var(--app-primary-color)] dark:text-teal-400 flex items-center justify-center">
             <Users size={24} />
           </div>
           <div>
@@ -276,7 +276,7 @@ export function PharmacistCustomers() {
         <div className="w-full overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-gray-100 dark:border-slate-700 bg-gray-50/50 dark:bg-slate-800/50 text-xs font-bold text-gray-400 uppercase tracking-wider">
+              <tr className="border-b border-gray-100 dark:border-slate-700 bg-gray-50 dark:bg-zinc-900/50 dark:bg-slate-800/50 text-xs font-bold text-gray-400 uppercase tracking-wider">
                 <th className="p-4 pl-6">{t('customer', 'Client / Patient')}</th>
                 <th className="p-4">{t('contact', 'Contact')}</th>
                 <th className="p-4">{t('total_orders', 'Commandes')}</th>
@@ -306,7 +306,7 @@ export function PharmacistCustomers() {
                   const liveEmail = userProfiles[cust.id]?.email || cust.email;
 
                   return (
-                    <tr key={cust.id} className="hover:bg-gray-50/70 dark:hover:bg-slate-700/40 transition">
+                    <tr key={cust.id} className="hover:bg-gray-50 dark:bg-zinc-900/70 dark:hover:bg-slate-700/40 transition">
                       <td className="p-4 pl-6">
                         <div className="flex items-center gap-3">
                           <UserAvatar
@@ -372,7 +372,7 @@ export function PharmacistCustomers() {
                               navigate(`/pharmacist/messages`);
                             }
                           }}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#194B4B] hover:bg-[#133a3a] text-white rounded-xl text-xs font-bold transition shadow-xs"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[var(--app-primary-color)] hover:bg-[#133a3a] text-white rounded-xl text-xs font-bold transition shadow-xs"
                           title="Ouvrir la discussion avec ce client"
                         >
                           <MessageCircle size={14} />

@@ -126,15 +126,15 @@ export function PharmacistPrescriptions() {
                return (
                   <div key={p.id} className="bg-white dark:bg-slate-800 rounded-3xl border border-gray-100 dark:border-slate-700 shadow-sm flex flex-col overflow-hidden group">
                      {/* Preview Area */}
-                     <div className="h-48 bg-[#FAFBFC] dark:bg-slate-900/80 w-full flex flex-col relative overflow-hidden group-hover:bg-gray-50 transition-colors">
+                     <div className="h-48 bg-[#FAFBFC] dark:bg-slate-900/80 w-full flex flex-col relative overflow-hidden group-hover:bg-gray-50 dark:bg-zinc-900 transition-colors">
                         <div className="absolute top-4 left-4 z-10 flex gap-2">
-                           <span className={`text-[10px] font-bold px-3 py-1 rounded-full shadow-sm flex items-center gap-1 border ${p.status === 'approved' ? 'bg-[#D3F5A8]/90 text-[#0B3B3C] border-[#D3F5A8] backdrop-blur-md' : p.status === 'rejected' ? 'bg-red-50/90 text-red-700 border-red-100/50 backdrop-blur-md' : 'bg-white/90 text-amber-700 border-gray-200 backdrop-blur-md'}`}>
+                           <span className={`text-[10px] font-bold px-3 py-1 rounded-full shadow-sm flex items-center gap-1 border ${p.status === 'approved' ? 'bg-[#D3F5A8]/90 text-[#0B3B3C] border-[#D3F5A8] backdrop-blur-md' : p.status === 'rejected' ? 'bg-red-50/90 text-red-700 border-red-100/50 backdrop-blur-md' : 'bg-white dark:bg-zinc-950/90 text-amber-700 border-gray-200 backdrop-blur-md'}`}>
                              {p.status === 'approved' ? <CheckCircle size={12} /> : p.status === 'rejected' ? <XCircle size={12} /> : <Clock size={12} className="text-amber-500" />}
                              {t(p.status || 'pending', p.status || 'Pending')}
                            </span>
 
                            {hasAiScan && (
-                             <span className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-[#194B4B] text-yellow-300 shadow-sm flex items-center gap-1 backdrop-blur-md">
+                             <span className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-[var(--app-primary-color)] text-yellow-300 shadow-sm flex items-center gap-1 backdrop-blur-md">
                                <Sparkles size={11} /> AI DPML
                              </span>
                            )}
@@ -144,7 +144,7 @@ export function PharmacistPrescriptions() {
                            {isImage ? (
                               <img src={p.fileUrl} className="w-full h-full object-contain filter drop-shadow-sm group-hover:scale-105 transition-all duration-300" alt={displayFilename} />
                            ) : (
-                              <div className="w-20 h-20 bg-white rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center group-hover:-translate-y-1 transition-transform">
+                              <div className="w-20 h-20 bg-white dark:bg-zinc-950 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center group-hover:-translate-y-1 transition-transform">
                                 <FileText size={36} strokeWidth={1.5} className="text-gray-400" />
                               </div>
                            )}
@@ -153,7 +153,7 @@ export function PharmacistPrescriptions() {
                      
                      <div className="p-5 flex flex-col flex-1 border-t border-gray-100 dark:border-slate-700">
                         <div className="flex items-center gap-3 mb-2">
-                           <div className={`w-8 h-8 shrink-0 rounded-xl flex items-center justify-center border ${isPdf ? 'bg-red-50 border-red-100 text-red-500' : isImage ? 'bg-blue-50 border-blue-100 text-blue-500' : 'bg-gray-50 border-gray-100 text-gray-500'}`}>
+                           <div className={`w-8 h-8 shrink-0 rounded-xl flex items-center justify-center border ${isPdf ? 'bg-red-50 border-red-100 text-red-500' : isImage ? 'bg-blue-50 border-blue-100 text-blue-500' : 'bg-gray-50 dark:bg-zinc-900 border-gray-100 text-gray-500'}`}>
                               {isPdf ? <FileText size={16} /> : isImage ? <ImageIcon size={16} /> : <FileText size={16} />}
                            </div>
                            <div className="flex-1 overflow-hidden">
@@ -167,9 +167,9 @@ export function PharmacistPrescriptions() {
                         {/* AI Quick Button */}
                         <button
                           onClick={() => handleOpenAiModal(p)}
-                          className="w-full mt-2 mb-3 bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-950/30 dark:to-teal-950/30 border border-emerald-200 dark:border-emerald-800 text-[#194B4B] dark:text-teal-300 font-bold py-2.5 rounded-xl text-xs flex justify-center items-center gap-2 transition hover:shadow-sm"
+                          className="w-full mt-2 mb-3 bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-950/30 dark:to-teal-950/30 border border-emerald-200 dark:border-emerald-800 text-[var(--app-primary-color)] dark:text-teal-300 font-bold py-2.5 rounded-xl text-xs flex justify-center items-center gap-2 transition hover:shadow-sm"
                         >
-                           <ShieldCheck size={15} className="text-[#194B4B] dark:text-teal-400" />
+                           <ShieldCheck size={15} className="text-[var(--app-primary-color)] dark:text-teal-400" />
                            {hasAiScan ? "Consulter l'Audit DPML (IA)" : "Analyser avec l'IA"}
                         </button>
 
@@ -178,20 +178,20 @@ export function PharmacistPrescriptions() {
                            <button 
                              disabled={!isPending || processingId === p.id}
                              onClick={() => handleUpdateStatus(p.id, 'approved')}
-                             className="bg-white border-2 border-gray-100 hover:border-[#D3F5A8] hover:bg-[#D3F5A8]/20 hover:text-[#0B3B3C] text-gray-700 disabled:opacity-50 disabled:bg-gray-50 dark:bg-slate-700 disabled:border-transparent disabled:text-gray-400 font-bold py-3 rounded-2xl text-xs flex justify-center items-center gap-1.5 transition-all"
+                             className="bg-white dark:bg-zinc-950 border-2 border-gray-100 hover:border-[#D3F5A8] hover:bg-[#D3F5A8]/20 hover:text-[#0B3B3C] text-gray-700 disabled:opacity-50 disabled:bg-gray-50 dark:bg-slate-700 disabled:border-transparent disabled:text-gray-400 font-bold py-3 rounded-2xl text-xs flex justify-center items-center gap-1.5 transition-all"
                            >
                               {processingId === p.id ? <Loader2 size={16} className="animate-spin" /> : <CheckCircle size={16} />} Approve
                            </button>
                            <button 
                              disabled={!isPending || processingId === p.id}
                              onClick={() => handleUpdateStatus(p.id, 'rejected')}
-                             className="bg-white border-2 border-gray-100 hover:border-red-200 hover:bg-red-50 hover:text-red-700 text-gray-700 disabled:opacity-50 disabled:bg-gray-50 dark:bg-slate-700 disabled:border-transparent disabled:text-gray-400 font-bold py-3 rounded-2xl text-xs flex justify-center items-center gap-1.5 transition-all"
+                             className="bg-white dark:bg-zinc-950 border-2 border-gray-100 hover:border-red-200 hover:bg-red-50 hover:text-red-700 text-gray-700 disabled:opacity-50 disabled:bg-gray-50 dark:bg-slate-700 disabled:border-transparent disabled:text-gray-400 font-bold py-3 rounded-2xl text-xs flex justify-center items-center gap-1.5 transition-all"
                            >
                               <XCircle size={16} /> Reject
                            </button>
                         </div>
                         
-                        <button className="w-full mt-3 bg-white border border-[#0B3B3C]/10 hover:border-[#0B3B3C]/30 text-[#0B3B3C] font-bold py-3.5 rounded-2xl text-xs flex justify-center items-center gap-2 transition-all shadow-sm">
+                        <button className="w-full mt-3 bg-white dark:bg-zinc-950 border border-[#0B3B3C]/10 hover:border-[#0B3B3C]/30 text-[#0B3B3C] font-bold py-3.5 rounded-2xl text-xs flex justify-center items-center gap-2 transition-all shadow-sm">
                            <MessageSquare size={16} /> Contact Patient
                         </button>
                      </div>

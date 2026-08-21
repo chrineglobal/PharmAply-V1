@@ -68,7 +68,7 @@ export function Compliance() {
          <button 
            onClick={handleSave} 
            disabled={loading}
-           className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-sm transition flex items-center gap-2 disabled:opacity-50"
+           className="bg-[var(--app-primary-color)] hover:bg-[var(--app-primary-color)] text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-sm transition flex items-center gap-2 disabled:opacity-50"
          >
             <Save size={16} />  {t('save_changes', 'Save Changes')} </button>
       </div>
@@ -83,7 +83,7 @@ export function Compliance() {
                     name="hipaaAuditLogs"
                     checked={settings.hipaaAuditLogs}
                     onChange={handleChange}
-                    className="w-5 h-5 text-indigo-600 rounded mt-0.5"
+                    className="w-5 h-5 text-[var(--app-primary-color)] rounded mt-0.5"
                   />
                   <div>
                     <h3 className="font-bold text-gray-900 dark:text-white text-sm block">Enable PHI Audit Logging</h3>
@@ -102,7 +102,7 @@ export function Compliance() {
                     name="prescriptionApprovalRequired"
                     checked={settings.prescriptionApprovalRequired}
                     onChange={handleChange}
-                    className="w-5 h-5 text-indigo-600 rounded mt-0.5"
+                    className="w-5 h-5 text-[var(--app-primary-color)] rounded mt-0.5"
                   />
                   <div>
                     <h3 className="font-bold text-gray-900 dark:text-white text-sm block">Require Admin/Pharmacist Approval for Uploaded E-Prescriptions</h3>
@@ -115,7 +115,7 @@ export function Compliance() {
                     name="requireNABPCheck"
                     checked={settings.requireNABPCheck}
                     onChange={handleChange}
-                    className="w-5 h-5 text-indigo-600 rounded mt-0.5"
+                    className="w-5 h-5 text-[var(--app-primary-color)] rounded mt-0.5"
                   />
                   <div>
                     <h3 className="font-bold text-gray-900 dark:text-white text-sm block">Require NABP checks for pharmacies</h3>
@@ -135,7 +135,7 @@ export function Compliance() {
                     name="tosUrl"
                     value={settings.tosUrl} 
                     onChange={handleChange}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none"
                     placeholder={t('https_example_com_tos', 'https://example.com/tos')}
                   />
                </div>
@@ -146,7 +146,7 @@ export function Compliance() {
                     name="privacyPolicyUrl"
                     value={settings.privacyPolicyUrl} 
                     onChange={handleChange}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none"
                     placeholder={t('https_example_com_privacy', 'https://example.com/privacy')}
                   />
                </div>

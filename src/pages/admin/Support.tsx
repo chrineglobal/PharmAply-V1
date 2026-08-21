@@ -205,11 +205,11 @@ export function AdminSupport() {
                             <tr key={q.id} onClick={() => handleRowClick(q)} className="hover:bg-slate-50 transition-colors cursor-pointer">
                                <td className="py-4 px-6">
                                   <div className="flex items-center gap-3">
-                                    <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 shrink-0">
+                                    <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-[var(--app-primary-color)] shrink-0">
                                        <User size={14} />
                                     </div>
                                     <div>
-                                       <span className="font-bold text-gray-800 block text-xs">{q.userName || 'Pharmacy Client'}</span>
+                                       <span className="font-bold text-gray-800 dark:text-gray-100 block text-xs">{q.userName || 'Pharmacy Client'}</span>
                                        <span className="font-mono text-[10px] text-gray-400">{q.userId?.slice(0,8)} ({q.userRole || 'pharmacist'})</span>
                                     </div>
                                   </div>
@@ -239,7 +239,7 @@ export function AdminSupport() {
                                   </div>
                                </td>
                                <td className="py-4 px-6 text-right">
-                                  <button className="text-sm font-bold text-indigo-600 hover:text-indigo-800">
+                                  <button className="text-sm font-bold text-[var(--app-primary-color)] hover:text-indigo-800">
                                       {t('chat_now', 'Chat Now')} &rarr; </button>
                                </td>
                             </tr>
@@ -261,7 +261,7 @@ export function AdminSupport() {
         <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
             <div className="bg-white dark:bg-zinc-950 rounded-3xl w-full max-w-3xl h-[85vh] shadow-2xl flex flex-col overflow-hidden border border-gray-100 dark:border-zinc-800">
                {/* Modal Header */}
-               <div className="flex justify-between items-start p-6 border-b border-gray-100 dark:border-zinc-900 bg-gray-50/50 dark:bg-zinc-900/10 shrink-0">
+               <div className="flex justify-between items-start p-6 border-b border-gray-100 dark:border-zinc-900 bg-gray-50 dark:bg-zinc-900/50 dark:bg-zinc-900/10 shrink-0">
                   <div>
                      <h2 className="text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
                        {selectedQuery.subject || 'Support Ticket'}
@@ -272,7 +272,7 @@ export function AdminSupport() {
                        </span>
                      </h2>
                      <div className="flex gap-4 mt-1.5 text-xs text-slate-500">
-                       <span> {t('client_name', 'Client:')} <span className="font-bold text-gray-800">{selectedQuery.userName || 'Pharmacy'}</span></span>
+                       <span> {t('client_name', 'Client:')} <span className="font-bold text-gray-800 dark:text-gray-100">{selectedQuery.userName || 'Pharmacy'}</span></span>
                        <span> {t('user_id_short', 'ID:')} <span className="font-mono font-bold">{selectedQuery.userId}</span></span>
                        {parseDate(selectedQuery.createdAt) && (
                          <span> {t('date', 'Opened:')} {parseDate(selectedQuery.createdAt)!.toLocaleString()}</span>
@@ -303,10 +303,10 @@ export function AdminSupport() {
                      return (
                         <div key={msg.id} className={`flex ${isAdmin ? 'justify-end' : 'justify-start'}`}>
                            <div className={`max-w-[75%] rounded-2xl p-4 ${
-                              isAdmin ? 'bg-indigo-600 text-white rounded-br-sm shadow-indigo-100' : 'bg-white dark:bg-zinc-950 text-gray-850 dark:text-slate-100 rounded-bl-sm border border-gray-100 dark:border-zinc-850 shadow-sm'
+                              isAdmin ? 'bg-[var(--app-primary-color)] text-white rounded-br-sm shadow-indigo-100' : 'bg-white dark:bg-zinc-950 text-gray-850 dark:text-slate-100 rounded-bl-sm border border-gray-100 dark:border-zinc-850 shadow-sm'
                            }`}>
                               {!isAdmin && (
-                                <p className="text-[9px] font-extrabold text-indigo-500 uppercase tracking-widest mb-1">{selectedQuery.userName || 'Client'}</p>
+                                <p className="text-[9px] font-extrabold text-[var(--app-primary-color)] uppercase tracking-widest mb-1">{selectedQuery.userName || 'Client'}</p>
                               )}
                               <p className="text-sm leading-relaxed">{msg.text}</p>
                               <p className={`text-[10px] mt-2 font-medium ${isAdmin ? 'text-indigo-200' : 'text-gray-400 dark:text-gray-500'}`}>
@@ -343,7 +343,7 @@ export function AdminSupport() {
                   <button 
                     disabled={selectedQuery.status === 'resolved' || !replyText.trim() || sending}
                     onClick={handleSendReply}
-                    className="w-12 h-12 bg-indigo-600 text-white hover:bg-indigo-700 rounded-full flex items-center justify-center shadow-md shadow-indigo-100 transition shrink-0 disabled:opacity-40"
+                    className="w-12 h-12 bg-[var(--app-primary-color)] text-white hover:bg-[var(--app-primary-color)] rounded-full flex items-center justify-center shadow-md shadow-indigo-100 transition shrink-0 disabled:opacity-40"
                   >
                      {sending ? (
                         <Loader2 size={16} className="animate-spin" />

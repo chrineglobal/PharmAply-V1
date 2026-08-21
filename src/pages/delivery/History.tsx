@@ -40,7 +40,7 @@ export function DeliveryHistory() {
       <div className="bg-white dark:bg-black px-6 pt-12 pb-4 shadow-sm z-10 border-b border-gray-100 dark:border-zinc-800">
          <h1 className="font-bold text-gray-900 dark:text-white text-xl mb-4"> {t('history', 'History')} </h1>
          <div className="flex gap-4 border-b border-gray-100 dark:border-zinc-800 pb-2 text-sm font-medium">
-            <button className="text-indigo-600 border-b-2 border-indigo-600 pb-2"> {t('all', 'All')} </button>
+            <button className="text-[var(--app-primary-color)] border-b-2 border-[var(--app-primary-color)] pb-2"> {t('all', 'All')} </button>
             <button className="text-gray-400 dark:text-gray-500 pb-2"> {t('today', 'Today')} </button>
             <button className="text-gray-400 dark:text-gray-500 pb-2"> {t('this_week', 'This Week')} </button>
             <button className="text-gray-400 dark:text-gray-500 pb-2"> {t('this_month', 'This Month')} </button>
@@ -67,7 +67,7 @@ export function DeliveryHistory() {
                <div className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500 mb-4">{parseDate(item.createdAt) ? parseDate(item.createdAt)!.toLocaleDateString() : 'Recently'}</div>
                
                <div className="flex items-center gap-4 text-xs font-semibold text-gray-600 bg-gray-50 dark:bg-black p-3 rounded-xl border border-gray-100 dark:border-zinc-800">
-                  <div className="flex-1 flex justify-center items-center gap-1.5"><MapPin size={12} className="text-indigo-500" />  {t('local', 'Local')} </div>
+                  <div className="flex-1 flex justify-center items-center gap-1.5"><MapPin size={12} className="text-[var(--app-primary-color)]" />  {t('local', 'Local')} </div>
                   <div className="w-[1px] h-4 bg-gray-200"></div>
                   <div className="flex-1 flex justify-center items-center gap-1.5 text-green-600 font-bold">{formatCurrency((item.total || 0) * 0.1)}</div>
                </div>

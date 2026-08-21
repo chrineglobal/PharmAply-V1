@@ -209,7 +209,7 @@ export function AdminCategories() {
                     setNewCatImage("");
                     setShowModal(true);
                   }}
-                  className="bg-indigo-600 text-white px-4 py-2.5 rounded-xl text-sm font-bold shadow-sm hover:bg-indigo-700 transition flex items-center gap-2"
+                  className="bg-[var(--app-primary-color)] text-white px-4 py-2.5 rounded-xl text-sm font-bold shadow-sm hover:bg-[var(--app-primary-color)] transition flex items-center gap-2"
                >
                   <Plus size={18} />  {t('add_category', 'Add Category')} </button>
              </div>
@@ -226,7 +226,7 @@ export function AdminCategories() {
                             <th className="py-4 px-6 font-semibold w-12">
                               <input 
                                 type="checkbox" 
-                                className="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 border-gray-300 cursor-pointer"
+                                className="w-4 h-4 rounded text-[var(--app-primary-color)] focus:ring-[var(--app-primary-color)] border-gray-300 cursor-pointer"
                                 checked={selectedIds.size === filteredCategories.length && filteredCategories.length > 0}
                                 onChange={toggleSelectAll}
                               />
@@ -243,7 +243,7 @@ export function AdminCategories() {
                               <td className="py-4 px-6">
                                 <input 
                                   type="checkbox" 
-                                  className="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 border-gray-300 cursor-pointer"
+                                  className="w-4 h-4 rounded text-[var(--app-primary-color)] focus:ring-[var(--app-primary-color)] border-gray-300 cursor-pointer"
                                   checked={selectedIds.has(c.id)}
                                   onChange={() => toggleSelection(c.id)}
                                 />
@@ -269,7 +269,7 @@ export function AdminCategories() {
                               </td>
                               <td className="py-4 px-6 text-right">
                                  <div className="flex items-center justify-end gap-2">
-                                    <button onClick={() => handleEditClick(c)} className="p-1.5 text-slate-400 hover:text-indigo-600 rounded-lg transition" title={t('edit', 'Edit')}>
+                                    <button onClick={() => handleEditClick(c)} className="p-1.5 text-slate-400 hover:text-[var(--app-primary-color)] rounded-lg transition" title={t('edit', 'Edit')}>
                                        <Edit2 size={16} />
                                     </button>
                                     <button 
@@ -307,7 +307,7 @@ export function AdminCategories() {
                       type="text" 
                       value={newCatName}
                       onChange={(e) => setNewCatName(e.target.value)}
-                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none"
                     />
                  </div>
                  <div>
@@ -317,7 +317,7 @@ export function AdminCategories() {
                       value={newCatImage}
                       onChange={(e) => setNewCatImage(e.target.value)}
                       placeholder={t('https_images_unsplash', 'https://images.unsplash...')}
-                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none"
                     />
                  </div>
                  <div className="flex justify-end gap-3 pt-4">
@@ -334,7 +334,7 @@ export function AdminCategories() {
                     <button 
                       onClick={handleSave}
                       disabled={isSaving}
-                      className="px-4 py-2 text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition shadow-sm disabled:opacity-50 flex items-center gap-2"
+                      className="px-4 py-2 text-sm font-bold text-white bg-[var(--app-primary-color)] hover:bg-[var(--app-primary-color)] rounded-xl transition shadow-sm disabled:opacity-50 flex items-center gap-2"
                     >
                       {isSaving && <Loader2 size={14} className="animate-spin" />}
                       {isSaving ? "Enregistrement..." : (editingId ? "Enregistrer" : "Créer la catégorie")}

@@ -7,8 +7,8 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import { useTranslation } from "react-i18next";
-import { MapContainer, TileLayer, Marker, Polyline, useMap } from 'react-leaflet';
-import L from 'leaflet';
+import { APIProvider, Map, AdvancedMarker, useMap } from '@vis.gl/react-google-maps';
+import { Polyline } from '../../components/Polyline';
 import { doc, onSnapshot, getDoc, updateDoc, serverTimestamp, db } from '../../lib/firebase';
 import { supabase } from '../../lib/supabase';
 import { formatCurrency, parseDate } from '../../lib/utils';
@@ -16,94 +16,47 @@ import { getRoadRoute } from '../../lib/routing';
 import { InvoiceModal } from '../../components/InvoiceModal';
 import toast from 'react-hot-toast';
 
-// Custom Motorcycle Icon for Leaflet
-const driverMotoLeafletIcon = L.divIcon({
-  className: 'custom-driver-moto-marker',
-  html: `
-    <div style="
-      width: 44px;
-      height: 44px;
-      background: #194B4B;
-      border: 3px solid #ffffff;
-      border-radius: 50%;
-      box-shadow: 0 8px 20px rgba(25, 75, 75, 0.45);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #FACC15;
-    ">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="18.5" cy="17.5" r="3.5"/>
-        <circle cx="5.5" cy="17.5" r="3.5"/>
-        <circle cx="15" cy="5" r="1"/>
-        <path d="M12 17.5V14l-3-3 4-3 2 3h2"/>
-      </svg>
-    </div>
-  `,
-  iconSize: [44, 44],
-  iconAnchor: [22, 22]
-});
+// Google Maps Custom Marker Components
+const DriverMotoMarkerUI = () => (
+  <div style={{
+    width: 44, height: 44, background: '#194B4B', border: '3px solid #ffffff', borderRadius: '50%',
+    boxShadow: '0 8px 20px rgba(25, 75, 75, 0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#FACC15'
+  }}>
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="15" cy="5" r="1"/><path d="M12 17.5V14l-3-3 4-3 2 3h2"/>
+    </svg>
+  </div>
+);
 
-// Destination Pin (Patient)
-const destPinLeafletIcon = L.divIcon({
-  className: 'custom-patient-dest-marker',
-  html: `
-    <div style="
-      width: 38px;
-      height: 38px;
-      background: #ea580c;
-      border: 3px solid #ffffff;
-      border-radius: 50%;
-      box-shadow: 0 6px 18px rgba(234, 88, 12, 0.45);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    ">
-      <div style="
-        width: 12px;
-        height: 12px;
-        background: #ffffff;
-        border-radius: 50%;
-      "></div>
-    </div>
-  `,
-  iconSize: [38, 38],
-  iconAnchor: [19, 19]
-});
+const DestPinMarkerUI = () => (
+  <div style={{
+    width: 38, height: 38, background: '#ea580c', border: '3px solid #ffffff', borderRadius: '50%',
+    boxShadow: '0 6px 18px rgba(234, 88, 12, 0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center'
+  }}>
+    <div style={{ width: 12, height: 12, background: '#ffffff', borderRadius: '50%' }}></div>
+  </div>
+);
 
-// Pharmacy Pin
-const pharmacyLeafletIcon = L.divIcon({
-  className: 'custom-pharma-marker',
-  html: `
-    <div style="
-      width: 38px;
-      height: 38px;
-      background: #194B4B;
-      border: 3px solid #ffffff;
-      border-radius: 50%;
-      box-shadow: 0 6px 18px rgba(25, 75, 75, 0.45);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #ffffff;
-    ">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/>
-        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
-        <path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/>
-        <path d="M2 7h20"/>
-      </svg>
-    </div>
-  `,
-  iconSize: [38, 38],
-  iconAnchor: [19, 19]
-});
+const PharmacyMarkerUI = () => (
+  <div style={{
+    width: 38, height: 38, background: '#194B4B', border: '3px solid #ffffff', borderRadius: '50%',
+    boxShadow: '0 6px 18px rgba(25, 75, 75, 0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ffffff'
+  }}>
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/>
+      <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+      <path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/>
+      <path d="M2 7h20"/>
+    </svg>
+  </div>
+);
 
-// Component to auto recenter map
 function MapAutoCenter({ center }: { center: [number, number] }) {
   const map = useMap();
   useEffect(() => {
-    map.setView(center, map.getZoom(), { animate: true });
+    if (map) {
+      map.panTo({ lat: center[0], lng: center[1] });
+    }
   }, [center, map]);
   return null;
 }
@@ -127,6 +80,9 @@ export function PatientTracking() {
   
   // Rating states
   const [showRatingModal, setShowRatingModal] = useState(false);
+  const [showProductRatingModal, setShowProductRatingModal] = useState(false);
+  const [productRatings, setProductRatings] = useState<Record<string, { rating: number, comment: string }>>({});
+  const [hasPromptedRating, setHasPromptedRating] = useState(false);
   const [ratingScore, setRatingScore] = useState(5);
   const [ratingHover, setRatingHover] = useState<number | null>(null);
   const [ratingComment, setRatingComment] = useState("");
@@ -382,7 +338,7 @@ export function PatientTracking() {
   if (loading) {
     return (
       <div className="flex-1 bg-white dark:bg-zinc-950 flex flex-col items-center justify-center p-6 text-center">
-        <RefreshCw className="w-8 h-8 text-[#194B4B] animate-spin mb-3" />
+        <RefreshCw className="w-8 h-8 text-[var(--app-primary-color)] animate-spin mb-3" />
         <p className="text-sm font-bold text-gray-700 dark:text-gray-300">Chargement des informations de suivi...</p>
       </div>
     );
@@ -394,7 +350,7 @@ export function PatientTracking() {
         <AlertCircle className="w-12 h-12 text-amber-500" />
         <h2 className="text-lg font-bold text-gray-900 dark:text-white">Commande introuvable</h2>
         <p className="text-xs text-gray-500 max-w-xs">Cette commande n'existe pas ou vous n'avez pas l'autorisation d'y accéder.</p>
-        <button onClick={() => navigate('/patient/orders')} className="px-5 py-2.5 bg-[#194B4B] text-white text-xs font-bold rounded-full">
+        <button onClick={() => navigate('/patient/orders')} className="px-5 py-2.5 bg-[var(--app-primary-color)] text-white text-xs font-bold rounded-full">
           Retour aux commandes
         </button>
       </div>
@@ -416,17 +372,17 @@ export function PatientTracking() {
         <button 
           id="btn-back-patient"
           onClick={() => navigate('/patient/orders')} 
-          className="w-11 h-11 flex items-center justify-center bg-white/95 dark:bg-zinc-900/95 backdrop-blur-md rounded-full shadow-md text-gray-800 dark:text-white hover:bg-white transition active:scale-95"
+          className="w-11 h-11 flex items-center justify-center bg-white dark:bg-zinc-950/95 dark:bg-zinc-900/95 backdrop-blur-md rounded-full shadow-md text-gray-800 dark:text-white hover:bg-white dark:bg-zinc-950 transition active:scale-95"
         >
           <ArrowLeft size={20} />
         </button>
         
-        <div className="bg-white/95 dark:bg-zinc-900/95 backdrop-blur-md px-4 py-1.5 rounded-full shadow-md border border-gray-100 dark:border-zinc-800 flex items-center gap-2">
+        <div className="bg-white dark:bg-zinc-950/95 dark:bg-zinc-900/95 backdrop-blur-md px-4 py-1.5 rounded-full shadow-md border border-gray-100 dark:border-zinc-800 flex items-center gap-2">
           <span className={`w-2.5 h-2.5 rounded-full ${
             order?.status === 'delivered' ? 'bg-emerald-500' :
             shouldShowWaitingScreen ? 'bg-amber-400 animate-pulse' : 'bg-emerald-500 animate-pulse'
           }`}></span>
-          <span className="text-xs font-black tracking-wide text-[#194B4B] dark:text-teal-300 uppercase">
+          <span className="text-xs font-black tracking-wide text-[var(--app-primary-color)] dark:text-teal-300 uppercase">
             {order?.status === 'delivered' ? 'Livraison effectuée' : 
              isPickup ? 'Retrait Officine' : 
              shouldShowWaitingScreen ? 'En attente pharmacie' : 'Livraison en direct'}
@@ -436,7 +392,7 @@ export function PatientTracking() {
         <button 
           id="btn-open-details-top"
           onClick={() => setShowDetailsDrawer(true)}
-          className="w-11 h-11 flex items-center justify-center bg-white/95 dark:bg-zinc-900/95 backdrop-blur-md rounded-full shadow-md text-gray-800 dark:text-white hover:bg-white transition active:scale-95"
+          className="w-11 h-11 flex items-center justify-center bg-white dark:bg-zinc-950/95 dark:bg-zinc-900/95 backdrop-blur-md rounded-full shadow-md text-gray-800 dark:text-white hover:bg-white dark:bg-zinc-950 transition active:scale-95"
           title="Détails de la commande"
         >
           <FileText size={18} />
@@ -452,7 +408,7 @@ export function PatientTracking() {
             
             {/* Header d'attente */}
             <div className="bg-white dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800 p-6 rounded-3xl text-center space-y-4 shadow-sm">
-              <div className="w-16 h-16 bg-[#194B4B]/10 text-[#194B4B] dark:text-teal-300 rounded-full flex items-center justify-center mx-auto relative">
+              <div className="w-16 h-16 bg-[var(--app-primary-color)]/10 text-[var(--app-primary-color)] dark:text-teal-300 rounded-full flex items-center justify-center mx-auto relative">
                 <Clock size={32} className="animate-spin" style={{ animationDuration: '6s' }} />
                 <span className="absolute -top-1 -right-1 w-4 h-4 bg-amber-400 rounded-full border-2 border-white dark:border-zinc-900"></span>
               </div>
@@ -473,7 +429,7 @@ export function PatientTracking() {
               {pharmacy && (
                 <div className="bg-gray-50 dark:bg-zinc-800/60 p-3.5 rounded-2xl border border-gray-100 dark:border-zinc-800 flex items-center justify-between text-left">
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-xl bg-[#194B4B] text-white flex items-center justify-center font-bold">
+                    <div className="w-9 h-9 rounded-xl bg-[var(--app-primary-color)] text-white flex items-center justify-center font-bold">
                       <Store size={18} />
                     </div>
                     <div>
@@ -543,12 +499,12 @@ export function PatientTracking() {
                 onClick={() => setShowDetailsDrawer(true)}
                 className="flex-1 py-3.5 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 text-gray-800 dark:text-gray-200 rounded-2xl text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition active:scale-95"
               >
-                <ShoppingBag size={16} className="text-[#194B4B]" /> Détails commande
+                <ShoppingBag size={16} className="text-[var(--app-primary-color)]" /> Détails commande
               </button>
 
               <button
                 onClick={() => navigate(`/patient/messages/${order.id}`)}
-                className="flex-1 py-3.5 bg-[#194B4B] text-white rounded-2xl text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition active:scale-95"
+                className="flex-1 py-3.5 bg-[var(--app-primary-color)] text-white rounded-2xl text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition active:scale-95"
               >
                 <MessageSquare size={16} /> Contacter pharmacie
               </button>
@@ -560,49 +516,53 @@ export function PatientTracking() {
              VUE 2 : SUIVI GPS EN DIRECT AVEC LE VRAI LIVREUR ASSIGNÉ
              ========================================================================= */
           <div className="w-full h-full">
-            <MapContainer
-              center={driverPos || destPos}
-              zoom={15}
-              zoomControl={false}
+            <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
+            <Map
+              mapId="DEMO_MAP_ID"
+              defaultCenter={{ lat: (driverPos || destPos)[0], lng: (driverPos || destPos)[1] }}
+              defaultZoom={15}
+              gestureHandling="greedy"
+              disableDefaultUI={true}
               className="w-full h-full"
               style={{ width: '100%', height: '100%' }}
+              internalUsageAttributionIds={["gmp_mcp_codeassist_v1_aistudio"]}
             >
-              <TileLayer
-                url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
-                maxZoom={19}
-              />
               <MapAutoCenter center={driverPos || destPos} />
               
               {/* Driver Marker */}
               {driverPos && (
-                <Marker position={driverPos} icon={driverMotoLeafletIcon} />
+                <AdvancedMarker position={{ lat: driverPos[0], lng: driverPos[1] }}>
+                  <DriverMotoMarkerUI />
+                </AdvancedMarker>
               )}
 
               {/* Destination Marker */}
-              <Marker position={destPos} icon={destPinLeafletIcon} />
+              <AdvancedMarker position={{ lat: destPos[0], lng: destPos[1] }}>
+                <DestPinMarkerUI />
+              </AdvancedMarker>
 
               {/* Polyline Route */}
               {driverPos && (
                 <Polyline 
-                  positions={roadCoordinates.length > 0 ? roadCoordinates : [driverPos, destPos]} 
-                  color="#194B4B" 
-                  weight={5} 
-                  opacity={0.9} 
-                  dashArray="4, 8" 
+                  path={(roadCoordinates.length > 0 ? roadCoordinates : [driverPos, destPos]).map((c: any) => ({lat: c[0], lng: c[1]}))} 
+                  strokeColor="#194B4B" 
+                  strokeWeight={5} 
+                  strokeOpacity={0.9} 
                 />
               )}
-            </MapContainer>
+            </Map>
+            </APIProvider>
           </div>
         ) : (
           /* =========================================================================
              VUE 3 : MODE RETRAIT EN OFFICINE
              ========================================================================= */
           <div className="w-full h-full bg-slate-50 dark:bg-zinc-950 p-6 pt-24 overflow-y-auto space-y-4">
-            <div className="bg-[#194B4B]/10 border border-[#194B4B]/20 p-6 rounded-3xl text-center space-y-3">
-              <div className="w-14 h-14 bg-[#194B4B] text-white rounded-2xl flex items-center justify-center mx-auto shadow-sm">
+            <div className="bg-[var(--app-primary-color)]/10 border border-[var(--app-primary-color)]/20 p-6 rounded-3xl text-center space-y-3">
+              <div className="w-14 h-14 bg-[var(--app-primary-color)] text-white rounded-2xl flex items-center justify-center mx-auto shadow-sm">
                 <Store size={28} />
               </div>
-              <h2 className="text-xl font-black text-[#194B4B] dark:text-teal-300">Retrait en Pharmacie</h2>
+              <h2 className="text-xl font-black text-[var(--app-primary-color)] dark:text-teal-300">Retrait en Pharmacie</h2>
               <p className="text-xs text-gray-600 dark:text-gray-300 max-w-xs mx-auto">
                 Vos médicaments sont préparés et scellés par l'officine partenaire certifiée.
               </p>
@@ -614,7 +574,7 @@ export function PatientTracking() {
                   <div>
                     <h3 className="font-bold text-gray-900 dark:text-white text-base">{pharmacy.name || 'Pharmacie Partenaire'}</h3>
                     <p className="text-xs text-gray-500 mt-1 flex items-center gap-1">
-                      <MapPin size={13} className="text-[#194B4B]" />
+                      <MapPin size={13} className="text-[var(--app-primary-color)]" />
                       {pharmacy.address || 'Adresse de retrait'}
                     </p>
                   </div>
@@ -633,7 +593,7 @@ export function PatientTracking() {
                     href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(pharmacy.address || '')}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 py-2.5 bg-[#194B4B] text-white rounded-xl text-xs font-bold flex items-center justify-center gap-2"
+                    className="flex-1 py-2.5 bg-[var(--app-primary-color)] text-white rounded-xl text-xs font-bold flex items-center justify-center gap-2"
                   >
                     <Navigation size={14} /> Itinéraire
                   </a>
@@ -674,7 +634,7 @@ export function PatientTracking() {
                 </div>
                 {/* Type de véhicule */}
                 <div className="flex items-center gap-1 text-[11px] font-bold text-gray-400 mt-1">
-                  <Bike size={14} className="text-[#194B4B] dark:text-teal-400" />
+                  <Bike size={14} className="text-[var(--app-primary-color)] dark:text-teal-400" />
                   <span className="text-[10px] uppercase">{vehicleTypeLabel}</span>
                 </div>
               </div>
@@ -693,7 +653,7 @@ export function PatientTracking() {
                     {driverPhoto ? (
                       <img src={driverPhoto} alt={driverName} className="w-full h-full object-cover" />
                     ) : (
-                      <div className="w-full h-full bg-[#194B4B]/15 text-[#194B4B] dark:text-teal-400 flex items-center justify-center font-black text-lg">
+                      <div className="w-full h-full bg-[var(--app-primary-color)]/15 text-[var(--app-primary-color)] dark:text-teal-400 flex items-center justify-center font-black text-lg">
                         {driverFirstName.charAt(0)}
                       </div>
                     )}
@@ -728,10 +688,10 @@ export function PatientTracking() {
                   <button
                     id="btn-contact-driver"
                     onClick={() => setShowContactModal(true)}
-                    className="w-14 h-14 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-gray-800 dark:text-white flex items-center justify-center shadow-sm transition active:scale-95"
+                    className="w-14 h-14 rounded-full bg-gray-100 dark:bg-zinc-800 hover:bg-gray-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-gray-800 dark:text-white flex items-center justify-center shadow-sm transition active:scale-95"
                     title="Contacter le livreur"
                   >
-                    <Phone size={22} className="text-[#194B4B] dark:text-teal-300" />
+                    <Phone size={22} className="text-[var(--app-primary-color)] dark:text-teal-300" />
                   </button>
                   <span className="text-[11px] font-bold text-gray-600 dark:text-gray-300 mt-1.5">
                     Contact
@@ -744,7 +704,7 @@ export function PatientTracking() {
                 <button
                   id="btn-details-drawer"
                   onClick={() => setShowDetailsDrawer(true)}
-                  className="w-14 h-14 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-gray-800 dark:text-white flex items-center justify-center shadow-sm transition active:scale-95"
+                  className="w-14 h-14 rounded-full bg-gray-100 dark:bg-zinc-800 hover:bg-gray-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-gray-800 dark:text-white flex items-center justify-center shadow-sm transition active:scale-95"
                   title="Afficher les détails de la commande"
                 >
                   <div className="flex flex-col gap-1 items-center justify-center">
@@ -770,7 +730,7 @@ export function PatientTracking() {
           <div className="bg-white dark:bg-zinc-900 w-full max-w-sm rounded-[24px] p-6 shadow-2xl space-y-4 border border-gray-100 dark:border-zinc-800">
             <div className="flex items-center justify-between border-b border-gray-100 dark:border-zinc-800 pb-3">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-gray-100 dark:bg-zinc-800 overflow-hidden flex items-center justify-center font-bold text-[#194B4B]">
+                <div className="w-10 h-10 rounded-full bg-gray-100 dark:bg-zinc-800 overflow-hidden flex items-center justify-center font-bold text-[var(--app-primary-color)]">
                   {driverPhoto ? <img src={driverPhoto} alt={driverName} className="w-full h-full object-cover" /> : driverFirstName.charAt(0)}
                 </div>
                 <div>
@@ -787,7 +747,7 @@ export function PatientTracking() {
               {driverPhone && (
                 <a
                   href={`tel:${driverPhone}`}
-                  className="w-full py-3.5 px-4 bg-[#194B4B] hover:bg-[#143d3d] text-white rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-sm transition"
+                  className="w-full py-3.5 px-4 bg-[var(--app-primary-color)] hover:bg-[#143d3d] text-white rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-sm transition"
                 >
                   <PhoneCall size={18} />
                   Appeler ({driverPhone})
@@ -799,9 +759,9 @@ export function PatientTracking() {
                   setShowContactModal(false);
                   navigate(`/patient/messages/${order?.id}`);
                 }}
-                className="w-full py-3.5 px-4 bg-gray-100 hover:bg-gray-200 dark:bg-zinc-800 text-gray-800 dark:text-gray-200 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition"
+                className="w-full py-3.5 px-4 bg-gray-100 dark:bg-zinc-800 hover:bg-gray-200 dark:bg-zinc-800 text-gray-800 dark:text-gray-200 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition"
               >
-                <MessageSquare size={18} className="text-[#194B4B] dark:text-teal-300" />
+                <MessageSquare size={18} className="text-[var(--app-primary-color)] dark:text-teal-300" />
                 Message dans l'application
               </button>
             </div>
@@ -817,14 +777,14 @@ export function PatientTracking() {
             {/* Drawer Header */}
             <div className="p-5 pb-3 border-b border-gray-100 dark:border-zinc-800 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-[#194B4B] dark:bg-teal-400"></div>
+                <div className="w-2 h-2 rounded-full bg-[var(--app-primary-color)] dark:bg-teal-400"></div>
                 <h3 className="font-extrabold text-gray-900 dark:text-white text-base">
                   Suivi de Commande #{order?.id?.slice(0, 8) || id?.slice(0, 8)}
                 </h3>
               </div>
               <button 
                 onClick={() => setShowDetailsDrawer(false)}
-                className="w-8 h-8 rounded-full bg-gray-100 dark:bg-zinc-800 flex items-center justify-center text-gray-500 hover:text-gray-800"
+                className="w-8 h-8 rounded-full bg-gray-100 dark:bg-zinc-800 flex items-center justify-center text-gray-500 hover:text-gray-800 dark:text-gray-100"
               >
                 <X size={18} />
               </button>
@@ -868,7 +828,7 @@ export function PatientTracking() {
                     return (
                       <div key={index} className="flex items-start gap-4 relative z-10">
                         <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 border-2 border-white dark:border-zinc-900 shadow-sm ${
-                          status.completed ? 'bg-[#194B4B] text-white' : 
+                          status.completed ? 'bg-[var(--app-primary-color)] text-white' : 
                           status.active ? 'bg-amber-100 text-amber-700 border-amber-300 animate-pulse' : 'bg-gray-100 dark:bg-zinc-800 text-gray-400'
                         }`}>
                           <Icon size={14} />
@@ -906,7 +866,7 @@ export function PatientTracking() {
                     ))}
                     <div className="pt-2 mt-2 border-t border-gray-200 dark:border-zinc-700 flex justify-between items-center text-sm">
                       <span className="font-black text-gray-900 dark:text-white">Total réglé</span>
-                      <span className="font-black text-[#194B4B] dark:text-teal-300 text-base">
+                      <span className="font-black text-[var(--app-primary-color)] dark:text-teal-300 text-base">
                         {formatCurrency(Number(order.total || 0))}
                       </span>
                     </div>
@@ -921,9 +881,9 @@ export function PatientTracking() {
                     setShowDetailsDrawer(false);
                     setShowInvoiceModal(true);
                   }}
-                  className="w-full py-3.5 bg-gray-100 hover:bg-gray-200 dark:bg-zinc-800 text-gray-900 dark:text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition"
+                  className="w-full py-3.5 bg-gray-100 dark:bg-zinc-800 hover:bg-gray-200 dark:bg-zinc-800 text-gray-900 dark:text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition"
                 >
-                  <FileText size={16} className="text-[#194B4B]" />
+                  <FileText size={16} className="text-[var(--app-primary-color)]" />
                   Afficher / Télécharger la Facture Officielle
                 </button>
               </div>
@@ -942,6 +902,74 @@ export function PatientTracking() {
         />
       )}
 
+      
+      {/* MODAL DE NOTATION DES PRODUITS */}
+      {showProductRatingModal && (
+        <div className="fixed inset-0 z-[60] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-150">
+          <div className="bg-white dark:bg-zinc-900 w-full max-w-md rounded-3xl p-6 shadow-2xl space-y-5 border border-gray-100 dark:border-zinc-800 max-h-[92vh] overflow-y-auto">
+            <div className="flex items-center justify-between border-b border-gray-100 dark:border-zinc-800 pb-3.5">
+              <div>
+                <h3 className="font-extrabold text-gray-900 dark:text-white text-base">
+                  Notez vos produits
+                </h3>
+                <p className="text-xs text-gray-500">
+                  Votre avis est précieux pour les autres patients
+                </p>
+              </div>
+              <button 
+                onClick={() => {
+                  setShowProductRatingModal(false);
+                  if (driver) setTimeout(() => setShowRatingModal(true), 500);
+                }}
+                className="w-8 h-8 rounded-full bg-gray-100 dark:bg-zinc-800 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 flex items-center justify-center"
+              >✕</button>
+            </div>
+
+            <div className="space-y-4">
+              {order?.items?.map((item: any) => (
+                <div key={item.id} className="border border-gray-100 dark:border-zinc-800 p-3 rounded-2xl">
+                  <p className="font-bold text-sm text-gray-800 dark:text-white mb-2">{item.name || item.commercial_name}</p>
+                  
+                  <div className="flex justify-center gap-1 mb-3">
+                    {[1, 2, 3, 4, 5].map((star) => {
+                       const currentRating = productRatings[item.id]?.rating || 5;
+                       return (
+                         <button
+                           key={star}
+                           type="button"
+                           onClick={() => setProductRatings(prev => ({...prev, [item.id]: { ...prev[item.id], rating: star }}))}
+                           className="p-1 focus:outline-none"
+                         >
+                           <Star size={24} className={currentRating >= star ? "fill-[#FACC15] text-[#FACC15]" : "text-gray-300 dark:text-zinc-700"} />
+                         </button>
+                       );
+                    })}
+                  </div>
+                  
+                  <textarea
+                    placeholder="Qu'avez-vous pensé de ce produit ?"
+                    className="w-full bg-gray-50 dark:bg-zinc-800/50 border border-gray-200 dark:border-zinc-700 rounded-xl p-3 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none resize-none placeholder-gray-400 text-gray-800 dark:text-white"
+                    rows={2}
+                    value={productRatings[item.id]?.comment || ''}
+                    onChange={(e) => setProductRatings(prev => ({...prev, [item.id]: { ...prev[item.id], comment: e.target.value }}))}
+                  ></textarea>
+                </div>
+              ))}
+            </div>
+
+            <button
+              disabled={loadingRatings}
+              onClick={submitProductRatings}
+              className="w-full py-3.5 bg-[var(--app-primary-color)] hover:opacity-90 text-white rounded-2xl font-black text-sm flex items-center justify-center gap-2 shadow-lg transition disabled:opacity-50"
+            >
+              {loadingRatings ? <Loader2 size={18} className="animate-spin" /> : <ThumbsUp size={18} />}
+              {loadingRatings ? "Envoi en cours..." : "Soumettre les avis"}
+            </button>
+          </div>
+        </div>
+      )}
+
+
       {/* MODAL DE NOTATION & CONFIRMATION DE LIVRAISON */}
       {showRatingModal && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-150">
@@ -950,7 +978,7 @@ export function PatientTracking() {
             {/* Header */}
             <div className="flex items-center justify-between border-b border-gray-100 dark:border-zinc-800 pb-3.5">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-100 dark:bg-zinc-800 border-2 border-[#194B4B]/20 flex items-center justify-center font-black text-lg text-[#194B4B]">
+                <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-100 dark:bg-zinc-800 border-2 border-[var(--app-primary-color)]/20 flex items-center justify-center font-black text-lg text-[var(--app-primary-color)]">
                   {driverPhoto ? (
                     <img src={driverPhoto} alt={driverName} className="w-full h-full object-cover" />
                   ) : (
@@ -996,7 +1024,7 @@ export function PatientTracking() {
                   );
                 })}
               </div>
-              <div className="text-xs font-black text-[#194B4B] dark:text-teal-400 tracking-wide uppercase">
+              <div className="text-xs font-black text-[var(--app-primary-color)] dark:text-teal-400 tracking-wide uppercase">
                 {ratingScore === 5 && "⭐ Service Exceptionnel & Parfait"}
                 {ratingScore === 4 && "⭐ Très bonne livraison"}
                 {ratingScore === 3 && "⭐ Service Correct"}
@@ -1027,8 +1055,8 @@ export function PatientTracking() {
                       onClick={() => toggleRatingTag(tag)}
                       className={`px-3 py-1.5 rounded-full text-xs font-bold transition border ${
                         isSelected 
-                          ? "bg-[#194B4B] text-white border-[#194B4B]" 
-                          : "bg-gray-50 dark:bg-zinc-800 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-zinc-700 hover:bg-gray-100"
+                          ? "bg-[var(--app-primary-color)] text-white border-[var(--app-primary-color)]" 
+                          : "bg-gray-50 dark:bg-zinc-800 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-zinc-700 hover:bg-gray-100 dark:bg-zinc-800"
                       }`}
                     >
                       {tag}
@@ -1087,7 +1115,7 @@ export function PatientTracking() {
                 type="button"
                 onClick={handleSubmitDriverRating}
                 disabled={isSubmittingRating}
-                className="w-full py-3.5 bg-[#194B4B] hover:bg-[#143d3d] text-white rounded-2xl font-bold text-sm shadow-md transition active:scale-98 flex items-center justify-center gap-2 disabled:opacity-50"
+                className="w-full py-3.5 bg-[var(--app-primary-color)] hover:bg-[#143d3d] text-white rounded-2xl font-bold text-sm shadow-md transition active:scale-98 flex items-center justify-center gap-2 disabled:opacity-50"
               >
                 {isSubmittingRating ? (
                   <RefreshCw size={18} className="animate-spin" />

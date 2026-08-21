@@ -87,7 +87,7 @@ export function AdminOrders() {
                             const dateStr = parseDate(o.createdAt) ? parseDate(o.createdAt)!.toLocaleString() : "Unknown";
                             return (
                                <tr key={o.id} className="hover:bg-slate-50 transition-colors">
-                                  <td className="py-4 px-6 font-mono font-medium text-indigo-600 block">
+                                  <td className="py-4 px-6 font-mono font-medium text-[var(--app-primary-color)] block">
                                      #{o.id.slice(0, 8)}...
                                   </td>
                                   <td className="py-4 px-6 text-slate-500">
@@ -102,7 +102,7 @@ export function AdminOrders() {
                                      {getStatusBadge(o.status)}
                                   </td>
                                   <td className="py-4 px-6 text-right">
-                                     <button className="text-slate-400 hover:text-indigo-600 p-1.5 transition">
+                                     <button className="text-slate-400 hover:text-[var(--app-primary-color)] p-1.5 transition">
                                         <ExternalLink size={18} />
                                      </button>
                                   </td>

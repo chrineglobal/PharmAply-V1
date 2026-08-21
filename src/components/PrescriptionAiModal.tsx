@@ -74,7 +74,7 @@ export const PrescriptionAiModal: React.FC<PrescriptionAiModalProps> = ({
         {/* Header */}
         <div className="px-6 py-4 bg-gradient-to-r from-[#194B4B] to-[#0f2e2e] text-white flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-white/10 flex items-center justify-center backdrop-blur-md">
+            <div className="w-10 h-10 rounded-2xl bg-white dark:bg-zinc-950/10 flex items-center justify-center backdrop-blur-md">
               <ShieldCheck className="text-yellow-400" size={24} />
             </div>
             <div>
@@ -82,7 +82,7 @@ export const PrescriptionAiModal: React.FC<PrescriptionAiModalProps> = ({
               <p className="text-xs text-emerald-200">Validation pharmaceutique & contrôle des substances réglementées</p>
             </div>
           </div>
-          <button onClick={onClose} className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors">
+          <button onClick={onClose} className="w-8 h-8 rounded-full bg-white dark:bg-zinc-950/10 hover:bg-white dark:bg-zinc-950/20 flex items-center justify-center text-white transition-colors">
             <X size={18} />
           </button>
         </div>
@@ -141,7 +141,7 @@ export const PrescriptionAiModal: React.FC<PrescriptionAiModalProps> = ({
             <div className="lg:col-span-8 space-y-4">
               <div className="flex items-center justify-between">
                 <h3 className="font-bold text-gray-900 dark:text-white text-sm flex items-center gap-2">
-                  <Pill size={16} className="text-[#194B4B] dark:text-teal-400" />
+                  <Pill size={16} className="text-[var(--app-primary-color)] dark:text-teal-400" />
                   Médicaments Détectés & Classifications DPML
                 </h3>
                 <span className="text-xs text-gray-500">
@@ -164,7 +164,7 @@ export const PrescriptionAiModal: React.FC<PrescriptionAiModalProps> = ({
                       </div>
 
                       {med.frequency && (
-                        <div className="text-xs text-indigo-900 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/40 p-2 rounded-xl">
+                        <div className="text-xs text-[var(--app-primary-color)] dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/40 p-2 rounded-xl">
                           <strong>Posologie :</strong> {med.frequency} {med.duration ? `(${med.duration})` : ''}
                         </div>
                       )}
@@ -203,7 +203,7 @@ export const PrescriptionAiModal: React.FC<PrescriptionAiModalProps> = ({
         <div className="px-6 py-4 bg-gray-50 dark:bg-zinc-800/80 border-t border-gray-100 dark:border-zinc-800 flex items-center justify-between shrink-0">
           <button
             onClick={onClose}
-            className="px-5 py-2.5 rounded-xl border border-gray-300 dark:border-zinc-700 text-gray-700 dark:text-gray-300 text-xs font-bold hover:bg-gray-100 dark:hover:bg-zinc-700 transition"
+            className="px-5 py-2.5 rounded-xl border border-gray-300 dark:border-zinc-700 text-gray-700 dark:text-gray-300 text-xs font-bold hover:bg-gray-100 dark:bg-zinc-800 dark:hover:bg-zinc-700 transition"
           >
             Fermer
           </button>
@@ -222,7 +222,7 @@ export const PrescriptionAiModal: React.FC<PrescriptionAiModalProps> = ({
               <button
                 disabled={isProcessing}
                 onClick={onApprove}
-                className="px-6 py-2.5 rounded-xl bg-[#194B4B] hover:bg-[#123838] text-white text-xs font-bold transition shadow-sm disabled:opacity-50 flex items-center gap-2"
+                className="px-6 py-2.5 rounded-xl bg-[var(--app-primary-color)] hover:bg-[#123838] text-white text-xs font-bold transition shadow-sm disabled:opacity-50 flex items-center gap-2"
               >
                 <CheckCircle2 size={16} />
                 Valider & Approuver la délivrance

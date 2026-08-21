@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import toast from 'react-hot-toast';
 import { supabase } from '../../lib/supabase';
 import { collection, onSnapshot, query, db } from '../../lib/firebase';
-import { MapContainer, TileLayer, Marker, Polyline, useMap as useLeafletMap, Tooltip } from 'react-leaflet';
-import L from 'leaflet';
+import { APIProvider, Map, AdvancedMarker, useMap } from '@vis.gl/react-google-maps';
+import { Polyline } from '../../components/Polyline';
 import { 
   ExternalLink, ShieldAlert, Navigation, Clock, Truck, CheckCircle2, 
   ChevronRight, AlertTriangle, Monitor, Bike, Store, User, MapPin, 
@@ -66,102 +66,54 @@ interface DriverStatus {
   color: string;
 }
 
-// Leaflet Map Marker Generators
-const createDriverIcon = (color: string, isAlert: boolean) => {
-  return L.divIcon({
-    className: 'custom-admin-driver-marker',
-    html: `
-      <div style="
-        position: relative;
-        width: 44px;
-        height: 44px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      ">
-        ${isAlert ? '<div style="position: absolute; inset: -4px; border-radius: 50%; background: rgba(239, 68, 68, 0.4); animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;"></div>' : ''}
-        <div style="
-          width: 40px;
-          height: 40px;
-          background: ${color};
-          border: 3px solid #ffffff;
-          border-radius: 50%;
-          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: #ffffff;
-        ">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="18.5" cy="17.5" r="3.5"/>
-            <circle cx="5.5" cy="17.5" r="3.5"/>
-            <circle cx="15" cy="5" r="1"/>
-            <path d="M12 17.5V14l-3-3 4-3 2 3h2"/>
-          </svg>
-        </div>
-      </div>
-    `,
-    iconSize: [44, 44],
-    iconAnchor: [22, 22]
-  });
-};
-
-const pharmacyIcon = L.divIcon({
-  className: 'custom-admin-pharma-marker',
-  html: `
-    <div style="
-      width: 36px;
-      height: 36px;
-      background: #194B4B;
-      border: 2.5px solid #ffffff;
-      border-radius: 50%;
-      box-shadow: 0 6px 18px rgba(25, 75, 75, 0.45);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #ffffff;
-    ">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/>
-        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
-        <path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/>
-        <path d="M2 7h20"/>
+// Google Maps Custom Marker Components
+const DriverMarkerUI = ({ color, isAlert }: { color: string, isAlert: boolean }) => (
+  <div style={{
+    position: 'relative', width: 44, height: 44, display: 'flex', alignItems: 'center', justifyContent: 'center'
+  }}>
+    {isAlert && <div style={{ position: 'absolute', inset: -4, borderRadius: '50%', background: 'rgba(239, 68, 68, 0.4)', animation: 'ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite' }}></div>}
+    <div style={{
+      width: 40, height: 40, background: color, border: '3px solid #ffffff', borderRadius: '50%',
+      boxShadow: '0 8px 24px rgba(0, 0, 0, 0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ffffff'
+    }}>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="15" cy="5" r="1"/><path d="M12 17.5V14l-3-3 4-3 2 3h2"/>
       </svg>
     </div>
-  `,
-  iconSize: [36, 36],
-  iconAnchor: [18, 18]
-});
+  </div>
+);
 
-const patientIcon = L.divIcon({
-  className: 'custom-admin-patient-marker',
-  html: `
-    <div style="
-      width: 34px;
-      height: 34px;
-      background: #ea580c;
-      border: 2.5px solid #ffffff;
-      border-radius: 50%;
-      box-shadow: 0 6px 18px rgba(234, 88, 12, 0.45);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #ffffff;
-    ">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-        <circle cx="12" cy="7" r="4"/>
-      </svg>
-    </div>
-  `,
-  iconSize: [34, 34],
-  iconAnchor: [17, 17]
-});
+const PharmacyMarkerUI = () => (
+  <div style={{
+    width: 36, height: 36, background: '#194B4B', border: '2.5px solid #ffffff', borderRadius: '50%',
+    boxShadow: '0 6px 18px rgba(25, 75, 75, 0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ffffff'
+  }}>
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/>
+      <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+      <path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/>
+      <path d="M2 7h20"/>
+    </svg>
+  </div>
+);
 
-function LeafletMapAutoCenter({ center }: { center: [number, number] }) {
-  const map = useLeafletMap();
+const PatientMarkerUI = () => (
+  <div style={{
+    width: 34, height: 34, background: '#ea580c', border: '2.5px solid #ffffff', borderRadius: '50%',
+    boxShadow: '0 6px 18px rgba(234, 88, 12, 0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ffffff'
+  }}>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+    </svg>
+  </div>
+);
+
+function GoogleMapAutoCenter({ center }: { center: [number, number] }) {
+  const map = useMap();
   useEffect(() => {
-    map.setView(center, map.getZoom(), { animate: true });
+    if (map) {
+      map.panTo({ lat: center[0], lng: center[1] });
+    }
   }, [center, map]);
   return null;
 }
@@ -577,7 +529,7 @@ export function AdminLiveMap() {
             <p className="text-[10px] uppercase font-black tracking-wider text-gray-400">Flotte Active</p>
             <p className="text-xl font-extrabold text-gray-900 dark:text-white mt-0.5">{drivers.length}</p>
           </div>
-          <div className="w-10 h-10 rounded-xl bg-[#194B4B]/10 text-[#194B4B] dark:text-teal-400 flex items-center justify-center font-black">
+          <div className="w-10 h-10 rounded-xl bg-[var(--app-primary-color)]/10 text-[var(--app-primary-color)] dark:text-teal-400 flex items-center justify-center font-black">
             <Bike size={20} />
           </div>
         </div>
@@ -585,7 +537,7 @@ export function AdminLiveMap() {
         <div className="bg-white dark:bg-zinc-900 p-4 rounded-2xl border border-gray-100 dark:border-zinc-800 shadow-sm flex items-center justify-between">
           <div>
             <p className="text-[10px] uppercase font-black tracking-wider text-gray-400">En Livraison</p>
-            <p className="text-xl font-extrabold text-[#194B4B] dark:text-teal-400 mt-0.5">{deliveringDrivers.length}</p>
+            <p className="text-xl font-extrabold text-[var(--app-primary-color)] dark:text-teal-400 mt-0.5">{deliveringDrivers.length}</p>
           </div>
           <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center font-black">
             <Radio size={20} className="animate-pulse" />
@@ -620,109 +572,104 @@ export function AdminLiveMap() {
         
         {/* CENTER MAP CONTAINER */}
         <div className="flex-1 h-[45vh] lg:h-full relative z-0">
-          <MapContainer
-            center={activeMapCenter}
-            zoom={13}
-            zoomControl={true}
-            className="w-full h-full"
-            style={{ width: '100%', height: '100%' }}
-          >
-            <TileLayer
-              url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
-              maxZoom={19}
-            />
-            <LeafletMapAutoCenter center={activeMapCenter} />
+          <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
+            <Map
+              mapId="DEMO_MAP_ID"
+              defaultCenter={{ lat: activeMapCenter[0], lng: activeMapCenter[1] }}
+              defaultZoom={13}
+              gestureHandling="greedy"
+              disableDefaultUI={true}
+              className="w-full h-full"
+              style={{ width: '100%', height: '100%' }}
+              internalUsageAttributionIds={["gmp_mcp_codeassist_v1_aistudio"]}
+            >
+              <GoogleMapAutoCenter center={activeMapCenter} />
 
-            {/* DRIVER MARKERS */}
-            {driverStatuses.map(st => {
-              const pos: [number, number] | null = (st.driver.lat && st.driver.lng && !isNaN(Number(st.driver.lat)))
-                ? [Number(st.driver.lat), Number(st.driver.lng)]
-                : null;
+              {/* DRIVER MARKERS */}
+              {driverStatuses.map(st => {
+                const pos = (st.driver.lat && st.driver.lng && !isNaN(Number(st.driver.lat)))
+                  ? { lat: Number(st.driver.lat), lng: Number(st.driver.lng) }
+                  : null;
 
-              if (!pos) return null;
+                if (!pos) return null;
 
-              const isAlert = st.isStalled;
-              const markerIcon = createDriverIcon(st.color, isAlert);
+                const isAlert = st.isStalled;
 
-              // Associated Points
-              const pharmaPos: [number, number] | null = (st.order?.pharmacyLat && st.order?.pharmacyLng)
-                ? [Number(st.order.pharmacyLat), Number(st.order.pharmacyLng)]
-                : null;
+                // Associated Points
+                const pharmaPos = (st.order?.pharmacyLat && st.order?.pharmacyLng)
+                  ? { lat: Number(st.order.pharmacyLat), lng: Number(st.order.pharmacyLng) }
+                  : null;
 
-              const patientPos: [number, number] | null = (st.order?.destLat && st.order?.destLng)
-                ? [Number(st.order.destLat), Number(st.order.destLng)]
-                : null;
+                const patientPos = (st.order?.destLat && st.order?.destLng)
+                  ? { lat: Number(st.order.destLat), lng: Number(st.order.destLng) }
+                  : null;
 
-              return (
-                <React.Fragment key={st.driver.id}>
-                  <Marker 
-                    position={pos} 
-                    icon={markerIcon}
-                    eventHandlers={{
-                      click: () => setSelectedDriverId(st.driver.id)
-                    }}
-                  >
-                    <Tooltip direction="top" offset={[0, -20]} opacity={0.95}>
-                      <div className="p-1 text-center font-sans">
-                        <p className="font-bold text-xs text-gray-900">{st.driver.name}</p>
-                        <p className="text-[10px] text-gray-500 font-bold uppercase mt-0.5">
-                          {st.state === 'idle' ? 'En attente' : st.state === 'en_route_to_pharmacy' ? 'Vers Pharmacie' : 'Vers Patient'}
-                        </p>
-                        {isAlert && <p className="text-[10px] text-red-600 font-bold">Immobilisé &gt; 5 min</p>}
-                      </div>
-                    </Tooltip>
-                  </Marker>
+                const pharmaPolylinePath = routesMap[`${st.driver.id}_pharma`]?.coordinates.map(c => ({lat: c[0], lng: c[1]})) || [pos, pharmaPos];
+                const patientPolylinePath = routesMap[`${st.driver.id}_patient`]?.coordinates.map(c => ({lat: c[0], lng: c[1]})) || [pos, patientPos];
 
-                  {/* Road Network Route: Driver to Pharmacy */}
-                  {pharmaPos && (st.state === 'en_route_to_pharmacy' || selectedDriverId === st.driver.id) && (
-                    <>
-                      <Marker position={pharmaPos} icon={pharmacyIcon} />
-                      <Polyline 
-                        positions={routesMap[`${st.driver.id}_pharma`]?.coordinates || [pos, pharmaPos]} 
-                        color="#f59e0b" 
-                        weight={selectedDriverId === st.driver.id ? 5 : 4} 
-                        opacity={0.85} 
-                        dashArray="6, 8"
-                      />
-                    </>
-                  )}
+                return (
+                  <React.Fragment key={st.driver.id}>
+                    <AdvancedMarker 
+                      position={pos} 
+                      onClick={() => setSelectedDriverId(st.driver.id)}
+                      title={st.driver.name}
+                    >
+                      <DriverMarkerUI color={st.color} isAlert={isAlert} />
+                    </AdvancedMarker>
 
-                  {/* Road Network Route: Driver to Patient */}
-                  {patientPos && (st.state === 'delivering' || selectedDriverId === st.driver.id) && (
-                    <>
-                      <Marker position={patientPos} icon={patientIcon} />
-                      <Polyline 
-                        positions={routesMap[`${st.driver.id}_patient`]?.coordinates || [pos, patientPos]} 
-                        color="#10b981" 
-                        weight={selectedDriverId === st.driver.id ? 5 : 4} 
-                        opacity={0.85} 
-                        dashArray="6, 8"
-                      />
-                    </>
-                  )}
-                </React.Fragment>
-              );
-            })}
-          </MapContainer>
+                    {/* Road Network Route: Driver to Pharmacy */}
+                    {pharmaPos && (st.state === 'en_route_to_pharmacy' || selectedDriverId === st.driver.id) && (
+                      <>
+                        <AdvancedMarker position={pharmaPos}>
+                           <PharmacyMarkerUI />
+                        </AdvancedMarker>
+                        <Polyline 
+                          path={pharmaPolylinePath} 
+                          strokeColor="#f59e0b" 
+                          strokeWeight={selectedDriverId === st.driver.id ? 5 : 4} 
+                          strokeOpacity={0.85} 
+                        />
+                      </>
+                    )}
+
+                    {/* Road Network Route: Driver to Patient */}
+                    {patientPos && (st.state === 'delivering' || selectedDriverId === st.driver.id) && (
+                      <>
+                        <AdvancedMarker position={patientPos}>
+                          <PatientMarkerUI />
+                        </AdvancedMarker>
+                        <Polyline 
+                          path={patientPolylinePath} 
+                          strokeColor="#10b981" 
+                          strokeWeight={selectedDriverId === st.driver.id ? 5 : 4} 
+                          strokeOpacity={0.85} 
+                        />
+                      </>
+                    )}
+                  </React.Fragment>
+                );
+              })}
+            </Map>
+          </APIProvider>
 
           {/* Floating Action Button (Refresh Data) */}
           <div className="absolute top-4 right-4 z-10 flex gap-2">
             <button
               onClick={() => fetchData()}
-              className="p-3 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-md rounded-2xl shadow-lg border border-gray-100 dark:border-zinc-800 text-gray-700 dark:text-gray-200 hover:bg-white transition active:scale-95"
+              className="p-3 bg-white dark:bg-zinc-950/95 dark:bg-zinc-900/95 backdrop-blur-md rounded-2xl shadow-lg border border-gray-100 dark:border-zinc-800 text-gray-700 dark:text-gray-200 hover:bg-white dark:bg-zinc-950 transition active:scale-95"
               title="Rafraîchir les données"
             >
-              <RefreshCw size={18} className={loading ? "animate-spin text-[#194B4B]" : ""} />
+              <RefreshCw size={18} className={loading ? "animate-spin text-[var(--app-primary-color)]" : ""} />
             </button>
           </div>
 
           {/* Floating Selected Driver Card */}
           {selectedDriver && (
             <div className="absolute bottom-4 left-4 right-4 sm:left-6 sm:right-auto sm:w-96 z-10 pointer-events-auto animate-in slide-in-from-bottom duration-200">
-              <div className="bg-white/95 dark:bg-zinc-900/95 backdrop-blur-md p-4 rounded-3xl border border-gray-100 dark:border-zinc-800 shadow-2xl space-y-3">
+              <div className="bg-white dark:bg-zinc-950/95 dark:bg-zinc-900/95 backdrop-blur-md p-4 rounded-3xl border border-gray-100 dark:border-zinc-800 shadow-2xl space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-[#194B4B] text-white flex items-center justify-center font-bold">
+                    <div className="w-10 h-10 rounded-full bg-[var(--app-primary-color)] text-white flex items-center justify-center font-bold">
                       {selectedDriver.driver.name.charAt(0)}
                     </div>
                     <div>
@@ -742,7 +689,7 @@ export function AdminLiveMap() {
                   <div className="bg-gray-50 dark:bg-zinc-800/60 p-3 rounded-2xl text-xs space-y-1.5 border border-gray-100 dark:border-zinc-800">
                     <div className="flex justify-between font-bold">
                       <span className="text-gray-500">Mission:</span>
-                      <span className="text-[#194B4B] dark:text-teal-300">#{selectedDriver.order.id.slice(0, 8).toUpperCase()}</span>
+                      <span className="text-[var(--app-primary-color)] dark:text-teal-300">#{selectedDriver.order.id.slice(0, 8).toUpperCase()}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-500">Patient:</span>
@@ -782,7 +729,7 @@ export function AdminLiveMap() {
                 {selectedDriver.driver.phone && (
                   <a
                     href={`tel:${selectedDriver.driver.phone}`}
-                    className="w-full py-2.5 bg-[#194B4B] text-white rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition"
+                    className="w-full py-2.5 bg-[var(--app-primary-color)] text-white rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition"
                   >
                     <Phone size={14} /> Contacter le livreur ({selectedDriver.driver.phone})
                   </a>
@@ -799,7 +746,7 @@ export function AdminLiveMap() {
           <div className="p-5 border-b border-gray-100 dark:border-zinc-800 flex items-center justify-between shrink-0">
             <div>
               <h3 className="font-extrabold text-base text-gray-900 dark:text-white flex items-center gap-2">
-                <ShieldAlert size={18} className="text-[#194B4B] dark:text-teal-400" />
+                <ShieldAlert size={18} className="text-[var(--app-primary-color)] dark:text-teal-400" />
                 Centre de Contrôle Live
               </h3>
               <p className="text-[11px] text-gray-500 mt-0.5">Supervision de la logistique temps réel</p>
@@ -809,13 +756,13 @@ export function AdminLiveMap() {
             <div className="flex bg-gray-100 dark:bg-zinc-800 p-1 rounded-xl gap-1 text-[11px] font-bold">
               <button
                 onClick={() => setSelectedFilter('all')}
-                className={`px-2.5 py-1 rounded-lg transition ${selectedFilter === 'all' ? 'bg-white dark:bg-zinc-900 text-[#194B4B] dark:text-teal-300 shadow-sm' : 'text-gray-500'}`}
+                className={`px-2.5 py-1 rounded-lg transition ${selectedFilter === 'all' ? 'bg-white dark:bg-zinc-900 text-[var(--app-primary-color)] dark:text-teal-300 shadow-sm' : 'text-gray-500'}`}
               >
                 Tous
               </button>
               <button
                 onClick={() => setSelectedFilter('delivering')}
-                className={`px-2.5 py-1 rounded-lg transition ${selectedFilter === 'delivering' ? 'bg-white dark:bg-zinc-900 text-[#194B4B] dark:text-teal-300 shadow-sm' : 'text-gray-500'}`}
+                className={`px-2.5 py-1 rounded-lg transition ${selectedFilter === 'delivering' ? 'bg-white dark:bg-zinc-900 text-[var(--app-primary-color)] dark:text-teal-300 shadow-sm' : 'text-gray-500'}`}
               >
                 Actifs
               </button>
@@ -868,7 +815,7 @@ export function AdminLiveMap() {
                   onClick={() => setSelectedDriverId(st.driver.id)}
                   className={`p-3.5 rounded-2xl border transition cursor-pointer flex items-center justify-between ${
                     selectedDriverId === st.driver.id
-                      ? 'border-[#194B4B] bg-[#194B4B]/5 dark:border-teal-500 dark:bg-teal-950/20'
+                      ? 'border-[var(--app-primary-color)] bg-[var(--app-primary-color)]/5 dark:border-teal-500 dark:bg-teal-950/20'
                       : 'border-gray-100 dark:border-zinc-800/80 bg-white dark:bg-zinc-900 hover:border-gray-300'
                   }`}
                 >

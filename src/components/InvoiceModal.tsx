@@ -34,7 +34,7 @@ export const InvoiceModal: React.FC<InvoiceModalProps> = ({ isOpen, onClose, ord
           <div className="flex items-center gap-2">
             <button
               onClick={() => printInvoice(order)}
-              className="flex items-center gap-2 px-4 py-2 bg-[#194B4B] hover:bg-[#123636] text-white rounded-xl text-xs font-bold transition shadow-sm touch-manipulation"
+              className="flex items-center gap-2 px-4 py-2 bg-[var(--app-primary-color)] hover:bg-[#123636] text-white rounded-xl text-xs font-bold transition shadow-sm touch-manipulation"
             >
               <Printer size={15} /> Imprimer / Télécharger (PDF)
             </button>
@@ -56,11 +56,11 @@ export const InvoiceModal: React.FC<InvoiceModalProps> = ({ isOpen, onClose, ord
 
             {/* Logo & Brand Header */}
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-11 h-11 bg-[#194B4B] rounded-xl flex items-center justify-center text-white font-black text-2xl shadow-sm">
+              <div className="w-11 h-11 bg-[var(--app-primary-color)] rounded-xl flex items-center justify-center text-white font-black text-2xl shadow-sm">
                 +
               </div>
               <div>
-                <h2 className="text-xl font-black text-[#194B4B] dark:text-teal-400 tracking-tight">PharmAply</h2>
+                <h2 className="text-xl font-black text-[var(--app-primary-color)] dark:text-teal-400 tracking-tight">PharmAply</h2>
                 <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Chrine Digital Agency Pharmacy</p>
               </div>
             </div>
@@ -89,7 +89,7 @@ export const InvoiceModal: React.FC<InvoiceModalProps> = ({ isOpen, onClose, ord
             <div className="overflow-x-auto mb-8">
               <table className="w-full text-xs text-left">
                 <thead>
-                  <tr className="bg-[#194B4B] text-white font-bold rounded-lg overflow-hidden">
+                  <tr className="bg-[var(--app-primary-color)] text-white font-bold rounded-lg overflow-hidden">
                     <th className="py-3 px-4 rounded-l-lg">Description du produit</th>
                     <th className="py-3 px-4 text-right">Prix unitaire</th>
                     <th className="py-3 px-4 text-center">Qté</th>
@@ -118,7 +118,7 @@ export const InvoiceModal: React.FC<InvoiceModalProps> = ({ isOpen, onClose, ord
                 </div>
                 <div>
                   <h4 className="font-bold text-gray-900 dark:text-white mb-1">Mode de Règlement :</h4>
-                  <p className="text-[11px] font-semibold text-[#194B4B] dark:text-teal-400">{order.paymentMethod || 'Fapshi (Mobile Money & Carte)'}</p>
+                  <p className="text-[11px] font-semibold text-[var(--app-primary-color)] dark:text-teal-400">{order.paymentMethod || 'Fapshi (Mobile Money & Carte)'}</p>
                 </div>
                 <div>
                   <h4 className="font-bold text-gray-900 dark:text-white mb-1">Une question ?</h4>
@@ -141,7 +141,7 @@ export const InvoiceModal: React.FC<InvoiceModalProps> = ({ isOpen, onClose, ord
                   <span>Frais de livraison :</span>
                   <span className="font-bold text-gray-900 dark:text-white">{formatCurrency(deliveryFee)}</span>
                 </div>
-                <div className="flex justify-between p-3 bg-[#194B4B] text-white rounded-xl font-bold text-sm mt-3 shadow-sm">
+                <div className="flex justify-between p-3 bg-[var(--app-primary-color)] text-white rounded-xl font-bold text-sm mt-3 shadow-sm">
                   <span>Total TTC :</span>
                   <span className="text-base font-black">{formatCurrency(grandTotal)}</span>
                 </div>

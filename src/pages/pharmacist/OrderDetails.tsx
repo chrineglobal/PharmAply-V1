@@ -14,77 +14,60 @@ import { formatCurrency, parseDate } from '../../lib/utils';
 import { printInvoice } from '../../lib/invoice';
 import { InvoiceModal } from '../../components/InvoiceModal';
 import { useTranslation } from "react-i18next";
-import { MapContainer, TileLayer, Marker, Polyline, Tooltip, useMap } from 'react-leaflet';
-import L from 'leaflet';
+import { APIProvider, Map, AdvancedMarker, useMap } from '@vis.gl/react-google-maps';
+import { Polyline } from '../../components/Polyline';
 
-// Custom Leaflet Icons
-const driverMotoLeafletIcon = L.divIcon({
-  className: 'custom-driver-moto-marker',
-  html: `
-    <div style="
-      width: 44px;
-      height: 44px;
-      background: #194B4B;
-      border: 3px solid #ffffff;
-      border-radius: 50%;
-      box-shadow: 0 8px 20px rgba(25, 75, 75, 0.45);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #FACC15;
-    ">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="18.5" cy="17.5" r="3.5"/>
-        <circle cx="5.5" cy="17.5" r="3.5"/>
-        <circle cx="15" cy="5" r="1"/>
-        <path d="M12 17.5V14l-3-3 4-3 2 3h2"/>
-      </svg>
-    </div>
-  `,
-  iconSize: [44, 44],
-  iconAnchor: [22, 22]
-});
+// Google Maps Custom Marker Components
+const DriverMotoMarkerUI = () => (
+  <div style={{
+    width: 44, height: 44, background: '#194B4B', border: '3px solid #ffffff', borderRadius: '50%',
+    boxShadow: '0 8px 20px rgba(25, 75, 75, 0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#FACC15'
+  }}>
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="15" cy="5" r="1"/><path d="M12 17.5V14l-3-3 4-3 2 3h2"/>
+    </svg>
+  </div>
+);
 
-const pharmacyLeafletIcon = L.divIcon({
-  className: 'custom-pharma-marker',
-  html: `
-    <div style="
-      width: 40px;
-      height: 40px;
-      background: #194B4B;
-      border: 3px solid #ffffff;
-      border-radius: 50%;
-      box-shadow: 0 6px 18px rgba(25, 75, 75, 0.45);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #ffffff;
-    ">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/>
-        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
-        <path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/>
-        <path d="M2 7h20"/>
-      </svg>
-    </div>
-  `,
-  iconSize: [40, 40],
-  iconAnchor: [20, 20]
-});
-
-// Map View Controller to fit bounds (Pharmacist only: Pharmacy <-> Driver)
+const PharmacyMarkerUI = () => (
+  <div style={{
+    width: 40, height: 40, background: '#194B4B', border: '3px solid #ffffff', borderRadius: '50%',
+    boxShadow: '0 6px 18px rgba(25, 75, 75, 0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ffffff'
+  }}>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/>
+      <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+      <path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/>
+      <path d="M2 7h20"/>
+    </svg>
+  </div>
+);
 function MapAutoBounds({ pharmacyPos, driverPos }: { pharmacyPos?: [number, number]; driverPos?: [number, number] }) {
   const map = useMap();
   useEffect(() => {
-    const points: [number, number][] = [];
-    if (pharmacyPos) points.push(pharmacyPos);
-    if (driverPos) points.push(driverPos);
+    if (!map) return;
+    const bounds = new google.maps.LatLngBounds();
+    let hasPoints = false;
+    
+    if (pharmacyPos) {
+      bounds.extend({ lat: pharmacyPos[0], lng: pharmacyPos[1] });
+      hasPoints = true;
+    }
+    if (driverPos) {
+      bounds.extend({ lat: driverPos[0], lng: driverPos[1] });
+      hasPoints = true;
+    }
 
-    if (points.length > 1) {
-      const bounds = L.latLngBounds(points);
-      map.fitBounds(bounds, { padding: [50, 50], maxZoom: 15 });
-    } else if (points.length === 1) {
-      map.setView(points[0], 14);
+    if (hasPoints) {
+      if (pharmacyPos && !driverPos) {
+        map.setCenter({ lat: pharmacyPos[0], lng: pharmacyPos[1] });
+        map.setZoom(14);
+      } else if (!pharmacyPos && driverPos) {
+        map.setCenter({ lat: driverPos[0], lng: driverPos[1] });
+        map.setZoom(14);
+      } else {
+        map.fitBounds(bounds, { top: 50, bottom: 50, left: 50, right: 50 });
+      }
     }
   }, [pharmacyPos, driverPos, map]);
 
@@ -247,7 +230,7 @@ export function PharmacistOrderDetails() {
       {/* HEADER */}
       <div className="px-8 pt-8 pb-4 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-4">
-          <button onClick={() => navigate(-1)} className="w-10 h-10 bg-white dark:bg-slate-800 rounded-full border border-gray-100 dark:border-slate-700 shadow-sm flex items-center justify-center hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors">
+          <button onClick={() => navigate(-1)} className="w-10 h-10 bg-white dark:bg-slate-800 rounded-full border border-gray-100 dark:border-slate-700 shadow-sm flex items-center justify-center hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-slate-700 transition-colors">
             <ArrowLeft size={20} className="text-gray-700 dark:text-gray-300" />
           </button>
           <div>
@@ -263,7 +246,7 @@ export function PharmacistOrderDetails() {
               const targetId = String(order?.id || id || '');
               navigate(`/pharmacist/messages/${targetId}`);
             }}
-            className="px-5 py-2.5 bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 text-gray-700 dark:text-gray-300 rounded-full text-sm font-bold shadow-sm hover:bg-gray-50 dark:hover:bg-slate-700 transition flex items-center gap-2"
+            className="px-5 py-2.5 bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 text-gray-700 dark:text-gray-300 rounded-full text-sm font-bold shadow-sm hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-slate-700 transition flex items-center gap-2"
           >
             <MessageCircle size={16} />
             Chat Patient
@@ -271,7 +254,7 @@ export function PharmacistOrderDetails() {
           {driver?.phone && (
             <a 
               href={`tel:${driver.phone}`}
-              className="px-4 py-2.5 bg-[#194B4B] text-white rounded-full text-sm font-bold shadow-sm hover:bg-[#133a3a] transition flex items-center gap-2"
+              className="px-4 py-2.5 bg-[var(--app-primary-color)] text-white rounded-full text-sm font-bold shadow-sm hover:bg-[#133a3a] transition flex items-center gap-2"
             >
               <Phone size={16} />
               Appeler Livreur
@@ -292,7 +275,7 @@ export function PharmacistOrderDetails() {
               <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-sm border border-gray-100 dark:border-slate-700 space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-9 h-9 rounded-full bg-teal-50 dark:bg-slate-700 flex items-center justify-center text-[#194B4B] dark:text-teal-400">
+                    <div className="w-9 h-9 rounded-full bg-teal-50 dark:bg-slate-700 flex items-center justify-center text-[var(--app-primary-color)] dark:text-teal-400">
                       <Navigation size={18} />
                     </div>
                     <div>
@@ -317,41 +300,33 @@ export function PharmacistOrderDetails() {
 
                 {/* Carte Leaflet interactive (Strictement Livreur -> Pharmacie) */}
                 <div className="w-full h-80 rounded-2xl overflow-hidden border border-gray-200 dark:border-slate-700 relative shadow-inner z-0">
-                  <MapContainer
-                    center={driverPos}
-                    zoom={14}
-                    scrollWheelZoom={false}
+                  <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
+                  <Map
+                    mapId="DEMO_MAP_ID"
+                    defaultCenter={{ lat: driverPos[0], lng: driverPos[1] }}
+                    defaultZoom={14}
+                    gestureHandling="greedy"
+                    disableDefaultUI={true}
+                    className="w-full h-full"
                     style={{ width: "100%", height: "100%" }}
+                    internalUsageAttributionIds={["gmp_mcp_codeassist_v1_aistudio"]}
                   >
-                    <TileLayer
-                      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-                    />
+                    <AdvancedMarker position={{ lat: pharmacyPos[0], lng: pharmacyPos[1] }} title={order.pharmacyName || "Votre Pharmacie"}>
+                      <PharmacyMarkerUI />
+                    </AdvancedMarker>
 
-                    {/* Pin Pharmacie */}
-                    <Marker position={pharmacyPos} icon={pharmacyLeafletIcon}>
-                      <Tooltip permanent direction="top" offset={[0, -20]}>
-                        <span className="font-bold text-xs">{order.pharmacyName || "Votre Pharmacie"}</span>
-                      </Tooltip>
-                    </Marker>
-
-                    {/* Pin Livreur */}
                     {hasDriverAssigned && (
-                      <Marker position={driverPos} icon={driverMotoLeafletIcon}>
-                        <Tooltip permanent direction="top" offset={[0, -22]}>
-                          <span className="font-bold text-xs text-[#194B4B]">{driver?.name || order.driverName || "Coursier en approche"}</span>
-                        </Tooltip>
-                      </Marker>
+                      <AdvancedMarker position={{ lat: driverPos[0], lng: driverPos[1] }} title={driver?.name || order.driverName || "Coursier en approche"}>
+                        <DriverMotoMarkerUI />
+                      </AdvancedMarker>
                     )}
 
-                    {/* Tracé Itinéraire Livreur -> Pharmacie */}
                     {hasDriverAssigned && (
                       <Polyline
-                        positions={routePositions}
-                        color="#194B4B"
-                        weight={4}
-                        dashArray="6, 8"
-                        opacity={0.8}
+                        path={routePositions.map((c: any) => ({lat: c[0], lng: c[1]}))}
+                        strokeColor="#194B4B"
+                        strokeWeight={4}
+                        strokeOpacity={0.8}
                       />
                     )}
 
@@ -359,7 +334,8 @@ export function PharmacistOrderDetails() {
                       pharmacyPos={pharmacyPos}
                       driverPos={hasDriverAssigned ? driverPos : undefined}
                     />
-                  </MapContainer>
+                  </Map>
+                  </APIProvider>
                 </div>
 
                 {/* Infos Livreur */}
@@ -369,7 +345,7 @@ export function PharmacistOrderDetails() {
                       {driver?.photoURL || driver?.avatar_url || order.driverPhoto ? (
                         <img src={driver?.photoURL || driver?.avatar_url || order.driverPhoto} alt="" className="w-full h-full object-cover" />
                       ) : (
-                        <Bike size={22} className="text-[#194B4B] dark:text-teal-400" />
+                        <Bike size={22} className="text-[var(--app-primary-color)] dark:text-teal-400" />
                       )}
                     </div>
                     <div>
@@ -387,7 +363,7 @@ export function PharmacistOrderDetails() {
                     {driver?.phone && (
                       <a
                         href={`tel:${driver.phone}`}
-                        className="px-4 py-2 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-gray-800 dark:text-gray-200 rounded-xl text-xs font-bold hover:bg-gray-100 flex items-center gap-1.5 transition shadow-sm"
+                        className="px-4 py-2 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-gray-800 dark:text-gray-200 rounded-xl text-xs font-bold hover:bg-gray-100 dark:bg-zinc-800 flex items-center gap-1.5 transition shadow-sm"
                       >
                         <Phone size={14} className="text-emerald-600" />
                         {driver.phone}
@@ -395,7 +371,7 @@ export function PharmacistOrderDetails() {
                     )}
                     <div className="text-right">
                       <span className="text-xs text-gray-500 block">Mission</span>
-                      <span className="text-xs font-bold text-[#194B4B] dark:text-teal-400 block">
+                      <span className="text-xs font-bold text-[var(--app-primary-color)] dark:text-teal-400 block">
                         Ramassage au comptoir
                       </span>
                     </div>
@@ -433,7 +409,7 @@ export function PharmacistOrderDetails() {
                         {driver?.photoURL || driver?.avatar_url || order.driverPhoto ? (
                           <img src={driver?.photoURL || driver?.avatar_url || order.driverPhoto} alt="" className="w-full h-full object-cover" />
                         ) : (
-                          <Bike size={20} className="text-[#194B4B]" />
+                          <Bike size={20} className="text-[var(--app-primary-color)]" />
                         )}
                       </div>
                       <div>
@@ -450,7 +426,7 @@ export function PharmacistOrderDetails() {
                     {driver?.phone && (
                       <a
                         href={`tel:${driver.phone}`}
-                        className="px-4 py-2 bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-gray-300 rounded-xl text-xs font-bold hover:bg-gray-100 flex items-center gap-1.5 transition"
+                        className="px-4 py-2 bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-gray-300 rounded-xl text-xs font-bold hover:bg-gray-100 dark:bg-zinc-800 flex items-center gap-1.5 transition"
                       >
                         <Phone size={14} className="text-emerald-600" />
                         {driver.phone}
@@ -496,18 +472,18 @@ export function PharmacistOrderDetails() {
                 </div>
                 <div className="flex flex-col">
                   <span className="text-xs text-gray-500">Client</span>
-                  <span className="text-gray-900 font-bold dark:text-gray-300">{order.patientName || 'Client'}</span>
+                  <span className="text-gray-900 dark:text-white font-bold dark:text-gray-300">{order.patientName || 'Client'}</span>
                 </div>
               </div>
 
               <div className="flex flex-col justify-center">
                 <span className="text-xs text-gray-500">Articles</span>
-                <span className="text-gray-900 font-bold dark:text-gray-300">{order.items?.length || 0} médicament(s)</span>
+                <span className="text-gray-900 dark:text-white font-bold dark:text-gray-300">{order.items?.length || 0} médicament(s)</span>
               </div>
 
               <div className="flex flex-col justify-center">
                 <span className="text-xs text-gray-500">Mode</span>
-                <span className="text-gray-900 font-bold dark:text-gray-300">{order.deliveryMethod === 'pickup' ? 'Retrait en Pharmacie' : 'Livraison à Domicile'}</span>
+                <span className="text-gray-900 dark:text-white font-bold dark:text-gray-300">{order.deliveryMethod === 'pickup' ? 'Retrait en Pharmacie' : 'Livraison à Domicile'}</span>
               </div>
             </div>
           </div>
@@ -622,10 +598,10 @@ export function PharmacistOrderDetails() {
         <div className="flex gap-4 w-full justify-end pointer-events-auto">
           {order.status === 'pending' && !isRejecting && (
             <>
-              <button disabled={processing} onClick={handlePrintInvoice} className="px-5 py-3.5 bg-white border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-gray-300 rounded-full font-bold shadow-sm transition-all focus:outline-none flex items-center gap-2">
+              <button disabled={processing} onClick={handlePrintInvoice} className="px-5 py-3.5 bg-white dark:bg-zinc-950 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-gray-300 rounded-full font-bold shadow-sm transition-all focus:outline-none flex items-center gap-2">
                 <Download size={18} /> Imprimer
               </button>
-              <button disabled={processing} onClick={() => setIsRejecting(true)} className="px-6 py-3.5 bg-white border border-red-100 text-red-600 hover:bg-red-50 rounded-full font-bold shadow-sm transition-all focus:outline-none">
+              <button disabled={processing} onClick={() => setIsRejecting(true)} className="px-6 py-3.5 bg-white dark:bg-zinc-950 border border-red-100 text-red-600 hover:bg-red-50 rounded-full font-bold shadow-sm transition-all focus:outline-none">
                 Refuser
               </button>
               <button 
@@ -667,7 +643,7 @@ export function PharmacistOrderDetails() {
           )}
           
           {order.status !== 'pending' && (
-            <button disabled={processing} onClick={handlePrintInvoice} className="px-5 py-3.5 bg-white border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-gray-300 rounded-full font-bold shadow-sm hover:bg-gray-50 dark:hover:bg-slate-700 transition-all focus:outline-none flex items-center gap-2">
+            <button disabled={processing} onClick={handlePrintInvoice} className="px-5 py-3.5 bg-white dark:bg-zinc-950 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-gray-300 rounded-full font-bold shadow-sm hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-slate-700 transition-all focus:outline-none flex items-center gap-2">
               <Download size={18} /> Imprimer Facture
             </button>           
           )}
@@ -697,7 +673,7 @@ export function PharmacistOrderDetails() {
                 />
               )}
               <div className="flex gap-3 mt-2">
-                <button disabled={processing} onClick={() => setIsRejecting(false)} className="flex-1 py-3 bg-white border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-gray-300 rounded-full font-bold transition-colors"> Annuler </button>
+                <button disabled={processing} onClick={() => setIsRejecting(false)} className="flex-1 py-3 bg-white dark:bg-zinc-950 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-gray-300 rounded-full font-bold transition-colors"> Annuler </button>
                 <button 
                   disabled={processing || !rejectReason} 
                   onClick={() => handleUpdateStatus('rejected')} 

@@ -84,7 +84,7 @@ export function AdminProfile() {
             <div>
                <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1">{user?.displayName || "Platform Admin"}</h2>
                <p className="text-sm text-slate-500 mb-3">{user?.email}</p>
-               <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-indigo-50 text-indigo-700 rounded-lg text-xs font-bold uppercase">
+               <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-indigo-50 text-[var(--app-primary-color)] rounded-lg text-xs font-bold uppercase">
                  <Shield size={12} /> {role || 'admin'}
                </span>
             </div>

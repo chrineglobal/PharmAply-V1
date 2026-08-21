@@ -5,8 +5,8 @@ import {
   LocateFixed, Compass, Volume2, VolumeX, Maximize2, ShieldAlert
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { MapContainer, TileLayer, Marker, Polyline, Popup, useMap } from 'react-leaflet';
-import L from 'leaflet';
+import { APIProvider, Map, AdvancedMarker, useMap } from '@vis.gl/react-google-maps';
+import { Polyline } from '../../components/Polyline';
 import { 
   collection, query, where, updateDoc, doc, onSnapshot, getDoc, 
   serverTimestamp, ref, uploadBytesResumable, getDownloadURL 
@@ -35,205 +35,106 @@ function calculateDistanceKm(lat1: number, lon1: number, lat2: number, lon2: num
 }
 
 // Leaflet Map Auto-Recenter Controller
+// Google Maps Custom Marker Components
+const DriverMarkerUI = () => (
+  <div style={{
+    position: 'relative', width: 48, height: 48, display: 'flex', alignItems: 'center', justifyContent: 'center'
+  }}>
+    <div style={{
+      position: 'absolute', inset: -6, background: 'rgba(25, 75, 75, 0.25)', borderRadius: '50%', animation: 'ping 2s cubic-bezier(0, 0, 0.2, 1) infinite'
+    }}></div>
+    <div style={{
+      width: 42, height: 42, background: '#194B4B', border: '3.5px solid #ffffff', borderRadius: '50%',
+      boxShadow: '0 8px 20px rgba(0,0,0,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white'
+    }}>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="1" y="3" width="15" height="13" rx="2"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+      </svg>
+    </div>
+  </div>
+);
+
+const PharmacyMarkerUI = () => (
+  <div style={{
+    width: 46, height: 46, background: '#0d9488', border: '3.5px solid #ffffff', borderRadius: '50%',
+    boxShadow: '0 8px 20px rgba(13,148,136,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white'
+  }}>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+    </svg>
+  </div>
+);
+
+const PatientMarkerUI = () => (
+  <div style={{
+    width: 46, height: 46, background: '#ea580c', border: '3.5px solid #ffffff', borderRadius: '50%',
+    boxShadow: '0 8px 20px rgba(234,88,12,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white'
+  }}>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+    </svg>
+  </div>
+);
+
 function MapAutoRecenter({ center, lockOnDriver }: { center: [number, number]; lockOnDriver: boolean }) {
   const map = useMap();
   useEffect(() => {
-    if (lockOnDriver && center && center[0] && center[1]) {
-      map.setView(center, map.getZoom(), { animate: true });
+    if (lockOnDriver && center && center[0] && center[1] && map) {
+      map.panTo({ lat: center[0], lng: center[1] });
     }
   }, [center, lockOnDriver, map]);
   return null;
 }
 
-// Custom DivIcon Markers for GPS Navigation Map
-const driverIcon = L.divIcon({
-  className: 'custom-driver-marker',
-  html: `
-    <div style="
-      position: relative;
-      width: 48px;
-      height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    ">
-      <div style="
-        position: absolute;
-        inset: -6px;
-        background: rgba(25, 75, 75, 0.25);
-        border-radius: 50%;
-        animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
-      "></div>
-      <div style="
-        width: 42px;
-        height: 42px;
-        background: #194B4B;
-        border: 3.5px solid #ffffff;
-        border-radius: 50%;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-      ">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="1" y="3" width="15" height="13" rx="2"/>
-          <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
-          <circle cx="5.5" cy="18.5" r="2.5"/>
-          <circle cx="18.5" cy="18.5" r="2.5"/>
-        </svg>
-      </div>
-    </div>
-  `,
-  iconSize: [48, 48],
-  iconAnchor: [24, 24]
-});
-
-const pharmacyIcon = L.divIcon({
-  className: 'custom-pharmacy-marker',
-  html: `
-    <div style="
-      width: 46px;
-      height: 46px;
-      background: #0d9488;
-      border: 3.5px solid #ffffff;
-      border-radius: 50%;
-      box-shadow: 0 8px 20px rgba(13,148,136,0.4);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-    ">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-        <polyline points="9 22 9 12 15 12 15 22"/>
-      </svg>
-    </div>
-  `,
-  iconSize: [46, 46],
-  iconAnchor: [23, 23]
-});
-
-const patientIcon = L.divIcon({
-  className: 'custom-patient-marker',
-  html: `
-    <div style="
-      width: 46px;
-      height: 46px;
-      background: #ea580c;
-      border: 3.5px solid #ffffff;
-      border-radius: 50%;
-      box-shadow: 0 8px 20px rgba(234,88,12,0.4);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-    ">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-        <circle cx="12" cy="10" r="3"/>
-      </svg>
-    </div>
-  `,
-  iconSize: [46, 46],
-  iconAnchor: [23, 23]
-});
-
 export function DeliveryActive() {
-  const { t } = useTranslation();
   const navigate = useNavigate();
   const { user } = useAuth();
-
+  
   const [order, setOrder] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [driverPos, setDriverPos] = useState<[number, number]>([4.0511, 9.7679]);
+  const [stage, setStage] = useState<DeliveryStage>('to_pharmacy');
+  
   const [pharmacy, setPharmacy] = useState<any>(null);
   const [patientUser, setPatientUser] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+  const [routeCoordinates, setRouteCoordinates] = useState<[number, number][]>([]);
+  const [routeDistanceText, setRouteDistanceText] = useState<string>("--");
+  const [routeEtaMins, setRouteEtaMins] = useState<number | null>(null);
+  const [distance, setDistance] = useState<number | null>(null);
+  const [eta, setEta] = useState<number | null>(null);
+  
+  const [lockOnDriver, setLockOnDriver] = useState(true);
+  const [showCancelModal, setShowCancelModal] = useState(false);
+  const [cancelReason, setCancelReason] = useState("");
   const [processing, setProcessing] = useState(false);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
-
-  const [stage, setStage] = useState<DeliveryStage>('to_pharmacy');
-  const [driverPos, setDriverPos] = useState<[number, number]>([3.8480, 11.5021]); // Yaoundé / Douala default
-  const [lockOnDriver, setLockOnDriver] = useState(true);
-  const [sheetExpanded, setSheetExpanded] = useState(true);
-  const [voiceGuidance, setVoiceGuidance] = useState(true);
-
-  // Live road route coordinates and stats
-  const [routeCoordinates, setRouteCoordinates] = useState<[number, number][]>([]);
-  const [routeDistanceText, setRouteDistanceText] = useState<string>("Calcul...");
-  const [routeEtaMins, setRouteEtaMins] = useState<number>(5);
-
-  // Proof of delivery state
-  const [proofPreview, setProofPreview] = useState<string | null>(null);
+  const [showNavMenu, setShowNavMenu] = useState(false);
+  
   const [proofFile, setProofFile] = useState<File | null>(null);
+  const [proofPreview, setProofPreview] = useState<string | null>(null);
   const [uploadingProof, setUploadingProof] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // 1. Geolocation watcher for driver
+  // 1. GPS Tracking
   useEffect(() => {
-    if (!user) return;
     let watchId: number;
-
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          setDriverPos([pos.coords.latitude, pos.coords.longitude]);
-        },
-        (err) => console.warn("Initial location warning:", err),
-        { timeout: 5000, enableHighAccuracy: true }
-      );
-
       watchId = navigator.geolocation.watchPosition(
-        async (position) => {
-          const { latitude, longitude } = position.coords;
-          setDriverPos([latitude, longitude]);
-
-          // Sync location across collections
-          try {
-            await updateDoc(doc(db, 'drivers', user.uid), {
-              lat: latitude,
-              lng: longitude,
-              isOnline: true,
+        (pos) => {
+          const lat = pos.coords.latitude;
+          const lng = pos.coords.longitude;
+          setDriverPos([lat, lng]);
+          
+          if (user && order?.id) {
+            updateDoc(doc(db, 'drivers', user.uid), {
+              lat, lng,
               updatedAt: serverTimestamp()
-            });
-            await updateDoc(doc(db, 'users', user.uid), {
-              lat: latitude,
-              lng: longitude
-            });
-          } catch (e) {
-            console.warn("Could not update driver doc location:", e);
-          }
-
-          // Supabase driver_locations sync
-          try {
-            await supabase.from('driver_locations').upsert({
-              driver_id: user.uid,
-              latitude: latitude,
-              longitude: longitude,
-              is_online: true,
-              updated_at: new Date().toISOString()
-            });
-          } catch (e) {
-            // silent catch if table structure differs
-          }
-
-          if (order?.id) {
-            try {
-              await updateDoc(doc(db, 'orders', order.id), {
-                driverLat: latitude,
-                driverLng: longitude,
-                driverLocation: { lat: latitude, lng: longitude },
-                updatedAt: serverTimestamp()
-              });
-            } catch (e) {
-              console.warn("Could not update order driver location:", e);
-            }
+            }).catch(() => {});
           }
         },
-        (err) => console.warn("Watch position error:", err),
-        { enableHighAccuracy: true, timeout: 8000, maximumAge: 0 }
+        (err) => console.warn("GPS error:", err),
+        { enableHighAccuracy: true, maximumAge: 10000, timeout: 10000 }
       );
     }
-
     return () => {
       if (watchId && navigator.geolocation) {
         navigator.geolocation.clearWatch(watchId);
@@ -471,9 +372,9 @@ export function DeliveryActive() {
 
   if (loading) {
     return (
-      <div className="flex-1 flex flex-col items-center justify-center bg-slate-900 text-white p-8 text-center">
+      <div className="flex-1 flex flex-col items-center justify-center bg-white dark:bg-zinc-950 text-gray-900 dark:text-white p-8 text-center">
         <Loader2 size={36} className="animate-spin text-teal-400 mb-3" />
-        <span className="font-medium text-sm text-slate-300">Initialisation de la navigation GPS...</span>
+        <span className="font-medium text-sm text-gray-500 dark:text-gray-600 dark:text-slate-300">Initialisation de la navigation GPS...</span>
       </div>
     );
   }
@@ -490,7 +391,7 @@ export function DeliveryActive() {
         </p>
         <button
           onClick={() => navigate('/delivery')}
-          className="px-6 py-3 bg-[#194B4B] text-white rounded-xl font-bold hover:opacity-90 transition"
+          className="px-6 py-3 bg-[var(--app-primary-color)] text-gray-900 dark:text-white rounded-xl font-bold hover:opacity-90 transition"
         >
           Retour aux courses
         </button>
@@ -525,81 +426,70 @@ export function DeliveryActive() {
       
       {/* 1. FULLSCREEN LEAFLET MAP CANVAS */}
       <div className="absolute inset-0 z-0">
-        <MapContainer
-          center={driverPos}
-          zoom={15}
-          zoomControl={false}
+        <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
+        <Map
+          mapId="DEMO_MAP_ID"
+          defaultCenter={{ lat: driverPos[0], lng: driverPos[1] }}
+          defaultZoom={15}
+          gestureHandling="greedy"
+          disableDefaultUI={true}
+          className="w-full h-full"
           style={{ width: '100%', height: '100%' }}
+          internalUsageAttributionIds={["gmp_mcp_codeassist_v1_aistudio"]}
         >
-          {/* CartoDB Voyager Tile Layer */}
-          <TileLayer
-            url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
-            maxZoom={19}
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          />
-
           <MapAutoRecenter center={driverPos} lockOnDriver={lockOnDriver} />
 
           {/* Driver Vehicle Marker */}
-          <Marker position={driverPos} icon={driverIcon}>
-            <Popup>
-              <div className="text-center font-bold text-xs p-1">
-                Livreur (Vous)
-              </div>
-            </Popup>
-          </Marker>
+          <AdvancedMarker position={{ lat: driverPos[0], lng: driverPos[1] }} title="Livreur (Vous)">
+            <DriverMarkerUI />
+          </AdvancedMarker>
 
           {/* Destination Marker */}
-          <Marker position={activeTargetPos} icon={isPharmacyStep ? pharmacyIcon : patientIcon}>
-            <Popup>
-              <div className="text-center p-1">
-                <span className="font-bold text-xs block">{targetName}</span>
-                <span className="text-[10px] text-gray-500">{targetAddress}</span>
-              </div>
-            </Popup>
-          </Marker>
+          <AdvancedMarker position={{ lat: activeTargetPos[0], lng: activeTargetPos[1] }} title={targetName + '\n' + targetAddress}>
+             {isPharmacyStep ? <PharmacyMarkerUI /> : <PatientMarkerUI />}
+          </AdvancedMarker>
 
           {/* Real-time Road Network Navigation Polyline */}
           {routeCoordinates.length > 0 && (
             <>
               {/* Outer stroke casing */}
               <Polyline
-                positions={routeCoordinates}
-                color="#0f172a"
-                weight={8}
-                opacity={0.4}
+                path={routeCoordinates.map((c: any) => ({lat: c[0], lng: c[1]}))}
+                strokeColor="#0f172a"
+                strokeWeight={8}
+                strokeOpacity={0.4}
               />
               {/* Main colored navigation polyline */}
               <Polyline
-                positions={routeCoordinates}
-                color={isPharmacyStep ? "#0d9488" : "#194B4B"}
-                weight={5}
-                opacity={0.95}
+                path={routeCoordinates.map((c: any) => ({lat: c[0], lng: c[1]}))}
+                strokeColor={isPharmacyStep ? "#0d9488" : "#194B4B"}
+                strokeWeight={5}
+                strokeOpacity={0.95}
               />
             </>
           )}
 
           {routeCoordinates.length === 0 && (
             <Polyline
-              positions={[driverPos, activeTargetPos]}
-              color={isPharmacyStep ? "#0d9488" : "#194B4B"}
-              weight={5}
-              opacity={0.85}
-              dashArray="6, 10"
+              path={[{lat: driverPos[0], lng: driverPos[1]}, {lat: activeTargetPos[0], lng: activeTargetPos[1]}]}
+              strokeColor={isPharmacyStep ? "#0d9488" : "#194B4B"}
+              strokeWeight={5}
+              strokeOpacity={0.85}
             />
           )}
-        </MapContainer>
+        </Map>
+        </APIProvider>
       </div>
 
       {/* 2. TOP FLOATING NAVIGATION BANNER & CONTROLS */}
       <div className="absolute top-4 left-4 right-4 z-10 flex flex-col gap-3 pointer-events-none">
         
         {/* Navigation HUD Banner */}
-        <div className="bg-slate-900/95 backdrop-blur-md text-white p-4 rounded-2xl shadow-2xl border border-slate-800 pointer-events-auto flex items-center justify-between">
+        <div className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-md text-gray-900 dark:text-white p-4 rounded-2xl shadow-2xl border border-slate-800 pointer-events-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
             <button 
               onClick={() => navigate('/delivery')} 
-              className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-white hover:bg-slate-700 transition"
+              className="w-10 h-10 rounded-full bg-gray-100 dark:bg-slate-800 flex items-center justify-center text-gray-900 dark:text-white hover:bg-gray-200 dark:bg-slate-700 transition"
             >
               <ArrowLeft size={20} />
             </button>
@@ -607,11 +497,11 @@ export function DeliveryActive() {
             <div className="flex-1">
               <div className="flex items-center gap-2">
                 <span className={`w-2.5 h-2.5 rounded-full ${isPharmacyStep ? 'bg-teal-400' : 'bg-amber-400'} animate-ping`} />
-                <span className="text-xs font-bold uppercase tracking-wider text-slate-300">
+                <span className="text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-slate-300">
                   {isPharmacyStep ? 'Étape 1 : Collecte Pharmacie' : 'Étape 2 : Livraison Client'}
                 </span>
               </div>
-              <p className="font-black text-white text-base truncate max-w-[200px] sm:max-w-xs mt-0.5">
+              <p className="font-black text-gray-900 dark:text-white text-base truncate max-w-[200px] sm:max-w-xs mt-0.5">
                 {targetAddress}
               </p>
             </div>
@@ -619,7 +509,7 @@ export function DeliveryActive() {
 
           <div className="text-right pl-3 border-l border-slate-800">
             <div className="text-lg font-black text-emerald-400 leading-tight">
-              {routeEtaMins} <span className="text-xs font-semibold text-slate-300">min</span>
+              {routeEtaMins} <span className="text-xs font-semibold text-gray-600 dark:text-slate-300">min</span>
             </div>
             <div className="text-[11px] font-bold text-slate-400">
               {routeDistanceText}
@@ -634,8 +524,8 @@ export function DeliveryActive() {
               onClick={() => setLockOnDriver(!lockOnDriver)}
               className={`flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-bold shadow-lg transition backdrop-blur-md ${
                 lockOnDriver 
-                  ? 'bg-[#194B4B] text-white' 
-                  : 'bg-slate-900/90 text-slate-300 hover:bg-slate-800'
+                  ? 'bg-[var(--app-primary-color)] text-gray-900 dark:text-white' 
+                  : 'bg-white/90 dark:bg-slate-900/90 text-gray-600 dark:text-slate-300 hover:bg-gray-100 dark:bg-slate-800'
               }`}
             >
               <LocateFixed size={15} />
@@ -644,14 +534,14 @@ export function DeliveryActive() {
 
             <button
               onClick={() => setVoiceGuidance(!voiceGuidance)}
-              className="p-2 rounded-full bg-slate-900/90 text-slate-300 shadow-lg hover:bg-slate-800 transition backdrop-blur-md"
+              className="p-2 rounded-full bg-white/90 dark:bg-slate-900/90 text-gray-600 dark:text-slate-300 shadow-lg hover:bg-gray-100 dark:bg-slate-800 transition backdrop-blur-md"
               title="Guide vocal"
             >
               {voiceGuidance ? <Volume2 size={16} className="text-emerald-400" /> : <VolumeX size={16} />}
             </button>
           </div>
 
-          <span className="bg-slate-900/90 text-white text-[11px] font-bold px-3 py-1.5 rounded-full shadow-lg backdrop-blur-md flex items-center gap-1.5">
+          <span className="bg-white/90 dark:bg-slate-900/90 text-gray-900 dark:text-white text-[11px] font-bold px-3 py-1.5 rounded-full shadow-lg backdrop-blur-md flex items-center gap-1.5">
             <Compass size={14} className="text-teal-400 animate-spin" />
             Vitesse ~ 28 km/h
           </span>
@@ -666,13 +556,13 @@ export function DeliveryActive() {
           onClick={() => setSheetExpanded(!sheetExpanded)}
           className="w-full flex flex-col items-center justify-center py-1 mb-2 group"
         >
-          <div className="w-12 h-1.5 bg-gray-300 dark:bg-zinc-700 rounded-full group-hover:bg-[#194B4B] transition-colors" />
+          <div className="w-12 h-1.5 bg-gray-300 dark:bg-zinc-700 rounded-full group-hover:bg-[var(--app-primary-color)] transition-colors" />
         </button>
 
         {/* Header Bar */}
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
-            <div className={`w-12 h-12 rounded-2xl overflow-hidden flex items-center justify-center text-white shadow-md ${isPharmacyStep ? 'bg-teal-600' : 'bg-amber-600'}`}>
+            <div className={`w-12 h-12 rounded-2xl overflow-hidden flex items-center justify-center text-gray-900 dark:text-white shadow-md ${isPharmacyStep ? 'bg-teal-600' : 'bg-amber-600'}`}>
               {targetPhoto ? (
                 <img 
                   src={targetPhoto} 
@@ -724,7 +614,7 @@ export function DeliveryActive() {
             
             {/* Stage Guidance Note */}
             <div className="bg-emerald-50 dark:bg-emerald-950/40 p-3.5 rounded-2xl border border-emerald-100 dark:border-emerald-900/50 flex items-start gap-3">
-              <Navigation size={18} className="text-[#194B4B] dark:text-emerald-400 mt-0.5 shrink-0" />
+              <Navigation size={18} className="text-[var(--app-primary-color)] dark:text-emerald-400 mt-0.5 shrink-0" />
               <div className="text-xs text-slate-800 dark:text-slate-200">
                 <span className="font-bold block mb-0.5">Itinéraire routier en direct</span>
                 Suivez le tracé routier sur la carte. Vos coordonnées GPS réelles sont transmises au client.
@@ -752,7 +642,7 @@ export function DeliveryActive() {
                     <img src={proofPreview} alt="Preuve" className="max-h-40 object-contain" />
                     <button 
                       onClick={() => { setProofPreview(null); setProofFile(null); }}
-                      className="absolute top-2 right-2 bg-red-600 text-white p-1 rounded-full shadow"
+                      className="absolute top-2 right-2 bg-red-600 text-gray-900 dark:text-white p-1 rounded-full shadow"
                     >
                       <X size={14} />
                     </button>
@@ -761,7 +651,7 @@ export function DeliveryActive() {
                   <button
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
-                    className="w-full py-4 bg-white dark:bg-zinc-900 rounded-xl border border-gray-200 dark:border-zinc-800 flex items-center justify-center gap-2 text-[#194B4B] dark:text-teal-400 font-bold text-xs"
+                    className="w-full py-4 bg-white dark:bg-zinc-900 rounded-xl border border-gray-200 dark:border-zinc-800 flex items-center justify-center gap-2 text-[var(--app-primary-color)] dark:text-teal-400 font-bold text-xs"
                   >
                     <Camera size={18} />
                     <span>Prendre la photo de livraison</span>
@@ -776,7 +666,7 @@ export function DeliveryActive() {
                 <button
                   disabled={processing}
                   onClick={handleAdvanceStage}
-                  className="w-full py-4 bg-[#194B4B] hover:opacity-90 text-white rounded-2xl font-black transition flex items-center justify-center gap-2 shadow-xl text-base disabled:opacity-75"
+                  className="w-full py-4 bg-[var(--app-primary-color)] hover:opacity-90 text-gray-900 dark:text-white rounded-2xl font-black transition flex items-center justify-center gap-2 shadow-xl text-base disabled:opacity-75"
                 >
                   {processing && actionLoading === 'to_pharmacy' ? (
                     <>
@@ -796,7 +686,7 @@ export function DeliveryActive() {
                 <button
                   disabled={processing}
                   onClick={handleAdvanceStage}
-                  className="w-full py-4 bg-teal-600 hover:bg-teal-700 text-white rounded-2xl font-black transition flex items-center justify-center gap-2 shadow-xl text-base disabled:opacity-75"
+                  className="w-full py-4 bg-teal-600 hover:bg-teal-700 text-gray-900 dark:text-white rounded-2xl font-black transition flex items-center justify-center gap-2 shadow-xl text-base disabled:opacity-75"
                 >
                   {processing && actionLoading === 'at_pharmacy' ? (
                     <>
@@ -816,7 +706,7 @@ export function DeliveryActive() {
                 <button
                   disabled={processing}
                   onClick={handleAdvanceStage}
-                  className="w-full py-4 bg-[#194B4B] hover:opacity-90 text-white rounded-2xl font-black transition flex items-center justify-center gap-2 shadow-xl text-base disabled:opacity-75"
+                  className="w-full py-4 bg-[var(--app-primary-color)] hover:opacity-90 text-gray-900 dark:text-white rounded-2xl font-black transition flex items-center justify-center gap-2 shadow-xl text-base disabled:opacity-75"
                 >
                   {processing && actionLoading === 'to_customer' ? (
                     <>
@@ -836,7 +726,7 @@ export function DeliveryActive() {
                 <button
                   disabled={processing || !proofPreview || uploadingProof}
                   onClick={handleAdvanceStage}
-                  className="w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl font-black transition flex items-center justify-center gap-2 shadow-xl text-base disabled:opacity-50"
+                  className="w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-gray-900 dark:text-white rounded-2xl font-black transition flex items-center justify-center gap-2 shadow-xl text-base disabled:opacity-50"
                 >
                   {processing && actionLoading === 'at_customer' ? (
                     <>

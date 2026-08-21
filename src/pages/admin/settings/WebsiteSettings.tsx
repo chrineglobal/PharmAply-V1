@@ -190,7 +190,7 @@ export function WebsiteSettings() {
                     name="seoTitle"
                     value={settings.seoTitle}
                     onChange={handleChange}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none"
                   />
                </div>
                <div>
@@ -200,7 +200,7 @@ export function WebsiteSettings() {
                     value={settings.seoDescription}
                     onChange={handleChange}
                     rows={3}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none resize-none"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none resize-none"
                   />
                </div>
             </div>
@@ -216,7 +216,7 @@ export function WebsiteSettings() {
                     name="contactNumber"
                     value={settings.contactNumber}
                     onChange={handleChange}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none"
                   />
                </div>
                <div>
@@ -226,7 +226,7 @@ export function WebsiteSettings() {
                     name="companyAddress"
                     value={settings.companyAddress}
                     onChange={handleChange}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none"
                   />
                </div>
             </div>
@@ -242,7 +242,7 @@ export function WebsiteSettings() {
                     name="facebookUrl"
                     value={settings.facebookUrl}
                     onChange={handleChange}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none"
                   />
                </div>
                <div>
@@ -252,7 +252,7 @@ export function WebsiteSettings() {
                     name="instagramUrl"
                     value={settings.instagramUrl}
                     onChange={handleChange}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none"
                   />
                </div>
                <div>
@@ -262,7 +262,7 @@ export function WebsiteSettings() {
                     name="twitterUrl"
                     value={settings.twitterUrl}
                     onChange={handleChange}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none"
                   />
                </div>
             </div>

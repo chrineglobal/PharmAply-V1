@@ -88,7 +88,7 @@ export function AdminReports() {
                 <h3 className="text-2xl font-black text-slate-900 dark:text-white">{stats.totalOrders}</h3>
              </div>
              <div className="bg-white dark:bg-zinc-950 p-6 rounded-2xl shadow-sm border border-slate-100 relative overflow-hidden">
-                <div className="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-4">
+                <div className="w-12 h-12 rounded-xl bg-indigo-50 text-[var(--app-primary-color)] flex items-center justify-center mb-4">
                   <Users size={24} />
                 </div>
                 <p className="text-sm font-bold text-slate-500 mb-1"> {t('active_users', 'Active Users')} </p>
@@ -123,7 +123,7 @@ export function AdminReports() {
               <div className="bg-white dark:bg-zinc-950 rounded-2xl p-6 shadow-sm border border-slate-100 h-96">
                  <div className="flex items-center justify-between mb-6">
                     <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2"> 
-                       <Truck className="text-indigo-600" size={20} /> Driver Fleet Performance
+                       <Truck className="text-[var(--app-primary-color)]" size={20} /> Driver Fleet Performance
                     </h3>
                  </div>
                  <ResponsiveContainer width="100%" height={280}>

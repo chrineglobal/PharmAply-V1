@@ -78,6 +78,7 @@ import { GlobalSettings } from './pages/admin/settings/GlobalSettings';
 import { FinancialSettings } from './pages/admin/settings/FinancialSettings';
 import { VendorSettings } from './pages/admin/settings/VendorSettings';
 import { CatalogSettings } from './pages/admin/settings/CatalogSettings';
+import { AdminGmail } from './pages/admin/AdminGmail';
 
 import { PatientSettings } from './pages/patient/Settings';
 import { PatientProfileDetails } from './pages/patient/ProfileDetails';
@@ -190,6 +191,7 @@ export default function App() {
             <Route path="finances" element={<AdminFinances />} />
             <Route path="reports" element={<AdminReports />} />
             <Route path="settings" element={<AdminSettings />} />
+            <Route path="gmail" element={<AdminGmail />} />
             <Route path="audit" element={<AdminAuditLogs />} />
             <Route path="profile" element={<AdminProfile />} />
             <Route path="settings/app" element={<AppSettings />} />

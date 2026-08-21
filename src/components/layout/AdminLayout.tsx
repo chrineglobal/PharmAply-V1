@@ -1,7 +1,7 @@
 import { Outlet, NavLink, useNavigate, useLocation } from "react-router-dom";
 import { 
   LayoutDashboard, Users, User, CircleDollarSign, Settings, FileText, LogOut, Package, Search, Bell, Globe, Store, Truck, 
-  Pill, Tags, CreditCard, FileBarChart, Ticket, HeadphonesIcon, UserCog, BookText, History, Plus, MessageSquare, Smartphone, Monitor, Folder, ChevronDown, MapPin, ShieldAlert
+  Pill, Tags, CreditCard, FileBarChart, Ticket, HeadphonesIcon, UserCog, BookText, History, Plus, MessageSquare, Smartphone, Monitor, Folder, ChevronDown, MapPin, ShieldAlert, Mail
 } from "lucide-react";
 import { auth, db } from "../../lib/firebase";
 import { signOut } from '../../lib/firebase';
@@ -100,6 +100,7 @@ export function AdminLayout() {
     {
        label: t('admin_other', "OTHER"),
        items: [
+         { to: "/admin/gmail", icon: Mail, label: t('admin_gmail', "Gmail Workspace"), end: true },
          { to: "/admin/documentation", icon: BookText, label: t('admin_documentation', "Documentation"), end: true },
          { to: "/admin/changelog", icon: History, label: t('admin_changelog', "Changelog"), end: true }
        ]
@@ -132,7 +133,7 @@ export function AdminLayout() {
                       className={({ isActive }) =>
                         `flex items-center justify-between px-4 py-2.5 rounded-2xl text-sm font-medium transition-colors ${
                           isActive
-                            ? "bg-slate-900 text-white dark:bg-indigo-600"
+                            ? "bg-slate-900 text-white dark:bg-[var(--app-primary-color)]"
                             : "text-slate-500 hover:bg-slate-50 hover:text-slate-900 dark:text-white dark:hover:bg-slate-700 dark:hover:text-white"
                         }`
                       }
@@ -202,13 +203,13 @@ export function AdminLayout() {
               <input 
                 type="text" 
                 placeholder={t('search_placeholder', 'Search')}
-                className="w-full bg-white dark:bg-slate-800 dark:text-white border-0 py-3 pl-12 pr-4 rounded-full text-sm shadow-sm focus:ring-2 focus:ring-slate-900 dark:focus:ring-indigo-500 outline-none"
+                className="w-full bg-white dark:bg-slate-800 dark:text-white border-0 py-3 pl-12 pr-4 rounded-full text-sm shadow-sm focus:ring-2 focus:ring-slate-900 dark:focus:ring-[var(--app-primary-color)] outline-none"
               />
            </div>
            
            <div className="flex items-center gap-6">
               <div className="relative group">
-                 <button className="flex items-center gap-2 bg-slate-900 dark:bg-indigo-600 text-white px-4 py-2 rounded-full shadow-sm text-xs font-bold hover:bg-slate-800 dark:hover:bg-indigo-700 transition">
+                 <button className="flex items-center gap-2 bg-slate-900 dark:bg-[var(--app-primary-color)] text-white px-4 py-2 rounded-full shadow-sm text-xs font-bold hover:bg-slate-800 dark:hover:bg-[var(--app-primary-color)] transition">
                     <Plus size={14} /> {t('add_new', 'Add New')}
                  </button>
                  <div className="absolute top-full right-0 mt-2 w-48 bg-white dark:bg-zinc-950 rounded-xl shadow-lg border border-slate-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
@@ -225,7 +226,7 @@ export function AdminLayout() {
                  <DarkModeToggle className="shadow-sm bg-white dark:bg-slate-800 dark:text-slate-200" />
                  <button 
                    onClick={() => navigate('/admin/support')} 
-                   className="w-10 h-10 bg-white dark:bg-slate-800 dark:text-slate-200 rounded-full flex items-center justify-center border border-gray-100 dark:border-zinc-700 shadow-sm hover:bg-gray-50 dark:hover:bg-zinc-700 transition"
+                   className="w-10 h-10 bg-white dark:bg-slate-800 dark:text-slate-200 rounded-full flex items-center justify-center border border-gray-100 dark:border-zinc-700 shadow-sm hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-zinc-700 transition"
                    title="Messages & Support"
                  >
                     <MessageSquare size={18} />

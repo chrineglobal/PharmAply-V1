@@ -189,7 +189,7 @@ export function PharmacistSupport() {
       {/* Top Header */}
       <div className="px-8 pt-8 pb-4 flex items-center justify-between z-10 shrink-0">
          <div className="flex items-center gap-4">
-            <button onClick={() => navigate(-1)} className="w-10 h-10 flex items-center justify-center bg-white dark:bg-slate-800 rounded-full border border-gray-100 dark:border-slate-700 shadow-sm transition-colors hover:bg-gray-50 dark:hover:bg-slate-700">
+            <button onClick={() => navigate(-1)} className="w-10 h-10 flex items-center justify-center bg-white dark:bg-slate-800 rounded-full border border-gray-100 dark:border-slate-700 shadow-sm transition-colors hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-slate-700">
                <ArrowLeft size={20} className="text-gray-700 dark:text-gray-300" />
             </button>
             <div>
@@ -239,7 +239,7 @@ export function PharmacistSupport() {
                         <div 
                           key={q.id}
                           onClick={() => setSelectedQueryId(q.id)}
-                          className={`p-5 transition-colors cursor-pointer text-left flex flex-col gap-2 ${isSelected ? 'bg-[#FAFBFC] dark:bg-slate-900' : 'hover:bg-gray-50 dark:hover:bg-slate-700/50'}`}
+                          className={`p-5 transition-colors cursor-pointer text-left flex flex-col gap-2 ${isSelected ? 'bg-[#FAFBFC] dark:bg-slate-900' : 'hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-slate-700/50'}`}
                         >
                            <div className="flex justify-between items-center">
                               <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
@@ -267,7 +267,7 @@ export function PharmacistSupport() {
                   {/* Active Ticket Header */}
                   <div className="px-6 py-5 bg-[#FAFBFC] dark:bg-slate-900/50 border-b border-gray-100 dark:border-slate-700 flex items-center justify-between shrink-0">
                      <div className="flex items-center gap-4">
-                        <button onClick={() => setSelectedQueryId(null)} className="md:hidden w-10 h-10 border border-gray-200 bg-white rounded-full flex items-center justify-center text-gray-600">
+                        <button onClick={() => setSelectedQueryId(null)} className="md:hidden w-10 h-10 border border-gray-200 bg-white dark:bg-zinc-950 rounded-full flex items-center justify-center text-gray-600">
                           <ArrowLeft size={18} />
                         </button>
                         <div>
@@ -319,7 +319,7 @@ export function PharmacistSupport() {
                   </div>
 
                   {/* Message Input Box */}
-                  <div className="absolute bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md dark:bg-slate-800/90 border-t border-gray-100 dark:border-slate-700 p-5 px-6 z-20 flex gap-3 items-center">
+                  <div className="absolute bottom-0 left-0 right-0 bg-white dark:bg-zinc-950/90 backdrop-blur-md dark:bg-slate-800/90 border-t border-gray-100 dark:border-slate-700 p-5 px-6 z-20 flex gap-3 items-center">
                      <input 
                        disabled={activeTicket.status === 'resolved'}
                        type="text"
@@ -397,7 +397,7 @@ export function PharmacistSupport() {
                        type="button"
                        onClick={() => setShowNewTicketModal(false)}
                        disabled={submitting}
-                       className="flex-1 py-4 bg-white border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-gray-300 rounded-full font-bold transition hover:bg-gray-50 focus:outline-none"
+                       className="flex-1 py-4 bg-white dark:bg-zinc-950 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-gray-300 rounded-full font-bold transition hover:bg-gray-50 dark:bg-zinc-900 focus:outline-none"
                      >
                        {t('cancel', 'Cancel')}
                      </button>

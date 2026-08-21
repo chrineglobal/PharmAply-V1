@@ -355,13 +355,13 @@ export function AdminUsers({ type = 'all' }: { type?: 'vendors' | 'clients' | 'd
          <div className="flex gap-6 border-b-0 border-gray-100">
             <button 
                onClick={() => setActiveTab('users')} 
-               className={`pb-3 text-sm font-bold border-b-2 ${activeTab === 'users' ? 'text-indigo-600 border-indigo-600' : 'text-gray-400 border-transparent hover:text-gray-600'}`}
+               className={`pb-3 text-sm font-bold border-b-2 ${activeTab === 'users' ? 'text-[var(--app-primary-color)] border-[var(--app-primary-color)]' : 'text-gray-400 border-transparent hover:text-gray-600'}`}
             >
                 {t('profiles', 'Profiles')} </button>
             {type !== 'clients' && type !== 'cashiers' && (
               <button 
                  onClick={() => setActiveTab('approvals')} 
-                 className={`pb-3 text-sm font-bold flex items-center gap-2 border-b-2 ${activeTab === 'approvals' ? 'text-indigo-600 border-indigo-600' : 'text-gray-400 border-transparent hover:text-gray-600'}`}
+                 className={`pb-3 text-sm font-bold flex items-center gap-2 border-b-2 ${activeTab === 'approvals' ? 'text-[var(--app-primary-color)] border-[var(--app-primary-color)]' : 'text-gray-400 border-transparent hover:text-gray-600'}`}
               >
                   {t('kyc_approvals', 'KYC Approvals')} {(type === 'vendors' && pharmacies.length > 0) && <span className="bg-red-500 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full">{pharmacies.length}</span>}
                  {(type === 'drivers' && drivers.length > 0) && <span className="bg-red-500 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full">{drivers.length}</span>}
@@ -431,10 +431,10 @@ export function AdminUsers({ type = 'all' }: { type?: 'vendors' | 'clients' | 'd
                  )}
                  {selectedUsers.length > 0 && (
                    <div className="flex items-center gap-2 bg-indigo-50 px-4 py-2 rounded-xl text-sm border border-indigo-100">
-                      <span className="font-bold text-indigo-900 border-r border-indigo-200 pr-3 mr-1">{selectedUsers.length}  {t('selected', 'selected')} </span>
+                      <span className="font-bold text-[var(--app-primary-color)] border-r border-indigo-200 pr-3 mr-1">{selectedUsers.length}  {t('selected', 'selected')} </span>
                       <button onClick={() => handleBulkAction('approve')} className="p-1.5 text-emerald-600 hover:bg-emerald-100 rounded-lg transition" title={t('approve', 'Approve')}><CheckCircle size={18} /></button>
                       <button onClick={() => handleBulkAction('suspend')} className="p-1.5 text-amber-600 hover:bg-amber-100 rounded-lg transition" title={t('suspend', 'Suspend')}><Ban size={18} /></button>
-                      <button onClick={() => handleBulkAction('make_cashier')} className="p-1.5 text-indigo-600 hover:bg-indigo-100 rounded-lg transition" title={t('make_cashier', 'Make Cashier')}><CircleDollarSign size={18} /></button>
+                      <button onClick={() => handleBulkAction('make_cashier')} className="p-1.5 text-[var(--app-primary-color)] hover:bg-indigo-100 rounded-lg transition" title={t('make_cashier', 'Make Cashier')}><CircleDollarSign size={18} /></button>
                       <button onClick={() => handleBulkAction('delete')} className="p-1.5 text-red-600 hover:bg-red-100 rounded-lg transition" title={t('delete', 'Delete')}><Trash2 size={18} /></button>
                    </div>
                  )}
@@ -447,8 +447,8 @@ export function AdminUsers({ type = 'all' }: { type?: 'vendors' | 'clients' | 'd
                       <thead className="text-xs text-gray-500 bg-gray-50 dark:bg-zinc-900/50 border-b border-gray-100">
                          <tr>
                             <th className="py-4 px-6 font-semibold w-12">
-                              <button onClick={toggleSelectAll} className="block text-gray-400 hover:text-indigo-600">
-                                {allSelected ? <CheckSquare size={18} className="text-indigo-600" /> : <div className="w-[18px] h-[18px] border-2 border-gray-300 rounded-[4px]"></div>}
+                              <button onClick={toggleSelectAll} className="block text-gray-400 hover:text-[var(--app-primary-color)]">
+                                {allSelected ? <CheckSquare size={18} className="text-[var(--app-primary-color)]" /> : <div className="w-[18px] h-[18px] border-2 border-gray-300 rounded-[4px]"></div>}
                               </button>
                             </th>
                             <th className="py-4 px-6 font-semibold">{t('user_label', 'User')}</th>
@@ -466,13 +466,13 @@ export function AdminUsers({ type = 'all' }: { type?: 'vendors' | 'clients' | 'd
                            return (
                              <tr key={u.id} onClick={() => toggleSelectUser(u.id)} className={`cursor-pointer hover:bg-gray-100 dark:bg-zinc-800/80 transition-colors even:bg-gray-50 dark:bg-zinc-900/30 ${isSelected ? 'bg-indigo-50/40 even:bg-indigo-50/40' : ''}`}>
                                 <td className="py-4 px-6">
-                                  <button onClick={(e) => { e.stopPropagation(); toggleSelectUser(u.id); }} className="block text-gray-400 hover:text-indigo-600">
-                                    {isSelected ? <CheckSquare size={18} className="text-indigo-600" /> : <div className="w-[18px] h-[18px] border-2 border-gray-300 rounded-[4px]"></div>}
+                                  <button onClick={(e) => { e.stopPropagation(); toggleSelectUser(u.id); }} className="block text-gray-400 hover:text-[var(--app-primary-color)]">
+                                    {isSelected ? <CheckSquare size={18} className="text-[var(--app-primary-color)]" /> : <div className="w-[18px] h-[18px] border-2 border-gray-300 rounded-[4px]"></div>}
                                   </button>
                                 </td>
                                 <td className="py-4 px-6">
                                    <div className="flex items-center gap-3">
-                                      <div className="w-10 h-10 rounded-full flex items-center justify-center bg-gradient-to-br from-indigo-100 to-purple-100 text-indigo-700 font-bold shrink-0">
+                                      <div className="w-10 h-10 rounded-full flex items-center justify-center bg-gradient-to-br from-indigo-100 to-purple-100 text-[var(--app-primary-color)] font-bold shrink-0">
                                          {u.name ? u.name.charAt(0).toUpperCase() : <User size={18} />}
                                       </div>
                                       <div>
@@ -508,7 +508,7 @@ export function AdminUsers({ type = 'all' }: { type?: 'vendors' | 'clients' | 'd
                                          e.stopPropagation();
                                          handleImpersonate(u);
                                        }}
-                                       className="p-1.5 rounded-lg border transition-colors text-indigo-600 bg-indigo-50 border-indigo-100 hover:bg-indigo-100"
+                                       className="p-1.5 rounded-lg border transition-colors text-[var(--app-primary-color)] bg-indigo-50 border-indigo-100 hover:bg-indigo-100"
                                        title={t('impersonate', 'Impersonate')}
                                      >
                                        <VenetianMask size={16} />
@@ -563,7 +563,7 @@ export function AdminUsers({ type = 'all' }: { type?: 'vendors' | 'clients' | 'd
                         <div className="absolute top-0 right-0 bg-orange-100 text-orange-600 font-bold text-[10px] px-3 py-1 rounded-bl-xl uppercase"> {t('pharmacy_review', 'Pharmacy Review')} </div>
                         
                         <div className="flex items-center gap-3 mb-4">
-                           <div className="w-12 h-12 bg-indigo-50 text-indigo-600 flex items-center justify-center rounded-xl">
+                           <div className="w-12 h-12 bg-indigo-50 text-[var(--app-primary-color)] flex items-center justify-center rounded-xl">
                               <Store size={24} />
                            </div>
                            <div>
@@ -595,7 +595,7 @@ export function AdminUsers({ type = 'all' }: { type?: 'vendors' | 'clients' | 'd
                                       <Search size={16} className="text-white" />
                                     </div>
                                   </div>
-                                  <span className="font-bold text-xs text-indigo-600"> {t('view_document', 'View Document')} </span>
+                                  <span className="font-bold text-xs text-[var(--app-primary-color)]"> {t('view_document', 'View Document')} </span>
                                 </button>
                               ) : (
                                 <span className="text-gray-400 mt-1"> {t('not_uploaded', 'Not uploaded')} </span>
@@ -615,21 +615,21 @@ export function AdminUsers({ type = 'all' }: { type?: 'vendors' | 'clients' | 'd
                                       <Search size={16} className="text-white" />
                                     </div>
                                   </div>
-                                  <span className="font-bold text-xs text-indigo-600"> {t('view_document', 'View Document')} </span>
+                                  <span className="font-bold text-xs text-[var(--app-primary-color)]"> {t('view_document', 'View Document')} </span>
                                 </button>
                               ) : (
                                 <span className="text-gray-400 mt-1"> {t('not_uploaded', 'Not uploaded')} </span>
                               )}
                            </div>
                            <div className="bg-gray-50 dark:bg-zinc-900 p-3 rounded-xl mt-2 flex items-start gap-2">
-                              <ShieldAlert size={16} className="text-indigo-400 shrink-0 mt-0.5" />
+                              <ShieldAlert size={16} className="text-[var(--app-primary-color)] shrink-0 mt-0.5" />
                               <p className="text-xs text-gray-600"> {t('ensure_the_rccm_number_matches', 'Ensure the RCCM number matches official Cameroon business registries before approval.')} </p>
                            </div>
                         </div>
                         
                         <div className="flex gap-3">
                            <button className="flex-1 py-3 text-red-600 bg-red-50 hover:bg-red-100 font-bold rounded-xl transition text-sm"> {t('reject', 'Reject')} </button>
-                           <button onClick={() => handleApprovePharmacy(pharmacy.id, pharmacy.ownerId)} className="flex-1 py-3 bg-indigo-600 text-white hover:bg-indigo-700 font-bold rounded-xl transition text-sm flex items-center justify-center gap-2">
+                           <button onClick={() => handleApprovePharmacy(pharmacy.id, pharmacy.ownerId)} className="flex-1 py-3 bg-[var(--app-primary-color)] text-white hover:bg-[var(--app-primary-color)] font-bold rounded-xl transition text-sm flex items-center justify-center gap-2">
                              <CheckCircle size={16} />  {t('approve', 'Approve')} </button>
                         </div>
                      </div>

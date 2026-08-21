@@ -268,8 +268,8 @@ export function DeliveryHome() {
                   {isOnline && (
                     <AdvancedMarker position={driverPos}>
                       <div className="flex flex-col items-center justify-center">
-                         <div className="w-16 h-16 bg-indigo-500/20 rounded-full absolute animate-ping"></div>
-                         <div className="w-8 h-8 bg-indigo-600 rounded-full border-4 border-white shadow-lg z-10 flex items-center justify-center">
+                         <div className="w-16 h-16 bg-[var(--app-primary-color)]/80/20 rounded-full absolute animate-ping"></div>
+                         <div className="w-8 h-8 bg-[var(--app-primary-color)] rounded-full border-4 border-white shadow-lg z-10 flex items-center justify-center">
                             <Navigation size={12} className="text-white fill-current transform rotate-45" />
                          </div>
                       </div>
@@ -284,10 +284,10 @@ export function DeliveryHome() {
                </Map>
             </APIProvider>
          ) : (
-            <div className="w-full h-full flex flex-col items-center justify-center bg-gray-50 dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 p-6 text-center">
+            <div className="w-full h-full flex flex-col items-center justify-center bg-gray-50 dark:bg-zinc-800 dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 dark:border-zinc-800 p-6 text-center">
                <Navigation className="w-10 h-10 text-teal-600 dark:text-teal-400 mb-2 opacity-80 animate-pulse" />
-               <p className="text-xs font-bold text-gray-800 dark:text-gray-200 uppercase tracking-wider mb-1">Géo-localisation livreur active</p>
-               <p className="text-[11px] text-gray-500 max-w-xs">{isOnline ? "En ligne — Prêt à recevoir des courses" : "Hors ligne — Basculez en ligne pour débuter"}</p>
+               <p className="text-xs font-bold text-gray-800 dark:text-zinc-200 dark:text-gray-200 uppercase tracking-wider mb-1">Géo-localisation livreur active</p>
+               <p className="text-[11px] text-gray-500 dark:text-zinc-400 max-w-xs">{isOnline ? "En ligne — Prêt à recevoir des courses" : "Hors ligne — Basculez en ligne pour débuter"}</p>
             </div>
          )}
       </div>
@@ -296,7 +296,7 @@ export function DeliveryHome() {
       <div className="absolute top-32 right-6 z-10">
          <button 
            onClick={() => setMapType(prev => prev === 'roadmap' ? 'satellite' : 'roadmap')}
-           className="w-10 h-10 bg-white dark:bg-black rounded-full shadow-lg flex items-center justify-center border border-gray-100 dark:border-zinc-800"
+           className="w-10 h-10 bg-white dark:bg-zinc-900 dark:bg-black rounded-full shadow-lg flex items-center justify-center border border-gray-100 dark:border-zinc-800 dark:border-zinc-800"
          >
            <Layers size={20} className="text-gray-700 dark:text-gray-300" />
          </button>
@@ -304,7 +304,7 @@ export function DeliveryHome() {
 
       {/* Top HUD */}
       <div className="absolute top-0 left-0 right-0 p-6 pt-12 z-10 flex items-start justify-between">
-         <div className="bg-white dark:bg-black/90 backdrop-blur shadow-sm rounded-2xl p-2 flex items-center gap-3 pr-4 pointer-events-auto cursor-pointer" onClick={() => navigate('/delivery/profile')}>
+         <div className="bg-white dark:bg-zinc-900 dark:bg-black/90 backdrop-blur shadow-sm rounded-2xl p-2 flex items-center gap-3 pr-4 pointer-events-auto cursor-pointer" onClick={() => navigate('/delivery/profile')}>
             <div 
               className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center shrink-0 relative"
               style={{ backgroundColor: `${brandPrimary}15`, color: brandPrimary }}
@@ -335,7 +335,7 @@ export function DeliveryHome() {
                  >
                    {driverProfile?.vehicleType === 'car' ? t('car', 'Voiture') : (driverProfile?.vehicleType === 'motorcycle' ? t('moto', 'Moto') : (driverProfile?.vehicleType === 'bicycle' ? t('bicycle', 'Vélo') : t('vehicle', 'Véhicule')))}
                  </span>
-                 <p className="text-[11px] text-gray-500 font-bold tracking-wider uppercase font-mono"> 
+                 <p className="text-[11px] text-gray-500 dark:text-zinc-400 font-bold tracking-wider uppercase font-mono"> 
                    {driverProfile?.vehiclePlate || t('no_plate', 'NON RENSEIGNÉ')} 
                  </p>
                </div>
@@ -343,16 +343,16 @@ export function DeliveryHome() {
          </div>
          
          <div className="flex flex-row items-center gap-2 pointer-events-auto">
-            <div className="hidden sm:flex bg-white dark:bg-black/90 backdrop-blur rounded-2xl shadow-sm px-3 py-1 flex-col items-center justify-center text-gray-900 dark:text-white relative font-bold text-sm">
+            <div className="hidden sm:flex bg-white dark:bg-zinc-900 dark:bg-black/90 backdrop-blur rounded-2xl shadow-sm px-3 py-1 flex-col items-center justify-center text-gray-900 dark:text-white relative font-bold text-sm">
                <span className="text-[9px] text-gray-400 font-medium tracking-wide uppercase">Aujourd'hui</span>
                <span className="text-xs">{formatCurrency(todaysEarnings)}</span>
             </div>
             
-            <DarkModeToggle className="w-10 h-10 bg-white dark:bg-zinc-800 border border-gray-100 dark:border-zinc-700 shadow-sm" />
+            <DarkModeToggle className="w-10 h-10 bg-white dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800 dark:border-zinc-700 shadow-sm" />
             
             <button 
               onClick={() => navigate('/delivery/messages')}
-              className="w-10 h-10 bg-white dark:bg-zinc-800 rounded-full flex items-center justify-center border border-gray-100 dark:border-zinc-700 shadow-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-zinc-700 transition-colors"
+              className="w-10 h-10 bg-white dark:bg-zinc-900 rounded-full flex items-center justify-center border border-gray-100 dark:border-zinc-800 dark:border-zinc-700 shadow-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:bg-zinc-800 dark:bg-zinc-900 dark:hover:bg-zinc-700 transition-colors"
               title="Messages"
               aria-label="Messages"
             >
@@ -383,21 +383,21 @@ export function DeliveryHome() {
       {/* Bottom Panel */}
       <div className="absolute bottom-0 left-0 right-0 z-20 pointer-events-auto px-6 pb-20 pt-4 bg-gradient-to-t from-white via-white/90 to-transparent">
          {!isOnline ? (
-            <div className="bg-white dark:bg-black rounded-3xl p-6 shadow-xl border border-gray-100 dark:border-zinc-800 transform transition-all duration-300 translate-y-0">
+            <div className="bg-white dark:bg-zinc-900 dark:bg-black rounded-3xl p-6 shadow-xl border border-gray-100 dark:border-zinc-800 dark:border-zinc-800 transform transition-all duration-300 translate-y-0">
                <h2 className="font-bold text-gray-900 dark:text-white text-xl text-center mb-2"> {t('you_re_offline', 'You\'re Offline')} </h2>
-               <p className="text-gray-500 dark:text-gray-400 dark:text-gray-500 text-sm text-center mb-6"> {t('go_online_to_start_receiving_d', 'Go online to start receiving delivery requests')} </p>
+               <p className="text-gray-500 dark:text-zinc-400 dark:text-gray-400 dark:text-gray-500 dark:text-zinc-400 text-sm text-center mb-6"> {t('go_online_to_start_receiving_d', 'Go online to start receiving delivery requests')} </p>
                <button 
                   onClick={() => toggleOnlineStatus(true)}
                   disabled={driverProfile?.status === 'pending_verification' && driverProfile?.kyc_status !== 'approved'}
-                  className="w-full bg-indigo-600 disabled:bg-indigo-300 disabled:cursor-not-allowed border border-indigo-700 disabled:border-indigo-300 shadow-indigo-200 shadow-lg text-white font-bold py-4 rounded-2xl hover:bg-indigo-700 disabled:hover:bg-indigo-300 transition flex justify-center items-center gap-2 text-lg uppercase tracking-wide"
+                  className="w-full bg-[var(--app-primary-color)] disabled:bg-indigo-300 disabled:cursor-not-allowed border border-indigo-700 disabled:border-indigo-300 shadow-indigo-200 shadow-lg text-white font-bold py-4 rounded-2xl hover:bg-[var(--app-primary-color)] disabled:hover:bg-indigo-300 transition flex justify-center items-center gap-2 text-lg uppercase tracking-wide"
                >
                   <Power size={22} className="mr-1" />  {t('go_online', 'Go Online')} </button>
             </div>
          ) : !currentRequest ? (
-            <div className="bg-white dark:bg-black rounded-3xl p-6 shadow-xl border border-gray-100 dark:border-zinc-800 transform transition-all duration-300 translate-y-0 flex flex-col items-center text-center">
+            <div className="bg-white dark:bg-zinc-900 dark:bg-black rounded-3xl p-6 shadow-xl border border-gray-100 dark:border-zinc-800 dark:border-zinc-800 transform transition-all duration-300 translate-y-0 flex flex-col items-center text-center">
                <div className="w-16 h-1 bg-gray-200 rounded-full mb-6"></div>
-               <h2 className="font-bold text-indigo-600 text-xl mb-1"> {t('you_re_online', 'You\'re Online')} </h2>
-               <p className="text-gray-500 dark:text-gray-400 dark:text-gray-500 text-sm mb-6"> {t('waiting_for_the_next_delivery_', 'Waiting for the next delivery request...')} </p>
+               <h2 className="font-bold text-[var(--app-primary-color)] text-xl mb-1"> {t('you_re_online', 'You\'re Online')} </h2>
+               <p className="text-gray-500 dark:text-zinc-400 dark:text-gray-400 dark:text-gray-500 dark:text-zinc-400 text-sm mb-6"> {t('waiting_for_the_next_delivery_', 'Waiting for the next delivery request...')} </p>
                
                <button 
                   onClick={() => toggleOnlineStatus(false)}
@@ -406,20 +406,20 @@ export function DeliveryHome() {
                    {t('go_offline', 'Go Offline')} </button>
             </div>
          ) : (
-            <div className="bg-white dark:bg-black rounded-3xl overflow-hidden shadow-2xl border border-indigo-100 transform transition-all duration-300 translate-y-0 relative animate-slide-up">
+            <div className="bg-white dark:bg-zinc-900 dark:bg-black rounded-3xl overflow-hidden shadow-2xl border border-indigo-100 transform transition-all duration-300 translate-y-0 relative animate-slide-up">
                {/* Progress bar timer mock */}
                <div className="absolute top-0 left-0 right-0 h-1.5 bg-gray-100 dark:bg-zinc-900">
-                  <div className="h-full bg-indigo-600 animate-shrink-x" style={{ animationDuration: '30s', transformOrigin: 'left' }}></div>
+                  <div className="h-full bg-[var(--app-primary-color)] animate-shrink-x" style={{ animationDuration: '30s', transformOrigin: 'left' }}></div>
                </div>
                
                <div className="p-6">
                   <div className="flex justify-between items-start mb-6 pt-2">
                      <div>
-                        <span className="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-2 inline-block"> {t('new_delivery', 'New Delivery')} </span>
-                        <h2 className="font-bold text-gray-900 dark:text-white text-3xl tracking-tight">{formatCurrency(currentRequest.total)} <span className="text-sm text-gray-400 dark:text-gray-500 font-medium tracking-normal"> {t('tips', '+ tips')} </span></h2>
+                        <span className="bg-indigo-100 text-[var(--app-primary-color)] px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-2 inline-block"> {t('new_delivery', 'New Delivery')} </span>
+                        <h2 className="font-bold text-gray-900 dark:text-white text-3xl tracking-tight">{formatCurrency(currentRequest.total)} <span className="text-sm text-gray-400 dark:text-gray-500 dark:text-zinc-400 font-medium tracking-normal"> {t('tips', '+ tips')} </span></h2>
                      </div>
-                     <div className="flex bg-gray-50 dark:bg-black rounded-xl p-2 items-center gap-2">
-                        <Clock size={16} className="text-gray-400 dark:text-gray-500" />
+                     <div className="flex bg-gray-50 dark:bg-zinc-800 dark:bg-black rounded-xl p-2 items-center gap-2">
+                        <Clock size={16} className="text-gray-400 dark:text-gray-500 dark:text-zinc-400" />
                         <div className="font-bold text-gray-700 text-sm"> {t('calculating', 'Calculating...')} </div>
                      </div>
                   </div>
@@ -427,17 +427,17 @@ export function DeliveryHome() {
                   <div className="relative pl-6 space-y-5 mb-8">
                      <div className="absolute left-[9px] top-[4px] bottom-[4px] w-0.5 bg-gray-200"></div>
                      <div className="relative">
-                        <div className="w-5 h-5 bg-indigo-600 rounded-full absolute -left-6 top-0 border-4 border-white flex items-center justify-center shadow-sm">
-                           <div className="w-1 h-1 bg-white dark:bg-black rounded-full"></div>
+                        <div className="w-5 h-5 bg-[var(--app-primary-color)] rounded-full absolute -left-6 top-0 border-4 border-white flex items-center justify-center shadow-sm">
+                           <div className="w-1 h-1 bg-white dark:bg-zinc-900 dark:bg-black rounded-full"></div>
                         </div>
-                        <p className="text-xs text-gray-400 dark:text-gray-500 font-medium">Pickup</p>
+                        <p className="text-xs text-gray-400 dark:text-gray-500 dark:text-zinc-400 font-medium">Pickup</p>
                         <p className="font-bold text-gray-900 dark:text-white mt-0.5">{currentRequest.pharmacyName || t('pharmacy', 'Pharmacy')} </p>
                      </div>
                      <div className="relative">
                         <div className="w-5 h-5 bg-green-500 rounded-full absolute -left-6 top-0 border-4 border-white flex items-center justify-center shadow-sm">
-                           <div className="w-1 h-1 bg-white dark:bg-black rounded-full"></div>
+                           <div className="w-1 h-1 bg-white dark:bg-zinc-900 dark:bg-black rounded-full"></div>
                         </div>
-                        <p className="text-xs text-gray-400 dark:text-gray-500 font-medium">Drop-off</p>
+                        <p className="text-xs text-gray-400 dark:text-gray-500 dark:text-zinc-400 font-medium">Drop-off</p>
                         <p className="font-bold text-gray-900 dark:text-white mt-0.5">{currentRequest.deliveryAddress || 'Customer Address'}</p>
                      </div>
                   </div>
@@ -446,7 +446,7 @@ export function DeliveryHome() {
                      <button 
                         disabled={processing}
                         onClick={handleRejectOrder}
-                        className="w-16 h-16 shrink-0 bg-gray-100 dark:bg-zinc-900 text-gray-600 border border-gray-200 dark:border-zinc-800 font-bold rounded-2xl hover:bg-gray-200 transition flex justify-center items-center"
+                        className="w-16 h-16 shrink-0 bg-gray-100 dark:bg-zinc-900 text-gray-600 border border-gray-200 dark:border-zinc-800 dark:border-zinc-800 font-bold rounded-2xl hover:bg-gray-200 transition flex justify-center items-center"
                         aria-label="Reject Request"
                      >
                         <X size={24} />
@@ -454,7 +454,7 @@ export function DeliveryHome() {
                      <button 
                         disabled={processing}
                         onClick={handleAcceptOrder}
-                        className="flex-1 bg-indigo-600 disabled:bg-indigo-400 shadow-indigo-300 shadow-xl text-white font-bold py-4 rounded-2xl hover:bg-indigo-700 transition flex justify-center items-center gap-2 text-xl"
+                        className="flex-1 bg-[var(--app-primary-color)] disabled:bg-indigo-400 shadow-indigo-300 shadow-xl text-white font-bold py-4 rounded-2xl hover:bg-[var(--app-primary-color)] transition flex justify-center items-center gap-2 text-xl"
                      >
                         {processing ? (
                           <>

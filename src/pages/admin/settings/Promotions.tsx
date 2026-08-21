@@ -87,7 +87,7 @@ export function Promotions() {
          <button 
            onClick={handleSave} 
            disabled={loading}
-           className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-sm transition flex items-center gap-2 disabled:opacity-50"
+           className="bg-[var(--app-primary-color)] hover:bg-[var(--app-primary-color)] text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-sm transition flex items-center gap-2 disabled:opacity-50"
          >
             <Save size={16} /> Save Changes </button>
       </div>
@@ -102,14 +102,14 @@ export function Promotions() {
                 placeholder="Code (e.g. SUMMER20)"
                 value={newCode}
                 onChange={e => setNewCode(e.target.value)}
-                className="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none uppercase"
+                className="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none uppercase"
               />
               <div className="relative w-32">
                  <input 
                    type="number" 
                    value={newDiscount}
                    onChange={e => setNewDiscount(Number(e.target.value))}
-                   className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                   className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none"
                  />
                  <span className="absolute right-4 top-2.5 text-slate-500 text-sm">%</span>
               </div>
@@ -126,7 +126,7 @@ export function Promotions() {
                  {promos.map((promo, idx) => (
                     <div key={idx} className="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-100">
                        <div>
-                          <p className="font-bold text-indigo-900">{promo.code}</p>
+                          <p className="font-bold text-[var(--app-primary-color)]">{promo.code}</p>
                           <p className="text-xs text-slate-500">{promo.discountPer}  % discount </p>
                        </div>
                        <button 
@@ -152,7 +152,7 @@ export function Promotions() {
                        name="dealOfTheDayEnabled"
                        checked={settings.dealOfTheDayEnabled}
                        onChange={handleChange}
-                       className="w-5 h-5 text-indigo-600 rounded mt-0.5"
+                       className="w-5 h-5 text-[var(--app-primary-color)] rounded mt-0.5"
                      />
                      <div>
                        <h3 className="font-bold text-gray-900 dark:text-white text-sm block">Enable Deal of the Day</h3>
@@ -167,7 +167,7 @@ export function Promotions() {
                        value={settings.dealOfTheDayDiscount} 
                        onChange={handleChange}
                        disabled={!settings.dealOfTheDayEnabled}
-                       className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none disabled:bg-gray-100 dark:bg-zinc-800 disabled:opacity-50"
+                       className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none disabled:bg-gray-100 dark:bg-zinc-800 disabled:opacity-50"
                      />
                   </div>
                </div>
@@ -182,9 +182,9 @@ export function Promotions() {
                        name="orderStatusTemplate"
                        value={settings.orderStatusTemplate} 
                        onChange={handleChange}
-                       className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none h-20"
+                       className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none h-20"
                      />
-                     <p className="text-xs text-indigo-600 mt-1">Variables: {'{orderId}'}, {'{status}'}</p>
+                     <p className="text-xs text-[var(--app-primary-color)] mt-1">Variables: {'{orderId}'}, {'{status}'}</p>
                   </div>
                   <div>
                      <label className="block text-sm font-medium text-gray-700 mb-1"> Refill Reminder </label>
@@ -192,9 +192,9 @@ export function Promotions() {
                        name="refillReminderTemplate"
                        value={settings.refillReminderTemplate} 
                        onChange={handleChange}
-                       className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none h-20"
+                       className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none h-20"
                      />
-                     <p className="text-xs text-indigo-600 mt-1">Variables: {'{drugName}'}</p>
+                     <p className="text-xs text-[var(--app-primary-color)] mt-1">Variables: {'{drugName}'}</p>
                   </div>
                </div>
             </div>

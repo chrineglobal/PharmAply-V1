@@ -147,7 +147,7 @@ export function PharmacistHome() {
              
              <button 
                 onClick={toggleDarkMode}
-                className="w-10 h-10 flex items-center justify-center bg-[#FAFBFA] dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors rounded-full text-gray-600 dark:text-gray-300 shadow-sm border border-gray-100 dark:border-zinc-700"
+                className="w-10 h-10 flex items-center justify-center bg-[#FAFBFA] dark:bg-slate-800 hover:bg-gray-100 dark:bg-zinc-800 dark:hover:bg-slate-700 transition-colors rounded-full text-gray-600 dark:text-gray-300 shadow-sm border border-gray-100 dark:border-zinc-700"
                 title={isDarkMode ? t('light_mode', 'Mode clair') : t('dark_mode', 'Mode sombre')}
              >
                 {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
@@ -155,7 +155,7 @@ export function PharmacistHome() {
 
              <button 
                 onClick={() => navigate('/pharmacist/messages')}
-                className="w-10 h-10 flex items-center justify-center bg-[#FAFBFA] dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors rounded-full text-gray-600 dark:text-gray-300 shadow-sm border border-gray-100 dark:border-zinc-700"
+                className="w-10 h-10 flex items-center justify-center bg-[#FAFBFA] dark:bg-slate-800 hover:bg-gray-100 dark:bg-zinc-800 dark:hover:bg-slate-700 transition-colors rounded-full text-gray-600 dark:text-gray-300 shadow-sm border border-gray-100 dark:border-zinc-700"
                 title={t('messages', 'Messagerie')}
              >
                 <MessageSquare size={18} />
@@ -201,7 +201,7 @@ export function PharmacistHome() {
                      <span>{t('this_month', 'Ce mois')}</span>
                      <ChevronDown size={14} className="text-gray-400" />
                   </div>
-                  <button className="w-9 h-9 rounded-full bg-white border border-gray-100 flex items-center justify-center text-gray-600 shadow-sm hover:bg-gray-50">
+                  <button className="w-9 h-9 rounded-full bg-white dark:bg-zinc-950 border border-gray-100 flex items-center justify-center text-gray-600 shadow-sm hover:bg-gray-50 dark:bg-zinc-900">
                      <Activity size={16} />
                   </button>
                </div>
@@ -305,7 +305,7 @@ export function PharmacistHome() {
             <div className="bg-[#FAFBFC] dark:bg-slate-800 rounded-3xl p-6 relative overflow-hidden border border-gray-100 dark:border-slate-700 shadow-sm flex flex-col">
                <div className="flex items-center justify-between mb-6">
                   <h3 className="text-lg font-bold text-gray-900 dark:text-white">{t('graph_report', 'Rapport Graphique')}</h3>
-                  <button className="w-8 h-8 flex items-center justify-center rounded-full bg-white dark:bg-slate-700 border border-gray-100 text-gray-500 hover:bg-gray-50">
+                  <button className="w-8 h-8 flex items-center justify-center rounded-full bg-white dark:bg-slate-700 border border-gray-100 text-gray-500 hover:bg-gray-50 dark:bg-zinc-900">
                      <MoreHorizontal size={14} />
                   </button>
                </div>
@@ -347,7 +347,7 @@ export function PharmacistHome() {
             <div className="bg-[#FAFBFC] dark:bg-slate-800 rounded-3xl p-6 relative overflow-hidden border border-gray-100 dark:border-slate-700 shadow-sm flex flex-col">
                <div className="flex items-center justify-between mb-6">
                   <h3 className="text-lg font-bold text-gray-900 dark:text-white">{t('total_sales_overview', 'Aperçu Total des Ventes')}</h3>
-                  <button className="w-8 h-8 flex items-center justify-center rounded-full bg-white dark:bg-slate-700 border border-gray-100 text-gray-500 hover:bg-gray-50">
+                  <button className="w-8 h-8 flex items-center justify-center rounded-full bg-white dark:bg-slate-700 border border-gray-100 text-gray-500 hover:bg-gray-50 dark:bg-zinc-900">
                      <MoreHorizontal size={14} />
                   </button>
                </div>
@@ -435,7 +435,7 @@ export function PharmacistHome() {
                               const liveName = userProfiles[pId]?.name || order.patientName || 'Client';
                               const livePhoto = userProfiles[pId]?.photoUrl || order.patientPhoto || order.patientPhotoUrl || '';
                               return (
-                              <tr key={order.id} className="hover:bg-gray-50 dark:hover:bg-slate-700/30 transition-colors group">
+                              <tr key={order.id} className="hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-slate-700/30 transition-colors group">
                                  <td className="py-4 px-6">
                                     <div className="flex items-center gap-3">
                                        <UserAvatar

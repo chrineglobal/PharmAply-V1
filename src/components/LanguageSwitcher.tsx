@@ -82,7 +82,7 @@ export function LanguageSwitcher({
         type="button"
         id="language-switcher-button"
         onClick={() => setIsOpen(prev => !prev)}
-        className="flex items-center gap-2 bg-[#FAFBFA] dark:bg-zinc-800 hover:bg-gray-100 dark:hover:bg-zinc-700 text-gray-800 dark:text-gray-200 px-3 py-1.5 rounded-full text-xs font-semibold shadow-xs border border-gray-200/80 dark:border-zinc-700 transition"
+        className="flex items-center gap-2 bg-[#FAFBFA] dark:bg-zinc-800 hover:bg-gray-100 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-gray-800 dark:text-gray-200 px-3 py-1.5 rounded-full text-xs font-semibold shadow-xs border border-gray-200/80 dark:border-zinc-700 transition"
         aria-expanded={isOpen}
         aria-haspopup="true"
         title={t('choose_language', 'Choisir la langue')}
@@ -109,8 +109,8 @@ export function LanguageSwitcher({
                 onClick={() => changeLanguage(lang.code)}
                 className={`w-full flex items-center justify-between px-3 py-2 text-xs rounded-lg transition-colors text-left ${
                   isSelected
-                    ? 'bg-[#194B4B]/10 dark:bg-[#194B4B]/30 text-[#194B4B] dark:text-teal-300 font-bold'
-                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-zinc-800'
+                    ? 'bg-[var(--app-primary-color)]/10 dark:bg-[var(--app-primary-color)]/30 text-[var(--app-primary-color)] dark:text-teal-300 font-bold'
+                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-zinc-800'
                 }`}
               >
                 <div className="flex items-center gap-2.5">
@@ -120,7 +120,7 @@ export function LanguageSwitcher({
                     <span className="text-[10px] text-gray-400 dark:text-gray-500">{lang.name}</span>
                   </div>
                 </div>
-                {isSelected && <Check size={14} className="text-[#194B4B] dark:text-teal-400 shrink-0" />}
+                {isSelected && <Check size={14} className="text-[var(--app-primary-color)] dark:text-teal-400 shrink-0" />}
               </button>
             );
           })}

@@ -114,7 +114,7 @@ export function DPMLDashboard() {
         ) : (
           <div className="divide-y divide-gray-100 dark:divide-zinc-800">
             {alerts.map(alert => (
-              <div key={alert.id} className="p-6 hover:bg-gray-50 dark:hover:bg-zinc-800/50 transition-colors">
+              <div key={alert.id} className="p-6 hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-zinc-800/50 transition-colors">
                 <div className="flex justify-between items-start">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">

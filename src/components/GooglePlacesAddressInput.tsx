@@ -287,7 +287,7 @@ export function GooglePlacesAddressInput({
               type="button"
               onClick={handleUseCurrentLocation}
               disabled={locating}
-              className="p-1.5 bg-gray-100 hover:bg-gray-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-[#194B4B] dark:text-teal-400 rounded-lg transition"
+              className="p-1.5 bg-gray-100 dark:bg-zinc-800 hover:bg-gray-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-[var(--app-primary-color)] dark:text-teal-400 rounded-lg transition"
               title="Utiliser ma position GPS actuelle"
             >
               {locating ? <Loader2 size={14} className="animate-spin" /> : <Crosshair size={14} />}
@@ -307,7 +307,7 @@ export function GooglePlacesAddressInput({
             <button
               type="button"
               onClick={handleUseCurrentLocation}
-              className="text-[10px] text-[#194B4B] dark:text-teal-400 hover:underline flex items-center gap-1 normal-case font-bold"
+              className="text-[10px] text-[var(--app-primary-color)] dark:text-teal-400 hover:underline flex items-center gap-1 normal-case font-bold"
             >
               <Navigation size={10} /> Ma position GPS
             </button>
@@ -318,7 +318,7 @@ export function GooglePlacesAddressInput({
               <div
                 key={`${item.description}-${idx}`}
                 onClick={() => handleSelect(item)}
-                className="px-3.5 py-2.5 flex items-start gap-3 hover:bg-gray-50 dark:hover:bg-zinc-800/80 cursor-pointer transition-colors"
+                className="px-3.5 py-2.5 flex items-start gap-3 hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-zinc-800/80 cursor-pointer transition-colors"
               >
                 <div 
                   className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 mt-0.5"

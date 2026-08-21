@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { ArrowLeft, SlidersHorizontal, Pill, Clock, X, Navigation, MapPin } from "lucide-react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { collection, query, getDocs, limit, where } from '../../lib/firebase';
+import { collection, query, getDocs, limit, where, addDoc, deleteDoc, doc } from '../../lib/firebase';
 import { db } from '../../lib/firebase';
 import { useTranslation } from "react-i18next";
+import { useAuth } from "../../components/AuthProvider";
+import toast from 'react-hot-toast';
 import { ProductCard } from '../../components/ProductCard';
 import { getCategoryIcon } from '../../lib/icons';
 
@@ -27,6 +29,7 @@ export function PatientSearch() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { t } = useTranslation();
+  const { user } = useAuth();
   const initialQuery = searchParams.get("q") || "";
   const [searchQuery, setSearchQuery] = useState(initialQuery);
   const [deduplicatedProducts, setDeduplicatedProducts] = useState<any[]>([]);
@@ -96,12 +99,59 @@ export function PatientSearch() {
     saveRecentSearch(searchQuery);
   };
 
-  const handleHeartClick = (e: React.MouseEvent, product: any) => {
+    const handleHeartClick = async (e: React.MouseEvent, product: any) => {
     e.stopPropagation();
-    const updatedWishlist = { ...wishlist, [product.id]: !wishlist[product.id] };
-    setWishlist(updatedWishlist);
-    localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+    if (!user) {
+      toast(t('login_required', 'Veuillez vous connecter pour ajouter aux favoris'));
+      return;
+    }
+    
+    const isWished = wishlist[product.id];
+    
+    const updatedWishlist = { ...wishlist, [product.id]: !isWished };
+    setWishlist(updatedWishlist); // Optimistic UI
+    
+    try {
+      if (isWished) {
+        // Find and delete the favorite doc
+        const q = query(collection(db, 'favorites'), where('userId', '==', user.uid), where('productId', '==', product.id));
+        const snap = await getDocs(q);
+        snap.docs.forEach(async (d) => {
+          await deleteDoc(doc(db, 'favorites', d.id));
+        });
+      } else {
+        // Add to favorites
+        await addDoc(collection(db, 'favorites'), {
+          userId: user.uid,
+          productId: product.id,
+          product: product,
+          createdAt: new Date().toISOString()
+        });
+      }
+    } catch (err) {
+      console.error('Failed to update favorites', err);
+      // Revert optimistic update
+      setWishlist({ ...wishlist, [product.id]: isWished });
+    }
   };
+
+  useEffect(() => {
+    if (!user) return;
+    const fetchFavs = async () => {
+      try {
+        const q = query(collection(db, 'favorites'), where('userId', '==', user.uid));
+        const snap = await getDocs(q);
+        const favsMap: Record<string, boolean> = {};
+        snap.docs.forEach(d => {
+          favsMap[d.data().productId] = true;
+        });
+        setWishlist(favsMap);
+      } catch (err) {
+        console.error('Error fetching favorites', err);
+      }
+    };
+    fetchFavs();
+  }, [user]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -219,14 +269,14 @@ export function PatientSearch() {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </form>
-          <button className="p-2 bg-[#194B4B]/10 text-[#194B4B] dark:text-teal-400 rounded-xl">
+          <button className="p-2 bg-[var(--app-primary-color)]/10 text-[var(--app-primary-color)] dark:text-teal-400 rounded-xl">
             <SlidersHorizontal size={20} />
           </button>
         </div>
 
         {/* Indicateur de localisation discrète */}
         <div className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400 pl-1">
-          <MapPin size={13} className="text-[#194B4B] dark:text-teal-400" />
+          <MapPin size={13} className="text-[var(--app-primary-color)] dark:text-teal-400" />
           <span>Tri par proximité automatique • Place de marché sécurisée</span>
         </div>
       </div>
@@ -241,8 +291,8 @@ export function PatientSearch() {
                 onClick={() => setSearchQuery(cat.name)}
                 className={`whitespace-nowrap border px-3 py-2 rounded-full text-xs font-medium flex items-center gap-1.5 transition-colors ${
                   searchQuery.toLowerCase() === cat.name.toLowerCase() 
-                    ? 'bg-[#194B4B] text-white border-[#194B4B]' 
-                    : 'bg-white dark:bg-zinc-900 border-gray-200 dark:border-zinc-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-zinc-800'
+                    ? 'bg-[var(--app-primary-color)] text-white border-[var(--app-primary-color)]' 
+                    : 'bg-white dark:bg-zinc-900 border-gray-200 dark:border-zinc-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-zinc-800'
                 }`}
               >
                 <div className={searchQuery.toLowerCase() === cat.name.toLowerCase() ? 'opacity-100' : 'opacity-70'}>
@@ -262,7 +312,7 @@ export function PatientSearch() {
             </div>
             <div className="flex flex-col gap-2">
               {recentSearches.map((sqStr, idx) => (
-                <div key={idx} onClick={() => setSearchQuery(sqStr)} className="flex items-center justify-between py-2 px-3 hover:bg-gray-50 dark:hover:bg-zinc-900 rounded-lg cursor-pointer group transition-colors">
+                <div key={idx} onClick={() => setSearchQuery(sqStr)} className="flex items-center justify-between py-2 px-3 hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-zinc-900 rounded-lg cursor-pointer group transition-colors">
                   <span className="text-gray-700 dark:text-gray-300 text-sm font-medium">{sqStr}</span>
                   <button onClick={(e) => removeRecentSearch(e, sqStr)} className="text-gray-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity">
                     <X size={16} />
@@ -280,7 +330,7 @@ export function PatientSearch() {
           <div>
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
-                <Pill size={18} className="text-[#194B4B] dark:text-teal-400" />
+                <Pill size={18} className="text-[var(--app-primary-color)] dark:text-teal-400" />
                 <h3 className="font-bold text-gray-900 dark:text-white">
                   {searchQuery ? t('relevant_products', 'Médicaments disponibles') : t('suggested_products', 'Médicaments à proximité')}
                 </h3>

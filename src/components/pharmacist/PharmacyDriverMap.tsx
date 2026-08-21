@@ -1,73 +1,45 @@
 import { useState, useEffect } from 'react';
-import { MapContainer, TileLayer, Marker, Polyline, useMap } from 'react-leaflet';
-import L from 'leaflet';
+import { APIProvider, Map, AdvancedMarker, useMap } from '@vis.gl/react-google-maps';
+import { Polyline } from '../../components/Polyline';
 import { doc, onSnapshot, getDoc, db } from '../../lib/firebase';
 import { formatCurrency } from '../../lib/utils';
 import { Bike, MapPin, Store, Navigation, Phone, MessageSquare, Clock, ShieldCheck, CheckCircle2, ChevronRight, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-// Pharmacy Marker Icon
-const pharmacyLeafletIcon = L.divIcon({
-  className: 'custom-pharma-marker',
-  html: `
-    <div style="
-      width: 44px;
-      height: 44px;
-      background: #194B4B;
-      border: 3px solid #ffffff;
-      border-radius: 50%;
-      box-shadow: 0 8px 20px rgba(25, 75, 75, 0.45);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #ffffff;
-    ">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/>
-        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
-        <path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/>
-        <path d="M2 7h20"/>
-        <path d="M12 11v6"/>
-        <path d="M9 14h6"/>
-      </svg>
-    </div>
-  `,
-  iconSize: [44, 44],
-  iconAnchor: [22, 22]
-});
+// Google Maps Custom Marker Components
+const PharmacyMarkerUI = () => (
+  <div style={{
+    width: 44, height: 44, background: '#194B4B', border: '3px solid #ffffff', borderRadius: '50%',
+    boxShadow: '0 8px 20px rgba(25, 75, 75, 0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ffffff'
+  }}>
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/>
+      <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+      <path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/>
+      <path d="M2 7h20"/>
+      <path d="M12 11v6"/>
+      <path d="M9 14h6"/>
+    </svg>
+  </div>
+);
 
-// Driver Motorcycle Marker Icon
-const driverMotoLeafletIcon = L.divIcon({
-  className: 'custom-driver-moto-marker',
-  html: `
-    <div style="
-      width: 44px;
-      height: 44px;
-      background: #FACC15;
-      border: 3px solid #ffffff;
-      border-radius: 50%;
-      box-shadow: 0 8px 20px rgba(250, 204, 21, 0.5);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #194B4B;
-    ">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="18.5" cy="17.5" r="3.5"/>
-        <circle cx="5.5" cy="17.5" r="3.5"/>
-        <circle cx="15" cy="5" r="1"/>
-        <path d="M12 17.5V14l-3-3 4-3 2 3h2"/>
-      </svg>
-    </div>
-  `,
-  iconSize: [44, 44],
-  iconAnchor: [22, 22]
-});
+const DriverMotoMarkerUI = () => (
+  <div style={{
+    width: 44, height: 44, background: '#FACC15', border: '3px solid #ffffff', borderRadius: '50%',
+    boxShadow: '0 8px 20px rgba(250, 204, 21, 0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#194B4B'
+  }}>
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="15" cy="5" r="1"/><path d="M12 17.5V14l-3-3 4-3 2 3h2"/>
+    </svg>
+  </div>
+);
 
 function MapAutoCenter({ center }: { center: [number, number] }) {
   const map = useMap();
   useEffect(() => {
-    map.setView(center, map.getZoom(), { animate: true });
+    if (map) {
+      map.panTo({ lat: center[0], lng: center[1] });
+    }
   }, [center, map]);
   return null;
 }
@@ -157,7 +129,7 @@ export function PharmacyDriverMap({ orders, pharmacy }: PharmacyDriverMapProps) 
   if (activeDeliveryOrders.length === 0) {
     return (
       <div className="bg-[#FAFBFC] dark:bg-slate-800 rounded-3xl p-6 border border-gray-100 dark:border-slate-700 shadow-sm flex flex-col items-center justify-center text-center min-h-[300px]">
-        <div className="w-14 h-14 rounded-full bg-[#194B4B]/10 text-[#194B4B] dark:text-teal-300 flex items-center justify-center mb-4">
+        <div className="w-14 h-14 rounded-full bg-[var(--app-primary-color)]/10 text-[var(--app-primary-color)] dark:text-teal-300 flex items-center justify-center mb-4">
           <Bike size={28} />
         </div>
         <h3 className="text-base font-bold text-gray-900 dark:text-white mb-1">
@@ -201,7 +173,7 @@ export function PharmacyDriverMap({ orders, pharmacy }: PharmacyDriverMapProps) 
                 onClick={() => setSelectedOrderId(o.id)}
                 className={`px-3 py-1.5 rounded-xl text-xs font-bold transition ${
                   (currentOrder?.id === o.id) 
-                    ? 'bg-[#194B4B] text-white shadow-sm' 
+                    ? 'bg-[var(--app-primary-color)] text-white shadow-sm' 
                     : 'bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200'
                 }`}
               >
@@ -214,38 +186,48 @@ export function PharmacyDriverMap({ orders, pharmacy }: PharmacyDriverMapProps) 
 
       {/* Map Container */}
       <div className="w-full h-[320px] relative z-0">
-        <MapContainer
-          center={mapCenter}
-          zoom={14}
-          zoomControl={false}
-          className="w-full h-full"
-          style={{ width: '100%', height: '100%' }}
-        >
-          <TileLayer
-            url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
-            maxZoom={19}
-          />
-          <MapAutoCenter center={mapCenter} />
-          
-          {/* Pharmacy Marker */}
-          <Marker position={pharmaPos} icon={pharmacyLeafletIcon} />
+        <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
+          <Map
+            mapId="DEMO_MAP_ID"
+            defaultCenter={{ lat: mapCenter[0], lng: mapCenter[1] }}
+            defaultZoom={14}
+            gestureHandling="greedy"
+            disableDefaultUI={true}
+            className="w-full h-full"
+            style={{ width: '100%', height: '100%' }}
+            internalUsageAttributionIds={["gmp_mcp_codeassist_v1_aistudio"]}
+          >
+            <MapAutoCenter center={mapCenter} />
+            
+            {/* Pharmacy Marker */}
+            <AdvancedMarker position={{ lat: pharmaPos[0], lng: pharmaPos[1] }}>
+              <PharmacyMarkerUI />
+            </AdvancedMarker>
 
-          {/* Driver Marker */}
-          {driverPos && (
-            <>
-              <Marker position={driverPos} icon={driverMotoLeafletIcon} />
-              <Polyline positions={[driverPos, pharmaPos]} color="#194B4B" weight={4} opacity={0.8} dashArray="5, 10" />
-            </>
-          )}
-        </MapContainer>
+            {/* Driver Marker */}
+            {driverPos && (
+              <>
+                <AdvancedMarker position={{ lat: driverPos[0], lng: driverPos[1] }}>
+                  <DriverMotoMarkerUI />
+                </AdvancedMarker>
+                <Polyline 
+                  path={[{lat: driverPos[0], lng: driverPos[1]}, {lat: pharmaPos[0], lng: pharmaPos[1]}]} 
+                  strokeColor="#194B4B" 
+                  strokeWeight={4} 
+                  strokeOpacity={0.8} 
+                />
+              </>
+            )}
+          </Map>
+        </APIProvider>
 
         {/* Floating live driver card overlay */}
         <div className="absolute bottom-3 left-3 right-3 z-10 pointer-events-auto">
-          <div className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-md p-4 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-xl flex flex-wrap items-center justify-between gap-3">
+          <div className="bg-white dark:bg-zinc-950/95 dark:bg-slate-900/95 backdrop-blur-md p-4 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-xl flex flex-wrap items-center justify-between gap-3">
             
             {/* Driver Info */}
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-[#194B4B] text-white flex items-center justify-center font-bold text-sm shadow-sm">
+              <div className="w-10 h-10 rounded-full bg-[var(--app-primary-color)] text-white flex items-center justify-center font-bold text-sm shadow-sm">
                 {driverData?.name?.charAt(0) || currentOrder?.driverName?.charAt(0) || 'L'}
               </div>
               <div>
@@ -269,7 +251,7 @@ export function PharmacyDriverMap({ orders, pharmacy }: PharmacyDriverMapProps) 
               <div className="h-6 w-px bg-gray-200 dark:bg-slate-700"></div>
               <div className="text-right">
                 <p className="text-[10px] uppercase font-bold text-gray-400">Arrivée estimée</p>
-                <p className="text-xs font-black text-[#194B4B] dark:text-teal-300">
+                <p className="text-xs font-black text-[var(--app-primary-color)] dark:text-teal-300">
                   {etaMinutes !== null ? `~${etaMinutes} min` : '--'}
                 </p>
               </div>
@@ -280,7 +262,7 @@ export function PharmacyDriverMap({ orders, pharmacy }: PharmacyDriverMapProps) 
               {(driverData?.phone || currentOrder?.driverPhone) && (
                 <a
                   href={`tel:${driverData?.phone || currentOrder?.driverPhone}`}
-                  className="p-2.5 bg-gray-100 hover:bg-gray-200 dark:bg-slate-800 text-gray-700 dark:text-gray-300 rounded-xl transition shadow-sm"
+                  className="p-2.5 bg-gray-100 dark:bg-zinc-800 hover:bg-gray-200 dark:bg-slate-800 text-gray-700 dark:text-gray-300 rounded-xl transition shadow-sm"
                   title="Appeler le chauffeur"
                 >
                   <Phone size={16} />
@@ -288,7 +270,7 @@ export function PharmacyDriverMap({ orders, pharmacy }: PharmacyDriverMapProps) 
               )}
               <button
                 onClick={() => navigate(`/pharmacist/orders/${currentOrder?.id}`)}
-                className="px-4 py-2.5 bg-[#194B4B] hover:bg-[#143d3d] text-white text-xs font-bold rounded-xl flex items-center gap-1.5 shadow-sm transition"
+                className="px-4 py-2.5 bg-[var(--app-primary-color)] hover:bg-[#143d3d] text-white text-xs font-bold rounded-xl flex items-center gap-1.5 shadow-sm transition"
               >
                 Voir commande
                 <ChevronRight size={14} />

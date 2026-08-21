@@ -75,7 +75,7 @@ export function GlobalSettings() {
          <button 
            onClick={handleSave} 
            disabled={loading}
-           className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-sm transition flex items-center gap-2 disabled:opacity-50"
+           className="bg-[var(--app-primary-color)] hover:bg-[var(--app-primary-color)] text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-sm transition flex items-center gap-2 disabled:opacity-50"
          >
             <Save size={16} />  {t('save_changes', 'Save Changes')} </button>
       </div>
@@ -91,7 +91,7 @@ export function GlobalSettings() {
                     name="appName"
                     value={settings.appName} 
                     onChange={handleChange}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none"
                     placeholder="Pharmaply"
                   />
                </div>
@@ -102,7 +102,7 @@ export function GlobalSettings() {
                     name="logoUrl"
                     value={settings.logoUrl} 
                     onChange={handleChange}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none"
                     placeholder="https://..."
                   />
                </div>
@@ -112,7 +112,7 @@ export function GlobalSettings() {
                     name="missionStatement"
                     value={settings.missionStatement} 
                     onChange={handleChange}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none"
                     placeholder="Deliver healthcare quickly..."
                   />
                </div>
@@ -123,7 +123,7 @@ export function GlobalSettings() {
                     name="supportEmail"
                     value={settings.supportEmail} 
                     onChange={handleChange}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none"
                     placeholder={t('support_pharmaply_com', 'support@pharmaply.com')}
                   />
                </div>
@@ -134,7 +134,7 @@ export function GlobalSettings() {
                     name="appVersion"
                     value={settings.appVersion} 
                     onChange={handleChange}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none"
                     placeholder="1.0.0"
                   />
                </div>
@@ -146,7 +146,7 @@ export function GlobalSettings() {
                     name="maintenanceMode"
                     checked={settings.maintenanceMode}
                     onChange={handleChange}
-                    className="w-5 h-5 text-indigo-600 rounded"
+                    className="w-5 h-5 text-[var(--app-primary-color)] rounded"
                   />
                   <div>
                     <label htmlFor="maintenanceMode" className="font-medium text-red-600 text-sm block cursor-pointer"> {t('maintenance_mode', 'Maintenance Mode')} </label>
@@ -161,7 +161,7 @@ export function GlobalSettings() {
             <div className="grid grid-cols-2 gap-4">
                <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1"> Default Language </label>
-                  <select name="defaultLanguage" value={settings.defaultLanguage} onChange={handleChange} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                  <select name="defaultLanguage" value={settings.defaultLanguage} onChange={handleChange} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none">
                      <option value="en">English</option>
                      <option value="fr">French</option>
                      <option value="es">Spanish</option>
@@ -169,7 +169,7 @@ export function GlobalSettings() {
                </div>
                <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1"> UI Time Zone </label>
-                  <select name="timeZone" value={settings.timeZone} onChange={handleChange} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                  <select name="timeZone" value={settings.timeZone} onChange={handleChange} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none">
                      <option value="UTC">UTC</option>
                      <option value="America/New_York">Eastern Time (US)</option>
                      <option value="Europe/London">London (UK)</option>
@@ -179,7 +179,7 @@ export function GlobalSettings() {
                </div>
                <div className="col-span-2">
                   <label className="block text-sm font-medium text-gray-700 mb-1"> Default Currency </label>
-                  <select name="defaultCurrency" value={settings.defaultCurrency} onChange={handleChange} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                  <select name="defaultCurrency" value={settings.defaultCurrency} onChange={handleChange} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none">
                      <option value="USD">USD ($)</option>
                      <option value="EUR">EUR (€)</option>
                      <option value="GBP">GBP (£)</option>
@@ -198,7 +198,7 @@ export function GlobalSettings() {
                     name="mapsApiKey"
                     value={settings.mapsApiKey} 
                     onChange={handleChange}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none"
                     placeholder="AIzaSy..."
                   />
                   <p className="text-xs text-slate-500 mt-1">Used for route optimization and map rendering.</p>
@@ -210,7 +210,7 @@ export function GlobalSettings() {
                     name="smsGatewayKey"
                     value={settings.smsGatewayKey} 
                     onChange={handleChange}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none"
                   />
                </div>
                <div>
@@ -220,7 +220,7 @@ export function GlobalSettings() {
                     name="socialLoginsKey"
                     value={settings.socialLoginsKey} 
                     onChange={handleChange}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none"
                   />
                </div>
             </div>

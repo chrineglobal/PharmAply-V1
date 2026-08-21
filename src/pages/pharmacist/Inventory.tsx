@@ -493,11 +493,11 @@ export function PharmacistInventory() {
                  ref={fileInputRef} 
                  onChange={handleFileUpload} 
              />
-             <button onClick={handleDownloadTemplate} className="bg-white hover:bg-gray-50 border border-gray-200 text-gray-700 px-4 py-2.5 rounded-full flex items-center gap-2 text-sm font-bold shadow-sm transition-colors">
+             <button onClick={handleDownloadTemplate} className="bg-white dark:bg-zinc-950 hover:bg-gray-50 dark:bg-zinc-900 border border-gray-200 text-gray-700 px-4 py-2.5 rounded-full flex items-center gap-2 text-sm font-bold shadow-sm transition-colors">
                <Download size={16} />
                <span className="hidden sm:inline">Template</span>
              </button>
-             <button onClick={() => fileInputRef.current?.click()} className="bg-white hover:bg-gray-50 border border-gray-200 text-gray-700 px-4 py-2.5 rounded-full flex items-center gap-2 text-sm font-bold shadow-sm transition-colors">
+             <button onClick={() => fileInputRef.current?.click()} className="bg-white dark:bg-zinc-950 hover:bg-gray-50 dark:bg-zinc-900 border border-gray-200 text-gray-700 px-4 py-2.5 rounded-full flex items-center gap-2 text-sm font-bold shadow-sm transition-colors">
                <Upload size={16} />
                <span className="hidden sm:inline">Import CSV</span>
              </button>
@@ -633,7 +633,7 @@ export function PharmacistInventory() {
                   {sortedStockItems.length > 0 && (
                      <button 
                         onClick={toggleSelectAll}
-                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-gray-200 dark:border-slate-700 text-xs font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800 transition"
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-gray-200 dark:border-slate-700 text-xs font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-slate-800 transition"
                      >
                         {isAllSelected ? <CheckSquare size={15} className="text-emerald-600" /> : <Square size={15} />}
                         <span>{isAllSelected ? "Tout désélectionner" : "Tout sélectionner"}</span>
@@ -792,12 +792,12 @@ export function PharmacistInventory() {
                   </span>
                </div>
 
-               <div className="h-5 w-px bg-white/20"></div>
+               <div className="h-5 w-px bg-white dark:bg-zinc-950/20"></div>
 
                <div className="flex items-center gap-2">
                   <button 
                      onClick={() => setShowBulkStockModal(true)}
-                     className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold transition cursor-pointer"
+                     className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white dark:bg-zinc-950/10 hover:bg-white dark:bg-zinc-950/20 text-xs font-bold transition cursor-pointer"
                   >
                      <Edit3 size={14} />
                      <span>Ajuster stock</span>
@@ -813,11 +813,11 @@ export function PharmacistInventory() {
                   </button>
                </div>
 
-               <div className="h-5 w-px bg-white/20"></div>
+               <div className="h-5 w-px bg-white dark:bg-zinc-950/20"></div>
 
                <button 
                   onClick={() => setSelectedIds([])}
-                  className="p-1 rounded-lg text-gray-300 hover:text-white hover:bg-white/10 transition"
+                  className="p-1 rounded-lg text-gray-300 hover:text-white hover:bg-white dark:bg-zinc-950/10 transition"
                   title="Annuler la sélection"
                >
                   <X size={16} />
@@ -856,7 +856,7 @@ export function PharmacistInventory() {
                   <div className="flex gap-2">
                      <button 
                         onClick={() => setShowBulkStockModal(false)}
-                        className="flex-1 py-2.5 rounded-xl border border-gray-200 dark:border-slate-700 text-xs font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-50 transition"
+                        className="flex-1 py-2.5 rounded-xl border border-gray-200 dark:border-slate-700 text-xs font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:bg-zinc-900 transition"
                      >
                         Annuler
                      </button>

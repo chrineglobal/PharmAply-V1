@@ -23,7 +23,7 @@ export function PatientCart() {
       <div className="flex-1 overflow-y-auto p-6 flex flex-col pb-32">
          {items.length === 0 ? (
            <div className="flex flex-col items-center justify-center text-center mt-20">
-             <div className="w-20 h-20 bg-indigo-50 dark:bg-indigo-900/20 rounded-full flex items-center justify-center mb-6 text-indigo-400 border-4 border-white dark:border-zinc-800 shadow-sm">
+             <div className="w-20 h-20 bg-indigo-50 dark:bg-indigo-900/20 rounded-full flex items-center justify-center mb-6 text-[var(--app-primary-color)] border-4 border-white dark:border-zinc-800 shadow-sm">
                 <ShoppingCart size={32} />
              </div>
              <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{t('your_cart_is_empty', 'Your cart is empty')}</h2>
@@ -57,13 +57,13 @@ export function PatientCart() {
                     </div>
                     <div className="flex-1">
                        <h3 className="font-bold text-gray-900 dark:text-white text-sm leading-tight mb-1">{item.commercial_name || item.name}</h3>
-                       <p className="text-[#1a3b8d] dark:text-indigo-400 font-bold mb-3">{formatCurrency(item.price)}</p>
+                       <p className="text-[#1a3b8d] dark:text-[var(--app-primary-color)] font-bold mb-3">{formatCurrency(item.price)}</p>
                        
                        <div className="flex items-center justify-between">
                           <div className="flex items-center bg-gray-50 dark:bg-black rounded-lg p-0.5 border border-gray-200 dark:border-zinc-800">
-                             <button onClick={() => updateQuantity(item.id, -1)} className="text-indigo-600 dark:text-indigo-400 p-2 shrink-0 touch-manipulation min-w-[36px] min-h-[36px] flex items-center justify-center"><Minus size={14}/></button>
+                             <button onClick={() => updateQuantity(item.id, -1)} className="text-[var(--app-primary-color)] dark:text-[var(--app-primary-color)] p-2 shrink-0 touch-manipulation min-w-[36px] min-h-[36px] flex items-center justify-center"><Minus size={14}/></button>
                              <span className="font-bold text-gray-900 dark:text-white mx-2 text-xs min-w-[16px] text-center">{item.quantity}</span>
-                             <button onClick={() => updateQuantity(item.id, 1)} className="text-indigo-600 dark:text-indigo-400 p-2 shrink-0 touch-manipulation min-w-[36px] min-h-[36px] flex items-center justify-center text-white bg-[#1a3b8d] rounded-md"><Plus size={14}/></button>
+                             <button onClick={() => updateQuantity(item.id, 1)} className="text-[var(--app-primary-color)] dark:text-[var(--app-primary-color)] p-2 shrink-0 touch-manipulation min-w-[36px] min-h-[36px] flex items-center justify-center text-white bg-[#1a3b8d] rounded-md"><Plus size={14}/></button>
                           </div>
                           <button onClick={() => removeFromCart(item.id)} className="text-red-500 hover:text-red-700 p-2 bg-red-50 dark:bg-red-900/20 rounded-lg shrink-0 flex items-center justify-center touch-manipulation" title="Remove">
                              <Trash2 size={18} />
@@ -75,7 +75,7 @@ export function PatientCart() {
               </div>
 
               {/* Add More Items Button */}
-              <button onClick={() => navigate('/patient')} className="w-full bg-white dark:bg-zinc-900 text-indigo-600 dark:text-indigo-400 font-bold py-4 min-h-[56px] rounded-[1.2rem] shadow-sm border-2 border-indigo-50 dark:border-zinc-800 transition-colors touch-manipulation outline-none flex justify-center items-center gap-2">
+              <button onClick={() => navigate('/patient')} className="w-full bg-white dark:bg-zinc-900 text-[var(--app-primary-color)] dark:text-[var(--app-primary-color)] font-bold py-4 min-h-[56px] rounded-[1.2rem] shadow-sm border-2 border-indigo-50 dark:border-zinc-800 transition-colors touch-manipulation outline-none flex justify-center items-center gap-2">
                  <Plus size={20} /> Add More Items
               </button>
            </div>

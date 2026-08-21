@@ -114,7 +114,7 @@ export function AdminFinances() {
                <p className="text-xs text-gray-500 mt-0.5"> {t('applied_per_pharmacy_order', 'Applied per pharmacy order')} </p>
             </div>
             <div className="text-right">
-               <p className="font-bold text-indigo-600 text-xl">5.0%</p>
+               <p className="font-bold text-[var(--app-primary-color)] text-xl">5.0%</p>
                <button className="text-[10px] font-bold text-slate-500 underline uppercase mt-1"> {t('configure', 'Configure')} </button>
             </div>
          </div>
@@ -125,7 +125,7 @@ export function AdminFinances() {
                <p className="text-xs text-gray-500 mt-0.5"> {t('base_fee_for_drivers', 'Base fee for drivers')} </p>
             </div>
             <div className="text-right">
-               <p className="font-bold text-indigo-600 text-xl">{formatCurrency(3)}</p>
+               <p className="font-bold text-[var(--app-primary-color)] text-xl">{formatCurrency(3)}</p>
                <button className="text-[10px] font-bold text-slate-500 underline uppercase mt-1"> {t('configure', 'Configure')} </button>
             </div>
          </div>

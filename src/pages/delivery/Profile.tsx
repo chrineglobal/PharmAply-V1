@@ -513,7 +513,7 @@ export function DeliveryProfile() {
         />
 
         {/* Submenu Header */}
-        <div className="px-6 pt-12 pb-4 flex items-center justify-between bg-white shadow-sm z-10 border-b border-slate-100">
+        <div className="px-6 pt-12 pb-4 flex items-center justify-between bg-white dark:bg-zinc-950 shadow-sm z-10 border-b border-slate-100">
           <div className="flex items-center gap-3">
             <button 
               onClick={() => setActiveMenu(null)} 
@@ -534,7 +534,7 @@ export function DeliveryProfile() {
         <div className="flex-1 overflow-y-auto p-6 space-y-6 max-w-xl mx-auto w-full">
           {/* 1. Vehicle Details */}
           {activeMenu === 'vehicle_details' && (
-            <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 space-y-5">
+            <div className="bg-white dark:bg-zinc-950 rounded-3xl p-6 shadow-sm border border-slate-100 space-y-5">
               <div className="flex items-center gap-3 pb-3 border-b border-slate-100">
                 <div 
                   className="w-10 h-10 rounded-2xl flex items-center justify-center"
@@ -590,7 +590,7 @@ export function DeliveryProfile() {
                   value={formData.vehicleModel || ''} 
                   onChange={(e) => setFormData({ ...formData, vehicleModel: e.target.value })} 
                   placeholder={t('eg_yamaha', 'ex: Yamaha Crypton 110, Boxer 150cc, TVS...')}
-                  className="w-full border border-slate-200 rounded-2xl p-3.5 bg-slate-50 text-slate-900 font-medium text-sm outline-none focus:bg-white transition" 
+                  className="w-full border border-slate-200 rounded-2xl p-3.5 bg-slate-50 text-slate-900 font-medium text-sm outline-none focus:bg-white dark:bg-zinc-950 transition" 
                 />
               </div>
 
@@ -604,7 +604,7 @@ export function DeliveryProfile() {
                     value={formData.vehiclePlate || ''} 
                     onChange={(e) => setFormData({ ...formData, vehiclePlate: e.target.value.toUpperCase() })} 
                     placeholder="LT 482 AB"
-                    className="w-full border border-slate-200 rounded-2xl p-3.5 bg-slate-50 text-slate-900 font-bold text-sm uppercase tracking-wider outline-none focus:bg-white transition" 
+                    className="w-full border border-slate-200 rounded-2xl p-3.5 bg-slate-50 text-slate-900 font-bold text-sm uppercase tracking-wider outline-none focus:bg-white dark:bg-zinc-950 transition" 
                   />
                 </div>
                 <div>
@@ -616,7 +616,7 @@ export function DeliveryProfile() {
                     value={formData.vehicleColor || ''} 
                     onChange={(e) => setFormData({ ...formData, vehicleColor: e.target.value })} 
                     placeholder="Noir, Rouge, Bleu..."
-                    className="w-full border border-slate-200 rounded-2xl p-3.5 bg-slate-50 text-slate-900 font-medium text-sm outline-none focus:bg-white transition" 
+                    className="w-full border border-slate-200 rounded-2xl p-3.5 bg-slate-50 text-slate-900 font-medium text-sm outline-none focus:bg-white dark:bg-zinc-950 transition" 
                   />
                 </div>
               </div>
@@ -625,7 +625,7 @@ export function DeliveryProfile() {
 
           {/* 2. Payout Methods */}
           {activeMenu === 'payout_methods' && (
-            <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 space-y-5">
+            <div className="bg-white dark:bg-zinc-950 rounded-3xl p-6 shadow-sm border border-slate-100 space-y-5">
               <div className="flex items-center gap-3 pb-3 border-b border-slate-100">
                 <div 
                   className="w-10 h-10 rounded-2xl flex items-center justify-center"
@@ -679,7 +679,7 @@ export function DeliveryProfile() {
                   value={formData.accountNumber || ''} 
                   onChange={(e) => setFormData({ ...formData, accountNumber: e.target.value })} 
                   placeholder={driver?.phoneNumber || "+237 6XX XX XX XX"}
-                  className="w-full border border-slate-200 rounded-2xl p-3.5 bg-slate-50 text-slate-900 font-bold text-sm outline-none focus:bg-white transition" 
+                  className="w-full border border-slate-200 rounded-2xl p-3.5 bg-slate-50 text-slate-900 font-bold text-sm outline-none focus:bg-white dark:bg-zinc-950 transition" 
                 />
               </div>
 
@@ -692,7 +692,7 @@ export function DeliveryProfile() {
                   value={formData.beneficiaryName || ''} 
                   onChange={(e) => setFormData({ ...formData, beneficiaryName: e.target.value })} 
                   placeholder={driver?.name || "Nom apparaissant sur le compte"}
-                  className="w-full border border-slate-200 rounded-2xl p-3.5 bg-slate-50 text-slate-900 font-medium text-sm outline-none focus:bg-white transition" 
+                  className="w-full border border-slate-200 rounded-2xl p-3.5 bg-slate-50 text-slate-900 font-medium text-sm outline-none focus:bg-white dark:bg-zinc-950 transition" 
                 />
               </div>
             </div>
@@ -700,7 +700,7 @@ export function DeliveryProfile() {
 
           {/* 3. Working Hours & Availability */}
           {activeMenu === 'working_hours' && (
-            <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 space-y-5">
+            <div className="bg-white dark:bg-zinc-950 rounded-3xl p-6 shadow-sm border border-slate-100 space-y-5">
               <div className="flex items-center gap-3 pb-3 border-b border-slate-100">
                 <div 
                   className="w-10 h-10 rounded-2xl flex items-center justify-center"
@@ -723,7 +723,7 @@ export function DeliveryProfile() {
                     type="time" 
                     value={formData.workStartTime || '08:00'} 
                     onChange={(e) => setFormData({ ...formData, workStartTime: e.target.value })} 
-                    className="w-full border border-slate-200 rounded-2xl p-3.5 bg-slate-50 text-slate-900 font-bold text-base outline-none focus:bg-white transition" 
+                    className="w-full border border-slate-200 rounded-2xl p-3.5 bg-slate-50 text-slate-900 font-bold text-base outline-none focus:bg-white dark:bg-zinc-950 transition" 
                   />
                 </div>
                 <div>
@@ -734,7 +734,7 @@ export function DeliveryProfile() {
                     type="time" 
                     value={formData.workEndTime || '20:00'} 
                     onChange={(e) => setFormData({ ...formData, workEndTime: e.target.value })} 
-                    className="w-full border border-slate-200 rounded-2xl p-3.5 bg-slate-50 text-slate-900 font-bold text-base outline-none focus:bg-white transition" 
+                    className="w-full border border-slate-200 rounded-2xl p-3.5 bg-slate-50 text-slate-900 font-bold text-base outline-none focus:bg-white dark:bg-zinc-950 transition" 
                   />
                 </div>
               </div>
@@ -748,7 +748,7 @@ export function DeliveryProfile() {
                   value={formData.operatingZone || ''} 
                   onChange={(e) => setFormData({ ...formData, operatingZone: e.target.value })} 
                   placeholder={t('eg_zones', 'ex: Akwa, Bonanjo, Deido, Bonapriso, Makepe...')}
-                  className="w-full border border-slate-200 rounded-2xl p-3.5 bg-slate-50 text-slate-900 font-medium text-sm outline-none focus:bg-white transition" 
+                  className="w-full border border-slate-200 rounded-2xl p-3.5 bg-slate-50 text-slate-900 font-medium text-sm outline-none focus:bg-white dark:bg-zinc-950 transition" 
                 />
               </div>
             </div>
@@ -756,7 +756,7 @@ export function DeliveryProfile() {
 
           {/* 4. Driver KYC Documents */}
           {activeMenu === 'driver_documents' && (
-            <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 space-y-4">
+            <div className="bg-white dark:bg-zinc-950 rounded-3xl p-6 shadow-sm border border-slate-100 space-y-4">
               <div className="p-4 rounded-2xl border border-slate-100 flex items-start gap-3 bg-slate-50">
                 <ShieldCheck size={24} style={{ color: brandPrimary }} className="shrink-0 mt-0.5" />
                 <div>
@@ -800,7 +800,7 @@ export function DeliveryProfile() {
                     <div key={docItem.key} className="p-4 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-between gap-3">
                       <div className="flex items-center gap-3">
                         <div 
-                          className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm"
+                          className="w-10 h-10 rounded-xl bg-white dark:bg-zinc-950 flex items-center justify-center shadow-sm"
                           style={{ color: brandPrimary }}
                         >
                           <FileText size={18} />
@@ -871,7 +871,7 @@ export function DeliveryProfile() {
       />
 
       {/* Top Header */}
-      <div className="px-6 pt-12 pb-4 flex items-center justify-between bg-white shadow-sm z-10 border-b border-slate-100">
+      <div className="px-6 pt-12 pb-4 flex items-center justify-between bg-white dark:bg-zinc-950 shadow-sm z-10 border-b border-slate-100">
         <div className="flex items-center gap-3">
           <button 
             onClick={() => navigate('/delivery')} 
@@ -902,7 +902,7 @@ export function DeliveryProfile() {
       {/* Main Profile Content */}
       <div className="flex-1 overflow-y-auto p-6 space-y-6 max-w-xl mx-auto w-full">
         {/* Profile Card with Photo & Main Info */}
-        <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 flex flex-col items-center text-center relative overflow-hidden">
+        <div className="bg-white dark:bg-zinc-950 rounded-3xl p-6 shadow-sm border border-slate-100 flex flex-col items-center text-center relative overflow-hidden">
           {/* Avatar Container with Upload Trigger */}
           <div className="relative group mb-3">
             <div className="w-28 h-28 rounded-full overflow-hidden border-4 border-slate-100 bg-slate-100 shadow-sm relative">
@@ -1018,7 +1018,7 @@ export function DeliveryProfile() {
         {/* Real Dynamic Stats Computed from Orders */}
         <div className="grid grid-cols-2 gap-4">
           {/* 1. Completed Deliveries */}
-          <div className="bg-white border border-slate-100 rounded-3xl p-4 text-center shadow-sm">
+          <div className="bg-white dark:bg-zinc-950 border border-slate-100 rounded-3xl p-4 text-center shadow-sm">
             <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-0.5">
               {t('completed_deliveries', 'Courses effectuées')}
             </p>
@@ -1031,7 +1031,7 @@ export function DeliveryProfile() {
           </div>
           
           {/* 2. Real Satisfaction Rating */}
-          <div className="bg-white border border-slate-100 rounded-3xl p-4 text-center shadow-sm">
+          <div className="bg-white dark:bg-zinc-950 border border-slate-100 rounded-3xl p-4 text-center shadow-sm">
             <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-0.5">
               {t('satisfaction_rating', 'Note de satisfaction')}
             </p>
@@ -1056,7 +1056,7 @@ export function DeliveryProfile() {
 
         {/* Real Cumulative Earnings Banner */}
         {stats.totalEarnings > 0 && (
-          <div className="bg-white rounded-3xl p-4.5 px-5 shadow-sm border border-slate-100 flex items-center justify-between">
+          <div className="bg-white dark:bg-zinc-950 rounded-3xl p-4.5 px-5 shadow-sm border border-slate-100 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div 
                 className="w-10 h-10 rounded-2xl flex items-center justify-center"
@@ -1086,7 +1086,7 @@ export function DeliveryProfile() {
           style={{ backgroundColor: brandPrimary }}
         >
           <div className="flex items-center gap-3.5">
-            <div className="w-11 h-11 bg-white/10 rounded-2xl flex items-center justify-center text-[#FACC15]">
+            <div className="w-11 h-11 bg-white dark:bg-zinc-950/10 rounded-2xl flex items-center justify-center text-[#FACC15]">
               {driver?.vehicleType === 'car' ? <Car size={22} /> : <Bike size={22} />}
             </div>
             <div>
@@ -1096,7 +1096,7 @@ export function DeliveryProfile() {
                     ? t('car', 'Voiture') 
                     : (driver?.vehicleType === 'bicycle' ? t('bicycle', 'Vélo') : t('motorcycle', 'Moto'))}
                 </span>
-                <span className="text-xs bg-white/20 px-2 py-0.5 rounded-md font-mono font-bold tracking-widest uppercase">
+                <span className="text-xs bg-white dark:bg-zinc-950/20 px-2 py-0.5 rounded-md font-mono font-bold tracking-widest uppercase">
                   {driver?.vehiclePlate || t('no_plate', 'NON IMMATRICULÉ')}
                 </span>
               </div>
@@ -1114,7 +1114,7 @@ export function DeliveryProfile() {
             {t('account_management', 'Gestion du compte & Paramètres')}
           </h3>
           
-          <div className="bg-white rounded-3xl border border-slate-100 shadow-sm divide-y divide-slate-100 overflow-hidden">
+          <div className="bg-white dark:bg-zinc-950 rounded-3xl border border-slate-100 shadow-sm divide-y divide-slate-100 overflow-hidden">
             {/* 1. Modify Personal Info */}
             <div 
               onClick={() => setIsEditingBasic(true)}
@@ -1219,7 +1219,7 @@ export function DeliveryProfile() {
             {t('preferences_and_security', 'Sécurité & Préférences')}
           </h3>
 
-          <div className="bg-white rounded-3xl border border-slate-100 shadow-sm divide-y divide-slate-100 overflow-hidden">
+          <div className="bg-white dark:bg-zinc-950 rounded-3xl border border-slate-100 shadow-sm divide-y divide-slate-100 overflow-hidden">
             {/* Language */}
             <div className="p-4 flex items-center justify-between hover:bg-slate-50 transition">
               <div className="flex items-center gap-3.5">
@@ -1275,7 +1275,7 @@ export function DeliveryProfile() {
       {/* MODAL 1: Edit Basic Profile (Name, Phone, Operating Zone, Bio) */}
       {isEditingBasic && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl max-w-md w-full p-6 shadow-xl border border-slate-100 space-y-5 animate-in fade-in zoom-in-95 duration-150">
+          <div className="bg-white dark:bg-zinc-950 rounded-3xl max-w-md w-full p-6 shadow-xl border border-slate-100 space-y-5 animate-in fade-in zoom-in-95 duration-150">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <div className="flex items-center gap-2.5">
                 <div 
@@ -1308,7 +1308,7 @@ export function DeliveryProfile() {
                   value={formData.name || ''} 
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })} 
                   placeholder={t('eg_driver_name', 'ex: Jean Dupont')}
-                  className="w-full border border-slate-200 rounded-2xl p-3.5 bg-slate-50 text-slate-900 font-bold text-sm outline-none focus:bg-white transition"
+                  className="w-full border border-slate-200 rounded-2xl p-3.5 bg-slate-50 text-slate-900 font-bold text-sm outline-none focus:bg-white dark:bg-zinc-950 transition"
                 />
               </div>
 
@@ -1323,7 +1323,7 @@ export function DeliveryProfile() {
                   value={formData.phoneNumber || formData.phone || ''} 
                   onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value, phone: e.target.value })} 
                   placeholder="+237 6XX XX XX XX"
-                  className="w-full border border-slate-200 rounded-2xl p-3.5 bg-slate-50 text-slate-900 font-bold text-sm outline-none focus:bg-white transition"
+                  className="w-full border border-slate-200 rounded-2xl p-3.5 bg-slate-50 text-slate-900 font-bold text-sm outline-none focus:bg-white dark:bg-zinc-950 transition"
                 />
               </div>
 
@@ -1356,7 +1356,7 @@ export function DeliveryProfile() {
                   value={formData.bio || ''} 
                   onChange={(e) => setFormData({ ...formData, bio: e.target.value })} 
                   placeholder={t('driver_bio_placeholder', 'Coursier express, disponible pour livraisons...')}
-                  className="w-full border border-slate-200 rounded-2xl p-3 bg-slate-50 text-slate-900 font-medium text-xs outline-none focus:bg-white transition resize-none"
+                  className="w-full border border-slate-200 rounded-2xl p-3 bg-slate-50 text-slate-900 font-medium text-xs outline-none focus:bg-white dark:bg-zinc-950 transition resize-none"
                 />
               </div>
 
@@ -1385,7 +1385,7 @@ export function DeliveryProfile() {
       {/* MODAL 2: Change Password */}
       {showPasswordModal && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl max-w-md w-full p-6 shadow-xl border border-slate-100 space-y-5 animate-in fade-in zoom-in-95 duration-150">
+          <div className="bg-white dark:bg-zinc-950 rounded-3xl max-w-md w-full p-6 shadow-xl border border-slate-100 space-y-5 animate-in fade-in zoom-in-95 duration-150">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <div className="flex items-center gap-2.5">
                 <div className="w-9 h-9 rounded-xl bg-rose-50 text-rose-700 flex items-center justify-center">
@@ -1416,7 +1416,7 @@ export function DeliveryProfile() {
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
                     placeholder="Au moins 6 caractères"
-                    className="w-full border border-slate-200 rounded-2xl p-3.5 pr-11 bg-slate-50 text-slate-900 font-medium text-sm outline-none focus:bg-white transition"
+                    className="w-full border border-slate-200 rounded-2xl p-3.5 pr-11 bg-slate-50 text-slate-900 font-medium text-sm outline-none focus:bg-white dark:bg-zinc-950 transition"
                   />
                   <button 
                     type="button" 
@@ -1438,7 +1438,7 @@ export function DeliveryProfile() {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder="Répétez le mot de passe"
-                  className="w-full border border-slate-200 rounded-2xl p-3.5 bg-slate-50 text-slate-900 font-medium text-sm outline-none focus:bg-white transition"
+                  className="w-full border border-slate-200 rounded-2xl p-3.5 bg-slate-50 text-slate-900 font-medium text-sm outline-none focus:bg-white dark:bg-zinc-950 transition"
                 />
               </div>
 

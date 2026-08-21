@@ -189,7 +189,7 @@ const resources = {
       "view_order": "Voir commande",
       "call": "Appeler",
       "no_messages_yet": "Aucun message pour l'instant.",
-      "support_welcome_title": "Assistance PharmaExpress",
+      "support_welcome_title": "Assistance PharmAply",
       "support_welcome_desc": "Posez votre question à notre équipe technique. Un agent vous répondra sous quelques minutes.",
       "type_your_message": "Saisissez votre message...",
       "write_to_support": "Écrivez au support administrateur...",
@@ -218,7 +218,7 @@ const resources = {
   en: {
     translation: {
       ...enNested,
-      "app_name": "PharmaExpress",
+      "app_name": "PharmAply",
       "subtitle_1": "Trusted access to the medicine you need safely and effortlessly.",
       "title_1": "Your Health\nOur Priority",
       "subtitle_2": "Fast, reliable delivery that brings essential care right to your home.",
@@ -383,7 +383,7 @@ const resources = {
       "view_order": "View order",
       "call": "Call",
       "no_messages_yet": "No messages yet.",
-      "support_welcome_title": "PharmaExpress Support",
+      "support_welcome_title": "PharmAply Support",
       "support_welcome_desc": "Ask your question to our technical team. An agent will respond in a few minutes.",
       "type_your_message": "Type your message...",
       "write_to_support": "Write to administrator support...",

@@ -212,8 +212,8 @@ export function AdminDeliveriesTracking() {
       case 'en_route':
       case 'delivering':
         return (
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#194B4B]/10 text-[#194B4B] dark:bg-teal-950/60 dark:text-teal-300 rounded-full text-xs font-bold">
-            <Bike size={12} className="text-[#194B4B]" /> En route
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[var(--app-primary-color)]/10 text-[var(--app-primary-color)] dark:bg-teal-950/60 dark:text-teal-300 rounded-full text-xs font-bold">
+            <Bike size={12} className="text-[var(--app-primary-color)]" /> En route
           </span>
         );
       case 'driver_assigned':
@@ -252,7 +252,7 @@ export function AdminDeliveriesTracking() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100 flex items-center gap-3">
-            <span className="w-9 h-9 rounded-2xl bg-[#194B4B] text-[#FACC15] flex items-center justify-center shadow-sm">
+            <span className="w-9 h-9 rounded-2xl bg-[var(--app-primary-color)] text-[#FACC15] flex items-center justify-center shadow-sm">
               <Truck size={20} />
             </span>
             Tableau Livraison
@@ -274,19 +274,19 @@ export function AdminDeliveriesTracking() {
           <div className="flex items-center bg-white dark:bg-zinc-950 p-1 rounded-full shadow-sm border border-gray-100 dark:border-zinc-800">
             <button 
               onClick={() => setTimeRange("7d")}
-              className={`px-3 py-1.5 rounded-full text-xs font-semibold transition ${timeRange === "7d" ? "bg-[#194B4B] text-white" : "text-slate-500 hover:text-slate-800"}`}
+              className={`px-3 py-1.5 rounded-full text-xs font-semibold transition ${timeRange === "7d" ? "bg-[var(--app-primary-color)] text-white" : "text-slate-500 hover:text-slate-800"}`}
             >
               7 jours
             </button>
             <button 
               onClick={() => setTimeRange("30d")}
-              className={`px-3 py-1.5 rounded-full text-xs font-semibold transition ${timeRange === "30d" ? "bg-[#194B4B] text-white" : "text-slate-500 hover:text-slate-800"}`}
+              className={`px-3 py-1.5 rounded-full text-xs font-semibold transition ${timeRange === "30d" ? "bg-[var(--app-primary-color)] text-white" : "text-slate-500 hover:text-slate-800"}`}
             >
               30 jours
             </button>
             <button 
               onClick={() => setTimeRange("all")}
-              className={`px-3 py-1.5 rounded-full text-xs font-semibold transition ${timeRange === "all" ? "bg-[#194B4B] text-white" : "text-slate-500 hover:text-slate-800"}`}
+              className={`px-3 py-1.5 rounded-full text-xs font-semibold transition ${timeRange === "all" ? "bg-[var(--app-primary-color)] text-white" : "text-slate-500 hover:text-slate-800"}`}
             >
               Total
             </button>
@@ -346,12 +346,12 @@ export function AdminDeliveriesTracking() {
         </div>
 
         {/* Card 3: Commission Plateforme (Couleur principale #194B4B & Jaune) */}
-        <div className="bg-[#194B4B] rounded-[2rem] p-6 relative overflow-hidden flex flex-col justify-between h-40 shadow-sm text-white">
+        <div className="bg-[var(--app-primary-color)] rounded-[2rem] p-6 relative overflow-hidden flex flex-col justify-between h-40 shadow-sm text-white">
           <div className="flex justify-between items-start">
-            <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center">
+            <div className="w-8 h-8 bg-white dark:bg-zinc-950/10 rounded-full flex items-center justify-center">
               <Sparkles size={16} className="text-[#FACC15]" />
             </div>
-            <span className="text-[10px] font-bold uppercase tracking-wider bg-[#FACC15] text-[#194B4B] px-2.5 py-0.5 rounded-full">
+            <span className="text-[10px] font-bold uppercase tracking-wider bg-[#FACC15] text-[var(--app-primary-color)] px-2.5 py-0.5 rounded-full">
               Marge 20%
             </span>
           </div>
@@ -363,9 +363,9 @@ export function AdminDeliveriesTracking() {
             </p>
           </div>
           <div className="absolute right-6 bottom-6 flex items-end gap-1 opacity-20 pointer-events-none">
-            <div className="w-2 h-6 bg-white rounded-full"></div>
-            <div className="w-2 h-14 bg-white rounded-full"></div>
-            <div className="w-2 h-10 bg-white rounded-full"></div>
+            <div className="w-2 h-6 bg-white dark:bg-zinc-950 rounded-full"></div>
+            <div className="w-2 h-14 bg-white dark:bg-zinc-950 rounded-full"></div>
+            <div className="w-2 h-10 bg-white dark:bg-zinc-950 rounded-full"></div>
           </div>
         </div>
 
@@ -373,7 +373,7 @@ export function AdminDeliveriesTracking() {
         <div className="bg-[#fef08a] rounded-[2rem] p-6 relative overflow-hidden flex flex-col justify-between h-40 shadow-sm">
           <div className="flex justify-between items-start">
             <div className="w-8 h-8 bg-black/10 rounded-full flex items-center justify-center">
-              <Star size={16} className="text-[#194B4B] fill-[#194B4B]" />
+              <Star size={16} className="text-[var(--app-primary-color)] fill-[var(--app-primary-color)]" />
             </div>
             <span className="text-[10px] font-bold uppercase tracking-wider bg-black/10 text-black px-2.5 py-0.5 rounded-full">
               ~{metrics.avgDeliveryTime}
@@ -407,7 +407,7 @@ export function AdminDeliveriesTracking() {
             </div>
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-1.5">
-                <div className="w-3 h-3 rounded-full bg-[#194B4B]"></div>
+                <div className="w-3 h-3 rounded-full bg-[var(--app-primary-color)]"></div>
                 <span className="text-xs text-slate-500 font-medium">Revenu Global</span>
               </div>
               <div className="flex items-center gap-1.5">
@@ -513,7 +513,7 @@ export function AdminDeliveriesTracking() {
             <div className="flex items-center bg-slate-50 dark:bg-zinc-900 p-1 rounded-full border border-slate-100 dark:border-zinc-800 text-xs">
               <button
                 onClick={() => setStatusFilter("all")}
-                className={`px-3 py-1.5 rounded-full font-semibold transition ${statusFilter === "all" ? "bg-white dark:bg-zinc-950 text-[#194B4B] shadow-sm font-bold" : "text-slate-500"}`}
+                className={`px-3 py-1.5 rounded-full font-semibold transition ${statusFilter === "all" ? "bg-white dark:bg-zinc-950 text-[var(--app-primary-color)] shadow-sm font-bold" : "text-slate-500"}`}
               >
                 Toutes ({deliveryOrders.length})
               </button>
@@ -585,7 +585,7 @@ export function AdminDeliveriesTracking() {
                           {order.patientName || order.customerName || "Patient"}
                         </div>
                         <div className="text-[11px] text-slate-400 truncate max-w-[200px] flex items-center gap-1 mt-0.5">
-                          <MapPin size={11} className="text-[#194B4B] shrink-0" />
+                          <MapPin size={11} className="text-[var(--app-primary-color)] shrink-0" />
                           {order.deliveryAddress || order.address || "Douala, Cameroun"}
                         </div>
                       </td>
@@ -593,7 +593,7 @@ export function AdminDeliveriesTracking() {
                       {/* Livreur & Moto */}
                       <td className="py-4 px-4">
                         <div className="flex items-center gap-2">
-                          <div className="w-7 h-7 rounded-full bg-[#194B4B]/10 text-[#194B4B] flex items-center justify-center font-bold text-xs shrink-0">
+                          <div className="w-7 h-7 rounded-full bg-[var(--app-primary-color)]/10 text-[var(--app-primary-color)] flex items-center justify-center font-bold text-xs shrink-0">
                             <Bike size={14} />
                           </div>
                           <div>
@@ -609,7 +609,7 @@ export function AdminDeliveriesTracking() {
 
                       {/* Frais & Commission */}
                       <td className="py-4 px-4">
-                        <div className="font-bold text-[#194B4B] dark:text-teal-400">
+                        <div className="font-bold text-[var(--app-primary-color)] dark:text-teal-400">
                           {formatCurrency(fee)}
                         </div>
                         <div className="text-[10px] text-emerald-600 font-medium">
@@ -689,7 +689,7 @@ export function AdminDeliveriesTracking() {
                 </div>
                 <div>
                   <span className="text-slate-400">Frais de livraison</span>
-                  <div className="text-base font-bold text-[#194B4B] dark:text-teal-400 mt-0.5">
+                  <div className="text-base font-bold text-[var(--app-primary-color)] dark:text-teal-400 mt-0.5">
                     {formatCurrency(Number(selectedOrder.deliveryFee || 1500))}
                   </div>
                 </div>
@@ -762,7 +762,7 @@ export function AdminDeliveriesTracking() {
             <div className="pt-2">
               <button
                 onClick={() => setSelectedOrder(null)}
-                className="w-full py-3 bg-[#194B4B] text-white rounded-full font-bold text-xs shadow-sm hover:bg-[#143d3d] transition"
+                className="w-full py-3 bg-[var(--app-primary-color)] text-white rounded-full font-bold text-xs shadow-sm hover:bg-[#143d3d] transition"
               >
                 Fermer
               </button>

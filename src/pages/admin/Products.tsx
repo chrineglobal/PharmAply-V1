@@ -871,7 +871,7 @@ export function AdminProducts() {
                               </td>
                               <td className="py-4 px-6 text-right">
                                  <div className="flex items-center justify-end gap-2">
-                                    <button onClick={() => openEditModal(p)} className="p-1.5 text-slate-400 hover:text-indigo-600 rounded-lg transition" title={t('edit', 'Edit')}>
+                                    <button onClick={() => openEditModal(p)} className="p-1.5 text-slate-400 hover:text-[var(--app-primary-color)] rounded-lg transition" title={t('edit', 'Edit')}>
                                        <Edit2 size={16} />
                                     </button>
                                     <button 
@@ -904,7 +904,7 @@ export function AdminProducts() {
               
               <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col h-full overflow-hidden">
               {/* Modal Header */}
-              <div className="px-6 py-5 border-b border-gray-100 dark:border-zinc-900 flex justify-between items-center bg-gray-50/50 dark:bg-zinc-900/10 shrink-0">
+              <div className="px-6 py-5 border-b border-gray-100 dark:border-zinc-900 flex justify-between items-center bg-gray-50 dark:bg-zinc-900/50 dark:bg-zinc-900/10 shrink-0">
                  <div>
                     <h2 className="text-lg font-extrabold text-slate-900 dark:text-white">
                        {editingId ? t('edit_product', 'Edit Product') : t('add_new_product', 'Add New Product')}
@@ -932,7 +932,7 @@ export function AdminProducts() {
                     <div className="bg-slate-50/40 dark:bg-zinc-900/20 p-5 rounded-2xl border border-gray-100 dark:border-zinc-850/50 space-y-4">
                        <div className="flex flex-col md:flex-row items-start md:items-center gap-6 pb-4 border-b border-dashed border-gray-100 dark:border-zinc-850">
                           {(watch('imageUrl')) ? (
-                             <img src={watch('imageUrl')} className="w-20 h-20 rounded-2xl object-cover border border-slate-200 dark:border-zinc-800 shadow-sm bg-white" alt="Preview"/>
+                             <img src={watch('imageUrl')} className="w-20 h-20 rounded-2xl object-cover border border-slate-200 dark:border-zinc-800 shadow-sm bg-white dark:bg-zinc-950" alt="Preview"/>
                           ) : (
                              <div className="w-20 h-20 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 flex items-center justify-center shadow-sm shrink-0">
                                 <ImageIcon className="text-slate-400" size={32} />

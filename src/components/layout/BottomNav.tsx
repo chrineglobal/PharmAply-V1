@@ -55,7 +55,7 @@ export function BottomNav({ role }: BottomNavProps) {
       : adminLinks;
 
   return (
-    <div className="h-[4.5rem] bg-white/95 dark:bg-zinc-950/95 backdrop-blur-xl border-t border-gray-100 dark:border-zinc-800 flex items-center justify-around px-2 sm:px-6 z-40 pb-[env(safe-area-inset-bottom)] transition-colors shrink-0 shadow-sm relative">
+    <div className="h-[4.5rem] bg-white dark:bg-zinc-950/95 dark:bg-zinc-950/95 backdrop-blur-xl border-t border-gray-100 dark:border-zinc-800 flex items-center justify-around px-2 sm:px-6 z-40 pb-[env(safe-area-inset-bottom)] transition-colors shrink-0 shadow-sm relative">
       {links.map((link) => {
         const Icon = link.icon;
         const isCenter = (link as any).isCenter;

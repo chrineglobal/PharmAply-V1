@@ -65,7 +65,7 @@ export function SecurityRoles() {
          <button 
            onClick={handleSave} 
            disabled={loading}
-           className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-sm transition flex items-center gap-2 disabled:opacity-50"
+           className="bg-[var(--app-primary-color)] hover:bg-[var(--app-primary-color)] text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-sm transition flex items-center gap-2 disabled:opacity-50"
          >
             <Save size={16} />  {t('save_changes', 'Save Changes')} </button>
       </div>
@@ -74,7 +74,7 @@ export function SecurityRoles() {
          {/* Authentication Settings */}
          <div className="bg-white dark:bg-zinc-950 rounded-2xl p-6 shadow-sm border border-gray-100 mb-6">
             <div className="flex items-center gap-3 mb-6 block border-b border-gray-50 pb-4">
-              <div className="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center">
+              <div className="w-10 h-10 bg-indigo-50 text-[var(--app-primary-color)] rounded-xl flex items-center justify-center">
                  <Shield size={20} />
               </div>
               <div>
@@ -89,7 +89,7 @@ export function SecurityRoles() {
                     type="checkbox" 
                     checked={requireTwoFactor}
                     onChange={(e) => setRequireTwoFactor(e.target.checked)}
-                    className="w-5 h-5 text-indigo-600 rounded mt-0.5"
+                    className="w-5 h-5 text-[var(--app-primary-color)] rounded mt-0.5"
                   />
                   <div>
                     <h3 className="font-bold text-gray-900 dark:text-white text-sm block">Require Two-Factor Authentication (2FA)</h3>
@@ -132,7 +132,7 @@ export function SecurityRoles() {
                       value={allowedIPs}
                       onChange={(e) => setAllowedIPs(e.target.value)}
                       placeholder={t('e_g_192_168_1_1_10_10_0_0_0_24', 'e.g. 192.168.1.1&#10;10.0.0.0/24')}
-                      className="w-full border border-gray-200 rounded-xl p-3 text-sm focus:border-indigo-500 outline-none font-mono min-h-[100px]"
+                      className="w-full border border-gray-200 rounded-xl p-3 text-sm focus:border-[var(--app-primary-color)] outline-none font-mono min-h-[100px]"
                    />
                    <p className="text-xs text-slate-400 mt-2"> {t('enter_one_ip_address_or_cidr_r', 'Enter one IP address or CIDR range per line.')} </p>
                  </div>
@@ -166,11 +166,11 @@ export function SecurityRoles() {
                         </div>
                         <p className="text-sm text-slate-500">{r.desc}</p>
                      </div>
-                     <button className="text-indigo-600 font-medium text-sm hover:underline"> {t('edit_permissions', 'Edit Permissions')} </button>
+                     <button className="text-[var(--app-primary-color)] font-medium text-sm hover:underline"> {t('edit_permissions', 'Edit Permissions')} </button>
                   </div>
                ))}
                
-               <button className="w-full border-2 border-dashed border-gray-200 text-gray-500 font-bold py-4 rounded-xl hover:border-indigo-300 hover:text-indigo-600 hover:bg-indigo-50 transition-colors mt-2">
+               <button className="w-full border-2 border-dashed border-gray-200 text-gray-500 font-bold py-4 rounded-xl hover:border-indigo-300 hover:text-[var(--app-primary-color)] hover:bg-indigo-50 transition-colors mt-2">
                   {t('create_custom_role', '+ Create Custom Role')} </button>
             </div>
          </div>

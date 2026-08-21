@@ -66,7 +66,7 @@ export function VendorSettings() {
          <button 
            onClick={handleSave} 
            disabled={loading}
-           className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-sm transition flex items-center gap-2 disabled:opacity-50"
+           className="bg-[var(--app-primary-color)] hover:bg-[var(--app-primary-color)] text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-sm transition flex items-center gap-2 disabled:opacity-50"
          >
             <Save size={16} /> Save Changes
          </button>
@@ -83,7 +83,7 @@ export function VendorSettings() {
                     name="requireBusinessLicense"
                     checked={settings.requireBusinessLicense}
                     onChange={handleChange}
-                    className="w-5 h-5 text-indigo-600 rounded mt-0.5"
+                    className="w-5 h-5 text-[var(--app-primary-color)] rounded mt-0.5"
                   />
                   <div>
                     <h3 className="font-bold text-gray-900 dark:text-white text-sm block">Require Operating License / Business License</h3>
@@ -95,7 +95,7 @@ export function VendorSettings() {
                     name="requireTaxId"
                     checked={settings.requireTaxId}
                     onChange={handleChange}
-                    className="w-5 h-5 text-indigo-600 rounded mt-0.5"
+                    className="w-5 h-5 text-[var(--app-primary-color)] rounded mt-0.5"
                   />
                   <div>
                     <h3 className="font-bold text-gray-900 dark:text-white text-sm block">Require Taxpayer Card / VAT ID</h3>
@@ -107,7 +107,7 @@ export function VendorSettings() {
                     name="requirePharmacistLicense"
                     checked={settings.requirePharmacistLicense}
                     onChange={handleChange}
-                    className="w-5 h-5 text-indigo-600 rounded mt-0.5"
+                    className="w-5 h-5 text-[var(--app-primary-color)] rounded mt-0.5"
                   />
                   <div>
                     <h3 className="font-bold text-gray-900 dark:text-white text-sm block">Require Pharmacy Board License</h3>
@@ -125,7 +125,7 @@ export function VendorSettings() {
                     name="autoApproveVerified"
                     checked={settings.autoApproveVerified}
                     onChange={handleChange}
-                    className="w-5 h-5 text-indigo-600 rounded mt-0.5"
+                    className="w-5 h-5 text-[var(--app-primary-color)] rounded mt-0.5"
                   />
                   <div>
                     <h3 className="font-bold text-gray-900 dark:text-white text-sm block">Auto-approve Verified Pharmacies</h3>
@@ -138,7 +138,7 @@ export function VendorSettings() {
                     name="allowCustomCommissions"
                     checked={settings.allowCustomCommissions}
                     onChange={handleChange}
-                    className="w-5 h-5 text-indigo-600 rounded mt-0.5"
+                    className="w-5 h-5 text-[var(--app-primary-color)] rounded mt-0.5"
                   />
                   <div>
                     <h3 className="font-bold text-gray-900 dark:text-white text-sm block">Allow Custom Commission Rates</h3>

@@ -36,7 +36,7 @@ export function NotificationListener() {
             {message}
           </span>
         </div>
-        <span className="text-[10px] font-bold text-[#194B4B] dark:text-teal-400 bg-teal-50 dark:bg-teal-950/60 px-2 py-1 rounded-full whitespace-nowrap">
+        <span className="text-[10px] font-bold text-[var(--app-primary-color)] dark:text-teal-400 bg-teal-50 dark:bg-teal-950/60 px-2 py-1 rounded-full whitespace-nowrap">
           Voir &rarr;
         </span>
       </div>

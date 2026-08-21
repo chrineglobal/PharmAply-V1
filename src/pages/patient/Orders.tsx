@@ -146,7 +146,7 @@ export function PatientOrders() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                <ShoppingBag size={24} className="text-[#194B4B] dark:text-teal-400 shrink-0" />
+                <ShoppingBag size={24} className="text-[var(--app-primary-color)] dark:text-teal-400 shrink-0" />
                 {t('patient_orders.my_orders', 'Mes Commandes')}
               </h1>
               <p className="text-xs text-gray-500 dark:text-zinc-400 mt-0.5">
@@ -163,7 +163,7 @@ export function PatientOrders() {
               placeholder={t('patient_orders.search_placeholder', 'Rechercher une commande, un médicament ou une pharmacie...')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full bg-gray-100 dark:bg-zinc-800 py-2.5 pl-10 pr-4 rounded-2xl text-xs sm:text-sm outline-none text-gray-900 dark:text-white placeholder-gray-400 border border-transparent focus:border-[#194B4B] transition"
+              className="w-full bg-gray-100 dark:bg-zinc-800 py-2.5 pl-10 pr-4 rounded-2xl text-xs sm:text-sm outline-none text-gray-900 dark:text-white placeholder-gray-400 border border-transparent focus:border-[var(--app-primary-color)] transition"
             />
           </div>
         </div>
@@ -315,7 +315,7 @@ export function PatientOrders() {
               <div className="flex justify-end pt-1">
                 <button
                   onClick={() => handleProceedToPayment(unpaidOrders[0])}
-                  className="w-full sm:w-auto px-5 py-2.5 min-h-[44px] bg-[#194B4B] hover:bg-teal-700 text-white rounded-xl sm:rounded-2xl text-xs font-bold shadow-md flex items-center justify-center gap-2 transition active:scale-95"
+                  className="w-full sm:w-auto px-5 py-2.5 min-h-[44px] bg-[var(--app-primary-color)] hover:bg-teal-700 text-white rounded-xl sm:rounded-2xl text-xs font-bold shadow-md flex items-center justify-center gap-2 transition active:scale-95"
                 >
                   <ShieldCheck size={16} className="text-yellow-400" />
                   {t('patient_orders.pay_now', 'Payer maintenant')}
@@ -331,7 +331,7 @@ export function PatientOrders() {
               onClick={() => setActiveTab("all")}
               className={`px-3.5 sm:px-4 py-2 min-h-[38px] rounded-full text-xs font-bold transition whitespace-nowrap ${
                 activeTab === "all"
-                  ? "bg-[#194B4B] text-white shadow-sm"
+                  ? "bg-[var(--app-primary-color)] text-white shadow-sm"
                   : "bg-gray-100 dark:bg-zinc-800 text-gray-600 dark:text-zinc-400 hover:bg-gray-200"
               }`}
             >
@@ -354,7 +354,7 @@ export function PatientOrders() {
               onClick={() => setActiveTab("in_progress")}
               className={`px-3.5 sm:px-4 py-2 min-h-[38px] rounded-full text-xs font-bold transition whitespace-nowrap flex items-center gap-1.5 ${
                 activeTab === "in_progress"
-                  ? "bg-[#194B4B] text-white shadow-sm"
+                  ? "bg-[var(--app-primary-color)] text-white shadow-sm"
                   : "bg-gray-100 dark:bg-zinc-800 text-gray-600 dark:text-zinc-400 hover:bg-gray-200"
               }`}
             >
@@ -366,7 +366,7 @@ export function PatientOrders() {
               onClick={() => setActiveTab("delivered")}
               className={`px-3.5 sm:px-4 py-2 min-h-[38px] rounded-full text-xs font-bold transition whitespace-nowrap ${
                 activeTab === "delivered"
-                  ? "bg-[#194B4B] text-white shadow-sm"
+                  ? "bg-[var(--app-primary-color)] text-white shadow-sm"
                   : "bg-gray-100 dark:bg-zinc-800 text-gray-600 dark:text-zinc-400 hover:bg-gray-200"
               }`}
             >
@@ -401,7 +401,7 @@ export function PatientOrders() {
               </p>
               <button
                 onClick={() => navigate("/patient/search")}
-                className="mt-5 px-6 py-2.5 min-h-[44px] bg-[#194B4B] text-white rounded-full text-xs font-bold hover:bg-teal-700 transition shadow-sm"
+                className="mt-5 px-6 py-2.5 min-h-[44px] bg-[var(--app-primary-color)] text-white rounded-full text-xs font-bold hover:bg-teal-700 transition shadow-sm"
               >
                 {t('patient_orders.browse_meds', 'Parcourir les médicaments')}
               </button>
@@ -417,7 +417,7 @@ export function PatientOrders() {
 
                 // Libellé et Style du Statut
                 let statusLabel = t('status.pending', "En attente");
-                let statusClass = "bg-gray-100 text-gray-700 dark:bg-zinc-800 dark:text-zinc-300";
+                let statusClass = "bg-gray-100 dark:bg-zinc-800 text-gray-700 dark:bg-zinc-800 dark:text-zinc-300";
 
                 if (order.status === 'validated_awaiting_payment' || (order.status === 'pending' && !order.paidAt)) {
                   statusLabel = t('status.validated_awaiting_payment', "Validée — À Payer");
@@ -427,7 +427,7 @@ export function PatientOrders() {
                   statusClass = "bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300";
                 } else if (order.status === 'preparing') {
                   statusLabel = t('status.preparing', "En préparation");
-                  statusClass = "bg-teal-100 text-[#194B4B] dark:bg-teal-950 dark:text-teal-300";
+                  statusClass = "bg-teal-100 text-[var(--app-primary-color)] dark:bg-teal-950 dark:text-teal-300";
                 } else if (order.status === 'ready' || order.status === 'ready_for_pickup') {
                   statusLabel = order.deliveryMethod === 'pickup' ? t('status.ready_counter', "Prêt au comptoir") : t('status.ready_delivery', "Prêt pour livraison");
                   statusClass = "bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300";
@@ -464,7 +464,7 @@ export function PatientOrders() {
                           </span>
                           {order.pharmacyName && (
                             <span className="flex items-center gap-1 font-medium text-gray-700 dark:text-zinc-300">
-                              <Store size={13} className="text-[#194B4B] dark:text-teal-400 shrink-0" />
+                              <Store size={13} className="text-[var(--app-primary-color)] dark:text-teal-400 shrink-0" />
                               {order.pharmacyName}
                             </span>
                           )}
@@ -488,7 +488,7 @@ export function PatientOrders() {
                         {items.map((it: any, idx: number) => (
                           <div key={idx} className="flex items-center justify-between text-xs sm:text-sm gap-3">
                             <span className="text-gray-800 dark:text-zinc-200 font-medium truncate">
-                              <span className="font-bold text-[#194B4B] dark:text-teal-400 mr-2">{it.quantity}x</span>
+                              <span className="font-bold text-[var(--app-primary-color)] dark:text-teal-400 mr-2">{it.quantity}x</span>
                               {it.name} {it.dosage ? `(${it.dosage})` : ""}
                             </span>
                             <span className="font-bold text-gray-900 dark:text-white shrink-0">
@@ -503,7 +503,7 @@ export function PatientOrders() {
                     <div className="flex items-center gap-2 text-xs text-gray-600 dark:text-zinc-400 bg-gray-50 dark:bg-zinc-800/40 p-3 rounded-xl">
                       {order.deliveryMethod === 'pickup' ? (
                         <div className="flex items-center gap-2">
-                          <Store size={15} className="text-[#194B4B] dark:text-teal-400 shrink-0" />
+                          <Store size={15} className="text-[var(--app-primary-color)] dark:text-teal-400 shrink-0" />
                           <span className="font-medium">{t('patient_orders.pickup_at_counter', 'Retrait sur place en pharmacie')}</span>
                         </div>
                       ) : (
@@ -560,7 +560,7 @@ export function PatientOrders() {
                           </span>
                           <button
                             onClick={() => navigate(`/patient/tracking/${order.id}`)}
-                            className="px-5 py-3 min-h-[44px] bg-[#194B4B] hover:bg-teal-700 text-white rounded-2xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-sm transition"
+                            className="px-5 py-3 min-h-[44px] bg-[var(--app-primary-color)] hover:bg-teal-700 text-white rounded-2xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-sm transition"
                           >
                             <MapPin size={16} /> {t('patient_orders.track_live_map', 'Suivre sur la Carte Live')}
                           </button>

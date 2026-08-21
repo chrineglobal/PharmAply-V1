@@ -103,7 +103,7 @@ export function NotificationBell({ className = '' }: { className?: string }) {
       case 'order':
       case 'order_status':
       default:
-        return <Package size={16} className="text-indigo-500" />;
+        return <Package size={16} className="text-[var(--app-primary-color)]" />;
     }
   };
 
@@ -228,7 +228,7 @@ export function NotificationBell({ className = '' }: { className?: string }) {
     <div className={`relative ${className}`} ref={dropdownRef}>
       <button 
         onClick={() => setShowDropdown(!showDropdown)}
-        className="w-10 h-10 bg-white dark:bg-zinc-800 rounded-full flex items-center justify-center border border-gray-100 dark:border-zinc-700 shadow-sm relative text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-zinc-700 transition-colors"
+        className="w-10 h-10 bg-white dark:bg-zinc-800 rounded-full flex items-center justify-center border border-gray-100 dark:border-zinc-700 shadow-sm relative text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-zinc-700 transition-colors"
         title="Notifications"
         aria-label="Notifications"
       >
@@ -252,7 +252,7 @@ export function NotificationBell({ className = '' }: { className?: string }) {
             {unreadCount > 0 && (
               <button 
                 onClick={markAllAsRead} 
-                className="text-xs text-[#194B4B] dark:text-teal-400 font-bold hover:underline"
+                className="text-xs text-[var(--app-primary-color)] dark:text-teal-400 font-bold hover:underline"
               >
                 {t('mark_all_read', 'Tout marquer lu')}
               </button>
@@ -277,7 +277,7 @@ export function NotificationBell({ className = '' }: { className?: string }) {
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between gap-1 mb-0.5">
-                      <p className={`text-xs font-bold truncate ${!notif.isRead ? 'text-[#194B4B] dark:text-teal-300' : 'text-gray-900 dark:text-white'}`}>
+                      <p className={`text-xs font-bold truncate ${!notif.isRead ? 'text-[var(--app-primary-color)] dark:text-teal-300' : 'text-gray-900 dark:text-white'}`}>
                         {notif.title}
                       </p>
                       {!notif.isRead && (

@@ -152,7 +152,7 @@ export function PharmacistOrders() {
                            const liveName = userProfiles[pId]?.name || order.patientName || 'Client';
                            const livePhoto = userProfiles[pId]?.photoUrl || order.patientPhoto || order.patientPhotoUrl || '';
                            return (
-                           <tr key={order.id} className="hover:bg-gray-50 dark:hover:bg-slate-700/30 transition-colors cursor-pointer" onClick={() => navigate(`/pharmacist/order/${order.id}`)}>
+                           <tr key={order.id} className="hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-slate-700/30 transition-colors cursor-pointer" onClick={() => navigate(`/pharmacist/order/${order.id}`)}>
                               <td className="py-4 px-6">
                                  <div className="flex items-center gap-3">
                                     <UserAvatar
@@ -173,7 +173,7 @@ export function PharmacistOrders() {
                                      order.status === 'pending' ? 'text-green-600' :
                                      order.status === 'preparing' ? 'text-blue-600' :
                                      order.status === 'ready' ? 'text-purple-600' :
-                                     order.status === 'delivered' ? 'text-indigo-600' :
+                                     order.status === 'delivered' ? 'text-[var(--app-primary-color)]' :
                                      'text-red-500'
                                  }`}>
                                     {order.status}
@@ -196,7 +196,7 @@ export function PharmacistOrders() {
                                        e.stopPropagation();
                                        navigate(`/pharmacist/messages/${order.id}`, { state: { patientId: order.patientId } });
                                     }}
-                                    className="bg-indigo-50 text-indigo-600 hover:bg-indigo-100 dark:bg-indigo-500/10 dark:text-indigo-400 dark:hover:bg-indigo-500/20 px-3 py-1.5 rounded-xl text-xs font-bold transition-colors"
+                                    className="bg-indigo-50 text-[var(--app-primary-color)] hover:bg-indigo-100 dark:bg-[var(--app-primary-color)]/80/10 dark:text-[var(--app-primary-color)] dark:hover:bg-[var(--app-primary-color)]/80/20 px-3 py-1.5 rounded-xl text-xs font-bold transition-colors"
                                  >
                                     {t('messages', 'Messagerie')}
                                  </button>

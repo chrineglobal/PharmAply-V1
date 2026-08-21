@@ -11,7 +11,7 @@ export function PharmacistPayments() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
            <h1 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
-            <div className="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg text-indigo-600 dark:text-indigo-400">
+            <div className="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg text-[var(--app-primary-color)] dark:text-[var(--app-primary-color)]">
               <CreditCard size={24} />
             </div>
             {t('payments', 'Payments')}
@@ -21,11 +21,11 @@ export function PharmacistPayments() {
           </p>
         </div>
         <div className="flex items-center gap-2">
-           <button className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700 transition">
+           <button className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-slate-700 transition">
             <Filter size={16} />
             {t('filter', 'Filter')}
           </button>
-          <button className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700 transition">
+          <button className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-slate-700 transition">
             <Download size={16} />
             {t('export', 'Export')}
           </button>
@@ -36,7 +36,7 @@ export function PharmacistPayments() {
         <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-slate-700">
            <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">{t('available_balance', 'Available Balance')}</p>
            <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{formatCurrency(0)}</h3>
-           <button className="mt-4 w-full py-2 bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 font-medium text-sm rounded-lg hover:bg-indigo-100 dark:hover:bg-indigo-500/20 transition">
+           <button className="mt-4 w-full py-2 bg-indigo-50 dark:bg-[var(--app-primary-color)]/80/10 text-[var(--app-primary-color)] dark:text-[var(--app-primary-color)] font-medium text-sm rounded-lg hover:bg-indigo-100 dark:hover:bg-[var(--app-primary-color)]/80/20 transition">
              {t('withdraw', 'Withdraw')}
            </button>
         </div>

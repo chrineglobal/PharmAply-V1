@@ -85,7 +85,7 @@ export function DeliveryOrderDetails() {
             <div className="absolute left-[33px] top-[40px] bottom-[40px] w-0.5 bg-gray-200 border-l border-dashed border-gray-300"></div>
             
             <div className="flex gap-4 mb-6 relative z-10">
-               <div className="w-8 h-8 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center shrink-0">
+               <div className="w-8 h-8 bg-indigo-100 text-[var(--app-primary-color)] rounded-full flex items-center justify-center shrink-0">
                   <MapPin size={14} className="fill-current" />
                </div>
                <div className="flex-1">
@@ -130,7 +130,7 @@ export function DeliveryOrderDetails() {
 
       {/* Accept Button */}
       <div className="absolute bottom-0 left-0 right-0 bg-white dark:bg-black border-t border-gray-100 dark:border-zinc-800 p-4 px-6 pb-8 z-50">
-         <button disabled={processing} onClick={handleAcceptOrder} className="w-full bg-indigo-600 disabled:bg-indigo-400 text-white rounded-2xl font-bold py-4 shadow-lg shadow-indigo-200 hover:bg-indigo-700 transition flex items-center justify-center gap-2">
+         <button disabled={processing} onClick={handleAcceptOrder} className="w-full bg-[var(--app-primary-color)] disabled:bg-indigo-400 text-white rounded-2xl font-bold py-4 shadow-lg shadow-indigo-200 hover:bg-[var(--app-primary-color)] transition flex items-center justify-center gap-2">
             {processing ? (
               <>
                 <Loader2 size={20} className="animate-spin" />

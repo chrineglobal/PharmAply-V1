@@ -172,7 +172,7 @@ export function PatientHome() {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate('/patient/profile')}>
             <div 
-              className="w-12 h-12 bg-gray-100 dark:bg-zinc-800 rounded-full overflow-hidden border-2 flex items-center justify-center text-lg text-[#194B4B] dark:text-teal-400 font-bold uppercase shrink-0 shadow-sm"
+              className="w-12 h-12 bg-gray-100 dark:bg-zinc-800 rounded-full overflow-hidden border-2 flex items-center justify-center text-lg text-[var(--app-primary-color)] dark:text-teal-400 font-bold uppercase shrink-0 shadow-sm"
               style={{ borderColor: theme.primaryColor || '#194B4B' }}
             >
               {(user?.photoURL || userData?.photoURL || userData?.photoUrl || userData?.avatar_url) ? (
@@ -193,7 +193,7 @@ export function PatientHome() {
                 {t('hello', 'Bonjour')}, {userData?.name || user?.displayName || t('user', 'Client')}
               </p>
               <div className="flex items-center text-gray-500 dark:text-gray-400 text-xs mt-0.5">
-                <MapPin size={12} className="text-[#194B4B] dark:text-teal-400 mr-1 shrink-0" />
+                <MapPin size={12} className="text-[var(--app-primary-color)] dark:text-teal-400 mr-1 shrink-0" />
                 <span className="truncate max-w-[200px]">
                   {userData?.address || t('home_delivery', 'Livraison à domicile')}
                 </span>
@@ -206,7 +206,7 @@ export function PatientHome() {
             
             <button 
               onClick={() => navigate('/patient/messages')}
-              className="w-10 h-10 bg-white dark:bg-zinc-800 rounded-full flex items-center justify-center border border-gray-100 dark:border-zinc-700 shadow-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-zinc-700 transition-colors"
+              className="w-10 h-10 bg-white dark:bg-zinc-800 rounded-full flex items-center justify-center border border-gray-100 dark:border-zinc-700 shadow-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-zinc-700 transition-colors"
               title={t('messages', 'Messagerie')}
               aria-label={t('messages', 'Messagerie')}
             >

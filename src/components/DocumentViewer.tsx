@@ -56,7 +56,7 @@ export function DocumentViewer({ filePath, bucket = 'drivers', onClose }: Docume
           <h3 className="text-white font-bold text-xl drop-shadow-md"> {t('document_verification', 'Document Verification')} </h3>
           <button 
             onClick={onClose}
-            className="p-2 bg-white/10 hover:bg-white/20 text-white rounded-full transition backdrop-blur-md"
+            className="p-2 bg-white dark:bg-zinc-950/10 hover:bg-white dark:bg-zinc-950/20 text-white rounded-full transition backdrop-blur-md"
           >
             <X size={24} />
           </button>
@@ -70,7 +70,7 @@ export function DocumentViewer({ filePath, bucket = 'drivers', onClose }: Docume
              </div>
           ) : signedUrl ? (
             signedUrl.toLowerCase().includes('.pdf') ? (
-              <iframe src={`${signedUrl}#toolbar=0`} className="w-full h-[80vh] rounded-2xl bg-white" title={t('document_viewer', 'Document Viewer')} />
+              <iframe src={`${signedUrl}#toolbar=0`} className="w-full h-[80vh] rounded-2xl bg-white dark:bg-zinc-950" title={t('document_viewer', 'Document Viewer')} />
             ) : (
               <img src={signedUrl} alt="Document View" className="max-w-full max-h-[80vh] object-contain rounded-xl" />
             )
@@ -85,7 +85,7 @@ export function DocumentViewer({ filePath, bucket = 'drivers', onClose }: Docume
                  href={signedUrl} 
                  target="_blank" 
                  rel="noreferrer" 
-                 className="flex-1 py-3 bg-white/10 hover:bg-white/20 text-white text-center font-bold rounded-xl transition backdrop-blur-md border border-white/10"
+                 className="flex-1 py-3 bg-white dark:bg-zinc-950/10 hover:bg-white dark:bg-zinc-950/20 text-white text-center font-bold rounded-xl transition backdrop-blur-md border border-white/10"
                >
                   {t('open_in_new_tab', 'Open in New Tab')} 
                </a>

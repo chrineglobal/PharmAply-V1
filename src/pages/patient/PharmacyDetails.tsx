@@ -55,7 +55,7 @@ export function PatientPharmacyDetails() {
     <div className="flex-1 bg-slate-50 dark:bg-black flex flex-col h-full overflow-hidden">
       {/* Header Image & Info */}
       <div className="relative bg-white dark:bg-black shadow-sm z-10">
-        <div className="h-40 bg-indigo-600 relative overflow-hidden flex items-end p-6">
+        <div className="h-40 bg-[var(--app-primary-color)] relative overflow-hidden flex items-end p-6">
            {(pharmacy.imageUrl || theme.defaultPharmacyLogo) && (
               <img src={pharmacy.imageUrl || theme.defaultPharmacyLogo} className="absolute inset-0 w-full h-full object-cover" alt="header" />
            )}
@@ -89,13 +89,13 @@ export function PatientPharmacyDetails() {
         <div className="flex px-6 pt-4 border-b border-gray-100 dark:border-zinc-800 gap-6">
            <button 
              onClick={() => setActiveTab('products')}
-             className={`pb-3 font-bold text-sm ${activeTab === 'products' ? 'text-indigo-600 border-b-2 border-indigo-600' : 'text-gray-400 dark:text-gray-500'}`}
+             className={`pb-3 font-bold text-sm ${activeTab === 'products' ? 'text-[var(--app-primary-color)] border-b-2 border-[var(--app-primary-color)]' : 'text-gray-400 dark:text-gray-500'}`}
            >
              {t('products_tab', 'Products')}
            </button>
            <button 
              onClick={() => setActiveTab('about')}
-             className={`pb-3 font-bold text-sm ${activeTab === 'about' ? 'text-indigo-600 border-b-2 border-indigo-600' : 'text-gray-400 dark:text-gray-500'}`}
+             className={`pb-3 font-bold text-sm ${activeTab === 'about' ? 'text-[var(--app-primary-color)] border-b-2 border-[var(--app-primary-color)]' : 'text-gray-400 dark:text-gray-500'}`}
            >
              {t('about_tab', 'About')}
            </button>
@@ -108,7 +108,7 @@ export function PatientPharmacyDetails() {
             <div className="p-6">
                <div className="flex items-center justify-between mb-4">
                   <h3 className="font-bold text-gray-900 dark:text-white">{t('all_products', 'All Products')}</h3>
-                  <button className="text-indigo-600 bg-indigo-50 p-2 rounded-xl">
+                  <button className="text-[var(--app-primary-color)] bg-indigo-50 p-2 rounded-xl">
                      <Filter size={16} />
                   </button>
                </div>
@@ -126,14 +126,14 @@ export function PatientPharmacyDetails() {
             <div className="p-6 space-y-6">
                <div className="bg-white dark:bg-black p-5 rounded-2xl border border-gray-100 dark:border-zinc-800 space-y-4">
                   <div className="flex items-center gap-3 text-gray-700">
-                     <div className="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600"><MapPin size={20} /></div>
+                     <div className="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-[var(--app-primary-color)]"><MapPin size={20} /></div>
                      <div className="flex-1">
                         <p className="text-sm font-bold text-gray-900 dark:text-white">{pharmacy.address}</p>
                         <p className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500">{t('registered_local_pharmacy', 'Registered Local Pharmacy')}</p>
                      </div>
                   </div>
                   <div className="flex items-center gap-3 text-gray-700">
-                     <div className="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600"><Clock size={20} /></div>
+                     <div className="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-[var(--app-primary-color)]"><Clock size={20} /></div>
                      <div className="flex-1">
                         <p className="text-sm font-bold text-gray-900 dark:text-white">{t('open_now', 'Open Now')}</p>
                         <p className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500">{t('closes_at', 'Closes at 10:00 PM')}</p>
@@ -148,15 +148,15 @@ export function PatientPharmacyDetails() {
                     className="bg-indigo-50 border border-indigo-100 rounded-2xl p-4 flex items-center justify-between cursor-pointer"
                   >
                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-white dark:bg-black rounded-xl flex items-center justify-center text-indigo-600 shadow-sm">
+                        <div className="w-10 h-10 bg-white dark:bg-black rounded-xl flex items-center justify-center text-[var(--app-primary-color)] shadow-sm">
                            <FileText size={20} />
                         </div>
                         <div>
-                           <p className="font-bold text-indigo-900 text-sm">{t('send_to_this_pharmacy', 'Send to this pharmacy')}</p>
-                           <p className="text-xs text-indigo-700 mt-1">{t('get_prescription_quote', 'Get quote for your prescription')}</p>
+                           <p className="font-bold text-[var(--app-primary-color)] text-sm">{t('send_to_this_pharmacy', 'Send to this pharmacy')}</p>
+                           <p className="text-xs text-[var(--app-primary-color)] mt-1">{t('get_prescription_quote', 'Get quote for your prescription')}</p>
                         </div>
                      </div>
-                     <ArrowLeft size={20} className="text-indigo-400 rotate-180" />
+                     <ArrowLeft size={20} className="text-[var(--app-primary-color)] rotate-180" />
                   </div>
                </div>
             </div>

@@ -67,7 +67,7 @@ export function ForgetPassword() {
   return (
     <div className="flex-1 bg-slate-50 flex flex-col h-full scrollbar-hide">
       <div className="bg-white dark:bg-zinc-950 px-6 pt-12 pb-4 shadow-sm z-10 flex items-center justify-between">
-         <button onClick={() => navigate(-1)} className="p-2 -ml-2 text-indigo-900 hover:bg-gray-50 dark:bg-zinc-900 rounded-full transition">
+         <button onClick={() => navigate(-1)} className="p-2 -ml-2 text-[var(--app-primary-color)] hover:bg-gray-50 dark:bg-zinc-900 rounded-full transition">
             <ArrowLeft size={24} />
          </button>
          <div className="w-8"></div>
@@ -95,13 +95,13 @@ export function ForgetPassword() {
                     placeholder="New password (min 6 characters)"
                     required
                     minLength={6}
-                    className="w-full p-4 border border-slate-200 rounded-xl mb-6 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                    className="w-full p-4 border border-slate-200 rounded-xl mb-6 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-[var(--app-primary-color)] focus:border-[var(--app-primary-color)]"
                   />
                   
                   <button 
                     type="submit" 
                     disabled={loading || !newPassword}
-                    className="w-full bg-indigo-600 text-white rounded-full py-4 font-bold text-lg hover:bg-indigo-700 transition disabled:opacity-50"
+                    className="w-full bg-[var(--app-primary-color)] text-white rounded-full py-4 font-bold text-lg hover:bg-[var(--app-primary-color)] transition disabled:opacity-50"
                   >
                     {loading ? 'Updating...' : 'Update Password'}
                   </button>
@@ -114,23 +114,23 @@ export function ForgetPassword() {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder={t('enter_your_email', 'Enter your email')}
                     required
-                    className="w-full p-4 border border-slate-200 rounded-xl mb-6 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                    className="w-full p-4 border border-slate-200 rounded-xl mb-6 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-[var(--app-primary-color)] focus:border-[var(--app-primary-color)]"
                   />
                   
                   <button 
                     type="submit" 
                     disabled={loading || !email}
-                    className="w-full bg-indigo-600 text-white rounded-full py-4 font-bold text-lg hover:bg-indigo-700 transition disabled:opacity-50"
+                    className="w-full bg-[var(--app-primary-color)] text-white rounded-full py-4 font-bold text-lg hover:bg-[var(--app-primary-color)] transition disabled:opacity-50"
                   >
                     {loading ? 'Sending...' : 'Send Link'}
                   </button>
                </form>
             ) : (
                <div className="flex flex-col items-center gap-4">
-                  <button onClick={() => navigate('/')} className="w-full bg-indigo-600 text-white rounded-full py-4 font-bold text-lg hover:bg-indigo-700 transition">
+                  <button onClick={() => navigate('/')} className="w-full bg-[var(--app-primary-color)] text-white rounded-full py-4 font-bold text-lg hover:bg-[var(--app-primary-color)] transition">
                      {t('return_to_login', 'Return to Login')} </button>
                   <p className="text-sm text-slate-500">
-                      {t('didn_t_get_the_email', 'Didn\'t get the email?')} <button onClick={handleReset} className="text-indigo-600 font-bold hover:underline"> {t('resend_it', 'Resend it.')} </button>
+                      {t('didn_t_get_the_email', 'Didn\'t get the email?')} <button onClick={handleReset} className="text-[var(--app-primary-color)] font-bold hover:underline"> {t('resend_it', 'Resend it.')} </button>
                   </p>
                </div>
             )}

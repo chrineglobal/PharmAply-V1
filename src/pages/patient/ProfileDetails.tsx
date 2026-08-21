@@ -86,7 +86,7 @@ export function PatientProfileDetails() {
   };
 
   if (initialLoading) {
-     return <div className="flex-1 flex items-center justify-center dark:bg-black"><Loader2 className="animate-spin text-indigo-600" /></div>;
+     return <div className="flex-1 flex items-center justify-center dark:bg-black"><Loader2 className="animate-spin text-[var(--app-primary-color)]" /></div>;
   }
 
   return (
@@ -102,7 +102,7 @@ export function PatientProfileDetails() {
       <div className="flex-1 overflow-y-auto p-6 space-y-6">
           <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-zinc-800 shadow-sm overflow-hidden p-6 space-y-4">
              <h2 className="font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                <User size={18} className="text-indigo-500" /> Personal Information
+                <User size={18} className="text-[var(--app-primary-color)]" /> Personal Information
              </h2>
              <div>
                 <label className="block text-xs font-bold text-gray-500 dark:text-gray-400 mb-1 uppercase tracking-wider">Full Name</label>
@@ -111,7 +111,7 @@ export function PatientProfileDetails() {
                    name="fullName"
                    value={formData.fullName}
                    onChange={handleChange}
-                   className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none dark:text-white"
+                   className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none dark:text-white"
                    placeholder="Your full name"
                 />
              </div>
@@ -126,7 +126,7 @@ export function PatientProfileDetails() {
                       name="phoneNumber"
                       value={formData.phoneNumber}
                       onChange={handleChange}
-                      className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-xl pl-10 pr-4 py-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none dark:text-white"
+                      className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-xl pl-10 pr-4 py-3 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none dark:text-white"
                       placeholder="+1 (555) 000-0000"
                    />
                 </div>
@@ -135,7 +135,7 @@ export function PatientProfileDetails() {
 
           <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-zinc-800 shadow-sm overflow-hidden p-6 space-y-4">
              <h2 className="font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                <MapPin size={18} className="text-[#194B4B] dark:text-teal-400" /> Adresse de Livraison
+                <MapPin size={18} className="text-[var(--app-primary-color)] dark:text-teal-400" /> Adresse de Livraison
              </h2>
              <div>
                 <label className="block text-xs font-bold text-gray-500 dark:text-gray-400 mb-1 uppercase tracking-wider">
@@ -159,11 +159,11 @@ export function PatientProfileDetails() {
           <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-zinc-800 shadow-sm overflow-hidden p-6 space-y-4">
              <div className="flex items-center justify-between">
                  <h2 className="font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                    <Hospital size={18} className="text-indigo-500" /> Professional Credentials
+                    <Hospital size={18} className="text-[var(--app-primary-color)]" /> Professional Credentials
                  </h2>
                  <button 
                    onClick={() => setFormData(s => ({ ...s, isHealthcareProvider: !s.isHealthcareProvider }))}
-                   className={`w-12 h-6 rounded-full transition-colors relative ${formData.isHealthcareProvider ? 'bg-indigo-600' : 'bg-gray-200 dark:bg-zinc-700'}`}
+                   className={`w-12 h-6 rounded-full transition-colors relative ${formData.isHealthcareProvider ? 'bg-[var(--app-primary-color)]' : 'bg-gray-200 dark:bg-zinc-700'}`}
                  >
                     <div className={`w-5 h-5 bg-white dark:bg-zinc-950 rounded-full absolute top-0.5 transition-transform ${formData.isHealthcareProvider ? 'translate-x-6' : 'translate-x-0.5'}`}></div>
                  </button>
@@ -179,7 +179,7 @@ export function PatientProfileDetails() {
                            name="clinicName"
                            value={formData.clinicName}
                            onChange={handleChange}
-                           className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none dark:text-white"
+                           className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none dark:text-white"
                            placeholder="Name of your practice"
                         />
                      </div>
@@ -190,7 +190,7 @@ export function PatientProfileDetails() {
                            name="professionalLicense"
                            value={formData.professionalLicense}
                            onChange={handleChange}
-                           className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none dark:text-white"
+                           className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none dark:text-white"
                            placeholder="License number"
                         />
                      </div>
@@ -201,7 +201,7 @@ export function PatientProfileDetails() {
                            name="npiNumber"
                            value={formData.npiNumber}
                            onChange={handleChange}
-                           className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none dark:text-white"
+                           className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none dark:text-white"
                            placeholder="National Provider Identifier"
                         />
                      </div>
@@ -213,7 +213,7 @@ export function PatientProfileDetails() {
       </div>
       
       <div className="p-6 bg-white dark:bg-zinc-900 border-t border-gray-100 dark:border-zinc-800 z-10 shrink-0">
-         <button onClick={handleSave} disabled={loading} className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-4 rounded-2xl font-bold transition-colors disabled:opacity-50 flex items-center justify-center gap-2">
+         <button onClick={handleSave} disabled={loading} className="w-full bg-[var(--app-primary-color)] hover:bg-[var(--app-primary-color)] text-white py-4 rounded-2xl font-bold transition-colors disabled:opacity-50 flex items-center justify-center gap-2">
             {loading ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div> : 
              success ? <><Check size={20} /> Saved Successfully</> : "Save Details"}
          </button>

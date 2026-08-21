@@ -50,7 +50,7 @@ export function AdminChangelog() {
             {versions.map((ver, i) => (
               <div key={i} className="relative pl-8">
                  <div className={`absolute -left-[21px] top-0 w-10 h-10 rounded-full border-4 border-slate-50 flex items-center justify-center
-                    ${ver.type === 'feature' ? 'bg-indigo-100 text-indigo-600' : ''}
+                    ${ver.type === 'feature' ? 'bg-indigo-100 text-[var(--app-primary-color)]' : ''}
                     ${ver.type === 'bugfix' ? 'bg-amber-100 text-amber-600' : ''}
                     ${ver.type === 'major' ? 'bg-emerald-100 text-emerald-600' : ''}
                  `}>

@@ -133,7 +133,7 @@ export function PatientPrescriptions() {
 
           <button
             onClick={() => navigate("/patient/smart-scanner")}
-            className="px-4 py-2 bg-[#194B4B] hover:bg-teal-700 text-white rounded-full text-xs font-bold shadow-md flex items-center gap-1.5 transition active:scale-95"
+            className="px-4 py-2 bg-[var(--app-primary-color)] hover:bg-teal-700 text-white rounded-full text-xs font-bold shadow-md flex items-center gap-1.5 transition active:scale-95"
           >
             <Sparkles size={14} className="text-yellow-400" />
             Nouveau Scan
@@ -148,7 +148,7 @@ export function PatientPrescriptions() {
             placeholder="Rechercher par médicament ou nom d'ordonnance..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 bg-gray-100 dark:bg-zinc-800 rounded-2xl text-xs text-gray-900 dark:text-white placeholder-gray-400 outline-none border border-transparent focus:border-[#194B4B] transition"
+            className="w-full pl-10 pr-4 py-2.5 bg-gray-100 dark:bg-zinc-800 rounded-2xl text-xs text-gray-900 dark:text-white placeholder-gray-400 outline-none border border-transparent focus:border-[var(--app-primary-color)] transition"
           />
         </div>
 
@@ -158,7 +158,7 @@ export function PatientPrescriptions() {
             onClick={() => setActiveTab("all")}
             className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${
               activeTab === "all"
-                ? "bg-[#194B4B] text-white shadow-sm"
+                ? "bg-[var(--app-primary-color)] text-white shadow-sm"
                 : "bg-gray-100 dark:bg-zinc-800 text-gray-600 dark:text-zinc-400 hover:bg-gray-200"
             }`}
           >
@@ -168,7 +168,7 @@ export function PatientPrescriptions() {
             onClick={() => setActiveTab("today")}
             className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${
               activeTab === "today"
-                ? "bg-[#194B4B] text-white shadow-sm"
+                ? "bg-[var(--app-primary-color)] text-white shadow-sm"
                 : "bg-gray-100 dark:bg-zinc-800 text-gray-600 dark:text-zinc-400 hover:bg-gray-200"
             }`}
           >
@@ -192,7 +192,7 @@ export function PatientPrescriptions() {
             </p>
             <button
               onClick={() => navigate("/patient/smart-scanner")}
-              className="mt-5 px-6 py-3 bg-[#194B4B] text-white rounded-2xl text-xs font-bold shadow-md hover:bg-teal-700 transition"
+              className="mt-5 px-6 py-3 bg-[var(--app-primary-color)] text-white rounded-2xl text-xs font-bold shadow-md hover:bg-teal-700 transition"
             >
               Lancer le Scanner IA
             </button>
@@ -221,7 +221,7 @@ export function PatientPrescriptions() {
                             className="w-full h-full object-cover"
                           />
                         ) : (
-                          <FileText size={24} className="text-[#194B4B] dark:text-teal-400" />
+                          <FileText size={24} className="text-[var(--app-primary-color)] dark:text-teal-400" />
                         )}
                       </div>
 
@@ -246,7 +246,7 @@ export function PatientPrescriptions() {
                       <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
                         p.status === 'approved' 
                           ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300' 
-                          : 'bg-teal-50 text-[#194B4B] dark:bg-teal-950 dark:text-teal-300'
+                          : 'bg-teal-50 text-[var(--app-primary-color)] dark:bg-teal-950 dark:text-teal-300'
                       }`}>
                         {p.status === 'approved' ? 'Validée DPML' : 'Analysée IA'}
                       </span>
@@ -258,7 +258,7 @@ export function PatientPrescriptions() {
                             e.stopPropagation();
                             setActiveMenuId(activeMenuId === p.id ? null : p.id);
                           }}
-                          className="p-1.5 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100 dark:hover:bg-zinc-800"
+                          className="p-1.5 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100 dark:bg-zinc-800 dark:hover:bg-zinc-800"
                         >
                           <MoreVertical size={16} />
                         </button>
@@ -271,7 +271,7 @@ export function PatientPrescriptions() {
                                   e.stopPropagation();
                                   window.open(p.fileUrl, "_blank");
                                 }}
-                                className="w-full text-left px-4 py-2.5 text-xs text-gray-700 dark:text-zinc-200 hover:bg-gray-50 dark:hover:bg-zinc-700 flex items-center gap-2 font-medium"
+                                className="w-full text-left px-4 py-2.5 text-xs text-gray-700 dark:text-zinc-200 hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-zinc-700 flex items-center gap-2 font-medium"
                               >
                                 <Eye size={14} /> Voir l'original
                               </button>
@@ -300,7 +300,7 @@ export function PatientPrescriptions() {
                             key={idx}
                             className="bg-white dark:bg-zinc-800 text-gray-800 dark:text-zinc-200 text-xs px-2.5 py-1 rounded-xl border border-gray-200 dark:border-zinc-700 flex items-center gap-1 shadow-2xs font-medium"
                           >
-                            <Pill size={11} className="text-[#194B4B] dark:text-teal-400" />
+                            <Pill size={11} className="text-[var(--app-primary-color)] dark:text-teal-400" />
                             {m.nom_medicament} {m.dosage ? `(${m.dosage})` : ""}
                           </span>
                         ))}
@@ -316,7 +316,7 @@ export function PatientPrescriptions() {
                           e.stopPropagation();
                           window.open(p.fileUrl, "_blank");
                         }}
-                        className="text-xs text-[#194B4B] dark:text-teal-400 font-bold hover:underline flex items-center gap-1"
+                        className="text-xs text-[var(--app-primary-color)] dark:text-teal-400 font-bold hover:underline flex items-center gap-1"
                       >
                         <Eye size={13} />
                         Afficher ordonnance
@@ -326,7 +326,7 @@ export function PatientPrescriptions() {
                     {meds.length > 0 && (
                       <button
                         onClick={(e) => handleOrderMedications(p, e)}
-                        className="ml-auto px-4 py-2 bg-[#194B4B] hover:bg-teal-700 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm transition active:scale-95"
+                        className="ml-auto px-4 py-2 bg-[var(--app-primary-color)] hover:bg-teal-700 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm transition active:scale-95"
                       >
                         <ShoppingCart size={13} />
                         Commander les médicaments
@@ -343,7 +343,7 @@ export function PatientPrescriptions() {
       {/* Bouton Flottant Nouveau Scan */}
       <button
         onClick={() => navigate("/patient/smart-scanner")}
-        className="fixed bottom-20 right-6 w-14 h-14 bg-[#194B4B] hover:bg-teal-700 text-white rounded-full shadow-2xl flex items-center justify-center cursor-pointer transition active:scale-90 z-30 border-2 border-white dark:border-zinc-900"
+        className="fixed bottom-20 right-6 w-14 h-14 bg-[var(--app-primary-color)] hover:bg-teal-700 text-white rounded-full shadow-2xl flex items-center justify-center cursor-pointer transition active:scale-90 z-30 border-2 border-white dark:border-zinc-900"
       >
         <Sparkles size={24} className="text-yellow-400" />
       </button>

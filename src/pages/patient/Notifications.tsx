@@ -50,10 +50,10 @@ export function PatientNotifications() {
     <div className="flex-1 bg-slate-50 dark:bg-black flex flex-col h-full overflow-hidden">
       <div className="bg-white dark:bg-black px-6 pt-12 pb-4 shadow-sm z-10">
          <div className="flex items-center justify-between mb-4">
-           <button onClick={() => navigate(-1)} className="p-2 -ml-2 text-indigo-900 border border-gray-100 dark:border-zinc-800 rounded-full bg-white dark:bg-slate-950 shadow-sm hover:bg-gray-50 dark:bg-black">
+           <button onClick={() => navigate(-1)} className="p-2 -ml-2 text-[var(--app-primary-color)] border border-gray-100 dark:border-zinc-800 rounded-full bg-white dark:bg-slate-950 shadow-sm hover:bg-gray-50 dark:bg-black">
              <ArrowLeft size={20} />
            </button>
-           <h1 className="text-lg font-bold text-indigo-900">{t('notification', 'Notification')}</h1>
+           <h1 className="text-lg font-bold text-[var(--app-primary-color)]">{t('notification', 'Notification')}</h1>
            <div className="w-10"></div>
          </div>
          
@@ -62,7 +62,7 @@ export function PatientNotifications() {
               <button 
                 key={tab.key}
                 onClick={() => handleTabClick(tab.key)}
-                className={`pb-2 capitalize whitespace-nowrap transition-colors ${activeTab === tab.key ? 'text-indigo-600 border-b-2 border-indigo-600' : 'text-gray-400 dark:text-gray-500 hover:text-gray-600'}`}
+                className={`pb-2 capitalize whitespace-nowrap transition-colors ${activeTab === tab.key ? 'text-[var(--app-primary-color)] border-b-2 border-[var(--app-primary-color)]' : 'text-gray-400 dark:text-gray-500 hover:text-gray-600'}`}
               >
                 {tab.label}
               </button>
@@ -73,7 +73,7 @@ export function PatientNotifications() {
       <div className="flex-1 overflow-y-auto p-6">
          <div className="flex justify-between items-center mb-6">
             <h2 className="font-bold text-gray-900 dark:text-white">{t('all_notification', 'All Notification')}</h2>
-            <button onClick={markAllAsRead} className="text-xs text-indigo-600 font-bold">{t('mark_as_read', 'Mark as read')}</button>
+            <button onClick={markAllAsRead} className="text-xs text-[var(--app-primary-color)] font-bold">{t('mark_as_read', 'Mark as read')}</button>
          </div>
 
          <div className="space-y-4">
@@ -96,11 +96,11 @@ export function PatientNotifications() {
                               <Star size={24} />
                            </div>
                            <span className="text-[10px] text-gray-400 dark:text-gray-500 mb-2 block w-full text-center">2h {t('ago', 'ago')}</span>
-                           <h3 className="font-bold text-indigo-900">{t('rate_delivery_experience', 'Rate your delivery experience')}</h3>
-                           <p className="text-xs text-indigo-700/80 mt-1 mb-4">{t('rate_delivery_desc', 'How was your order from City Pharmacy? Share your feedback.')}</p>
+                           <h3 className="font-bold text-[var(--app-primary-color)]">{t('rate_delivery_experience', 'Rate your delivery experience')}</h3>
+                           <p className="text-xs text-[var(--app-primary-color)]/80 mt-1 mb-4">{t('rate_delivery_desc', 'How was your order from City Pharmacy? Share your feedback.')}</p>
                            <div className="flex gap-2 w-full">
-                             <button className="flex-1 bg-indigo-600 text-white rounded-full py-3 font-bold text-sm shadow-md shadow-indigo-200">{t('rate_now', 'Rate Now')}</button>
-                             <button className="flex-1 bg-white dark:bg-black border border-indigo-200 text-indigo-600 rounded-full py-3 font-bold text-sm">{t('close', 'Close')}</button>
+                             <button className="flex-1 bg-[var(--app-primary-color)] text-white rounded-full py-3 font-bold text-sm shadow-md shadow-indigo-200">{t('rate_now', 'Rate Now')}</button>
+                             <button className="flex-1 bg-white dark:bg-black border border-indigo-200 text-[var(--app-primary-color)] rounded-full py-3 font-bold text-sm">{t('close', 'Close')}</button>
                            </div>
                         </div>
                      )}
@@ -111,8 +111,8 @@ export function PatientNotifications() {
                              <Clock size={18} />
                            </div>
                            <div>
-                              <h3 className="font-bold text-sm text-indigo-900">{item.title}</h3>
-                              <p className="text-xs text-indigo-700/80 mt-1 leading-relaxed">{item.description}</p>
+                              <h3 className="font-bold text-sm text-[var(--app-primary-color)]">{item.title}</h3>
+                              <p className="text-xs text-[var(--app-primary-color)]/80 mt-1 leading-relaxed">{item.description}</p>
                               <span className="text-[10px] text-gray-400 dark:text-gray-500 mt-2 block w-full text-left">2h {t('ago', 'ago')}</span>
                            </div>
                         </div>

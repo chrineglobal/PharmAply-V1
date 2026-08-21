@@ -435,7 +435,7 @@ export function Messages() {
         <div className="p-4 border-b border-gray-100 dark:border-slate-700 space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-teal-50 dark:bg-teal-950/50 flex items-center justify-center text-[#194B4B] dark:text-teal-400 font-bold">
+              <div className="w-9 h-9 rounded-xl bg-teal-50 dark:bg-teal-950/50 flex items-center justify-center text-[var(--app-primary-color)] dark:text-teal-400 font-bold">
                 <MessageCircle size={18} />
               </div>
               <h2 className="font-bold text-gray-900 dark:text-white text-base">
@@ -466,8 +466,8 @@ export function Messages() {
               onClick={() => setActiveTab('all')}
               className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition ${
                 activeTab === 'all' 
-                  ? 'bg-white dark:bg-slate-800 text-[#194B4B] dark:text-teal-400 shadow-xs' 
-                  : 'text-gray-500 hover:text-gray-800 dark:hover:text-gray-200'
+                  ? 'bg-white dark:bg-slate-800 text-[var(--app-primary-color)] dark:text-teal-400 shadow-xs' 
+                  : 'text-gray-500 hover:text-gray-800 dark:text-gray-100 dark:hover:text-gray-200'
               }`}
             >
               {t('all_tab', 'Tous')}
@@ -476,8 +476,8 @@ export function Messages() {
               onClick={() => setActiveTab('patients')}
               className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition ${
                 activeTab === 'patients' 
-                  ? 'bg-white dark:bg-slate-800 text-[#194B4B] dark:text-teal-400 shadow-xs' 
-                  : 'text-gray-500 hover:text-gray-800 dark:hover:text-gray-200'
+                  ? 'bg-white dark:bg-slate-800 text-[var(--app-primary-color)] dark:text-teal-400 shadow-xs' 
+                  : 'text-gray-500 hover:text-gray-800 dark:text-gray-100 dark:hover:text-gray-200'
               }`}
             >
               {t('patients_tab', 'Patients')}
@@ -486,8 +486,8 @@ export function Messages() {
               onClick={() => setActiveTab('drivers')}
               className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition ${
                 activeTab === 'drivers' 
-                  ? 'bg-white dark:bg-slate-800 text-[#194B4B] dark:text-teal-400 shadow-xs' 
-                  : 'text-gray-500 hover:text-gray-800 dark:hover:text-gray-200'
+                  ? 'bg-white dark:bg-slate-800 text-[var(--app-primary-color)] dark:text-teal-400 shadow-xs' 
+                  : 'text-gray-500 hover:text-gray-800 dark:text-gray-100 dark:hover:text-gray-200'
               }`}
             >
               {t('drivers_tab', 'Chauffeurs')}
@@ -496,8 +496,8 @@ export function Messages() {
               onClick={() => setActiveTab('support')}
               className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition ${
                 activeTab === 'support' 
-                  ? 'bg-white dark:bg-slate-800 text-[#194B4B] dark:text-teal-400 shadow-xs' 
-                  : 'text-gray-500 hover:text-gray-800 dark:hover:text-gray-200'
+                  ? 'bg-white dark:bg-slate-800 text-[var(--app-primary-color)] dark:text-teal-400 shadow-xs' 
+                  : 'text-gray-500 hover:text-gray-800 dark:text-gray-100 dark:hover:text-gray-200'
               }`}
             >
               {t('support_tab', 'Support')}
@@ -518,11 +518,11 @@ export function Messages() {
             }}
             className={`p-3.5 flex items-center gap-3 cursor-pointer transition border-l-4 ${
               activeId.startsWith('support_') 
-                ? 'bg-teal-50/70 dark:bg-teal-950/30 border-[#194B4B] dark:border-teal-400' 
+                ? 'bg-teal-50/70 dark:bg-teal-950/30 border-[var(--app-primary-color)] dark:border-teal-400' 
                 : 'bg-amber-50/40 dark:bg-slate-800/80 border-amber-500 hover:bg-amber-50 dark:hover:bg-slate-700'
             }`}
           >
-            <div className="w-11 h-11 rounded-full bg-[#194B4B] text-white flex items-center justify-center font-bold shrink-0 shadow-sm">
+            <div className="w-11 h-11 rounded-full bg-[var(--app-primary-color)] text-white flex items-center justify-center font-bold shrink-0 shadow-sm">
               <Headphones size={20} />
             </div>
             <div className="flex-1 min-w-0">
@@ -561,8 +561,8 @@ export function Messages() {
                   }}
                   className={`p-3.5 flex items-center gap-3 cursor-pointer transition border-l-4 ${
                     isSelected 
-                      ? 'bg-teal-50/60 dark:bg-teal-950/30 border-[#194B4B] dark:border-teal-400' 
-                      : 'border-transparent hover:bg-gray-50 dark:hover:bg-slate-700/50'
+                      ? 'bg-teal-50/60 dark:bg-teal-950/30 border-[var(--app-primary-color)] dark:border-teal-400' 
+                      : 'border-transparent hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-slate-700/50'
                   }`}
                 >
                   <div className="shrink-0">
@@ -617,7 +617,7 @@ export function Messages() {
             <button 
               type="button"
               onClick={() => setMobileShowChat(false)} 
-              className="md:hidden w-9 h-9 flex items-center justify-center bg-gray-50 dark:bg-slate-700 rounded-full hover:bg-gray-100 transition text-gray-700 dark:text-gray-200"
+              className="md:hidden w-9 h-9 flex items-center justify-center bg-gray-50 dark:bg-slate-700 rounded-full hover:bg-gray-100 dark:bg-zinc-800 transition text-gray-700 dark:text-gray-200"
               title="Retour à la liste"
             >
               <ArrowLeft size={18} />
@@ -626,7 +626,7 @@ export function Messages() {
             <div className="flex items-center gap-3">
               <div className="shrink-0">
                 {activePartner?.type === 'support' ? (
-                  <div className="w-10 h-10 rounded-full bg-[#194B4B] text-white flex items-center justify-center font-bold">
+                  <div className="w-10 h-10 rounded-full bg-[var(--app-primary-color)] text-white flex items-center justify-center font-bold">
                     <Headphones size={20} />
                   </div>
                 ) : (
@@ -667,7 +667,7 @@ export function Messages() {
               <button
                 type="button"
                 onClick={() => navigate(`/pharmacist/order/${activePartner.id}`)}
-                className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 dark:bg-slate-700 text-gray-700 dark:text-gray-200 rounded-xl text-xs font-bold hover:bg-gray-100 transition border border-gray-200 dark:border-slate-600"
+                className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 dark:bg-slate-700 text-gray-700 dark:text-gray-200 rounded-xl text-xs font-bold hover:bg-gray-100 dark:bg-zinc-800 transition border border-gray-200 dark:border-slate-600"
               >
                 <FileText size={13} />
                 {t('view_order', 'Voir commande')}
@@ -692,14 +692,14 @@ export function Messages() {
             <div className="flex flex-col items-center justify-center h-64 text-center text-gray-400 dark:text-gray-500">
               <div className="w-14 h-14 bg-white dark:bg-slate-800 rounded-full flex items-center justify-center mb-3 shadow-xs">
                 {activePartner?.type === 'support' ? (
-                  <Headphones size={24} className="text-[#194B4B] dark:text-teal-400" />
+                  <Headphones size={24} className="text-[var(--app-primary-color)] dark:text-teal-400" />
                 ) : (
                   <Package size={24} className="text-gray-400 dark:text-gray-500" />
                 )}
               </div>
               <p className="text-sm font-bold text-gray-700 dark:text-gray-200">
                 {activePartner?.type === 'support' 
-                  ? t('support_welcome_title', "Assistance PharmaExpress") 
+                  ? t('support_welcome_title', "Assistance PharmAply") 
                   : t('no_messages_yet', 'Aucun message pour l\'instant.')}
               </p>
               <p className="text-xs text-gray-400 mt-1 max-w-sm">
@@ -731,7 +731,7 @@ export function Messages() {
                   <div 
                     className={`max-w-[78%] rounded-2xl p-3.5 shadow-xs ${
                       isMe 
-                        ? 'bg-[#194B4B] text-white rounded-br-none' 
+                        ? 'bg-[var(--app-primary-color)] text-white rounded-br-none' 
                         : 'bg-white dark:bg-slate-800 text-gray-900 dark:text-slate-100 rounded-bl-none border border-gray-100 dark:border-slate-700'
                     }`}
                   >
@@ -769,7 +769,7 @@ export function Messages() {
         </div>
 
         {/* Input Bar */}
-        <div className="p-4 px-6 bg-white/95 dark:bg-slate-800/95 backdrop-blur-md border-t border-gray-100 dark:border-slate-700 z-20 flex gap-2 items-center shadow-lg">
+        <div className="p-4 px-6 bg-white dark:bg-zinc-950/95 dark:bg-slate-800/95 backdrop-blur-md border-t border-gray-100 dark:border-slate-700 z-20 flex gap-2 items-center shadow-lg">
           <input 
             type="text"
             value={input}
@@ -782,7 +782,7 @@ export function Messages() {
             type="button"
             onClick={handleSend} 
             disabled={!input.trim()}
-            className="w-12 h-12 disabled:opacity-50 text-white rounded-full flex items-center justify-center shadow-md transition hover:bg-[#133a3a] bg-[#194B4B] shrink-0"
+            className="w-12 h-12 disabled:opacity-50 text-white rounded-full flex items-center justify-center shadow-md transition hover:bg-[#133a3a] bg-[var(--app-primary-color)] shrink-0"
           >
             <Send size={18} className="translate-x-0.5" />
           </button>

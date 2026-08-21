@@ -183,7 +183,7 @@ export function Onboarding() {
     <div className="flex-1 relative bg-[#6a7bc0] overflow-hidden flex flex-col h-full"> 
        {/* Dark Mode Toggle in Onboarding */}
        <div className="absolute top-4 right-4 z-50">
-          <DarkModeToggle className="bg-white/85 dark:bg-zinc-900/90 backdrop-blur-md shadow-lg border border-white/20 dark:border-zinc-700/50" />
+          <DarkModeToggle className="bg-white dark:bg-zinc-950/85 dark:bg-zinc-900/90 backdrop-blur-md shadow-lg border border-white/20 dark:border-zinc-700/50" />
        </div>
 
        <AnimatePresence>
@@ -343,7 +343,7 @@ export function Onboarding() {
                   transition={{ delay: 0.1 }}
                   className="absolute top-[18%] left-0 right-0 flex flex-col items-center justify-center z-10 text-white"
                >
-                  <div className="mb-4 text-white p-4 bg-white/20 backdrop-blur-md rounded-[2rem] border border-white/20 shadow-xl">
+                  <div className="mb-4 text-white p-4 bg-white dark:bg-zinc-950/20 backdrop-blur-md rounded-[2rem] border border-white/20 shadow-xl">
                      <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M10 6a2 2 0 1 0 4 0v12a2 2 0 1 0-4 0z" />
                         <path d="M12 2v2" />
@@ -375,7 +375,7 @@ export function Onboarding() {
                      <button
                         onClick={() => handleRoleSelection('patient')}
                         disabled={loading}
-                        className="w-full flex items-center justify-center py-4 bg-white text-gray-900 shadow-md shadow-gray-200/50 rounded-[1.5rem] font-bold hover:scale-[1.02] transition-all disabled:opacity-70 text-lg border border-gray-100"
+                        className="w-full flex items-center justify-center py-4 bg-white dark:bg-zinc-950 text-gray-900 dark:text-white shadow-md shadow-gray-200/50 rounded-[1.5rem] font-bold hover:scale-[1.02] transition-all disabled:opacity-70 text-lg border border-gray-100"
                      >
                         Patient
                      </button>
@@ -383,7 +383,7 @@ export function Onboarding() {
                      <button
                         onClick={() => handleRoleSelection('pharmacy')}
                         disabled={loading}
-                        className="w-full flex items-center justify-center py-4 bg-white text-gray-900 shadow-md shadow-gray-200/50 rounded-[1.5rem] font-bold hover:scale-[1.02] transition-all disabled:opacity-70 text-lg border border-gray-100"
+                        className="w-full flex items-center justify-center py-4 bg-white dark:bg-zinc-950 text-gray-900 dark:text-white shadow-md shadow-gray-200/50 rounded-[1.5rem] font-bold hover:scale-[1.02] transition-all disabled:opacity-70 text-lg border border-gray-100"
                      >
                         Pharmacist
                      </button>
@@ -391,7 +391,7 @@ export function Onboarding() {
                      <button
                         onClick={() => handleRoleSelection('driver')}
                         disabled={loading}
-                        className="w-full flex items-center justify-center py-4 bg-white text-gray-900 shadow-md shadow-gray-200/50 rounded-[1.5rem] font-bold hover:scale-[1.02] transition-all disabled:opacity-70 text-lg border border-gray-100"
+                        className="w-full flex items-center justify-center py-4 bg-white dark:bg-zinc-950 text-gray-900 dark:text-white shadow-md shadow-gray-200/50 rounded-[1.5rem] font-bold hover:scale-[1.02] transition-all disabled:opacity-70 text-lg border border-gray-100"
                      >
                         Delivery
                      </button>
@@ -461,7 +461,7 @@ export function Onboarding() {
                          <button 
                            type="button" 
                            onClick={() => navigate('/forget-password')} 
-                           className="text-xs font-bold text-gray-500 hover:text-gray-900 dark:hover:text-white transition"
+                           className="text-xs font-bold text-gray-500 hover:text-gray-900 dark:text-white dark:hover:text-white transition"
                          >
                             Forget Password?
                          </button>
@@ -471,7 +471,7 @@ export function Onboarding() {
                      <button
                         type="submit"
                         disabled={loading}
-                        className="w-full flex items-center justify-center py-4 mt-6 bg-[#0a1128] dark:bg-white text-white dark:text-gray-900 rounded-full font-bold hover:bg-black dark:hover:bg-gray-200 transition shadow-lg shadow-gray-200 dark:shadow-none disabled:opacity-70 text-lg uppercase tracking-wide"
+                        className="w-full flex items-center justify-center py-4 mt-6 bg-[#0a1128] dark:bg-white dark:bg-zinc-950 text-white dark:text-gray-900 dark:text-white rounded-full font-bold hover:bg-black dark:hover:bg-gray-200 transition shadow-lg shadow-gray-200 dark:shadow-none disabled:opacity-70 text-lg uppercase tracking-wide"
                      >
                         {loading ? 'Processing...' : (authMode === 'login' ? 'Log In' : 'Sign Up')}
                      </button>
@@ -499,7 +499,7 @@ export function Onboarding() {
                   </div>
                </div>
                
-               <button onClick={() => { setStep(5); setAuthMode('login'); }} className="absolute top-10 left-4 p-2 text-gray-500 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-full transition">
+               <button onClick={() => { setStep(5); setAuthMode('login'); }} className="absolute top-10 left-4 p-2 text-gray-500 hover:bg-gray-100 dark:bg-zinc-800 dark:hover:bg-zinc-800 rounded-full transition">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                      <path d="M19 12H5M12 19l-7-7 7-7"/>
                   </svg>

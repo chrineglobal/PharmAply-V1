@@ -70,7 +70,7 @@ export function FinancialSettings() {
          <button 
            onClick={handleSave} 
            disabled={loading}
-           className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-sm transition flex items-center gap-2 disabled:opacity-50"
+           className="bg-[var(--app-primary-color)] hover:bg-[var(--app-primary-color)] text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-sm transition flex items-center gap-2 disabled:opacity-50"
          >
             <Save size={16} /> Save Changes
          </button>
@@ -82,7 +82,7 @@ export function FinancialSettings() {
             <div className="grid grid-cols-2 gap-4">
                <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1"> Primary Payment Gateway </label>
-                  <select name="primaryGateway" value={settings.primaryGateway} onChange={handleChange} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                  <select name="primaryGateway" value={settings.primaryGateway} onChange={handleChange} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none">
                      <option value="stripe">Stripe</option>
                      <option value="paypal">PayPal</option>
                      <option value="square">Square</option>
@@ -90,7 +90,7 @@ export function FinancialSettings() {
                </div>
                <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1"> Secondary Payment Gateway </label>
-                  <select name="secondaryGateway" value={settings.secondaryGateway} onChange={handleChange} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                  <select name="secondaryGateway" value={settings.secondaryGateway} onChange={handleChange} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none">
                      <option value="none">None</option>
                      <option value="stripe">Stripe</option>
                      <option value="paypal">PayPal</option>
@@ -110,7 +110,7 @@ export function FinancialSettings() {
                     name="defaultCommissionRate"
                     value={settings.defaultCommissionRate} 
                     onChange={handleChange}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none"
                     placeholder="5.0"
                     step="0.1"
                   />
@@ -123,7 +123,7 @@ export function FinancialSettings() {
                     name="deliveryFixedFee"
                     value={settings.deliveryFixedFee} 
                     onChange={handleChange}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none"
                     placeholder="3.0"
                     step="0.5"
                   />
@@ -141,7 +141,7 @@ export function FinancialSettings() {
                     name="autoCalculateTax"
                     checked={settings.autoCalculateTax}
                     onChange={handleChange}
-                    className="w-5 h-5 text-indigo-600 rounded mt-0.5"
+                    className="w-5 h-5 text-[var(--app-primary-color)] rounded mt-0.5"
                   />
                   <div>
                     <h3 className="font-bold text-gray-900 dark:text-white text-sm block">Automated Tax Calculations</h3>
@@ -156,7 +156,7 @@ export function FinancialSettings() {
                     value={settings.taxRate} 
                     onChange={handleChange}
                     disabled={!settings.autoCalculateTax}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none disabled:opacity-50 disabled:bg-gray-100 dark:bg-zinc-800"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none disabled:opacity-50 disabled:bg-gray-100 dark:bg-zinc-800"
                     placeholder="7.0"
                   />
                </div>

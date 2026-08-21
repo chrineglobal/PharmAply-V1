@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { 
   Search, FileText, ChevronRight, Sparkles, ShieldCheck, 
-  Clock, Plus
+  Clock, Plus, Pill
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { getCategoryIcon } from "../lib/icons";
@@ -82,64 +82,76 @@ export function SearchHeroBanner({
   return (
     <div id="search-hero-banner-container" className="space-y-7">
       
-      {/* 1. PROMOTIONAL HERO BANNER */}
+            {/* 1. PROMOTIONAL HERO BANNER */}
       <div 
         id="search-promo-banner" 
-        className="rounded-3xl p-6 text-white shadow-md relative overflow-hidden"
-        style={{ backgroundColor: primaryColor }}
+        className="rounded-[32px] p-6 text-white shadow-sm relative overflow-hidden flex items-center min-h-[160px]"
+        style={{ backgroundColor: 'var(--app-primary-color)' }}
       >
-        <div className="relative z-10 flex flex-col gap-3">
-          <div 
-            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black self-start uppercase tracking-wider text-slate-950"
-            style={{ backgroundColor: secondaryColor }}
-          >
-            <Sparkles size={13} className="text-slate-950" />
-            <span>{t('search_hero.express_health_delivery', 'Livraison Express Santé')}</span>
-          </div>
+        {/* Abstract 3D-like Pills Illustration */}
+        <div className="absolute right-0 top-0 bottom-0 w-[45%] pointer-events-none flex items-center justify-end pr-2 overflow-hidden">
+           {/* Big Pill Jar Glass effect */}
+           <div className="relative w-28 h-32 mt-4 mr-2 rotate-[15deg]">
+              <div className="absolute inset-0 bg-white/10 backdrop-blur-sm border border-white/30 rounded-2xl shadow-xl z-10 flex items-center justify-center overflow-hidden">
+                 {/* Inner pills */}
+                 <div className="absolute top-4 left-2 rotate-45 text-white/90 drop-shadow-md"><Pill size={24} /></div>
+                 <div className="absolute bottom-6 right-3 -rotate-12 text-white drop-shadow-md"><Pill size={28} /></div>
+                 <div className="absolute bottom-4 left-4 rotate-90 text-white/70 drop-shadow-md"><Pill size={20} /></div>
+                 
+                 {/* Glass reflection */}
+                 <div className="absolute top-0 right-0 w-8 h-full bg-gradient-to-l from-white/20 to-transparent skew-x-12"></div>
+              </div>
+              {/* Jar Cap */}
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-24 h-6 bg-teal-500/80 backdrop-blur-md rounded-t-lg border-t border-x border-white/40 shadow-sm z-20"></div>
+           </div>
 
-          <div>
-            <h2 className="text-xl sm:text-2xl font-black text-white leading-tight tracking-tight">
-              {t('search_hero.find_medicines_easily', 'Trouvez vos médicaments facilement')}
-            </h2>
-            <p className="text-white/90 text-xs sm:text-sm font-medium mt-1.5 leading-relaxed max-w-[340px]">
-              {t('search_hero.hero_desc', 'Commandez vos produits de santé essentiels ou transmettez votre ordonnance en photo pour une livraison rapide.')}
-            </p>
-          </div>
+           {/* Floating external pill */}
+           <div className="absolute bottom-4 left-0 -rotate-45 text-white/90 drop-shadow-lg z-20">
+              <div className="bg-white/20 backdrop-blur-md p-2 rounded-full border border-white/30">
+                 <Pill size={24} className="text-white" />
+              </div>
+           </div>
+        </div>
 
-          <div className="flex flex-wrap gap-2.5 pt-2">
-            <button 
-              id="banner-btn-upload-prescription"
-              onClick={() => navigate('/patient/prescription-upload')}
-              className="text-slate-950 text-xs font-bold py-2.5 px-4 rounded-xl shadow-sm transition flex items-center gap-2 hover:opacity-90 active:scale-95"
-              style={{ backgroundColor: secondaryColor }}
-            >
-              <FileText size={15} />
-              <span>{t('search_hero.upload_prescription', 'Envoyer une ordonnance')}</span>
-            </button>
-
-            <button 
-              id="banner-btn-search-catalog"
-              onClick={() => navigate('/patient/search')}
-              className="bg-white/15 hover:bg-white/25 text-white text-xs font-bold py-2.5 px-4 rounded-xl border border-white/20 transition flex items-center gap-1.5 active:scale-95"
-            >
-              <span>{t('search_hero.search_product', 'Rechercher un produit')}</span>
-              <ChevronRight size={14} />
-            </button>
+        {/* Badge / Sticker */}
+        <div className="absolute top-1/2 left-[52%] -translate-x-1/2 -translate-y-1/2 w-16 h-16 z-20 drop-shadow-lg rotate-12">
+          <svg viewBox="0 0 100 100" className="w-full h-full text-white fill-current">
+            <path d="M50 2 L58 14 L72 10 L76 24 L90 24 L88 38 L100 46 L92 58 L98 72 L84 76 L84 90 L70 86 L60 98 L48 88 L36 98 L26 86 L12 90 L12 76 L-2 72 L4 58 L-4 46 L8 38 L6 24 L20 24 L24 10 L38 14 Z" />
+          </svg>
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-[var(--app-primary-color)]">
+            <span className="text-[16px] font-black leading-none tracking-tight">24/7</span>
+            <span className="text-[9px] font-bold leading-none mt-0.5">DISPO</span>
           </div>
+        </div>
 
-          <div className="flex items-center gap-4 pt-1 text-[11px] text-white/75 font-medium">
-            <span className="flex items-center gap-1">
-              <ShieldCheck size={13} style={{ color: secondaryColor }} /> {t('search_hero.certified_products', 'Produits certifiés')}
-            </span>
-            <span className="flex items-center gap-1">
-              <Clock size={13} style={{ color: secondaryColor }} /> {t('search_hero.live_gps_tracking', 'Suivi GPS en direct')}
-            </span>
-          </div>
+        <div className="relative z-10 flex flex-col gap-3 max-w-[55%]">
+          <h2 className="text-[22px] sm:text-2xl font-black text-white leading-[1.15] tracking-tight">
+            {t('search_hero.enhance_healthcare', 'Commandez vos médicaments en toute simplicité')}
+          </h2>
         </div>
       </div>
 
-      {/* 2. HORIZONTALLY SCROLLABLE PRODUCT CATEGORIES */}
-      {categories.length > 0 && (
+      {/* 2. PRESCRIPTION UPLOAD BANNER */}
+      <button 
+        id="banner-btn-upload-prescription"
+        onClick={() => navigate('/patient/prescription-upload')}
+        className="w-full bg-white dark:bg-zinc-900 rounded-[32px] p-5 shadow-sm border border-gray-100 dark:border-zinc-800 flex items-center gap-4 hover:shadow-md transition active:scale-95 text-left"
+      >
+        <div className="w-16 h-16 shrink-0 rounded-full bg-teal-50 dark:bg-teal-900/40 flex items-center justify-center text-[var(--app-primary-color)] dark:text-teal-400">
+           <FileText size={28} strokeWidth={2.5} />
+        </div>
+        <div className="flex-1 pr-2">
+           <h3 className="text-[17px] font-extrabold text-gray-900 dark:text-white mb-1 tracking-tight">
+              {t('search_hero.medicine_prescription', 'Ordonnance médicale')}
+           </h3>
+           <p className="text-[13px] font-medium text-gray-500 dark:text-gray-400 leading-snug">
+              {t('search_hero.upload_desc', "Téléchargez l'ordonnance de votre médecin et nous trouverons les médicaments pour vous")}
+           </p>
+        </div>
+      </button>
+
+      {/* 3. HORIZONTALLY SCROLLABLE PRODUCT CATEGORIES */}
+   {categories.length > 0 && (
         <div id="hero-categories-section">
           <div className="flex items-center justify-between mb-3 px-1">
             <div>
@@ -318,7 +330,7 @@ export function SearchHeroBanner({
           <button
             id="btn-explore-full-catalog"
             onClick={() => navigate('/patient/search')}
-            className="w-full py-3.5 bg-gray-50 dark:bg-zinc-900 hover:bg-gray-100 dark:hover:bg-zinc-800 text-gray-900 dark:text-white border border-gray-200 dark:border-zinc-800 rounded-2xl font-bold text-xs transition flex items-center justify-center gap-2"
+            className="w-full py-3.5 bg-gray-50 dark:bg-zinc-900 hover:bg-gray-100 dark:bg-zinc-800 dark:hover:bg-zinc-800 text-gray-900 dark:text-white border border-gray-200 dark:border-zinc-800 rounded-2xl font-bold text-xs transition flex items-center justify-center gap-2"
           >
             <Search size={15} style={{ color: primaryColor }} />
             <span>{t('search_hero.explore_full_catalog', 'Explorer tout le catalogue de médicaments')}</span>

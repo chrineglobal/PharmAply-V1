@@ -308,7 +308,7 @@ export function PharmacistProfile() {
                  <div className="flex gap-4 pt-6 border-t border-gray-100 dark:border-slate-700 mt-6">
                      <button onClick={handleSave} className="flex-1 bg-[#0B3B3C] text-white rounded-xl py-3.5 font-bold text-base shadow-sm hover:bg-[#082a2b] transition-colors flex items-center justify-center gap-2">
                        <Check size={20} /> Save Settings </button>
-                     <button onClick={() => { setIsEditing(false); setFormData({}); }} className="flex-1 bg-white border border-gray-100 dark:bg-slate-800 dark:border-slate-700 text-gray-800 dark:text-gray-300 rounded-xl py-3.5 font-bold text-base shadow-sm">
+                     <button onClick={() => { setIsEditing(false); setFormData({}); }} className="flex-1 bg-white dark:bg-zinc-950 border border-gray-100 dark:bg-slate-800 dark:border-slate-700 text-gray-800 dark:text-gray-300 rounded-xl py-3.5 font-bold text-base shadow-sm">
                         Cancel </button>
                  </div>
              </div>
@@ -322,7 +322,7 @@ export function PharmacistProfile() {
                         ) : (
                            <div className="w-full h-full bg-[#E2EBE9] opacity-80" />
                         )}
-                        <button className="absolute top-4 right-4 bg-white/50 backdrop-blur-md text-[#0B3B3C] p-2 rounded-full hover:bg-white shadow-sm transition" onClick={startEdit}>
+                        <button className="absolute top-4 right-4 bg-white dark:bg-zinc-950/50 backdrop-blur-md text-[#0B3B3C] p-2 rounded-full hover:bg-white dark:bg-zinc-950 shadow-sm transition" onClick={startEdit}>
                            <Edit2 size={16} />
                         </button>
                     </div>
@@ -380,7 +380,7 @@ export function PharmacistProfile() {
                     <div className="bg-white dark:bg-slate-800 rounded-3xl border border-gray-100 dark:border-slate-700 shadow-sm divide-y divide-gray-50 dark:divide-slate-700">
                         <div 
                             onClick={() => navigate('/pharmacist/support')}
-                            className="p-5 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-slate-700/50 transition rounded-t-3xl cursor-pointer"
+                            className="p-5 flex items-center justify-between hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-slate-700/50 transition rounded-t-3xl cursor-pointer"
                         >
                             <div className="flex items-center gap-4">
                                <div className="w-12 h-12 bg-[#FFB8BA] text-[#0B3B3C] rounded-xl flex items-center justify-center shadow-sm">

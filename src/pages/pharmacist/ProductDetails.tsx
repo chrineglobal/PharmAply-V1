@@ -74,7 +74,7 @@ export function PharmacistProductDetails() {
    if (!product) {
       return (
          <div className="flex-1 bg-transparent dark:bg-black p-8 text-center text-sm text-gray-500 font-medium pb-20">
-            <div className="bg-white p-8 rounded-3xl border border-gray-100 dark:border-slate-700 shadow-sm inline-block mx-auto">
+            <div className="bg-white dark:bg-zinc-950 p-8 rounded-3xl border border-gray-100 dark:border-slate-700 shadow-sm inline-block mx-auto">
                Product not found.
             </div>
          </div>
@@ -147,7 +147,7 @@ export function PharmacistProductDetails() {
       <div className="flex-1 bg-transparent dark:bg-black flex flex-col h-full overflow-hidden relative">
          {/* Header */}
          <div className="px-8 pt-8 pb-4 flex items-center gap-4 shrink-0 z-10">
-            <button onClick={() => navigate(-1)} className="w-10 h-10 flex items-center justify-center bg-white dark:bg-slate-800 rounded-full border border-gray-100 dark:border-slate-700 shadow-sm transition-colors hover:bg-gray-50 dark:hover:bg-slate-700">
+            <button onClick={() => navigate(-1)} className="w-10 h-10 flex items-center justify-center bg-white dark:bg-slate-800 rounded-full border border-gray-100 dark:border-slate-700 shadow-sm transition-colors hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-slate-700">
                <ArrowLeft size={20} className="text-gray-700 dark:text-gray-200" />
             </button>
             <h1 className="font-bold text-gray-900 dark:text-white text-2xl tracking-tight">Medication Details</h1>
@@ -175,13 +175,13 @@ export function PharmacistProductDetails() {
             <div className="flex bg-[#FAFBFC] dark:bg-slate-900 border border-gray-100 dark:border-slate-700 p-1.5 rounded-2xl mb-6">
                 <button
                    onClick={() => setActiveTab('details')}
-                   className={`flex-1 flex items-center justify-center gap-2 py-3 text-sm font-bold rounded-xl transition-colors ${activeTab === 'details' ? 'bg-white dark:bg-slate-800 text-[#0B3B3C] dark:text-white shadow-sm border border-gray-100 dark:border-slate-700' : 'text-gray-500 hover:text-gray-900 dark:hover:text-gray-300 border border-transparent'}`}
+                   className={`flex-1 flex items-center justify-center gap-2 py-3 text-sm font-bold rounded-xl transition-colors ${activeTab === 'details' ? 'bg-white dark:bg-slate-800 text-[#0B3B3C] dark:text-white shadow-sm border border-gray-100 dark:border-slate-700' : 'text-gray-500 hover:text-gray-900 dark:text-white dark:hover:text-gray-300 border border-transparent'}`}
                 >
                    <Package size={16} /> Details
                 </button>
                 <button
                    onClick={() => setActiveTab('history')}
-                   className={`flex-1 flex items-center justify-center gap-2 py-3 text-sm font-bold rounded-xl transition-colors ${activeTab === 'history' ? 'bg-white dark:bg-slate-800 text-[#0B3B3C] dark:text-white shadow-sm border border-gray-100 dark:border-slate-700' : 'text-gray-500 hover:text-gray-900 dark:hover:text-gray-300 border border-transparent'}`}
+                   className={`flex-1 flex items-center justify-center gap-2 py-3 text-sm font-bold rounded-xl transition-colors ${activeTab === 'history' ? 'bg-white dark:bg-slate-800 text-[#0B3B3C] dark:text-white shadow-sm border border-gray-100 dark:border-slate-700' : 'text-gray-500 hover:text-gray-900 dark:text-white dark:hover:text-gray-300 border border-transparent'}`}
                 >
                    <History size={16} /> Stock History
                 </button>
@@ -238,7 +238,7 @@ export function PharmacistProductDetails() {
                      <button 
                         disabled={markingOutOfStock}
                         onClick={handleMarkOutOfStock} 
-                        className="flex-1 bg-white hover:bg-red-50 border border-gray-200 hover:border-red-100 hover:text-red-600 text-gray-700 py-4 rounded-full font-bold text-sm cursor-pointer transition-colors shadow-sm whitespace-nowrap focus:outline-none disabled:opacity-50 flex items-center justify-center gap-2"
+                        className="flex-1 bg-white dark:bg-zinc-950 hover:bg-red-50 border border-gray-200 hover:border-red-100 hover:text-red-600 text-gray-700 py-4 rounded-full font-bold text-sm cursor-pointer transition-colors shadow-sm whitespace-nowrap focus:outline-none disabled:opacity-50 flex items-center justify-center gap-2"
                      >
                         {markingOutOfStock ? 'En cours...' : 'Mark Out of Stock'}
                      </button>
@@ -393,7 +393,7 @@ export function PharmacistProductDetails() {
                            type="button"
                            onClick={() => setShowStockModal(false)}
                            disabled={savingStock}
-                           className="flex-1 py-4 bg-white border border-gray-200 hover:bg-gray-50 dark:bg-slate-800 dark:border-slate-700 dark:hover:bg-slate-700 text-gray-700 dark:text-gray-300 rounded-full font-bold text-sm transition-colors disabled:opacity-50 focus:outline-none"
+                           className="flex-1 py-4 bg-white dark:bg-zinc-950 border border-gray-200 hover:bg-gray-50 dark:bg-slate-800 dark:border-slate-700 dark:hover:bg-slate-700 text-gray-700 dark:text-gray-300 rounded-full font-bold text-sm transition-colors disabled:opacity-50 focus:outline-none"
                         >
                            Cancel
                         </button>

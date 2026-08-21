@@ -128,7 +128,7 @@ export function PatientSearchBar() {
   return (
     <div className="relative w-full" ref={containerRef}>
       <form onSubmit={handleSearchSubmit} className="relative flex items-center">
-        <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#194B4B] dark:text-teal-400">
+        <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[var(--app-primary-color)] dark:text-teal-400">
           {loading ? (
             <Loader2 className="h-4 w-4 animate-spin" />
           ) : (
@@ -137,7 +137,7 @@ export function PatientSearchBar() {
         </div>
         <input
           type="text"
-          className="block w-full pl-10 pr-20 py-3 border border-gray-200 dark:border-zinc-700 rounded-2xl leading-5 bg-gray-50/80 dark:bg-zinc-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#194B4B] focus:border-[#194B4B] text-xs sm:text-sm transition-all dark:text-white shadow-xs"
+          className="block w-full pl-10 pr-20 py-3 border border-gray-200 dark:border-zinc-700 rounded-2xl leading-5 bg-gray-50 dark:bg-zinc-900/80 dark:bg-zinc-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#194B4B] focus:border-[var(--app-primary-color)] text-xs sm:text-sm transition-all dark:text-white shadow-xs"
           placeholder={t('search_bar.placeholder', 'Rechercher un médicament, DCI, symptôme...')}
           value={queryText}
           onChange={(e) => setQueryText(e.target.value)}
@@ -159,7 +159,7 @@ export function PatientSearchBar() {
           )}
           <button
             type="submit"
-            className="px-3 py-1.5 bg-[#194B4B] hover:bg-teal-800 text-white rounded-xl text-xs font-bold transition shadow-xs flex items-center gap-1 active:scale-95"
+            className="px-3 py-1.5 bg-[var(--app-primary-color)] hover:bg-teal-800 text-white rounded-xl text-xs font-bold transition shadow-xs flex items-center gap-1 active:scale-95"
           >
             <span>{t('search_bar.search_btn', 'Rechercher')}</span>
           </button>
@@ -176,7 +176,7 @@ export function PatientSearchBar() {
                 <button
                   type="button"
                   onClick={() => handleSearchSubmit()}
-                  className="text-[#194B4B] dark:text-teal-400 hover:underline flex items-center gap-0.5 normal-case font-semibold"
+                  className="text-[var(--app-primary-color)] dark:text-teal-400 hover:underline flex items-center gap-0.5 normal-case font-semibold"
                 >
                   {t('search_bar.view_all_catalog', 'Voir tout dans le catalogue')} <ArrowRight size={12} />
                 </button>
@@ -187,7 +187,7 @@ export function PatientSearchBar() {
                   <div
                     key={product.id}
                     onClick={() => handleSelectProduct(product)}
-                    className="p-3.5 hover:bg-gray-50 dark:hover:bg-zinc-800/70 cursor-pointer transition flex items-center justify-between gap-3 group"
+                    className="p-3.5 hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-zinc-800/70 cursor-pointer transition flex items-center justify-between gap-3 group"
                   >
                     <div className="flex items-center gap-3 min-w-0">
                       <div className="w-10 h-10 rounded-xl bg-gray-100 dark:bg-zinc-800 shrink-0 overflow-hidden flex items-center justify-center p-1 border border-gray-200/60 dark:border-zinc-700">
@@ -199,7 +199,7 @@ export function PatientSearchBar() {
                       </div>
                       <div className="min-w-0">
                         <div className="flex items-center gap-1.5 flex-wrap">
-                          <p className="font-bold text-gray-900 dark:text-white text-xs sm:text-sm truncate group-hover:text-[#194B4B] dark:group-hover:text-teal-400 transition-colors">
+                          <p className="font-bold text-gray-900 dark:text-white text-xs sm:text-sm truncate group-hover:text-[var(--app-primary-color)] dark:group-hover:text-teal-400 transition-colors">
                             {product.nom_commercial || product.name || product.dci}
                           </p>
                           {product.is_prescription_required && (
@@ -220,7 +220,7 @@ export function PatientSearchBar() {
                     </div>
 
                     <div className="text-right shrink-0">
-                      <p className="font-black text-xs sm:text-sm text-[#194B4B] dark:text-teal-400">
+                      <p className="font-black text-xs sm:text-sm text-[var(--app-primary-color)] dark:text-teal-400">
                         {product.price ? formatCurrency(product.price) : t('search_bar.in_stock', 'En stock')}
                       </p>
                       <span className="text-[10px] text-gray-400 font-medium">{t('search_bar.available', 'Disponible')}</span>
@@ -233,7 +233,7 @@ export function PatientSearchBar() {
                 <button
                   type="button"
                   onClick={() => handleSearchSubmit()}
-                  className="w-full py-2 bg-white dark:bg-zinc-800 hover:bg-gray-100 dark:hover:bg-zinc-700 rounded-xl text-xs font-bold text-[#194B4B] dark:text-teal-300 border border-gray-200 dark:border-zinc-700 transition flex items-center justify-center gap-1.5"
+                  className="w-full py-2 bg-white dark:bg-zinc-800 hover:bg-gray-100 dark:bg-zinc-800 dark:hover:bg-zinc-700 rounded-xl text-xs font-bold text-[var(--app-primary-color)] dark:text-teal-300 border border-gray-200 dark:border-zinc-700 transition flex items-center justify-center gap-1.5"
                 >
                   <Search size={13} />
                   <span>{t('search_bar.show_all_results_for', { query: queryText, defaultValue: `Afficher tous les résultats pour « ${queryText} »` })}</span>
@@ -249,7 +249,7 @@ export function PatientSearchBar() {
                 <button
                   type="button"
                   onClick={() => handleSearchSubmit()}
-                  className="mt-2 px-4 py-2 bg-[#194B4B] text-white rounded-xl text-xs font-bold inline-flex items-center gap-1"
+                  className="mt-2 px-4 py-2 bg-[var(--app-primary-color)] text-white rounded-xl text-xs font-bold inline-flex items-center gap-1"
                 >
                   {t('search_bar.search_full_catalog', 'Rechercher dans le catalogue complet')}
                 </button>

@@ -214,7 +214,7 @@ export function PharmacistSales() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2.5">
-            <div className="p-2.5 bg-teal-50 dark:bg-teal-950/40 rounded-xl text-[#194B4B] dark:text-teal-400">
+            <div className="p-2.5 bg-teal-50 dark:bg-teal-950/40 rounded-xl text-[var(--app-primary-color)] dark:text-teal-400">
               <BarChart2 size={24} />
             </div>
             {t('sales', 'Ventes & Performance Financière')}
@@ -230,8 +230,8 @@ export function PharmacistSales() {
             onClick={() => setTimeRange('today')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition ${
               timeRange === 'today' 
-                ? 'bg-[#194B4B] text-white shadow-xs' 
-                : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700'
+                ? 'bg-[var(--app-primary-color)] text-white shadow-xs' 
+                : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-slate-700'
             }`}
           >
             Aujourd'hui
@@ -240,8 +240,8 @@ export function PharmacistSales() {
             onClick={() => setTimeRange('week')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition ${
               timeRange === 'week' 
-                ? 'bg-[#194B4B] text-white shadow-xs' 
-                : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700'
+                ? 'bg-[var(--app-primary-color)] text-white shadow-xs' 
+                : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-slate-700'
             }`}
           >
             7 jours
@@ -250,8 +250,8 @@ export function PharmacistSales() {
             onClick={() => setTimeRange('month')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition ${
               timeRange === 'month' 
-                ? 'bg-[#194B4B] text-white shadow-xs' 
-                : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700'
+                ? 'bg-[var(--app-primary-color)] text-white shadow-xs' 
+                : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-slate-700'
             }`}
           >
             Ce mois
@@ -260,8 +260,8 @@ export function PharmacistSales() {
             onClick={() => setTimeRange('all')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition ${
               timeRange === 'all' 
-                ? 'bg-[#194B4B] text-white shadow-xs' 
-                : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700'
+                ? 'bg-[var(--app-primary-color)] text-white shadow-xs' 
+                : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-slate-700'
             }`}
           >
             Historique complet
@@ -455,9 +455,9 @@ export function PharmacistSales() {
                     <tr 
                       key={t.id} 
                       onClick={() => navigate(`/pharmacist/order/${t.id}`)}
-                      className="hover:bg-gray-50/70 dark:hover:bg-slate-700/40 cursor-pointer transition"
+                      className="hover:bg-gray-50 dark:bg-zinc-900/70 dark:hover:bg-slate-700/40 cursor-pointer transition"
                     >
-                      <td className="py-3.5 px-4 font-mono font-bold text-xs text-[#194B4B] dark:text-teal-400">
+                      <td className="py-3.5 px-4 font-mono font-bold text-xs text-[var(--app-primary-color)] dark:text-teal-400">
                         #{shortId}
                       </td>
                       <td className="py-3.5 px-4 font-medium text-gray-900 dark:text-white">

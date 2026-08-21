@@ -8,7 +8,7 @@ export function AdminSettings() {
   const sections = [
     { title: "Delivery Zones & Logistics", icon: Map, color: "text-blue-600", bg: "bg-blue-50", desc: "Service areas, shipping rules", path: "/admin/settings/delivery-zones" },
     { title: "Financial & Payments", icon: DollarSign, color: "text-emerald-600", bg: "bg-emerald-50", desc: "Payment gateways, tax, commissions", path: "/admin/settings/financial" },
-    { title: "Vendor & Pharmacist", icon: Store, color: "text-indigo-600", bg: "bg-indigo-50", desc: "KYC, licensing requirements", path: "/admin/settings/vendors" },
+    { title: "Vendor & Pharmacist", icon: Store, color: "text-[var(--app-primary-color)]", bg: "bg-indigo-50", desc: "KYC, licensing requirements", path: "/admin/settings/vendors" },
     { title: "Catalog & Inventory", icon: ShoppingCart, color: "text-cyan-600", bg: "bg-cyan-50", desc: "Pricing rules, substitution config", path: "/admin/settings/catalog" },
     { title: "Audit & Security Logs", icon: Database, color: "text-purple-600", bg: "bg-purple-50", desc: "System audit trail, API logs", path: "/admin/audit" },
     { title: "Compliance & Security Controls", icon: Shield, color: "text-red-600", bg: "bg-red-50", desc: "TOS updates, HIPAA, verification", path: "/admin/settings/compliance" },

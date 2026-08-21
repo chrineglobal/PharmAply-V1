@@ -62,7 +62,7 @@ export function DeliveryZones() {
          <button 
            onClick={handleSave} 
            disabled={loading}
-           className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-sm transition flex items-center gap-2"
+           className="bg-[var(--app-primary-color)] hover:bg-[var(--app-primary-color)] text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-sm transition flex items-center gap-2"
          >
             <Save size={16} />  {t('save_changes', 'Save Changes')} </button>
       </div>
@@ -77,7 +77,7 @@ export function DeliveryZones() {
                     type="number" 
                     value={baseFee} 
                     onChange={e => setBaseFee(Number(e.target.value))}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none"
                   />
                </div>
                <div>
@@ -87,7 +87,7 @@ export function DeliveryZones() {
                     step="0.1"
                     value={surgeMultiplier} 
                     onChange={e => setSurgeMultiplier(Number(e.target.value))}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none"
                   />
                   <p className="text-xs text-slate-500 mt-1">Multiplies the base fee during high demand (e.g., 1.5x).</p>
                </div>
@@ -97,7 +97,7 @@ export function DeliveryZones() {
                     type="number" 
                     value={maxDistance} 
                     onChange={e => setMaxDistance(Number(e.target.value))}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none"
                   />
                </div>
             </div>

@@ -162,10 +162,10 @@ export function PharmacistRegistration() {
             <div className="flex items-center justify-center gap-2 mb-8 px-6">
               {[1, 2, 3].map((s) => (
                 <div key={s} className="flex items-center">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${step >= s ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-500'}`}>
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${step >= s ? 'bg-[var(--app-primary-color)] text-white' : 'bg-gray-200 text-gray-500'}`}>
                     {s}
                   </div>
-                  {s < 3 && <div className={`w-10 h-1 rounded-full mx-1 ${step > s ? 'bg-indigo-600' : 'bg-gray-200'}`}></div>}
+                  {s < 3 && <div className={`w-10 h-1 rounded-full mx-1 ${step > s ? 'bg-[var(--app-primary-color)]' : 'bg-gray-200'}`}></div>}
                 </div>
               ))}
             </div>
@@ -181,7 +181,7 @@ export function PharmacistRegistration() {
             {step === 1 && (
               <div className="space-y-4 animate-in fade-in slide-in-from-right-4">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center"><Store size={24} /></div>
+                  <div className="w-12 h-12 bg-indigo-50 text-[var(--app-primary-color)] rounded-xl flex items-center justify-center"><Store size={24} /></div>
                   <div>
                     <h2 className="font-bold text-gray-900 dark:text-white text-lg"> {t('account_pharmacy_details', 'Account & Pharmacy Details')} </h2>
                     <p className="text-xs text-gray-500"> {t('basic_information', 'Basic information')} </p>
@@ -190,25 +190,25 @@ export function PharmacistRegistration() {
 
                 <div>
                    <label className="block text-sm font-medium text-gray-700 mb-1"> {t('email_address', 'Email Address')} </label>
-                   <input type="email" name="email" value={formData.email} onChange={handleInputChange} className="w-full border border-gray-200 rounded-xl p-3 bg-gray-50 dark:bg-zinc-900 focus:bg-white dark:bg-zinc-950 focus:ring-2 focus:ring-indigo-600 outline-none" placeholder={t('pharmacy_example_com', 'pharmacy@example.com')} />
+                   <input type="email" name="email" value={formData.email} onChange={handleInputChange} className="w-full border border-gray-200 rounded-xl p-3 bg-gray-50 dark:bg-zinc-900 focus:bg-white dark:bg-zinc-950 focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none" placeholder={t('pharmacy_example_com', 'pharmacy@example.com')} />
                 </div>
                 <div>
                    <label className="block text-sm font-medium text-gray-700 mb-1"> {t('password', 'Password')} </label>
-                   <input type="password" name="password" value={formData.password} onChange={handleInputChange} className="w-full border border-gray-200 rounded-xl p-3 bg-gray-50 dark:bg-zinc-900 focus:bg-white dark:bg-zinc-950 focus:ring-2 focus:ring-indigo-600 outline-none" placeholder="••••••••" />
+                   <input type="password" name="password" value={formData.password} onChange={handleInputChange} className="w-full border border-gray-200 rounded-xl p-3 bg-gray-50 dark:bg-zinc-900 focus:bg-white dark:bg-zinc-950 focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none" placeholder="••••••••" />
                 </div>
                 <div>
                    <label className="block text-sm font-medium text-gray-700 mb-1"> {t('pharmacy_name', 'Pharmacy Name')} </label>
-                   <input type="text" name="pharmacyName" value={formData.pharmacyName} onChange={handleInputChange} className="w-full border border-gray-200 rounded-xl p-3 bg-gray-50 dark:bg-zinc-900 focus:bg-white dark:bg-zinc-950 focus:ring-2 focus:ring-indigo-600 outline-none" placeholder={t('e_g_healthfirst_pharmacy', 'e.g. HealthFirst Pharmacy')} />
+                   <input type="text" name="pharmacyName" value={formData.pharmacyName} onChange={handleInputChange} className="w-full border border-gray-200 rounded-xl p-3 bg-gray-50 dark:bg-zinc-900 focus:bg-white dark:bg-zinc-950 focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none" placeholder={t('e_g_healthfirst_pharmacy', 'e.g. HealthFirst Pharmacy')} />
                 </div>
                 
-                <button onClick={nextStep} disabled={!formData.email || !formData.password || !formData.pharmacyName} className="w-full py-4 mt-4 bg-indigo-600 text-white rounded-xl font-bold hover:bg-indigo-700 disabled:opacity-50 transition"> {t('continue', 'Continue')} </button>
+                <button onClick={nextStep} disabled={!formData.email || !formData.password || !formData.pharmacyName} className="w-full py-4 mt-4 bg-[var(--app-primary-color)] text-white rounded-xl font-bold hover:bg-[var(--app-primary-color)] disabled:opacity-50 transition"> {t('continue', 'Continue')} </button>
               </div>
             )}
 
             {step === 2 && (
               <div className="space-y-4 animate-in fade-in slide-in-from-right-4">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center"><Store size={24} /></div>
+                  <div className="w-12 h-12 bg-indigo-50 text-[var(--app-primary-color)] rounded-xl flex items-center justify-center"><Store size={24} /></div>
                   <div>
                     <h2 className="font-bold text-gray-900 dark:text-white text-lg"> {t('owner_location_info', 'Owner & Location Info')} </h2>
                     <p className="text-xs text-gray-500"> {t('contact_details', 'Contact details')} </p>
@@ -217,25 +217,25 @@ export function PharmacistRegistration() {
 
                 <div>
                    <label className="block text-sm font-medium text-gray-700 mb-1"> {t('owner_full_name', 'Owner Full Name')} </label>
-                   <input type="text" name="ownerName" value={formData.ownerName} onChange={handleInputChange} className="w-full border border-gray-200 rounded-xl p-3 bg-gray-50 dark:bg-zinc-900 focus:bg-white dark:bg-zinc-950 focus:ring-2 focus:ring-indigo-600 outline-none" placeholder={t('john_doe', 'John Doe')} />
+                   <input type="text" name="ownerName" value={formData.ownerName} onChange={handleInputChange} className="w-full border border-gray-200 rounded-xl p-3 bg-gray-50 dark:bg-zinc-900 focus:bg-white dark:bg-zinc-950 focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none" placeholder={t('john_doe', 'John Doe')} />
                 </div>
                 <div>
                    <label className="block text-sm font-medium text-gray-700 mb-1"> {t('pharmacy_address', 'Pharmacy Address')} </label>
-                   <input type="text" name="address" value={formData.address} onChange={handleInputChange} className="w-full border border-gray-200 rounded-xl p-3 bg-gray-50 dark:bg-zinc-900 focus:bg-white dark:bg-zinc-950 focus:ring-2 focus:ring-indigo-600 outline-none" placeholder={t('e_g_makepe_douala', 'e.g. Makepe, Douala')} />
+                   <input type="text" name="address" value={formData.address} onChange={handleInputChange} className="w-full border border-gray-200 rounded-xl p-3 bg-gray-50 dark:bg-zinc-900 focus:bg-white dark:bg-zinc-950 focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none" placeholder={t('e_g_makepe_douala', 'e.g. Makepe, Douala')} />
                 </div>
                 <div>
                    <label className="block text-sm font-medium text-gray-700 mb-1"> {t('phone_number', 'Phone Number')} </label>
-                   <input type="text" name="phoneNumber" value={formData.phoneNumber} onChange={handleInputChange} className="w-full border border-gray-200 rounded-xl p-3 bg-gray-50 dark:bg-zinc-900 focus:bg-white dark:bg-zinc-950 focus:ring-2 focus:ring-indigo-600 outline-none" placeholder={t('237_6xx_xxx_xxx', '+237 6XX XXX XXX')} />
+                   <input type="text" name="phoneNumber" value={formData.phoneNumber} onChange={handleInputChange} className="w-full border border-gray-200 rounded-xl p-3 bg-gray-50 dark:bg-zinc-900 focus:bg-white dark:bg-zinc-950 focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none" placeholder={t('237_6xx_xxx_xxx', '+237 6XX XXX XXX')} />
                 </div>
                 
-                <button onClick={nextStep} disabled={!formData.ownerName || !formData.address || !formData.phoneNumber} className="w-full py-4 mt-4 bg-indigo-600 text-white rounded-xl font-bold hover:bg-indigo-700 disabled:opacity-50 transition"> {t('continue_to_kyc', 'Continue to KYC')} </button>
+                <button onClick={nextStep} disabled={!formData.ownerName || !formData.address || !formData.phoneNumber} className="w-full py-4 mt-4 bg-[var(--app-primary-color)] text-white rounded-xl font-bold hover:bg-[var(--app-primary-color)] disabled:opacity-50 transition"> {t('continue_to_kyc', 'Continue to KYC')} </button>
               </div>
             )}
 
             {step === 3 && (
               <div className="space-y-4 animate-in fade-in slide-in-from-right-4">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center"><FileText size={24} /></div>
+                  <div className="w-12 h-12 bg-indigo-50 text-[var(--app-primary-color)] rounded-xl flex items-center justify-center"><FileText size={24} /></div>
                   <div>
                     <h2 className="font-bold text-gray-900 dark:text-white text-lg"> {t('kyc_verification', 'KYC & Verification')} </h2>
                     <p className="text-xs text-gray-500"> {t('cameroon_official_documents', 'Cameroon Official Documents')} </p>
@@ -244,13 +244,13 @@ export function PharmacistRegistration() {
 
                 <div>
                    <label className="block text-sm font-medium text-gray-700 mb-1">Business Registration Number (RCCM)</label>
-                   <input type="text" name="registrationNumber" value={formData.registrationNumber} onChange={handleInputChange} className="w-full border border-gray-200 rounded-xl p-3 bg-gray-50 dark:bg-zinc-900 focus:bg-white dark:bg-zinc-950 focus:ring-2 focus:ring-indigo-600 outline-none" placeholder={t('rc_dla_xxxx_b_xxxx', 'RC/DLA/xxxx/B/xxxx')} />
+                   <input type="text" name="registrationNumber" value={formData.registrationNumber} onChange={handleInputChange} className="w-full border border-gray-200 rounded-xl p-3 bg-gray-50 dark:bg-zinc-900 focus:bg-white dark:bg-zinc-950 focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none" placeholder={t('rc_dla_xxxx_b_xxxx', 'RC/DLA/xxxx/B/xxxx')} />
                 </div>
                 
                 <div className="pt-2">
                    <p className="block text-sm font-medium text-gray-700 mb-2">Upload Operating License (Ordre National des Pharmaciens)</p>
                    <label className="border-2 border-dashed border-gray-300 rounded-xl p-6 flex flex-col items-center justify-center text-gray-500 bg-gray-50 dark:bg-zinc-900 hover:bg-indigo-50 hover:border-indigo-300 cursor-pointer transition">
-                      <Upload size={24} className="mb-2 text-indigo-400" />
+                      <Upload size={24} className="mb-2 text-[var(--app-primary-color)]" />
                       <span className="text-xs font-medium text-center">
                         {files.operatingLicense ? files.operatingLicense.name : 'Tap to upload Document (PDF/JPG)'}
                       </span>
@@ -262,7 +262,7 @@ export function PharmacistRegistration() {
                 <div className="pt-2">
                    <p className="block text-sm font-medium text-gray-700 mb-2">Upload Taxpayer Card (Carte de Contribuable)</p>
                    <label className="border-2 border-dashed border-gray-300 rounded-xl p-6 flex flex-col items-center justify-center text-gray-500 bg-gray-50 dark:bg-zinc-900 hover:bg-indigo-50 hover:border-indigo-300 cursor-pointer transition">
-                      <Upload size={24} className="mb-2 text-indigo-400" />
+                      <Upload size={24} className="mb-2 text-[var(--app-primary-color)]" />
                       <span className="text-xs font-medium text-center">
                         {files.taxpayerCard ? files.taxpayerCard.name : 'Tap to upload Document (PDF/JPG)'}
                       </span>
@@ -270,7 +270,7 @@ export function PharmacistRegistration() {
                    </label>
                 </div>
                 
-                <button onClick={handleSubmit} disabled={loading || !formData.registrationNumber || !files.operatingLicense || !files.taxpayerCard} className="w-full py-4 mt-6 bg-indigo-600 text-white rounded-xl font-bold hover:bg-indigo-700 disabled:opacity-50 transition flex justify-center items-center gap-2">
+                <button onClick={handleSubmit} disabled={loading || !formData.registrationNumber || !files.operatingLicense || !files.taxpayerCard} className="w-full py-4 mt-6 bg-[var(--app-primary-color)] text-white rounded-xl font-bold hover:bg-[var(--app-primary-color)] disabled:opacity-50 transition flex justify-center items-center gap-2">
                   {loading ? 'Submitting...' : 'Submit Application'}
                 </button>
               </div>
@@ -283,7 +283,7 @@ export function PharmacistRegistration() {
                  </div>
                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white"> {t('application_submitted', 'Application Submitted!')} </h2>
                  <p className="text-gray-500 max-w-xs"> {t('your_pharmacy_registration_is_', 'Your pharmacy registration is under review. Our team will verify your KYC documents within 24-48 hours according to Cameroon regulations.')} </p>
-                 <button onClick={() => navigate('/pharmacist')} className="w-full py-4 mt-8 bg-indigo-600 text-white rounded-xl font-bold hover:bg-indigo-700 transition">
+                 <button onClick={() => navigate('/pharmacist')} className="w-full py-4 mt-8 bg-[var(--app-primary-color)] text-white rounded-xl font-bold hover:bg-[var(--app-primary-color)] transition">
                      {t('go_to_dashboard', 'Go to Dashboard')} </button>
               </div>
             )}
