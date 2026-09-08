@@ -1,0 +1,179 @@
+<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+<head>
+    <meta charset="utf-8">
+    <title>Cahier des Charges - E-Pharmacie</title>
+    <style>
+        body {
+            font-family: 'Calibri', 'Arial', sans-serif;
+            color: #333333;
+            line-height: 1.6;
+            margin: 40px;
+        }
+        h1 {
+            color: #0d9488;
+            text-align: center;
+            font-size: 28px;
+            border-bottom: 2px solid #0d9488;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #115e59;
+            font-size: 22px;
+            margin-top: 30px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+        h3 {
+            color: #0f766e;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+        ul {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        .highlight {
+            background-color: #f0fdfa;
+            padding: 15px;
+            border-left: 4px solid #0d9488;
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f8fafc;
+            color: #0f766e;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>CAHIER DES CHARGES DÉTAILLÉ<br>Plateforme de E-Pharmacie & Livraison</h1>
+    <p><strong>Date de génération :</strong> 4 Septembre 2026<br>
+    <strong>Projet :</strong> Application de mise en relation (Patients, Pharmacies, Livreurs)</p>
+
+    <h2>1. Présentation Générale du Projet</h2>
+    <p>Le projet consiste en la création d'une application web progressive (PWA) de type "Marketplace" dédiée au secteur pharmaceutique. Elle permet de digitaliser le processus d'achat de produits de santé, de la soumission d'une ordonnance jusqu'à la livraison sécurisée au domicile du patient.</p>
+    <p>L'objectif principal est de réduire les temps d'attente en officine, de faciliter la recherche de médicaments parfois en rupture de stock, et d'offrir une source de revenus supplémentaires aux coursiers indépendants.</p>
+
+    <h2>2. Les Acteurs de la Plateforme (Rôles)</h2>
+    <ul>
+        <li><strong>Patient (Client final) :</strong> Utilisateur recherchant des médicaments, soumettant des ordonnances et commandant des livraisons.</li>
+        <li><strong>Pharmacien (Partenaire) :</strong> Gérant d'officine qui réceptionne les commandes, valide les ordonnances et prépare les colis.</li>
+        <li><strong>Livreur (Prestataire indépendant) :</strong> Récupère la commande en pharmacie et l'achemine de manière sécurisée au patient.</li>
+        <li><strong>Administrateur :</strong> Superviseur global gérant les conflits, la validation légale des comptes (KYC) et les finances de la plateforme.</li>
+    </ul>
+
+    <h2>3. Fonctionnalités Détaillées par Rôle</h2>
+    
+    <h3>3.1. Espace Patient</h3>
+    <ul>
+        <li><strong>Authentification unifiée :</strong> Création de compte par email/mot de passe ou SSO (Google).</li>
+        <li><strong>Recherche et Filtrage :</strong> Moteur de recherche avancé par catégorie (Douleur, Premiers soins, Maternité, etc.), par symptôme ou par nom de molécule.</li>
+        <li><strong>Gestion des Ordonnances :</strong> Upload sécurisé de photos d'ordonnances (format image ou PDF). Un système permet à la pharmacie d'envoyer un devis basé sur l'ordonnance.</li>
+        <li><strong>Géolocalisation :</strong> Intégration de l'API Google Maps pour détecter la position exacte du patient et autocompléter son adresse de livraison.</li>
+        <li><strong>Panier et Checkout :</strong> Tunnel d'achat fluide. Intégration de Fapshi (ou autre API de paiement) pour les paiements en Mobile Money (MTN, Orange) ou le choix de paiement à la livraison (Cash).</li>
+        <li><strong>Suivi en temps réel (Tracking) :</strong> Interface permettant de suivre l'état de la commande (En attente, Préparée, En cours de livraison, Livrée).</li>
+        <li><strong>Personnalisation :</strong> Multilingue (Français/Anglais) et bascule en Mode Sombre (Dark Mode).</li>
+    </ul>
+
+    <h3>3.2. Espace Pharmacien</h3>
+    <ul>
+        <li><strong>Tableau de Bord (Dashboard) :</strong> Vue centralisée sur les nouvelles commandes entrantes avec notification sonore/visuelle.</li>
+        <li><strong>Traitement des Ordonnances :</strong> Interface permettant de visualiser l'ordonnance du patient, d'assigner les produits correspondants depuis le stock et d'envoyer un devis au patient pour validation.</li>
+        <li><strong>Gestion du Stock :</strong> Ajout, modification, ou retrait de produits. Mise à jour des prix et de la disponibilité.</li>
+        <li><strong>Profil et Conformité (KYC) :</strong> Upload des documents légaux (Licence d'exploitation, CNI) pour la validation du compte par les administrateurs.</li>
+        <li><strong>Historique Financier :</strong> Suivi des ventes réalisées via la plateforme, calcul des commissions et demandes de reversement (Payouts).</li>
+    </ul>
+
+    <h3>3.3. Espace Livreur</h3>
+    <ul>
+        <li><strong>Bourse aux Courses :</strong> Affichage des commandes prêtes à être livrées dans la zone géographique du livreur.</li>
+        <li><strong>Acceptation de Commande :</strong> Possibilité d'accepter ou de refuser une course avec affichage clair du gain potentiel et de la distance.</li>
+        <li><strong>Itinéraire GPS :</strong> Lien direct vers Google Maps pour l'itinéraire de la pharmacie puis vers le domicile du client.</li>
+        <li><strong>Preuve de Livraison :</strong> Système de validation de la remise de la commande (ex: code PIN fourni au patient, photo, ou signature électronique).</li>
+        <li><strong>Gestion des Gains :</strong> Portefeuille virtuel (Wallet) listant les revenus accumulés et l'historique détaillé des courses.</li>
+    </ul>
+
+    <h3>3.4. Espace Administrateur</h3>
+    <ul>
+        <li><strong>Validation KYC :</strong> Interface d'approbation ou de rejet des documents légaux soumis par les pharmaciens et les livreurs avant l'activation de leurs comptes.</li>
+        <li><strong>Gestion des Utilisateurs :</strong> Suspension, bannissement ou assistance sur les comptes.</li>
+        <li><strong>Supervision des Commandes :</strong> Vue globale de toutes les transactions en cours. Outils d'intervention en cas de litige entre un client et un livreur.</li>
+        <li><strong>Gestion du Catalogue Global :</strong> Administration de la base de données centrale des médicaments (DCI, catégories par défaut).</li>
+    </ul>
+
+    <div class="highlight">
+        <h2>4. Modèle Économique (Business Model)</h2>
+        <p>La rentabilité de la plateforme repose sur une stratégie de diversification des revenus (Multi-sided platform) :</p>
+        <table>
+            <tr>
+                <th>Source de Revenu</th>
+                <th>Description et Mécanisme</th>
+            </tr>
+            <tr>
+                <td><strong>1. Commission sur les ventes</strong></td>
+                <td>Prélèvement d'un pourcentage fixe (ex: 5% à 10%) sur le montant total des produits commandés par les patients. Ce montant est déduit avant reversement à la pharmacie.</td>
+            </tr>
+            <tr>
+                <td><strong>2. Frais de Service (Service Fee)</strong></td>
+                <td>Frais fixes minimes ajoutés au panier du client (ex: 100 à 200 XAF par commande) pour couvrir les frais de serveur, de SMS et de maintenance.</td>
+            </tr>
+            <tr>
+                <td><strong>3. Marge sur la Livraison</strong></td>
+                <td>Le patient paie des frais de livraison dynamiques basés sur la distance (ex: 1000 XAF). La plateforme reverse la majorité au livreur (ex: 80%) et conserve une marge (ex: 20%).</td>
+            </tr>
+            <tr>
+                <td><strong>4. Placement Sponsorisé (B2B)</strong></td>
+                <td>Mise en avant (Top Pharmacies ou bannières promotionnelles pour des parapharmacies) sous forme d'abonnement mensuel premium pour les officines.</td>
+            </tr>
+        </table>
+    </div>
+
+    <h2>5. Spécifications Techniques</h2>
+    <ul>
+        <li><strong>Frontend (Client) :</strong> React.js avec le bundler Vite. Utilisation de Tailwind CSS pour un design responsive et moderne (Mobile-First). Application structurée en PWA.</li>
+        <li><strong>Backend & Base de données :</strong> 
+            <ul>
+                <li>Firebase Authentication (Sécurité des accès).</li>
+                <li>Cloud Firestore (Base de données NoSQL en temps réel pour la gestion des statuts de commande).</li>
+                <li>Firebase Storage (Stockage sécurisé des fichiers KYC et ordonnances médicales).</li>
+            </ul>
+        </li>
+        <li><strong>Intégrations Tiers (APIs) :</strong>
+            <ul>
+                <li><em>Google Maps Platform :</em> Places API (Autocomplétion), Geocoding, Distance Matrix API.</li>
+                <li><em>Passerelle de Paiement (Fapshi) :</em> Pour l'encaissement automatisé des Mobile Money locaux.</li>
+            </ul>
+        </li>
+        <li><strong>Sécurité des Données :</strong> 
+            <ul>
+                <li>Application de règles de sécurité strictes (Firestore Rules) pour que chaque utilisateur n'accède qu'à ses propres données médicales.</li>
+                <li>Chiffrement des communications en HTTPS/TLS.</li>
+                <li>Obfuscation des clés API critiques pour éviter le scraping et les alertes de sécurité (Github Secret Scanning).</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h2>6. Évolutions Futures Possibles (V2)</h2>
+    <ul>
+        <li>Intégration d'une Intelligence Artificielle (LLM / Gemini) pour le triage des symptômes bénins et l'aide à la sélection de produits parapharmaceutiques.</li>
+        <li>Système de rappel automatique pour les traitements chroniques (Notifications Push).</li>
+        <li>Téléconsultation intégrée avec des médecins partenaires.</li>
+    </ul>
+
+</body>
+</html>

@@ -100,7 +100,7 @@ export function PatientProfileDetails() {
       </div>
 
       <div className="flex-1 overflow-y-auto p-6 space-y-6">
-          <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-zinc-800 shadow-sm overflow-hidden p-6 space-y-4">
+          <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-zinc-800 shadow-sm overflow-visible p-6 space-y-4">
              <h2 className="font-bold text-gray-900 dark:text-white flex items-center gap-2">
                 <User size={18} className="text-[var(--app-primary-color)]" /> Personal Information
              </h2>
@@ -133,7 +133,7 @@ export function PatientProfileDetails() {
              </div>
           </div>
 
-          <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-zinc-800 shadow-sm overflow-hidden p-6 space-y-4">
+          <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-zinc-800 shadow-sm overflow-visible p-6 space-y-4">
              <h2 className="font-bold text-gray-900 dark:text-white flex items-center gap-2">
                 <MapPin size={18} className="text-[var(--app-primary-color)] dark:text-teal-400" /> Adresse de Livraison
              </h2>
@@ -156,7 +156,7 @@ export function PatientProfileDetails() {
              </div>
           </div>
 
-          <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-zinc-800 shadow-sm overflow-hidden p-6 space-y-4">
+          <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-zinc-800 shadow-sm overflow-visible p-6 space-y-4">
              <div className="flex items-center justify-between">
                  <h2 className="font-bold text-gray-900 dark:text-white flex items-center gap-2">
                     <Hospital size={18} className="text-[var(--app-primary-color)]" /> Professional Credentials

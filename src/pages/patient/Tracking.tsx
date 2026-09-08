@@ -2,7 +2,7 @@ import {
   ArrowLeft, CheckCircle, Package, Truck, Home, Phone, Star, 
   FileText, MapPin, Navigation, Store, MessageSquare, 
   ChevronRight, X, Bike, Key, PhoneCall, Check, Copy, Clock, 
-  AlertCircle, ShieldCheck, RefreshCw, ShoppingBag, ThumbsUp, Heart, Send
+  AlertCircle, ShieldCheck, RefreshCw, ShoppingBag, ThumbsUp, Heart, Send, Loader2
 } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from 'react';
@@ -89,6 +89,7 @@ export function PatientTracking() {
   const [selectedRatingTags, setSelectedRatingTags] = useState<string[]>(["Rapide ⚡", "Médicaments intacts 📦"]);
   const [selectedTip, setSelectedTip] = useState<number>(0);
   const [isSubmittingRating, setIsSubmittingRating] = useState(false);
+  const [loadingRatings, setLoadingRatings] = useState(false);
 
   // User Geolocation
   useEffect(() => {
@@ -320,6 +321,25 @@ export function PatientTracking() {
       toast.error("Impossible d'enregistrer l'avis. Veuillez réessayer.");
     } finally {
       setIsSubmittingRating(false);
+    }
+  };
+
+  const submitProductRatings = async () => {
+    if (!order?.id) return;
+    setLoadingRatings(true);
+    try {
+      await updateDoc(doc(db, 'orders', order.id), {
+        productRatings,
+        productRatingsSubmittedAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+      });
+      toast.success("Avis sur les produits enregistrés !");
+      setShowProductRatingModal(false);
+    } catch (e) {
+      console.error(e);
+      toast.error("Erreur lors de l'enregistrement des avis.");
+    } finally {
+      setLoadingRatings(false);
     }
   };
 

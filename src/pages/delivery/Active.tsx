@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { 
   Package, MapPin, Phone, Camera, CheckCircle, Navigation, Clock, 
   Store, User, MessageCircle, ArrowLeft, Loader2, X, ChevronUp, ChevronDown,
-  LocateFixed, Compass, Volume2, VolumeX, Maximize2, ShieldAlert
+  LocateFixed, Compass, Volume2, VolumeX, Maximize2, ShieldAlert, ExternalLink
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { APIProvider, Map, AdvancedMarker, useMap } from '@vis.gl/react-google-maps';
@@ -16,6 +16,10 @@ import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../components/AuthProvider';
 import { useTranslation } from "react-i18next";
 import { getRoadRoute } from '../../lib/routing';
+import { getGoogleMapsApiKey } from '../../lib/maps';
+import { QuickNavButton } from '../../components/delivery/QuickNavButton';
+import { NavigationModal } from '../../components/delivery/NavigationModal';
+import { launchNavigation, NavigationTarget } from '../../lib/navigation';
 import toast from "react-hot-toast";
 
 type DeliveryStage = 'to_pharmacy' | 'at_pharmacy' | 'to_customer' | 'at_customer' | 'completed';
@@ -104,12 +108,16 @@ export function DeliveryActive() {
   const [eta, setEta] = useState<number | null>(null);
   
   const [lockOnDriver, setLockOnDriver] = useState(true);
+  const [sheetExpanded, setSheetExpanded] = useState(true);
+  const [voiceGuidance, setVoiceGuidance] = useState(false);
+  const [navModalOpen, setNavModalOpen] = useState(false);
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [cancelReason, setCancelReason] = useState("");
   const [processing, setProcessing] = useState(false);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
   const [showNavMenu, setShowNavMenu] = useState(false);
   
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [proofFile, setProofFile] = useState<File | null>(null);
   const [proofPreview, setProofPreview] = useState<string | null>(null);
   const [uploadingProof, setUploadingProof] = useState(false);
@@ -421,12 +429,19 @@ export function DeliveryActive() {
     ? (order.pharmacyPhoto || pharmacy?.photoURL || pharmacy?.photoUrl || pharmacy?.logoUrl) 
     : (order.patientPhoto || patientUser?.photoURL || patientUser?.photoUrl || patientUser?.avatar_url);
 
+  const currentNavTarget: NavigationTarget = {
+    lat: activeTargetPos[0],
+    lng: activeTargetPos[1],
+    address: targetAddress,
+    label: targetName
+  };
+
   return (
     <div className="relative w-full h-screen overflow-hidden bg-slate-950 flex flex-col">
       
       {/* 1. FULLSCREEN LEAFLET MAP CANVAS */}
       <div className="absolute inset-0 z-0">
-        <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
+        <APIProvider apiKey={getGoogleMapsApiKey()}>
         <Map
           mapId="DEMO_MAP_ID"
           defaultCenter={{ lat: driverPos[0], lng: driverPos[1] }}
@@ -485,46 +500,55 @@ export function DeliveryActive() {
       <div className="absolute top-4 left-4 right-4 z-10 flex flex-col gap-3 pointer-events-none">
         
         {/* Navigation HUD Banner */}
-        <div className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-md text-gray-900 dark:text-white p-4 rounded-2xl shadow-2xl border border-slate-800 pointer-events-auto flex items-center justify-between">
-          <div className="flex items-center gap-3">
+        <div className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-md text-gray-900 dark:text-white p-3 sm:p-4 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 pointer-events-auto flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2.5 min-w-0 flex-1">
             <button 
               onClick={() => navigate('/delivery')} 
-              className="w-10 h-10 rounded-full bg-gray-100 dark:bg-slate-800 flex items-center justify-center text-gray-900 dark:text-white hover:bg-gray-200 dark:bg-slate-700 transition"
+              className="w-10 h-10 shrink-0 rounded-full bg-gray-100 dark:bg-slate-800 flex items-center justify-center text-gray-900 dark:text-white hover:bg-gray-200 dark:bg-slate-700 transition"
+              title="Retour"
             >
               <ArrowLeft size={20} />
             </button>
             
-            <div className="flex-1">
+            <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2">
-                <span className={`w-2.5 h-2.5 rounded-full ${isPharmacyStep ? 'bg-teal-400' : 'bg-amber-400'} animate-ping`} />
-                <span className="text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-slate-300">
-                  {isPharmacyStep ? 'Étape 1 : Collecte Pharmacie' : 'Étape 2 : Livraison Client'}
+                <span className={`w-2.5 h-2.5 rounded-full ${isPharmacyStep ? 'bg-teal-400' : 'bg-amber-400'} animate-ping shrink-0`} />
+                <span className="text-[11px] font-bold uppercase tracking-wider text-gray-600 dark:text-slate-300 truncate">
+                  {isPharmacyStep ? 'Étape 1 : Pharmacie' : 'Étape 2 : Client'}
                 </span>
               </div>
-              <p className="font-black text-gray-900 dark:text-white text-base truncate max-w-[200px] sm:max-w-xs mt-0.5">
+              <p className="font-black text-gray-900 dark:text-white text-sm sm:text-base truncate mt-0.5" title={targetAddress}>
                 {targetAddress}
               </p>
             </div>
           </div>
 
-          <div className="text-right pl-3 border-l border-slate-800">
-            <div className="text-lg font-black text-emerald-400 leading-tight">
-              {routeEtaMins} <span className="text-xs font-semibold text-gray-600 dark:text-slate-300">min</span>
+          <div className="flex items-center gap-2 shrink-0 pl-2 sm:pl-3 border-l border-slate-200 dark:border-slate-800">
+            <div className="text-right hidden xs:block">
+              <div className="text-base sm:text-lg font-black text-emerald-500 dark:text-emerald-400 leading-tight">
+                {routeEtaMins} <span className="text-xs font-semibold text-gray-600 dark:text-slate-300">min</span>
+              </div>
+              <div className="text-[10px] sm:text-[11px] font-bold text-slate-400">
+                {routeDistanceText}
+              </div>
             </div>
-            <div className="text-[11px] font-bold text-slate-400">
-              {routeDistanceText}
-            </div>
+
+            {/* Quick action button for launching Google Maps / Waze */}
+            <QuickNavButton
+              target={currentNavTarget}
+              variant="hud"
+            />
           </div>
         </div>
 
         {/* Quick Map Controls Overlay */}
-        <div className="flex items-center justify-between pointer-events-auto px-1">
+        <div className="flex items-center justify-between pointer-events-auto px-1 flex-wrap gap-2">
           <div className="flex items-center gap-2">
             <button
               onClick={() => setLockOnDriver(!lockOnDriver)}
               className={`flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-bold shadow-lg transition backdrop-blur-md ${
                 lockOnDriver 
-                  ? 'bg-[var(--app-primary-color)] text-gray-900 dark:text-white' 
+                  ? 'bg-[var(--app-primary-color)] text-white' 
                   : 'bg-white/90 dark:bg-slate-900/90 text-gray-600 dark:text-slate-300 hover:bg-gray-100 dark:bg-slate-800'
               }`}
             >
@@ -538,6 +562,15 @@ export function DeliveryActive() {
               title="Guide vocal"
             >
               {voiceGuidance ? <Volume2 size={16} className="text-emerald-400" /> : <VolumeX size={16} />}
+            </button>
+
+            <button
+              onClick={() => setNavModalOpen(true)}
+              className="flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-bold shadow-lg transition backdrop-blur-md bg-white/90 dark:bg-slate-900/90 text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-slate-800"
+              title="Ouvrir Google Maps ou Waze"
+            >
+              <Navigation size={13} />
+              <span>Ouvrir GPS</span>
             </button>
           </div>
 
@@ -582,13 +615,19 @@ export function DeliveryActive() {
               <h2 className="font-bold text-gray-900 dark:text-white text-lg leading-snug">
                 {targetName}
               </h2>
-              <p className="text-xs text-gray-500 dark:text-gray-400 truncate max-w-[220px]">
+              <p className="text-xs text-gray-500 dark:text-gray-400 truncate max-w-[200px] sm:max-w-[280px]">
                 {targetAddress}
               </p>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
+            {/* Quick Action Navigation button */}
+            <QuickNavButton
+              target={currentNavTarget}
+              variant="icon"
+            />
+
             {targetPhone && (
               <a 
                 href={`tel:${targetPhone}`}
@@ -612,12 +651,35 @@ export function DeliveryActive() {
         {sheetExpanded && (
           <div className="space-y-4 pt-2 border-t border-gray-100 dark:border-zinc-800">
             
-            {/* Stage Guidance Note */}
-            <div className="bg-emerald-50 dark:bg-emerald-950/40 p-3.5 rounded-2xl border border-emerald-100 dark:border-emerald-900/50 flex items-start gap-3">
-              <Navigation size={18} className="text-[var(--app-primary-color)] dark:text-emerald-400 mt-0.5 shrink-0" />
-              <div className="text-xs text-slate-800 dark:text-slate-200">
-                <span className="font-bold block mb-0.5">Itinéraire routier en direct</span>
-                Suivez le tracé routier sur la carte. Vos coordonnées GPS réelles sont transmises au client.
+            {/* Stage Guidance Note & Direct Launch Buttons */}
+            <div className="bg-emerald-50 dark:bg-emerald-950/40 p-3.5 rounded-2xl border border-emerald-100 dark:border-emerald-900/50 space-y-3">
+              <div className="flex items-start gap-3">
+                <Navigation size={18} className="text-[var(--app-primary-color)] dark:text-emerald-400 mt-0.5 shrink-0" />
+                <div className="text-xs text-slate-800 dark:text-slate-200 flex-1">
+                  <span className="font-bold block mb-0.5">Guidage GPS virage par virage</span>
+                  Lancez votre application favorite (Google Maps ou Waze) avec les coordonnées exactes ({currentNavTarget.lat.toFixed(4)}, {currentNavTarget.lng.toFixed(4)}).
+                </div>
+              </div>
+
+              {/* Direct Quick Launch Buttons */}
+              <div className="grid grid-cols-2 gap-2 pt-1 border-t border-emerald-200/50 dark:border-emerald-900/40">
+                <button
+                  type="button"
+                  onClick={() => launchNavigation('google_maps', currentNavTarget)}
+                  className="py-2.5 px-3 rounded-xl bg-white dark:bg-zinc-800 hover:bg-blue-50 dark:hover:bg-blue-950/40 text-blue-700 dark:text-blue-300 font-bold text-xs flex items-center justify-center gap-2 border border-blue-200 dark:border-blue-800 transition shadow-xs"
+                >
+                  <span>Google Maps</span>
+                  <ExternalLink size={13} />
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => launchNavigation('waze', currentNavTarget)}
+                  className="py-2.5 px-3 rounded-xl bg-white dark:bg-zinc-800 hover:bg-cyan-50 dark:hover:bg-cyan-950/40 text-cyan-700 dark:text-cyan-300 font-bold text-xs flex items-center justify-center gap-2 border border-cyan-200 dark:border-cyan-800 transition shadow-xs"
+                >
+                  <span>Waze</span>
+                  <ExternalLink size={13} />
+                </button>
               </div>
             </div>
 
@@ -748,6 +810,12 @@ export function DeliveryActive() {
 
       </div>
 
+      {/* Navigation App Selector Modal */}
+      <NavigationModal
+        isOpen={navModalOpen}
+        onClose={() => setNavModalOpen(false)}
+        target={currentNavTarget}
+      />
     </div>
   );
 }

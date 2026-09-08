@@ -7,6 +7,7 @@ import { db, handleFirestoreError, OperationType } from '../../lib/firebase';
 import { useAuth } from '../../components/AuthProvider';
 import { useTranslation } from "react-i18next";
 import { formatCurrency } from "../../lib/utils";
+import { QuickNavButton } from "../../components/delivery/QuickNavButton";
 
 export function DeliveryOrderDetails() {
     const { t } = useTranslation();
@@ -84,25 +85,46 @@ export function DeliveryOrderDetails() {
          <div className="bg-white dark:bg-black rounded-2xl p-5 shadow-sm border border-gray-100 dark:border-zinc-800 relative">
             <div className="absolute left-[33px] top-[40px] bottom-[40px] w-0.5 bg-gray-200 border-l border-dashed border-gray-300"></div>
             
-            <div className="flex gap-4 mb-6 relative z-10">
-               <div className="w-8 h-8 bg-indigo-100 text-[var(--app-primary-color)] rounded-full flex items-center justify-center shrink-0">
+            <div className="flex items-start gap-4 mb-6 relative z-10">
+               <div className="w-8 h-8 bg-teal-100 text-teal-700 rounded-full flex items-center justify-center shrink-0 mt-0.5">
                   <MapPin size={14} className="fill-current" />
                </div>
-               <div className="flex-1">
-                  <p className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500 font-medium"> {t('pickup_pharmacy', 'Pickup Pharmacy')} </p>
-                  <p className="font-bold text-gray-900 dark:text-white mt-0.5">{order.pharmacyName || t('pharmacy', 'Pharmacy')}</p>
+               <div className="flex-1 min-w-0">
+                  <p className="text-xs text-gray-500 dark:text-gray-400 font-medium"> {t('pickup_pharmacy', 'Pickup Pharmacy')} </p>
+                  <p className="font-bold text-gray-900 dark:text-white mt-0.5 truncate">{order.pharmacyName || t('pharmacy', 'Pharmacy')}</p>
+                  {order.pharmacyAddress && <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{order.pharmacyAddress}</p>}
                </div>
+               <QuickNavButton
+                  target={{
+                     lat: order.pharmacyLat || order.pharmacyPos?.[0] || order.pharmacyLocation?.lat || 4.051055,
+                     lng: order.pharmacyLng || order.pharmacyPos?.[1] || order.pharmacyLocation?.lng || 9.767868,
+                     label: order.pharmacyName || 'Pharmacie',
+                     address: order.pharmacyAddress
+                  }}
+                  variant="compact"
+                  label="GPS"
+               />
             </div>
 
-            <div className="flex gap-4 relative z-10">
-               <div className="w-8 h-8 bg-green-100 text-green-600 rounded-full flex items-center justify-center shrink-0">
+            <div className="flex items-start gap-4 relative z-10">
+               <div className="w-8 h-8 bg-green-100 text-green-600 rounded-full flex items-center justify-center shrink-0 mt-0.5">
                   <Navigation size={14} className="fill-current" />
                </div>
-               <div className="flex-1">
-                  <p className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500 font-medium"> {t('drop_off_customer', 'Drop-off Customer')} </p>
-                  <p className="font-bold text-gray-900 dark:text-white mt-0.5">{order.patientName || t('customer', 'Customer')}</p>
-                  <p className="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500 mt-1">{order.deliveryAddress}</p>
+               <div className="flex-1 min-w-0">
+                  <p className="text-xs text-gray-500 dark:text-gray-400 font-medium"> {t('drop_off_customer', 'Drop-off Customer')} </p>
+                  <p className="font-bold text-gray-900 dark:text-white mt-0.5 truncate">{order.patientName || t('customer', 'Customer')}</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 truncate">{order.deliveryAddress}</p>
                </div>
+               <QuickNavButton
+                  target={{
+                     lat: order.deliveryLat || order.patientLat || order.patientPos?.[0] || order.patientLocation?.lat || 4.048,
+                     lng: order.deliveryLng || order.patientLng || order.patientPos?.[1] || order.patientLocation?.lng || 9.704,
+                     label: order.patientName || 'Client',
+                     address: order.deliveryAddress
+                  }}
+                  variant="compact"
+                  label="GPS"
+               />
             </div>
          </div>
 
@@ -123,6 +145,17 @@ export function DeliveryOrderDetails() {
                 <MessageCircle size={20} className="text-blue-600" />
                 <span className="text-xs font-bold"> {t('message', 'Message')} </span>
              </button>
+             <div className="flex-1">
+               <QuickNavButton
+                  target={{
+                     lat: order.pharmacyLat || order.pharmacyPos?.[0] || order.deliveryLat || 4.051055,
+                     lng: order.pharmacyLng || order.pharmacyPos?.[1] || order.deliveryLng || 9.767868,
+                     label: order.pharmacyName || order.patientName || 'Destination',
+                     address: order.pharmacyAddress || order.deliveryAddress
+                  }}
+                  variant="full"
+               />
+             </div>
          </div>
 
          <div className="h-24"></div>

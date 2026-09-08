@@ -7,6 +7,7 @@ import { useCart } from "./CartProvider";
 import toast from "react-hot-toast";
 
 export interface ProductCardProps {
+  key?: React.Key;
   product: any;
   basePath?: string;
   onClick?: (product: any) => void;

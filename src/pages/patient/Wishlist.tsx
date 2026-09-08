@@ -1,7 +1,7 @@
+import React, { useEffect, useState } from "react";
 import { ArrowLeft, Heart, ShoppingBag, Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useEffect, useState } from "react";
 import { useAuth } from "../../components/AuthProvider";
 import { collection, query, where, getDocs, doc, deleteDoc } from "../../lib/firebase";
 import { db } from "../../lib/firebase";

@@ -1,6 +1,6 @@
 {
   "name": "Remix PharmAply",
-  "description": "",
+  "description": "PharmAply : Pharmacie en ligne, scan d'ordonnances IA, suivi de livraison en temps réel et navigation GPS pour livreurs.",
   "requestFramePermissions": [
     "geolocation",
     "camera"
