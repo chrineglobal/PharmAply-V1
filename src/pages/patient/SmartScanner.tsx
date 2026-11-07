@@ -393,7 +393,14 @@ export function SmartScanner() {
       toast.success(`${formattedItems.length} médicament(s) identifié(s) avec succès !`);
     } catch (error: any) {
       console.error("Erreur de scan :", error);
-      toast.error(error.message || "Erreur lors de l'analyse.");
+      const raw = String(error?.message || error || "");
+      let msg = "Erreur lors de l'analyse de l'ordonnance.";
+      if (raw.includes("429") || raw.includes("quota") || raw.includes("RESOURCE_EXHAUSTED")) {
+        msg = "Le service d'analyse IA est temporairement très sollicité. Veuillez réessayer dans un instant ou ajouter vos médicaments directement.";
+      } else if (!raw.includes("{") && raw.length < 160) {
+        msg = raw;
+      }
+      toast.error(msg);
       setStep("capture");
     } finally {
       clearTimeout(timer1);

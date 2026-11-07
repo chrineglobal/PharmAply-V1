@@ -9,8 +9,8 @@ import { useTheme } from '../../components/ThemeProvider';
 import { useTranslation } from "react-i18next";
 import { NotificationBell } from "../../components/NotificationBell";
 import { DarkModeToggle } from "../../components/DarkModeToggle";
-import { PatientSearchBar } from '../../components/PatientSearchBar';
 import { SearchHeroBanner, CategoryItem, GeneralProductItem } from '../../components/SearchHeroBanner';
+import { StepMedicationSearchModal } from '../../components/patient/StepMedicationSearchModal';
 
 // Fallback admin categories if not yet created in Firestore
 const DEFAULT_CATEGORIES: CategoryItem[] = [
@@ -30,6 +30,8 @@ export function PatientHome() {
   const theme = useTheme();
   const { t } = useTranslation();
   const [exactLocation, setExactLocation] = useState<string>('');
+  const [isStepModalOpen, setIsStepModalOpen] = useState(false);
+  const [stepInitialQuery, setStepInitialQuery] = useState('');
   
   useEffect(() => {
     if (userData?.deliveryAddress || userData?.address) {
@@ -254,11 +256,6 @@ export function PatientHome() {
             <NotificationBell />
           </div>
         </div>
-
-        {/* Search Bar with instant autocomplete */}
-        <div className="relative mt-1 flex items-center z-30">
-          <PatientSearchBar />
-        </div>
       </div>
 
       {/* Main Scrollable Content */}
@@ -268,8 +265,19 @@ export function PatientHome() {
           products={products}
           onProductClick={handleProductClick}
           onCategoryClick={handleCategoryClick}
+          onOpenStepSearch={(q) => {
+            setStepInitialQuery(q || '');
+            setIsStepModalOpen(true);
+          }}
         />
       </div>
+
+      {/* Multi-Step Medication Search & Ordering Modal */}
+      <StepMedicationSearchModal
+        isOpen={isStepModalOpen}
+        onClose={() => setIsStepModalOpen(false)}
+        initialQuery={stepInitialQuery}
+      />
 
     </div>
   );

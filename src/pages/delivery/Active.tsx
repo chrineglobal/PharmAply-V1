@@ -7,6 +7,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { APIProvider, Map, AdvancedMarker, useMap } from '@vis.gl/react-google-maps';
 import { Polyline } from '../../components/Polyline';
+import { useGoogleMapsStatus } from '../../hooks/useGoogleMapsStatus';
 import { 
   collection, query, where, updateDoc, doc, onSnapshot, getDoc, 
   serverTimestamp, ref, uploadBytesResumable, getDownloadURL 
@@ -93,6 +94,7 @@ function MapAutoRecenter({ center, lockOnDriver }: { center: [number, number]; l
 export function DeliveryActive() {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { isAvailable: mapsAvailable, apiKey: mapsApiKey } = useGoogleMapsStatus();
   
   const [order, setOrder] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -439,61 +441,101 @@ export function DeliveryActive() {
   return (
     <div className="relative w-full h-screen overflow-hidden bg-slate-950 flex flex-col">
       
-      {/* 1. FULLSCREEN LEAFLET MAP CANVAS */}
-      <div className="absolute inset-0 z-0">
-        <APIProvider apiKey={getGoogleMapsApiKey()}>
-        <Map
-          mapId="DEMO_MAP_ID"
-          defaultCenter={{ lat: driverPos[0], lng: driverPos[1] }}
-          defaultZoom={15}
-          gestureHandling="greedy"
-          disableDefaultUI={true}
-          className="w-full h-full"
-          style={{ width: '100%', height: '100%' }}
-          internalUsageAttributionIds={["gmp_mcp_codeassist_v1_aistudio"]}
-        >
-          <MapAutoRecenter center={driverPos} lockOnDriver={lockOnDriver} />
+      {/* 1. FULLSCREEN MAP CANVAS / FALLBACK */}
+      <div className="absolute inset-0 z-0 bg-slate-950">
+        {mapsAvailable && mapsApiKey ? (
+          <APIProvider 
+            apiKey={mapsApiKey}
+            onError={() => {
+              (window as any).__googleMapsAuthFailed = true;
+              try { sessionStorage.setItem('gmp_auth_failed', 'true'); } catch {}
+              window.dispatchEvent(new Event('google-maps-auth-failed'));
+            }}
+          >
+          <Map
+            mapId="DEMO_MAP_ID"
+            defaultCenter={{ lat: driverPos[0], lng: driverPos[1] }}
+            defaultZoom={15}
+            gestureHandling="greedy"
+            disableDefaultUI={true}
+            className="w-full h-full"
+            style={{ width: '100%', height: '100%' }}
+            internalUsageAttributionIds={["gmp_mcp_codeassist_v1_aistudio"]}
+          >
+            <MapAutoRecenter center={driverPos} lockOnDriver={lockOnDriver} />
 
-          {/* Driver Vehicle Marker */}
-          <AdvancedMarker position={{ lat: driverPos[0], lng: driverPos[1] }} title="Livreur (Vous)">
-            <DriverMarkerUI />
-          </AdvancedMarker>
+            {/* Driver Vehicle Marker */}
+            <AdvancedMarker position={{ lat: driverPos[0], lng: driverPos[1] }} title="Livreur (Vous)">
+              <DriverMarkerUI />
+            </AdvancedMarker>
 
-          {/* Destination Marker */}
-          <AdvancedMarker position={{ lat: activeTargetPos[0], lng: activeTargetPos[1] }} title={targetName + '\n' + targetAddress}>
-             {isPharmacyStep ? <PharmacyMarkerUI /> : <PatientMarkerUI />}
-          </AdvancedMarker>
+            {/* Destination Marker */}
+            <AdvancedMarker position={{ lat: activeTargetPos[0], lng: activeTargetPos[1] }} title={targetName + '\n' + targetAddress}>
+               {isPharmacyStep ? <PharmacyMarkerUI /> : <PatientMarkerUI />}
+            </AdvancedMarker>
 
-          {/* Real-time Road Network Navigation Polyline */}
-          {routeCoordinates.length > 0 && (
-            <>
-              {/* Outer stroke casing */}
+            {/* Real-time Road Network Navigation Polyline */}
+            {routeCoordinates.length > 0 && (
+              <>
+                {/* Outer stroke casing */}
+                <Polyline
+                  path={routeCoordinates.map((c: any) => ({lat: c[0], lng: c[1]}))}
+                  strokeColor="#0f172a"
+                  strokeWeight={8}
+                  strokeOpacity={0.4}
+                />
+                {/* Main colored navigation polyline */}
+                <Polyline
+                  path={routeCoordinates.map((c: any) => ({lat: c[0], lng: c[1]}))}
+                  strokeColor={isPharmacyStep ? "#0d9488" : "#194B4B"}
+                  strokeWeight={5}
+                  strokeOpacity={0.95}
+                />
+              </>
+            )}
+
+            {routeCoordinates.length === 0 && (
               <Polyline
-                path={routeCoordinates.map((c: any) => ({lat: c[0], lng: c[1]}))}
-                strokeColor="#0f172a"
-                strokeWeight={8}
-                strokeOpacity={0.4}
-              />
-              {/* Main colored navigation polyline */}
-              <Polyline
-                path={routeCoordinates.map((c: any) => ({lat: c[0], lng: c[1]}))}
+                path={[{lat: driverPos[0], lng: driverPos[1]}, {lat: activeTargetPos[0], lng: activeTargetPos[1]}]}
                 strokeColor={isPharmacyStep ? "#0d9488" : "#194B4B"}
                 strokeWeight={5}
-                strokeOpacity={0.95}
+                strokeOpacity={0.85}
               />
-            </>
-          )}
-
-          {routeCoordinates.length === 0 && (
-            <Polyline
-              path={[{lat: driverPos[0], lng: driverPos[1]}, {lat: activeTargetPos[0], lng: activeTargetPos[1]}]}
-              strokeColor={isPharmacyStep ? "#0d9488" : "#194B4B"}
-              strokeWeight={5}
-              strokeOpacity={0.85}
-            />
-          )}
-        </Map>
-        </APIProvider>
+            )}
+          </Map>
+          </APIProvider>
+        ) : (
+          <div className="w-full h-full flex flex-col items-center justify-center p-8 text-center relative overflow-hidden bg-slate-950">
+            <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#14b8a6_1px,transparent_1px)] [background-size:24px_24px]"></div>
+            <div className="relative z-10 max-w-sm space-y-6">
+              <div className="w-20 h-20 mx-auto rounded-full bg-teal-500/10 border border-teal-500/30 flex items-center justify-center text-teal-400 shadow-2xl relative">
+                <Navigation size={36} className="text-teal-400 transform rotate-45 animate-pulse" />
+                <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-emerald-500 border-2 border-slate-950 flex items-center justify-center text-[10px] font-black text-slate-950">
+                  GPS
+                </div>
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-xl font-bold text-white tracking-wide">Mode Navigation Active</h3>
+                <p className="text-sm font-semibold text-teal-300">
+                  {isPharmacyStep ? "Étape 1 : Vers l'Officine" : "Étape 2 : Livraison Patient"}
+                </p>
+                <p className="text-xs text-slate-400 max-w-xs mx-auto">
+                  Destination : {targetName} ({targetAddress || 'Douala'})
+                </p>
+              </div>
+              <div className="flex items-center justify-center gap-4 py-2">
+                <div className="px-4 py-2 rounded-2xl bg-slate-900 border border-slate-800 text-center">
+                  <span className="text-[10px] text-slate-400 uppercase font-semibold block">Distance</span>
+                  <span className="text-base font-bold text-teal-400">{distance ? `${distance.toFixed(1)} km` : (routeDistanceText || '--')}</span>
+                </div>
+                <div className="px-4 py-2 rounded-2xl bg-slate-900 border border-slate-800 text-center">
+                  <span className="text-[10px] text-slate-400 uppercase font-semibold block">Temps estimé</span>
+                  <span className="text-base font-bold text-amber-400">{eta ? `${eta} min` : (routeEtaMins ? `${routeEtaMins} min` : '--')}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* 2. TOP FLOATING NAVIGATION BANNER & CONTROLS */}

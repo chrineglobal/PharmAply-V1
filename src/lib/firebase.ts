@@ -335,13 +335,106 @@ const toDatabaseRecord = (table: string, id: string, docData: any) => {
         created_at: docData.createdAt || docData.created_at || new Date().toISOString()
      };
   }
+  if (table === 'drivers') {
+    const isOnline = docData.isOnline !== undefined ? !!docData.isOnline : (docData.is_online !== undefined ? !!docData.is_online : false);
+    return {
+       id,
+       data: {
+         ...docData,
+         id,
+         isOnline,
+         is_online: isOnline,
+       }
+    };
+  }
+  if (table === 'orders') {
+    const status = docData.status || 'pending';
+    const deliveryMethod = docData.deliveryMethod || docData.delivery_method || docData.delivery_mode || 'delivery';
+    const driverId = docData.driverId !== undefined ? docData.driverId : (docData.driver_id !== undefined ? docData.driver_id : null);
+    const patientId = docData.patientId !== undefined ? docData.patientId : (docData.patient_id !== undefined ? docData.patient_id : null);
+    const pharmacyId = docData.pharmacyId !== undefined ? docData.pharmacyId : (docData.pharmacy_id !== undefined ? docData.pharmacy_id : null);
+    const total = docData.total ? Number(docData.total) : 0;
+
+    const fullData = {
+       ...docData,
+       id,
+       status,
+       deliveryMethod,
+       delivery_method: deliveryMethod,
+       delivery_mode: deliveryMethod,
+       driverId,
+       driver_id: driverId,
+       patientId,
+       patient_id: patientId,
+       pharmacyId,
+       pharmacy_id: pharmacyId,
+       total
+    };
+    return {
+       id,
+       status,
+       delivery_method: deliveryMethod,
+       delivery_mode: deliveryMethod,
+       driver_id: driverId,
+       patient_id: patientId,
+       pharmacy_id: pharmacyId,
+       total,
+       data: fullData
+    };
+  }
   return { id, data: docData };
 };
 
 const parseRecordData = (table: string, row: any) => {
   if (!row) return undefined;
   let parsed: any;
-  if (row.data) {
+  if (table === 'drivers') {
+     const dataObj = row.data || {};
+     const isOnlineVal = dataObj.isOnline !== undefined ? !!dataObj.isOnline : (
+        dataObj.is_online !== undefined ? !!dataObj.is_online : (
+           row.isOnline !== undefined ? !!row.isOnline : (
+              row.is_online !== undefined ? !!row.is_online : false
+           )
+        )
+     );
+     parsed = {
+        ...row,
+        ...dataObj,
+        id: row.id || dataObj.id,
+        isOnline: isOnlineVal,
+        is_online: isOnlineVal,
+     };
+     delete parsed.data;
+  } else if (table === 'orders') {
+     const dataObj = row.data || {};
+     const status = (dataObj.status && dataObj.status !== 'pending' ? dataObj.status : null) 
+       || (row.status && row.status !== 'pending' ? row.status : null) 
+       || dataObj.status 
+       || row.status 
+       || 'pending';
+     const deliveryMethod = dataObj.deliveryMethod || dataObj.delivery_method || row.delivery_method || row.delivery_mode || row.deliveryMethod || 'delivery';
+     const driverId = dataObj.driverId !== undefined ? dataObj.driverId : (row.driver_id !== undefined ? row.driver_id : null);
+     const patientId = dataObj.patientId !== undefined ? dataObj.patientId : (row.patient_id !== undefined ? row.patient_id : null);
+     const pharmacyId = dataObj.pharmacyId !== undefined ? dataObj.pharmacyId : (row.pharmacy_id !== undefined ? row.pharmacy_id : null);
+     const total = Number(dataObj.total ?? (row.total && row.total > 0 ? row.total : 0));
+
+     parsed = {
+        ...row,
+        ...dataObj,
+        id: row.id || dataObj.id,
+        status,
+        deliveryMethod,
+        delivery_method: deliveryMethod,
+        driverId,
+        driver_id: driverId,
+        patientId,
+        patient_id: patientId,
+        pharmacyId,
+        pharmacy_id: pharmacyId,
+        total
+     };
+     delete parsed.data;
+  } else if (row.data) {
      parsed = { ...row.data };
   } else if (table === 'products') {
      const img = row.image_url || row.image || row.imageUrl || row.ImageURL || "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&q=80";
@@ -469,10 +562,14 @@ export const getDoc = async (docRef: any) => {
   try {
     const { data, error } = await supabase.from(docRef.table).select('*').eq('id', docRef.id).maybeSingle();
     if (data) {
+      const parsed = parseRecordData(docRef.table, data);
+      const localStore = getLocalStore(docRef.table);
+      const localData = localStore[docRef.id];
+      const combined = localData ? { ...parsed, ...localData } : parsed;
       return {
         id: docRef.id,
         exists: () => true,
-        data: () => parseRecordData(docRef.table, data)
+        data: () => combined
       };
     }
   } catch (e) {}
@@ -519,13 +616,21 @@ export const updateDoc = async (docRef: any, documentData: any) => {
   let finalData = { ...documentData };
   if (existing.exists()) {
     finalData = { ...existing.data(), ...documentData };
+  } else {
+    const localStore = getLocalStore(docRef.table);
+    if (localStore[docRef.id]) {
+      finalData = { ...localStore[docRef.id], ...documentData };
+    }
   }
   setLocalStoreItem(docRef.table, docRef.id, finalData);
   dispatchLocalSync(docRef.table);
 
   try {
     const payload = toDatabaseRecord(docRef.table, docRef.id, finalData);
-    await supabase.from(docRef.table).update(payload as any).eq('id', docRef.id);
+    const { data: updated, error } = await supabase.from(docRef.table).update(payload as any).eq('id', docRef.id).select('id');
+    if (error || !updated || updated.length === 0) {
+      await supabase.from(docRef.table).upsert(payload as any);
+    }
   } catch (e) {
     console.warn(`[Supabase updateDoc sync fallback] Updated locally in ${docRef.table}:`, e);
   }
@@ -671,7 +776,21 @@ export const getDocs = async (queryRef: any) => {
     if (queryRef.constraints) {
       for (const c of queryRef.constraints) {
         if (c.type === 'where') {
-          const val = item[c.field];
+          let val = item[c.field];
+          if (val === undefined && table === 'orders') {
+            if (c.field === 'deliveryMethod') val = item.delivery_method || item.delivery_mode;
+            else if (c.field === 'delivery_method') val = item.deliveryMethod || item.delivery_mode;
+            else if (c.field === 'driverId') val = item.driver_id;
+            else if (c.field === 'driver_id') val = item.driverId;
+            else if (c.field === 'patientId') val = item.patient_id;
+            else if (c.field === 'patient_id') val = item.patientId;
+            else if (c.field === 'pharmacyId') val = item.pharmacy_id;
+            else if (c.field === 'pharmacy_id') val = item.pharmacyId;
+          }
+          if (val === undefined && table === 'drivers') {
+            if (c.field === 'isOnline') val = item.is_online;
+            else if (c.field === 'is_online') val = item.isOnline;
+          }
           if (c.op === '==' && val != c.val) matches = false;
           else if (c.op === 'in' && Array.isArray(c.val) && !c.val.includes(val)) matches = false;
           else if (c.op === '!=' && val == c.val) matches = false;
@@ -681,12 +800,22 @@ export const getDocs = async (queryRef: any) => {
       }
     }
 
-    if (matches && !docsMap.has(id)) {
-      docsMap.set(id, {
-        id,
-        data: () => item,
-        ref: { id }
-      });
+    if (matches) {
+      if (docsMap.has(id)) {
+        const remoteItem = docsMap.get(id).data();
+        const merged = { ...remoteItem, ...item };
+        docsMap.set(id, {
+          id,
+          data: () => merged,
+          ref: { id }
+        });
+      } else {
+        docsMap.set(id, {
+          id,
+          data: () => item,
+          ref: { id }
+        });
+      }
     }
   });
 

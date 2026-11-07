@@ -7,6 +7,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { getCategoryIcon } from "../lib/icons";
 import { useTheme } from "./ThemeProvider";
+import { PatientSearchBar } from "./PatientSearchBar";
 
 export interface CategoryItem {
   id: string;
@@ -36,13 +37,15 @@ interface SearchHeroBannerProps {
   products?: GeneralProductItem[];
   onProductClick?: (product: GeneralProductItem) => void;
   onCategoryClick?: (category: CategoryItem) => void;
+  onOpenStepSearch?: (queryText?: string) => void;
 }
 
 export function SearchHeroBanner({
   categories = [],
   products = [],
   onProductClick,
-  onCategoryClick
+  onCategoryClick,
+  onOpenStepSearch
 }: SearchHeroBannerProps) {
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -122,24 +125,58 @@ export function SearchHeroBanner({
         />
       </div>
 
-      {/* 2. PRESCRIPTION UPLOAD BANNER */}
-      <button 
-        id="banner-btn-upload-prescription"
-        onClick={() => navigate('/patient/prescription-upload')}
-        className="w-full bg-white dark:bg-zinc-900 rounded-[32px] p-5 shadow-sm border border-gray-100 dark:border-zinc-800 flex items-center gap-4 hover:shadow-md transition active:scale-95 text-left"
-      >
-        <div className="w-16 h-16 shrink-0 rounded-full bg-teal-50 dark:bg-teal-900/40 flex items-center justify-center text-[var(--app-primary-color)] dark:text-teal-400">
-           <img src="/prescription-3d.png" alt="" className="w-10 h-10 object-contain drop-shadow-md" onError={(e) => { e.currentTarget.style.display = "none"; e.currentTarget.nextElementSibling?.classList.remove("hidden"); }} /><FileText size={28} strokeWidth={2.5} className="hidden" />
-        </div>
-        <div className="flex-1 pr-2">
-           <h3 className="text-[17px] font-extrabold text-gray-900 dark:text-white mb-1 tracking-tight">
-              {t('search_hero.medicine_prescription', 'Ordonnance médicale')}
-           </h3>
-           <p className="text-[13px] font-medium text-gray-500 dark:text-gray-400 leading-snug">
-              {t('search_hero.upload_desc', "Téléchargez l'ordonnance de votre médecin et nous trouverons les médicaments pour vous")}
-           </p>
-        </div>
-      </button>
+      {/* SEARCH BAR POSITIONED BETWEEN 1ST PROMOTIONAL BANNER AND PRESCRIPTION BANNER */}
+      <div id="patient-search-bar-between-banners" className="relative z-20 my-1 sm:my-1.5">
+        <PatientSearchBar onOpenStepSearch={onOpenStepSearch} />
+      </div>
+
+      {/* 2. PRESCRIPTION UPLOAD & AI PHARMACIES DE GARDE BANNERS */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+        <button 
+          id="banner-btn-upload-prescription"
+          onClick={() => navigate('/patient/prescription-upload')}
+          className="bg-white dark:bg-zinc-900 rounded-[28px] p-4.5 sm:p-5 shadow-sm border border-gray-100 dark:border-zinc-800 flex items-center gap-4 hover:shadow-md transition active:scale-95 text-left"
+        >
+          <div className="w-14 h-14 shrink-0 rounded-2xl bg-teal-50 dark:bg-teal-900/40 flex items-center justify-center text-[var(--app-primary-color)] dark:text-teal-400">
+             <img src="/prescription-3d.png" alt="" className="w-9 h-9 object-contain drop-shadow-md" onError={(e) => { e.currentTarget.style.display = "none"; e.currentTarget.nextElementSibling?.classList.remove("hidden"); }} /><FileText size={26} strokeWidth={2.5} className="hidden" />
+          </div>
+          <div className="flex-1 pr-1">
+             <h3 className="text-[16px] font-extrabold text-gray-900 dark:text-white mb-0.5 tracking-tight">
+                {t('search_hero.medicine_prescription', 'Ordonnance médicale')}
+             </h3>
+             <p className="text-[12px] font-medium text-gray-500 dark:text-gray-400 leading-snug">
+                {t('search_hero.upload_desc', "Téléchargez votre ordonnance en 1 clic")}
+             </p>
+          </div>
+        </button>
+
+        <button 
+          id="banner-btn-ai-pharmacist"
+          onClick={() => {
+            window.dispatchEvent(new CustomEvent('open-ai-pharmacist', {
+              detail: { query: 'Quelles sont les pharmacies de garde et ouvertes les plus proches de ma position ?' }
+            }));
+          }}
+          className="bg-gradient-to-br from-emerald-800 via-teal-800 to-emerald-900 text-white rounded-[28px] p-4.5 sm:p-5 shadow-sm border border-emerald-700/50 flex items-center gap-4 hover:shadow-md transition active:scale-95 text-left"
+        >
+          <div className="w-14 h-14 shrink-0 rounded-2xl bg-white/15 flex items-center justify-center text-amber-300">
+             <Sparkles size={26} className="animate-pulse" />
+          </div>
+          <div className="flex-1 pr-1">
+             <div className="flex items-center gap-1.5 mb-0.5">
+               <h3 className="text-[16px] font-extrabold text-white tracking-tight">
+                  Pharmacies de garde
+               </h3>
+               <span className="text-[9px] font-black uppercase px-1.5 py-0.5 rounded bg-emerald-400/30 text-emerald-100 border border-emerald-300/30">
+                 IA Maps
+               </span>
+             </div>
+             <p className="text-[12px] font-medium text-emerald-100/90 leading-snug">
+                Trouver les gardes & conseils vérifiés Google Maps
+             </p>
+          </div>
+        </button>
+      </div>
 
       {/* 3. HORIZONTALLY SCROLLABLE PRODUCT CATEGORIES */}
    {categories.length > 0 && (

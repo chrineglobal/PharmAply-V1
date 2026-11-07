@@ -98,6 +98,7 @@ import { NotificationListener } from './components/NotificationListener';
 
 import { AdminLiveMap } from './pages/admin/LiveMap';
 import { AdminDPML } from './pages/admin/AdminDPML';
+import { FloatingAiAssistant } from './components/ai/FloatingAiAssistant';
 
 export default function App() {
   return (
@@ -209,6 +210,7 @@ export default function App() {
             <Route path="changelog" element={<AdminChangelog />} />
           </Route>
         </Routes>
+        <FloatingAiAssistant />
       </AppShell>
       </BrowserRouter>
       </AppUpdater>

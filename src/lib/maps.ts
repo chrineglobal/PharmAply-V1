@@ -6,22 +6,34 @@
  */
 export function getGoogleMapsApiKey(): string {
   try {
-    const key =
-      process.env.GOOGLE_MAPS_PLATFORM_KEY ||
-      (import.meta as any).env?.VITE_GOOGLE_MAPS_PLATFORM_KEY ||
-      (import.meta as any).env?.VITE_GOOGLE_MAPS_API_KEY ||
-      (globalThis as any).GOOGLE_MAPS_PLATFORM_KEY ||
-      '';
-
-    if (
-      !key ||
-      key === 'YOUR_GOOGLE_MAPS_API_KEY' ||
-      key === 'YOUR_KEY_HERE' ||
-      key === 'YOUR_API_KEY'
-    ) {
-      return '';
+    if (typeof window !== 'undefined') {
+      if ((window as any).__googleMapsAuthFailed || sessionStorage.getItem('gmp_auth_failed') === 'true') {
+        return '';
+      }
     }
-    return key;
+
+    const candidateKeys = [
+      (import.meta as any).env?.VITE_GOOGLE_MAPS_API_KEY,
+      (import.meta as any).env?.VITE_GOOGLE_MAPS_PLATFORM_KEY,
+      process.env.GOOGLE_MAPS_PLATFORM_KEY,
+      (globalThis as any).GOOGLE_MAPS_PLATFORM_KEY
+    ];
+
+    for (const key of candidateKeys) {
+      if (
+        key &&
+        typeof key === 'string' &&
+        key !== 'YOUR_GOOGLE_MAPS_API_KEY' &&
+        key !== 'YOUR_KEY_HERE' &&
+        key !== 'YOUR_API_KEY' &&
+        key.startsWith('AIza') &&
+        key.length >= 30
+      ) {
+        return key;
+      }
+    }
+
+    return '';
   } catch {
     return '';
   }

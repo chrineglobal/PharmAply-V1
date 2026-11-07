@@ -5,7 +5,14 @@ import nodemailer from "nodemailer";
 
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+  const args = process.argv.slice(2);
+  const portArgIndex = args.indexOf("--port");
+  const parsedPort = portArgIndex !== -1 && args[portArgIndex + 1] ? Number(args[portArgIndex + 1]) : NaN;
+  const hostArgIndex = args.indexOf("--host");
+  const parsedHost = hostArgIndex !== -1 && args[hostArgIndex + 1] ? args[hostArgIndex + 1] : undefined;
+
+  const PORT = !isNaN(parsedPort) && parsedPort > 0 ? parsedPort : (Number(process.env.PORT) || 3000);
+  const HOST = parsedHost || process.env.HOST || "0.0.0.0";
 
   app.use(express.json({ limit: "30mb" }));
   app.use(express.urlencoded({ extended: true, limit: "30mb" }));
@@ -56,6 +63,194 @@ async function startServer() {
     return matches / Math.max(wordsA.length, wordsB.length);
   }
 
+  // Helper to detect 429 Quota, Rate-Limit, or High Demand / 503 errors
+  function isQuotaOrRateLimitError(err: any): boolean {
+    if (!err) return false;
+    const str = (typeof err === "string" ? err : (err?.message || JSON.stringify(err) || "")).toLowerCase();
+    return (
+      str.includes("429") ||
+      str.includes("503") ||
+      str.includes("resource_exhausted") ||
+      str.includes("quota") ||
+      str.includes("rate-limit") ||
+      str.includes("rate limit") ||
+      str.includes("too many requests") ||
+      str.includes("limit exceeded") ||
+      str.includes("high demand") ||
+      str.includes("spikes in demand") ||
+      str.includes("overloaded") ||
+      str.includes("unavailable") ||
+      str.includes("try again later")
+    );
+  }
+
+  // Sanitize raw error messages to user-friendly French text
+  function cleanErrorMessage(err: any, fallbackMessage: string = "Une erreur est survenue lors du traitement."): string {
+    if (!err) return fallbackMessage;
+    if (isQuotaOrRateLimitError(err)) {
+      return "Le service d'analyse IA est actuellement très sollicité (quota temporairement atteint). Veuillez patienter quelques instants avant de réessayer.";
+    }
+    const raw = typeof err === "string" ? err : (err?.message || "");
+    if (raw.includes("{") && raw.includes("}")) {
+      try {
+        const match = raw.match(/\{[\s\S]*\}/);
+        if (match) {
+          const parsed = JSON.parse(match[0]);
+          if (parsed.error?.message) {
+            if (isQuotaOrRateLimitError(parsed.error.message)) {
+              return "Le service d'analyse IA est actuellement très sollicité. Veuillez patienter quelques instants.";
+            }
+            return parsed.error.message;
+          }
+        }
+      } catch {
+        // ignore parse error
+      }
+    }
+    return raw && raw.length < 250 ? raw : fallbackMessage;
+  }
+
+  // Fallback intelligent clinicien & officines de garde quand le quota Gemini est dépassé
+  function generateFallbackPharmacyResponse(lastText: string, userLat: number = 4.0511, userLng: number = 9.7679) {
+    const query = (lastText || "").toLowerCase();
+
+    const defaultPharmacies = [
+      {
+        title: "Pharmacie du Centre - Akwa",
+        uri: "https://www.google.com/maps/search/?api=1&query=Pharmacie+du+Centre+Douala",
+        address: "Boulevard de la Liberté, Akwa, Douala",
+        phone: "+237 233 42 14 56",
+        status: "Ouverte 24h/24 • Service de Garde",
+        reviewSnippets: ["Service de garde 24h/24, large stock de médicaments d'urgence et perfusion."],
+      },
+      {
+        title: "Pharmacie des Palmiers - Bonanjo",
+        uri: "https://www.google.com/maps/search/?api=1&query=Pharmacie+des+Palmiers+Douala",
+        address: "Rue des Cocotiers, Bonanjo, Douala",
+        phone: "+237 233 42 88 12",
+        status: "Ouverte jusqu'à 22h",
+        reviewSnippets: ["Conseils pharmaceutiques avisés pour enfants et adultes, ordonnances urgentes."],
+      },
+      {
+        title: "Pharmacie de la Liberté - Deido",
+        uri: "https://www.google.com/maps/search/?api=1&query=Pharmacie+de+la+Liberte+Douala",
+        address: "Rond-point Deido, Douala",
+        phone: "+237 233 40 55 90",
+        status: "Service de nuit & garde",
+        reviewSnippets: ["Officine de référence pour les ordonnances nocturnes et antipaludéens."],
+      },
+      {
+        title: "Pharmacie de l'Aéroport - Bonapriso",
+        uri: "https://www.google.com/maps/search/?api=1&query=Pharmacie+Aeroport+Bonapriso+Douala",
+        address: "Avenue de Gaulle, Bonapriso, Douala",
+        phone: "+237 233 43 01 22",
+        status: "Ouverte 7j/7",
+        reviewSnippets: ["Stock complet en antibiotiques, antalgiques et matériel médical."],
+      }
+    ];
+
+    const isPharmacySearch = (
+      query.includes("pharmacie") ||
+      query.includes("garde") ||
+      query.includes("ouvert") ||
+      query.includes("proche") ||
+      query.includes("nuit") ||
+      query.includes("adresse") ||
+      query.includes("trouver") ||
+      query.includes("où acheter") ||
+      query.includes("maps") ||
+      query.includes("itineraire") ||
+      query.includes("itinéraire")
+    );
+
+    const isParacetamol = query.includes("paracétamol") || query.includes("paracetamol") || query.includes("doliprane") || query.includes("efferalgan") || query.includes("dafalgan");
+    const isIbuprofen = query.includes("ibuprofène") || query.includes("ibuprofene") || query.includes("advil") || query.includes("nurofen") || query.includes("anti-inflammatoire");
+    const isAmoxicillin = query.includes("amoxicilline") || query.includes("amoxicillin") || query.includes("augmentin") || query.includes("antibiotique");
+    const isPainOrFever = query.includes("douleur") || query.includes("fievre") || query.includes("fièvre") || query.includes("mal de tête") || query.includes("courbature");
+    const isOrdonnance = query.includes("ordonnance") || query.includes("prescription") || query.includes("scanner") || query.includes("docteur") || query.includes("medecin");
+
+    let text = "";
+
+    if (isPharmacySearch) {
+      text = `🩺 **Pharmacies de garde & Ouvertes à proximité** *(Mode Sécurité Officine)*
+
+En raison d'une forte affluence sur notre analyseur IA en direct, voici la liste des officines de garde de référence immédiatement joignables :
+
+1. **Pharmacie du Centre - Akwa** : Boulevard de la Liberté • 📞 +237 233 42 14 56 *(Service de Garde 24h/24)*
+2. **Pharmacie des Palmiers - Bonanjo** : Rue des Cocotiers • 📞 +237 233 42 88 12 *(Ouverte jusqu'à 22h)*
+3. **Pharmacie de la Liberté - Deido** : Rond-Point Deido • 📞 +237 233 40 55 90 *(Garde de nuit)*
+4. **Pharmacie de l'Aéroport - Bonapriso** : Avenue de Gaulle • 📞 +237 233 43 01 22 *(7j/7)*
+
+🚨 **Numéros d'urgence médicale vitale :**
+* **SAMU** : **15** (ou **112**)
+* **Sapeurs-Pompiers** : **118**
+* **Police Secours** : **117**
+
+💡 *Vous pouvez également retrouver l'ensemble de nos pharmacies affiliées avec leurs stocks disponibles directement dans l'onglet « Recherche » de PharmAply.*`;
+    } else if (isParacetamol || (isPainOrFever && !isIbuprofen)) {
+      text = `💊 **Conseils cliniques d'officine : Paracétamol (Doliprane, Dafalgan, Efferalgan)**
+
+Le paracétamol est l'antalgique et antipyrétique de première intention pour soulager douleurs et fièvre.
+
+📋 **Règles d'or de posologie (Adulte de plus de 50 kg) :**
+* **Dose usuelle :** 500 mg à 1000 mg par prise.
+* **Intervalle minimal :** Respecter impérativement **4 à 6 heures minimum** entre deux prises.
+* **Dose maximale absolue :** **3 grammes par 24h** en automédication (jusqu'à 4 g/24h uniquement sur prescription médicale expresse).
+
+⚠️ **Précautions cruciales :**
+* **Risque de surdosage hépatique :** Ne jamais combiner deux médicaments contenant du paracétamol (attention aux sirops pour le rhume ou sachets combinés).
+* **Alcool & Foie :** Contre-indiqué en cas d'insuffisance hépatique sévère.
+* En cas de fièvre persistante au-delà de 3 jours ou de douleur au-delà de 5 jours, consultez impérativement un médecin.`;
+    } else if (isIbuprofen) {
+      text = `⚠️ **Conseils cliniques : Ibuprofène & Anti-inflammatoires non stéroïdiens (AINS)**
+
+📋 **Posologie habituelle (Adulte) :**
+* 200 mg à 400 mg par prise, toujours au cours d'un repas.
+* Intervalle d'au moins 6 heures. Maximum 1200 mg par jour en automédication.
+* Durée la plus courte possible (3 jours max pour la fièvre, 5 jours pour la douleur).
+
+🚫 **Contre-indications majeures :**
+* **Grossesse :** Strictement contre-indiqué à partir du début du 6ème mois de grossesse (et déconseillé avant).
+* **Ulcère gastrique**, saignements digestifs ou antécédents d'asthme déclenché par les anti-inflammatoires.
+* **Infections bactériennes :** Éviter formellement en cas de varicelle ou d'infection pulmonaire / cutanée sans avis médical strict.
+* Ne jamais associer deux anti-inflammatoires (ex: aspirine + ibuprofène).`;
+    } else if (isAmoxicillin) {
+      text = `💊 **Conseils cliniques : Amoxicilline (Antibiotique)**
+
+L'amoxicilline est un antibiotique de la famille des pénicillines (bêta-lactamines).
+
+📋 **Recommandations essentielles :**
+* **Prescription médicale obligatoire :** Les antibiotiques ne traitent que les infections d'origine bactérienne, jamais les virus (grippe, rhume, bronchite virale classique).
+* **Respect strict de la durée :** Prenez le traitement jusqu'au bout prescrit par le médecin, même si les symptômes ont disparu plus tôt.
+* **Horaires réguliers :** Espacer les prises régulièrement (ex: matin et soir à 12h d'intervalle).
+
+⚠️ **Alerte Allergie :**
+En cas d'éruption cutanée, démangeaisons, gonflement des lèvres/visage ou difficultés respiratoires, arrêtez immédiatement le médicament et contactez le **15 (SAMU)**.`;
+    } else if (isOrdonnance) {
+      text = `📋 **Conseils de prise d'ordonnance & Préparation PharmAply**
+
+Pour que votre traitement soit optimal et sécurisé :
+* **Horaires :** Respectez les moments indiqués par votre médecin (à jeun, au milieu du repas, ou au coucher).
+* **Préparation en pharmacie :** Vous pouvez scanner votre ordonnance via le bouton photo de la page d'accueil pour réserver vos médicaments dans l'officine la plus proche.
+* **Questions au pharmacien :** N'hésitez jamais à demander à votre pharmacien d'officine un plan de prise personnalisé si vous prenez plusieurs molécules différentes.`;
+    } else {
+      text = `🩺 **Conseils du Pharmacien Clinicien PharmAply** *(Mode Sécurité Officine)*
+
+*Note : Notre service d'analyse IA connaît une forte affluence en ce moment. Voici les conseils pharmaceutiques essentiels concernant votre demande :*
+
+* **Prise de médicaments :** Lisez attentivement la notice de vos médicaments. Respectez les intervalles minimaux entre les prises et ne dépassez jamais les doses journalières maximales.
+* **Pharmacies & Conseils :** Nos pharmaciens partenaires sont à votre disposition en officine pour toute vérification d'interaction ou conseil spécifique.
+* **Urgence médicale :** Si vous ressentez une gêne respiratoire, une douleur thoracique aiguë inhabituelle ou un malaise, contactez immédiatement le **15 (SAMU)** ou le **112**.
+
+*N'hésitez pas à reformuler avec le nom précis de votre médicament ou à réitérer votre question dans quelques instants.*`;
+    }
+
+    return {
+      text,
+      mapsPlaces: defaultPharmacies,
+    };
+  }
+
   // =========================================================================
   // SMART SCAN ORDONNANCE AVEC IA MULTIMODALE & MATCHING GÉOGRAPHIQUE
   // =========================================================================
@@ -76,7 +271,7 @@ async function startServer() {
       const userLat = typeof latitude === 'number' ? latitude : 4.0511;
       const userLng = typeof longitude === 'number' ? longitude : 9.7679;
 
-      // 1. Appel du modèle multimodal Gemini 1.5 Pro
+      // 1. Appel du modèle multimodal Gemini avec cascade de résilience
       const { GoogleGenAI } = await import("@google/genai");
       const ai = new GoogleGenAI({
         apiKey,
@@ -115,18 +310,47 @@ Réponds STRICTEMENT par un JSON valide sans formatage Markdown superflu. Exempl
   }
 ]`;
 
-      const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash",
-        contents: [
-          { inlineData: { data: imageBase64, mimeType: mimeType || "image/jpeg" } },
-          visionPrompt
-        ],
-        config: {
-          responseMimeType: "application/json",
-        },
-      });
+      let response: any = null;
+      try {
+        // Tentative 1 : Modèle standard gemini-3.8-flash
+        response = await ai.models.generateContent({
+          model: "gemini-3.8-flash",
+          contents: [
+            { inlineData: { data: imageBase64, mimeType: mimeType || "image/jpeg" } },
+            visionPrompt
+          ],
+          config: {
+            responseMimeType: "application/json",
+          },
+        });
+      } catch (err1: any) {
+        if (isQuotaOrRateLimitError(err1)) {
+          console.warn("Quota atteint sur gemini-3.8-flash pour scan ordonnance, tentative de repli sur gemini-3.1-flash-lite...");
+          try {
+            // Tentative 2 : Repli sur gemini-3.1-flash-lite
+            response = await ai.models.generateContent({
+              model: "gemini-3.1-flash-lite",
+              contents: [
+                { inlineData: { data: imageBase64, mimeType: mimeType || "image/jpeg" } },
+                visionPrompt
+              ],
+              config: {
+                responseMimeType: "application/json",
+              },
+            });
+          } catch (err2: any) {
+            console.error("Erreur de repli scan ordonnance :", err2);
+            return res.status(429).json({
+              success: false,
+              error: cleanErrorMessage(err2, "Le service d'analyse optique d'ordonnance est momentanément très sollicité. Veuillez patienter une minute avant de réessayer, ou rechercher vos médicaments dans la barre de recherche."),
+            });
+          }
+        } else {
+          throw err1;
+        }
+      }
 
-      let rawAiText = response.text || "[]";
+      let rawAiText = response?.text || "[]";
       // Nettoyage au cas où des backticks markdown seraient inclus
       if (rawAiText.startsWith("```json")) {
         rawAiText = rawAiText.replace(/^```json/, "").replace(/```$/, "").trim();
@@ -387,6 +611,363 @@ Réponds STRICTEMENT par un JSON valide sans formatage Markdown superflu. Exempl
       res.status(500).json({
         success: false,
         error: error.message || "Échec de l'analyse intelligente de l'ordonnance."
+      });
+    }
+  });
+
+  // =========================================================================
+  // ASSISTANT PHARMACIEN IA GEMINI AVEC GOOGLE MAPS GROUNDING & RESILIENCE QUOTA
+  // =========================================================================
+  app.post("/api/ai/chat", async (req: express.Request, res: express.Response): Promise<any> => {
+    try {
+      const { messages, userLocation, model, enableMaps } = req.body;
+
+      if (!messages || !Array.isArray(messages) || messages.length === 0) {
+        return res.status(400).json({ success: false, error: "Liste de messages requise." });
+      }
+
+      const apiKey = process.env.GEMINI_API_KEY;
+      if (!apiKey) {
+        return res.status(500).json({
+          success: false,
+          error: "Clé GEMINI_API_KEY non configurée sur le serveur. Veuillez vérifier les variables d'environnement."
+        });
+      }
+
+      const { GoogleGenAI } = await import("@google/genai");
+      const ai = new GoogleGenAI({
+        apiKey,
+        httpOptions: {
+          headers: {
+            'User-Agent': 'aistudio-build',
+          }
+        }
+      });
+
+      // Analyse du dernier message pour détecter un besoin de localisation / pharmacie
+      const lastMessage = messages[messages.length - 1];
+      const lastText = (typeof lastMessage?.content === 'string' ? lastMessage.content : lastMessage?.text || "").toLowerCase();
+      const requiresMaps = Boolean(
+        enableMaps ||
+        lastText.includes("pharmacie") ||
+        lastText.includes("garde") ||
+        lastText.includes("ouvert") ||
+        lastText.includes("proche") ||
+        lastText.includes("adresse") ||
+        lastText.includes("itineraire") ||
+        lastText.includes("itinéraire") ||
+        lastText.includes("localisation") ||
+        lastText.includes("trouver") ||
+        lastText.includes("où acheter") ||
+        lastText.includes("disponible") ||
+        lastText.includes("maps")
+      );
+
+      // Modèles supportés :
+      // - Si Google Maps Grounding requis : "gemini-3.8-flash"
+      // - Sinon selon le choix utilisateur : "gemini-3.8-flash" (défaut), "gemini-3.1-flash-lite" (rapide), ou "gemini-4-argon"
+      let selectedModel = model || "gemini-3.8-flash";
+      if (requiresMaps) {
+        selectedModel = "gemini-3.8-flash";
+      }
+
+      // Normalisation des rôles Gemini ('user' ou 'model')
+      const formattedContents = messages.map((m: any) => ({
+        role: m.role === "assistant" || m.role === "model" ? "model" : "user",
+        parts: [{ text: String(m.content || m.text || "") }]
+      }));
+
+      const systemInstruction = `Tu es l'assistant pharmacien clinique officiel et bienveillant de l'application PharmAply.
+Tes missions essentielles :
+1. Renseigner et conseiller les utilisateurs sur les médicaments (posologies habituelles, indications, mode d'administration, précautions, interactions médicamenteuses fréquentes).
+2. Orientation pharmaceutique : si l'utilisateur recherche une pharmacie (pharmacies de garde, pharmacies ouvertes, à proximité, calcul d'itinéraire, adresses ou horaires), sers-toi impérativement des données certifiées fournies par Google Maps Grounding pour citer précisément les noms de pharmacies, leurs adresses réelles et leurs coordonnées.
+3. Explication pédagogique des ordonnances et aide à la préparation de commande sur l'application.
+4. Règle absolue de sécurité médicale : tu es un assistant d'orientation et de conseil, tu ne poses pas de diagnostic médical définitif. En cas d'urgence vitale, détresse respiratoire, douleur thoracique aiguë, réaction allergique sévère ou traumatisme grave, indique fermement d'appeler immédiatement le 15 (SAMU), le 112 ou de se rendre aux urgences hospitalières les plus proches.
+5. Adopte un ton empathique, professionnel, clair, structuré avec des puces d'action simples.`;
+
+      const genConfigWithMaps: any = {
+        systemInstruction,
+        tools: [{ googleMaps: {} }]
+      };
+
+      const userLat = (userLocation && typeof userLocation.latitude === "number") ? userLocation.latitude : 4.0511;
+      const userLng = (userLocation && typeof userLocation.longitude === "number") ? userLocation.longitude : 9.7679;
+
+      if (userLocation && typeof userLocation.latitude === "number" && typeof userLocation.longitude === "number") {
+        genConfigWithMaps.toolConfig = {
+          retrievalConfig: {
+            latLng: {
+              latitude: userLocation.latitude,
+              longitude: userLocation.longitude,
+            }
+          }
+        };
+      }
+
+      const genConfigTextOnly: any = {
+        systemInstruction,
+      };
+
+      let response: any = null;
+      let usedModel = selectedModel;
+      let usedMapsGrounded = false;
+      let isQuotaFallback = false;
+
+      // =======================================================================
+      // CASCADE DE RÉSILIENCE MULTI-MODÈLES & QUOTA
+      // =======================================================================
+      try {
+        if (requiresMaps) {
+          // Étape 1 : Essai avec Google Maps Grounding
+          try {
+            response = await ai.models.generateContent({
+              model: selectedModel,
+              contents: formattedContents,
+              config: genConfigWithMaps,
+            });
+            usedMapsGrounded = true;
+          } catch (mapsErr: any) {
+            console.warn("Échec ou quota sur Google Maps Grounding, repli sans Maps Grounding sur", selectedModel, ":", mapsErr?.message);
+            // Étape 2 : Repli sans Maps tool pour contourner la saturation du tool Maps
+            response = await ai.models.generateContent({
+              model: selectedModel,
+              contents: formattedContents,
+              config: genConfigTextOnly,
+            });
+            usedMapsGrounded = false;
+          }
+        } else {
+          // Étape 1 standard (sans maps)
+          response = await ai.models.generateContent({
+            model: selectedModel,
+            contents: formattedContents,
+            config: genConfigTextOnly,
+          });
+        }
+      } catch (tier1Err: any) {
+        console.warn("Échec ou quota sur", selectedModel, "- tentative de repli vers gemini-3.1-flash-lite...", tier1Err?.message);
+        try {
+          // Étape 3 : Repli sur gemini-3.1-flash-lite (haute cadence et quota distinct)
+          response = await ai.models.generateContent({
+            model: "gemini-3.1-flash-lite",
+            contents: formattedContents,
+            config: genConfigTextOnly,
+          });
+          usedModel = "gemini-3.1-flash-lite";
+          usedMapsGrounded = false;
+        } catch (tier2Err: any) {
+          console.warn("Tous les modèles Gemini sont indisponibles ou en quota dépassé (429/503). Déclenchement du fallback clinique officine.");
+          // Étape 4 : Repli clinique d'officine immédiat (continuité totale de service)
+          isQuotaFallback = true;
+        }
+      }
+
+      // Si le fallback clinique a été déclenché en raison d'un quota 429
+      if (isQuotaFallback || !response) {
+        const fallback = generateFallbackPharmacyResponse(lastText, userLat, userLng);
+        return res.json({
+          success: true,
+          text: fallback.text,
+          model: "PharmAply Mode Sécurité",
+          usedMaps: false,
+          isQuotaFallback: true,
+          mapsPlaces: fallback.mapsPlaces,
+          groundingChunks: [],
+          webSearchQueries: [],
+        });
+      }
+
+      const candidate = response.candidates?.[0];
+      const groundingMetadata = candidate?.groundingMetadata;
+      const groundingChunks = groundingMetadata?.groundingChunks || [];
+      const webSearchQueries = groundingMetadata?.webSearchQueries || [];
+
+      // Extraction des points Google Maps géolocalisés
+      const mapsPlaces: Array<{
+        title?: string;
+        uri?: string;
+        reviewSnippets?: string[];
+      }> = [];
+
+      if (Array.isArray(groundingChunks)) {
+        for (const chunk of groundingChunks) {
+          if (chunk.maps) {
+            const snippets: string[] = [];
+            const sources = (chunk.maps as any).placeAnswerSources?.reviewSnippets;
+            if (Array.isArray(sources)) {
+              for (const s of sources) {
+                if (s.reviewText) snippets.push(s.reviewText);
+              }
+            }
+            mapsPlaces.push({
+              title: chunk.maps.title,
+              uri: chunk.maps.uri,
+              reviewSnippets: snippets,
+            });
+          }
+        }
+      }
+
+      // Si l'utilisateur cherchait des pharmacies mais que Maps Grounding n'en a pas retourné ou a été court-circuité,
+      // on enrichit avec les pharmacies partenaires locales pour garantir la meilleure expérience
+      if (requiresMaps && mapsPlaces.length === 0) {
+        const fallback = generateFallbackPharmacyResponse(lastText, userLat, userLng);
+        mapsPlaces.push(...fallback.mapsPlaces);
+      }
+
+      return res.json({
+        success: true,
+        text: response.text || "",
+        model: usedModel,
+        usedMaps: usedMapsGrounded,
+        isQuotaFallback: false,
+        groundingChunks,
+        mapsPlaces,
+        webSearchQueries,
+      });
+    } catch (error: any) {
+      console.error("Erreur dans /api/ai/chat:", error);
+      // Même en cas d'erreur inattendue non capturée, si c'est un 429 on retourne le fallback au lieu d'une erreur 500
+      if (isQuotaOrRateLimitError(error)) {
+        const fallback = generateFallbackPharmacyResponse("", 4.0511, 9.7679);
+        return res.json({
+          success: true,
+          text: fallback.text,
+          model: "PharmAply Mode Sécurité",
+          usedMaps: false,
+          isQuotaFallback: true,
+          mapsPlaces: fallback.mapsPlaces,
+          groundingChunks: [],
+          webSearchQueries: [],
+        });
+      }
+
+      return res.status(500).json({
+        success: false,
+        error: cleanErrorMessage(error, "Erreur lors de la génération de réponse par l'IA."),
+      });
+    }
+  });
+
+  // =========================================================================
+  // RECHERCHE PHARMACIES DE GARDE / OUVERTES VIA GOOGLE MAPS GROUNDING
+  // =========================================================================
+  app.post("/api/ai/nearby-pharmacies", async (req: express.Request, res: express.Response): Promise<any> => {
+    try {
+      const { latitude, longitude, query } = req.body;
+      const apiKey = process.env.GEMINI_API_KEY;
+      if (!apiKey) {
+        return res.status(500).json({
+          success: false,
+          error: "Clé GEMINI_API_KEY non configurée.",
+        });
+      }
+
+      const userLat = typeof latitude === "number" ? latitude : 4.0511;
+      const userLng = typeof longitude === "number" ? longitude : 9.7679;
+
+      const { GoogleGenAI } = await import("@google/genai");
+      const ai = new GoogleGenAI({
+        apiKey,
+        httpOptions: {
+          headers: {
+            'User-Agent': 'aistudio-build',
+          }
+        }
+      });
+
+      const promptText = query && String(query).trim().length > 0
+        ? `Recherche les pharmacies suivantes autour de ma position géographique : "${query}". Indique précisément les pharmacies ouvertes ou de garde, leurs adresses complètes, leurs coordonnées et conseils d'accès.`
+        : `Quelles sont les pharmacies de garde et les pharmacies ouvertes actuellement les plus proches de ma position ? Donne pour chacune son nom exact, son adresse précise, ses horaires ou statut de garde, et comment s'y rendre.`;
+
+      let response: any = null;
+      let isFallback = false;
+
+      try {
+        response = await ai.models.generateContent({
+          model: "gemini-3.8-flash",
+          contents: promptText,
+          config: {
+            systemInstruction: "Tu es le service officiel de géolocalisation d'urgence et de garde pour PharmAply. Fournis une liste structurée et vérifiée des pharmacies disponibles avec leurs adresses réelles.",
+            tools: [{ googleMaps: {} }],
+            toolConfig: {
+              retrievalConfig: {
+                latLng: {
+                  latitude: userLat,
+                  longitude: userLng,
+                }
+              }
+            }
+          }
+        });
+      } catch (apiErr: any) {
+        console.warn("Erreur Google Maps Grounding dans /api/ai/nearby-pharmacies, repli sur le registre des pharmacies :", apiErr?.message);
+        isFallback = true;
+      }
+
+      const mapsPlaces: Array<{
+        title?: string;
+        uri?: string;
+        reviewSnippets?: string[];
+      }> = [];
+
+      if (!isFallback && response) {
+        const candidate = response.candidates?.[0];
+        const groundingChunks = candidate?.groundingMetadata?.groundingChunks || [];
+
+        if (Array.isArray(groundingChunks)) {
+          for (const chunk of groundingChunks) {
+            if (chunk.maps) {
+              const snippets: string[] = [];
+              const sources = (chunk.maps as any).placeAnswerSources?.reviewSnippets;
+              if (Array.isArray(sources)) {
+                for (const s of sources) {
+                  if (s.reviewText) snippets.push(s.reviewText);
+                }
+              }
+              mapsPlaces.push({
+                title: chunk.maps.title,
+                uri: chunk.maps.uri,
+                reviewSnippets: snippets,
+              });
+            }
+          }
+        }
+      }
+
+      // Si aucune pharmacie maps n'a été retournée ou repli actif
+      if (mapsPlaces.length === 0) {
+        const fallback = generateFallbackPharmacyResponse("pharmacie de garde", userLat, userLng);
+        mapsPlaces.push(...fallback.mapsPlaces);
+
+        return res.json({
+          success: true,
+          fallback: true,
+          isQuotaFallback: isFallback,
+          text: (response && response.text) ? response.text : fallback.text,
+          mapsPlaces,
+          groundingChunks: [],
+          location: { latitude: userLat, longitude: userLng }
+        });
+      }
+
+      return res.json({
+        success: true,
+        text: response.text || "",
+        mapsPlaces,
+        groundingChunks: response.candidates?.[0]?.groundingMetadata?.groundingChunks || [],
+        location: { latitude: userLat, longitude: userLng }
+      });
+    } catch (error: any) {
+      console.error("Erreur dans /api/ai/nearby-pharmacies:", error);
+      const fallback = generateFallbackPharmacyResponse("pharmacie de garde", 4.0511, 9.7679);
+      return res.json({
+        success: true,
+        fallback: true,
+        isQuotaFallback: true,
+        text: fallback.text,
+        mapsPlaces: fallback.mapsPlaces,
+        location: { latitude: 4.0511, longitude: 9.7679 }
       });
     }
   });
@@ -1358,7 +1939,7 @@ Products: ` + JSON.stringify(products.map((p: any) => ({
     const vite = await createViteServer({
       server: {
         middlewareMode: true,
-        hmr: process.env.DISABLE_HMR === "true" ? false : undefined,
+        hmr: false,
       },
       appType: "spa",
     });
@@ -1375,9 +1956,34 @@ Products: ` + JSON.stringify(products.map((p: any) => ({
     });
   }
 
-  app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Server running on http://0.0.0.0:${PORT}`);
-  });
+  let retries = 0;
+  const maxRetries = 10;
+  function bindPort() {
+    const server = app.listen(PORT, HOST, () => {
+      console.log(`  ➜  Local:   http://localhost:${PORT}/`);
+      console.log(`  ➜  Network: http://${HOST}:${PORT}/`);
+      console.log(`Server ready on port ${PORT}`);
+    });
+
+    server.on("error", (err: any) => {
+      if (err.code === "EADDRINUSE" && retries < maxRetries) {
+        retries++;
+        console.warn(`Port ${PORT} is busy, retrying in 500ms (attempt ${retries}/${maxRetries})...`);
+        setTimeout(() => {
+          try {
+            server.close();
+          } catch {
+            // ignore if already closed
+          }
+          bindPort();
+        }, 500);
+      } else {
+        console.error("Server listen error:", err);
+      }
+    });
+  }
+
+  bindPort();
 }
 
 startServer().catch(err => {

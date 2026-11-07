@@ -6,9 +6,6 @@ import { useTranslation } from "react-i18next";
 import { useGoogleMapsStatus } from "../hooks/useGoogleMapsStatus";
 import { getGoogleMapsApiKey } from "../lib/maps";
 
-const API_KEY = getGoogleMapsApiKey();
-const hasValidKey = Boolean(API_KEY);
-
 function DeckGlOverlay({ layers }: { layers: any[] }) {
   const map = useMap();
   useEffect(() => {
@@ -22,9 +19,9 @@ function DeckGlOverlay({ layers }: { layers: any[] }) {
 
 export function PharmacyHeatmap({ pharmacies }: { pharmacies: any[] }) {
   const { t } = useTranslation();
-  const { mapsFailed } = useGoogleMapsStatus();
+  const { isAvailable, apiKey } = useGoogleMapsStatus();
   
-  if (!hasValidKey || mapsFailed) {
+  if (!isAvailable || !apiKey) {
     return (
       <div className="w-full h-[300px] bg-slate-100 dark:bg-zinc-800/80 rounded-xl flex items-center justify-center p-6 text-center border border-slate-200 dark:border-zinc-700">
         <div>
@@ -68,7 +65,15 @@ export function PharmacyHeatmap({ pharmacies }: { pharmacies: any[] }) {
 
   return (
     <div className="w-full h-[300px] rounded-xl overflow-hidden shadow-sm border border-gray-100 dark:border-zinc-800">
-      <APIProvider apiKey={API_KEY} version="weekly">
+      <APIProvider 
+        apiKey={apiKey} 
+        version="weekly"
+        onError={() => {
+          (window as any).__googleMapsAuthFailed = true;
+          try { sessionStorage.setItem('gmp_auth_failed', 'true'); } catch {}
+          window.dispatchEvent(new Event('google-maps-auth-failed'));
+        }}
+      >
         <Map
           defaultCenter={{lat: 37.7749, lng: -122.4194}}
           defaultZoom={12}

@@ -16,7 +16,12 @@ function useDebounce(value: string, delay: number) {
   return debouncedValue;
 }
 
-export function PatientSearchBar() {
+interface PatientSearchBarProps {
+  onOpenStepSearch?: (queryText?: string) => void;
+  className?: string;
+}
+
+export function PatientSearchBar({ onOpenStepSearch, className = "" }: PatientSearchBarProps) {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [queryText, setQueryText] = useState('');
@@ -25,6 +30,7 @@ export function PatientSearchBar() {
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const fetchResults = async () => {
@@ -111,59 +117,94 @@ export function PatientSearchBar() {
 
   const handleSearchSubmit = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
-    if (!queryText.trim()) return;
+    if (inputRef.current) {
+      inputRef.current.blur();
+    } else {
+      (document.activeElement as HTMLElement)?.blur();
+    }
     setIsOpen(false);
-    navigate(`/patient/search?q=${encodeURIComponent(queryText.trim())}`);
+    const trimmed = queryText.trim();
+    if (onOpenStepSearch) {
+      onOpenStepSearch(trimmed);
+      return;
+    }
+    if (trimmed) {
+      navigate(`/patient/search?q=${encodeURIComponent(trimmed)}`);
+    } else {
+      navigate('/patient/search');
+    }
   };
 
   const handleSelectProduct = (product: any) => {
     setIsOpen(false);
+    if (inputRef.current) inputRef.current.blur();
+    const name = product.nom_commercial || product.name || product.dci || '';
+    if (onOpenStepSearch) {
+      onOpenStepSearch(name);
+      return;
+    }
     if (product.id) {
       navigate(`/patient/product/${product.id}`);
     } else {
-      navigate(`/patient/search?q=${encodeURIComponent(product.nom_commercial || product.dci || '')}`);
+      navigate(`/patient/search?q=${encodeURIComponent(name)}`);
     }
   };
 
   return (
-    <div className="relative w-full" ref={containerRef}>
-      <form onSubmit={handleSearchSubmit} className="relative flex items-center">
-        <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[var(--app-primary-color)] dark:text-teal-400">
+    <div className={`relative w-full ${className}`} ref={containerRef}>
+      <form onSubmit={handleSearchSubmit} action="" method="get" className="relative flex items-center w-full">
+        <div className="absolute inset-y-0 left-0 pl-4 sm:pl-5 flex items-center pointer-events-none text-[var(--app-primary-color)] dark:text-teal-400 z-10">
           {loading ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
+            <Loader2 className="h-5 w-5 sm:h-6 sm:w-6 animate-spin" />
           ) : (
-            <Search className="h-4 w-4" />
+            <Search className="h-5 w-5 sm:h-6 sm:w-6" />
           )}
         </div>
         <input
-          type="text"
-          className="block w-full pl-10 pr-20 py-3 border border-gray-200 dark:border-zinc-700 rounded-2xl leading-5 bg-gray-50 dark:bg-zinc-900/80 dark:bg-zinc-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#194B4B] focus:border-[var(--app-primary-color)] text-xs sm:text-sm transition-all dark:text-white shadow-xs"
-          placeholder={t('search_bar.placeholder', 'Rechercher un médicament, DCI, symptôme...')}
+          ref={inputRef}
+          type="search"
+          name="q"
+          enterKeyHint="search"
+          inputMode="search"
+          autoCapitalize="none"
+          autoComplete="off"
+          autoCorrect="off"
+          spellCheck="false"
+          className="block w-full min-h-[58px] sm:min-h-[64px] pl-12 sm:pl-14 pr-12 sm:pr-14 py-4 sm:py-4.5 border-2 border-gray-200/90 dark:border-zinc-700 rounded-2xl sm:rounded-3xl leading-5 bg-white dark:bg-zinc-800/95 placeholder-gray-400 dark:placeholder-zinc-500 text-gray-900 dark:text-white focus:outline-none focus:border-[var(--app-primary-color)] dark:focus:border-teal-400 focus:ring-4 focus:ring-[var(--app-primary-color)]/10 dark:focus:ring-teal-400/15 text-[15px] sm:text-base font-medium transition-all shadow-sm cursor-text"
+          placeholder={t('search_bar.placeholder', 'Rechercher vos médicaments par étapes...')}
           value={queryText}
           onChange={(e) => setQueryText(e.target.value)}
-          onFocus={() => { if (results.length > 0 || queryText.length >= 2) setIsOpen(true); }}
+          onFocus={() => {
+            if (results.length > 0 || queryText.length >= 2) {
+              setIsOpen(true);
+            }
+          }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              handleSearchSubmit();
+            }
+          }}
         />
-        <div className="absolute inset-y-0 right-0 pr-2 flex items-center gap-1">
-          {queryText.length > 0 && (
+        {queryText.length > 0 && (
+          <div className="absolute inset-y-0 right-0 pr-3.5 sm:pr-4 flex items-center z-10">
             <button
               type="button"
               onClick={() => {
                 setQueryText('');
                 setResults([]);
                 setIsOpen(false);
+                inputRef.current?.focus();
               }}
-              className="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 rounded-full"
+              className="p-1.5 sm:p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 rounded-full hover:bg-gray-100 dark:hover:bg-zinc-700 transition active:scale-95"
+              aria-label="Effacer le champ de recherche"
             >
-              <X size={14} />
+              <X size={18} />
             </button>
-          )}
-          <button
-            type="submit"
-            className="px-3 py-1.5 bg-[var(--app-primary-color)] hover:bg-teal-800 text-white rounded-xl text-xs font-bold transition shadow-xs flex items-center gap-1 active:scale-95"
-          >
-            <span>{t('search_bar.search_btn', 'Rechercher')}</span>
-          </button>
-        </div>
+          </div>
+        )}
+        {/* Hidden button enabling standard mobile keyboard form submit */}
+        <button type="submit" className="hidden" tabIndex={-1} aria-hidden="true" />
       </form>
 
       {/* Autocomplete Results Dropdown */}
@@ -245,7 +286,7 @@ export function PatientSearchBar() {
               <div className="p-6 text-center text-xs text-gray-500 dark:text-gray-400 space-y-2">
                 <Search className="mx-auto h-6 w-6 text-gray-300 dark:text-gray-600" />
                 <p className="font-bold text-gray-700 dark:text-gray-300">{t('search_bar.no_meds_found', { query: queryText, defaultValue: `Aucun médicament trouvé pour « ${queryText} »` })}</p>
-                <p className="text-[11px] text-gray-400">{t('search_bar.press_search_hint', 'Appuyez sur "Rechercher" pour explorer tout le catalogue ou envoyer une ordonnance.')}</p>
+                <p className="text-[11px] text-gray-400">{t('search_bar.press_search_hint', 'Appuyez sur la touche Entrée de votre clavier pour explorer tout le catalogue.')}</p>
                 <button
                   type="button"
                   onClick={() => handleSearchSubmit()}

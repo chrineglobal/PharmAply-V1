@@ -5,6 +5,7 @@ import { doc, onSnapshot, getDoc, db } from '../../lib/firebase';
 import { formatCurrency } from '../../lib/utils';
 import { Bike, MapPin, Store, Navigation, Phone, MessageSquare, Clock, ShieldCheck, CheckCircle2, ChevronRight, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useGoogleMapsStatus } from '../../hooks/useGoogleMapsStatus';
 
 // Google Maps Custom Marker Components
 const PharmacyMarkerUI = () => (
@@ -51,6 +52,7 @@ interface PharmacyDriverMapProps {
 
 export function PharmacyDriverMap({ orders, pharmacy }: PharmacyDriverMapProps) {
   const navigate = useNavigate();
+  const { isAvailable, apiKey } = useGoogleMapsStatus();
   // Filter active orders that have an assigned driver approaching or picking up
   const activeDeliveryOrders = orders.filter(o => 
     (o.driverId || o.driver_id) && 
@@ -185,41 +187,75 @@ export function PharmacyDriverMap({ orders, pharmacy }: PharmacyDriverMapProps) 
       </div>
 
       {/* Map Container */}
-      <div className="w-full h-[320px] relative z-0">
-        <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
-          <Map
-            mapId="DEMO_MAP_ID"
-            defaultCenter={{ lat: mapCenter[0], lng: mapCenter[1] }}
-            defaultZoom={14}
-            gestureHandling="greedy"
-            disableDefaultUI={true}
-            className="w-full h-full"
-            style={{ width: '100%', height: '100%' }}
-            internalUsageAttributionIds={["gmp_mcp_codeassist_v1_aistudio"]}
+      <div className="w-full h-[320px] relative z-0 rounded-2xl overflow-hidden bg-slate-900">
+        {isAvailable && apiKey ? (
+          <APIProvider 
+            apiKey={apiKey}
+            onError={() => {
+              (window as any).__googleMapsAuthFailed = true;
+              try { sessionStorage.setItem('gmp_auth_failed', 'true'); } catch {}
+              window.dispatchEvent(new Event('google-maps-auth-failed'));
+            }}
           >
-            <MapAutoCenter center={mapCenter} />
-            
-            {/* Pharmacy Marker */}
-            <AdvancedMarker position={{ lat: pharmaPos[0], lng: pharmaPos[1] }}>
-              <PharmacyMarkerUI />
-            </AdvancedMarker>
+            <Map
+              mapId="DEMO_MAP_ID"
+              defaultCenter={{ lat: mapCenter[0], lng: mapCenter[1] }}
+              defaultZoom={14}
+              gestureHandling="greedy"
+              disableDefaultUI={true}
+              className="w-full h-full"
+              style={{ width: '100%', height: '100%' }}
+              internalUsageAttributionIds={["gmp_mcp_codeassist_v1_aistudio"]}
+            >
+              <MapAutoCenter center={mapCenter} />
+              
+              {/* Pharmacy Marker */}
+              <AdvancedMarker position={{ lat: pharmaPos[0], lng: pharmaPos[1] }}>
+                <PharmacyMarkerUI />
+              </AdvancedMarker>
 
-            {/* Driver Marker */}
-            {driverPos && (
-              <>
-                <AdvancedMarker position={{ lat: driverPos[0], lng: driverPos[1] }}>
-                  <DriverMotoMarkerUI />
-                </AdvancedMarker>
-                <Polyline 
-                  path={[{lat: driverPos[0], lng: driverPos[1]}, {lat: pharmaPos[0], lng: pharmaPos[1]}]} 
-                  strokeColor="#194B4B" 
-                  strokeWeight={4} 
-                  strokeOpacity={0.8} 
-                />
-              </>
-            )}
-          </Map>
-        </APIProvider>
+              {/* Driver Marker */}
+              {driverPos && (
+                <>
+                  <AdvancedMarker position={{ lat: driverPos[0], lng: driverPos[1] }}>
+                    <DriverMotoMarkerUI />
+                  </AdvancedMarker>
+                  <Polyline 
+                    path={[{lat: driverPos[0], lng: driverPos[1]}, {lat: pharmaPos[0], lng: pharmaPos[1]}]} 
+                    strokeColor="#194B4B" 
+                    strokeWeight={4} 
+                    strokeOpacity={0.8} 
+                  />
+                </>
+              )}
+            </Map>
+          </APIProvider>
+        ) : (
+          <div className="w-full h-full flex flex-col items-center justify-center p-6 text-center relative overflow-hidden bg-slate-900 border border-slate-800">
+            <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#2dd4bf_1px,transparent_1px)] [background-size:16px_16px]"></div>
+            <div className="relative z-10 flex items-center justify-center gap-6 mb-4">
+              <div className="flex flex-col items-center gap-1.5">
+                <div className="w-12 h-12 rounded-2xl bg-amber-400/10 border border-amber-400/30 flex items-center justify-center text-amber-400">
+                  <Bike size={24} className="animate-pulse" />
+                </div>
+                <span className="text-[11px] font-bold text-slate-300">Livreur en approche</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className="w-20 border-t-2 border-dashed border-teal-500/50 my-auto"></div>
+                <span className="text-[10px] font-mono text-teal-400 mt-1">{distanceKm !== null ? `${distanceKm.toFixed(1)} km` : '--'}</span>
+              </div>
+              <div className="flex flex-col items-center gap-1.5">
+                <div className="w-12 h-12 rounded-2xl bg-[var(--app-primary-color)]/20 border border-[var(--app-primary-color)]/50 flex items-center justify-center text-teal-400">
+                  <Store size={24} />
+                </div>
+                <span className="text-[11px] font-bold text-slate-300">Votre Officine</span>
+              </div>
+            </div>
+            <p className="text-xs text-slate-400 relative z-10 font-medium">
+              Suivi GPS actif • {driverData?.name || currentOrder?.driverName || 'Livreur assigné'}
+            </p>
+          </div>
+        )}
 
         {/* Floating live driver card overlay */}
         <div className="absolute bottom-3 left-3 right-3 z-10 pointer-events-auto">

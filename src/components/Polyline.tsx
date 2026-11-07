@@ -30,7 +30,12 @@ export const Polyline = forwardRef<google.maps.Polyline | null, PolylineProps>((
 
   useEffect(() => {
     if (!polyline.current) {
-      polyline.current = new google.maps.Polyline();
+      if (typeof google === 'undefined' || !google.maps) return;
+      try {
+        polyline.current = new google.maps.Polyline();
+      } catch (err) {
+        console.warn("Could not create google.maps.Polyline:", err);
+      }
     }
   }, []);
 
@@ -48,18 +53,22 @@ export const Polyline = forwardRef<google.maps.Polyline | null, PolylineProps>((
 
   // Event bindings
   useEffect(() => {
-    if (!polyline.current) return;
+    if (!polyline.current || typeof google === 'undefined' || !google.maps) return;
     
     let listeners: google.maps.MapsEventListener[] = [];
-    if (onClick) listeners.push(google.maps.event.addListener(polyline.current, 'click', onClick));
-    if (onDrag) listeners.push(google.maps.event.addListener(polyline.current, 'drag', onDrag));
-    if (onDragStart) listeners.push(google.maps.event.addListener(polyline.current, 'dragstart', onDragStart));
-    if (onDragEnd) listeners.push(google.maps.event.addListener(polyline.current, 'dragend', onDragEnd));
-    if (onMouseOver) listeners.push(google.maps.event.addListener(polyline.current, 'mouseover', onMouseOver));
-    if (onMouseOut) listeners.push(google.maps.event.addListener(polyline.current, 'mouseout', onMouseOut));
+    try {
+      if (onClick) listeners.push(google.maps.event.addListener(polyline.current, 'click', onClick));
+      if (onDrag) listeners.push(google.maps.event.addListener(polyline.current, 'drag', onDrag));
+      if (onDragStart) listeners.push(google.maps.event.addListener(polyline.current, 'dragstart', onDragStart));
+      if (onDragEnd) listeners.push(google.maps.event.addListener(polyline.current, 'dragend', onDragEnd));
+      if (onMouseOver) listeners.push(google.maps.event.addListener(polyline.current, 'mouseover', onMouseOver));
+      if (onMouseOut) listeners.push(google.maps.event.addListener(polyline.current, 'mouseout', onMouseOut));
+    } catch {}
 
     return () => {
-      listeners.forEach(listener => google.maps.event.removeListener(listener));
+      try {
+        listeners.forEach(listener => google?.maps?.event?.removeListener(listener));
+      } catch {}
     };
   }, [onClick, onDrag, onDragStart, onDragEnd, onMouseOver, onMouseOut]);
 

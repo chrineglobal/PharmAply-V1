@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ArrowLeft, SlidersHorizontal, Pill, Clock, X, Navigation, MapPin } from "lucide-react";
+import { ArrowLeft, SlidersHorizontal, Pill, Clock, X, Navigation, MapPin, Sparkles } from "lucide-react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { collection, query, getDocs, limit, where, addDoc, deleteDoc, doc } from '../../lib/firebase';
 import { db } from '../../lib/firebase';
@@ -8,6 +8,7 @@ import { useAuth } from "../../components/AuthProvider";
 import toast from 'react-hot-toast';
 import { ProductCard } from '../../components/ProductCard';
 import { getCategoryIcon } from '../../lib/icons';
+import { StepMedicationSearchModal } from '../../components/patient/StepMedicationSearchModal';
 
 // Formule Haversine pour calculer la distance géographique en km
 function calculateDistanceKm(lat1: number, lon1: number, lat2: number, lon2: number): number {
@@ -32,6 +33,7 @@ export function PatientSearch() {
   const { user } = useAuth();
   const initialQuery = searchParams.get("q") || "";
   const [searchQuery, setSearchQuery] = useState(initialQuery);
+  const [isStepModalOpen, setIsStepModalOpen] = useState(false);
   const [deduplicatedProducts, setDeduplicatedProducts] = useState<any[]>([]);
   const [categories, setCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -261,16 +263,36 @@ export function PatientSearch() {
           </button>
           <form className="flex-1 relative" onSubmit={handleSearchSubmit}>
             <input
-              type="text"
+              type="search"
+              enterKeyHint="search"
+              inputMode="search"
+              autoCapitalize="none"
+              autoCorrect="off"
+              spellCheck="false"
               autoFocus
               placeholder={t('search_products_desc', 'Rechercher un médicament, DCI, catégorie...')}
-              className="w-full bg-gray-100 dark:bg-zinc-900 py-3 px-4 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#194B4B]/20 text-gray-900 dark:text-white"
+              className="w-full min-h-[54px] sm:min-h-[58px] bg-gray-100 dark:bg-zinc-900 py-4 px-4.5 rounded-2xl text-[15px] sm:text-base focus:outline-none focus:ring-2 focus:ring-[#194B4B]/20 text-gray-900 dark:text-white"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleSearchSubmit(e);
+                  (document.activeElement as HTMLElement)?.blur();
+                }
+              }}
             />
           </form>
-          <button className="p-2 bg-[var(--app-primary-color)]/10 text-[var(--app-primary-color)] dark:text-teal-400 rounded-xl">
-            <SlidersHorizontal size={20} />
+          <button 
+            type="button"
+            onClick={() => {
+              window.dispatchEvent(new CustomEvent('open-ai-pharmacist', {
+                detail: { query: searchQuery ? `Conseils et disponibilité pour : ${searchQuery}` : undefined }
+              }));
+            }}
+            title="Assistant Pharmacien IA"
+            className="p-3 bg-gradient-to-tr from-emerald-600 to-teal-600 text-white rounded-2xl shadow-sm hover:opacity-90 active:scale-95 transition"
+          >
+            <Sparkles size={20} className="animate-pulse" />
           </button>
         </div>
 
@@ -282,6 +304,32 @@ export function PatientSearch() {
       </div>
 
       <div className="flex-1 overflow-y-auto p-6 space-y-6">
+        {/* Step-by-Step Medication Search & Map Banner */}
+        <div 
+          onClick={() => setIsStepModalOpen(true)}
+          className="bg-gradient-to-r from-teal-900 to-emerald-900 text-white p-4 rounded-3xl cursor-pointer hover:shadow-lg transition-all flex items-center justify-between gap-4 border border-teal-700/40"
+        >
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="w-10 h-10 rounded-2xl bg-white/10 flex items-center justify-center shrink-0 text-amber-300">
+              <Sparkles size={20} />
+            </div>
+            <div className="min-w-0">
+              <h4 className="font-extrabold text-sm text-white truncate">
+                Recherche groupée par étapes & Carte des pharmacies
+              </h4>
+              <p className="text-xs text-teal-100 truncate">
+                Sélectionnez vos médicaments et trouvez les pharmacies avec 100% de stock disponible
+              </p>
+            </div>
+          </div>
+          <button 
+            type="button"
+            className="px-3.5 py-2 bg-white text-gray-900 hover:bg-gray-100 text-xs font-black rounded-xl shrink-0 shadow-xs active:scale-95 transition"
+          >
+            Lancer
+          </button>
+        </div>
+
         {/* Filtres par catégorie */}
         <div>
           <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-2">
@@ -367,6 +415,13 @@ export function PatientSearch() {
           </div>
         )}
       </div>
+
+      {/* Multi-Step Medication Search Modal */}
+      <StepMedicationSearchModal
+        isOpen={isStepModalOpen}
+        onClose={() => setIsStepModalOpen(false)}
+        initialQuery={searchQuery}
+      />
     </div>
   );
 }

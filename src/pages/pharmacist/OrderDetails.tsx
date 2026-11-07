@@ -16,6 +16,7 @@ import { InvoiceModal } from '../../components/InvoiceModal';
 import { useTranslation } from "react-i18next";
 import { APIProvider, Map, AdvancedMarker, useMap } from '@vis.gl/react-google-maps';
 import { Polyline } from '../../components/Polyline';
+import { useGoogleMapsStatus } from '../../hooks/useGoogleMapsStatus';
 
 // Google Maps Custom Marker Components
 const DriverMotoMarkerUI = () => (
@@ -45,7 +46,7 @@ const PharmacyMarkerUI = () => (
 function MapAutoBounds({ pharmacyPos, driverPos }: { pharmacyPos?: [number, number]; driverPos?: [number, number] }) {
   const map = useMap();
   useEffect(() => {
-    if (!map) return;
+    if (!map || typeof google === 'undefined' || !google.maps) return;
     const bounds = new google.maps.LatLngBounds();
     let hasPoints = false;
     
@@ -77,6 +78,7 @@ function MapAutoBounds({ pharmacyPos, driverPos }: { pharmacyPos?: [number, numb
 export function PharmacistOrderDetails() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { isAvailable: mapsAvailable, apiKey: mapsApiKey } = useGoogleMapsStatus();
   const { id } = useParams();
   const { user } = useAuth();
   
@@ -298,44 +300,80 @@ export function PharmacistOrderDetails() {
                   </div>
                 </div>
 
-                {/* Carte Leaflet interactive (Strictement Livreur -> Pharmacie) */}
-                <div className="w-full h-80 rounded-2xl overflow-hidden border border-gray-200 dark:border-slate-700 relative shadow-inner z-0">
-                  <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
-                  <Map
-                    mapId="DEMO_MAP_ID"
-                    defaultCenter={{ lat: driverPos[0], lng: driverPos[1] }}
-                    defaultZoom={14}
-                    gestureHandling="greedy"
-                    disableDefaultUI={true}
-                    className="w-full h-full"
-                    style={{ width: "100%", height: "100%" }}
-                    internalUsageAttributionIds={["gmp_mcp_codeassist_v1_aistudio"]}
-                  >
-                    <AdvancedMarker position={{ lat: pharmacyPos[0], lng: pharmacyPos[1] }} title={order.pharmacyName || "Votre Pharmacie"}>
-                      <PharmacyMarkerUI />
-                    </AdvancedMarker>
-
-                    {hasDriverAssigned && (
-                      <AdvancedMarker position={{ lat: driverPos[0], lng: driverPos[1] }} title={driver?.name || order.driverName || "Coursier en approche"}>
-                        <DriverMotoMarkerUI />
+                {/* Carte interactive Livreur -> Pharmacie */}
+                <div className="w-full h-80 rounded-2xl overflow-hidden border border-gray-200 dark:border-slate-700 relative shadow-inner z-0 bg-slate-900">
+                  {mapsAvailable && mapsApiKey ? (
+                    <APIProvider 
+                      apiKey={mapsApiKey}
+                      onError={() => {
+                        (window as any).__googleMapsAuthFailed = true;
+                        try { sessionStorage.setItem('gmp_auth_failed', 'true'); } catch {}
+                        window.dispatchEvent(new Event('google-maps-auth-failed'));
+                      }}
+                    >
+                    <Map
+                      mapId="DEMO_MAP_ID"
+                      defaultCenter={{ lat: driverPos[0], lng: driverPos[1] }}
+                      defaultZoom={14}
+                      gestureHandling="greedy"
+                      disableDefaultUI={true}
+                      className="w-full h-full"
+                      style={{ width: "100%", height: "100%" }}
+                      internalUsageAttributionIds={["gmp_mcp_codeassist_v1_aistudio"]}
+                    >
+                      <AdvancedMarker position={{ lat: pharmacyPos[0], lng: pharmacyPos[1] }} title={order.pharmacyName || "Votre Pharmacie"}>
+                        <PharmacyMarkerUI />
                       </AdvancedMarker>
-                    )}
 
-                    {hasDriverAssigned && (
-                      <Polyline
-                        path={routePositions.map((c: any) => ({lat: c[0], lng: c[1]}))}
-                        strokeColor="#194B4B"
-                        strokeWeight={4}
-                        strokeOpacity={0.8}
+                      {hasDriverAssigned && (
+                        <AdvancedMarker position={{ lat: driverPos[0], lng: driverPos[1] }} title={driver?.name || order.driverName || "Coursier en approche"}>
+                          <DriverMotoMarkerUI />
+                        </AdvancedMarker>
+                      )}
+
+                      {hasDriverAssigned && (
+                        <Polyline
+                          path={routePositions.map((c: any) => ({lat: c[0], lng: c[1]}))}
+                          strokeColor="#194B4B"
+                          strokeWeight={4}
+                          strokeOpacity={0.8}
+                        />
+                      )}
+
+                      <MapAutoBounds
+                        pharmacyPos={pharmacyPos}
+                        driverPos={hasDriverAssigned ? driverPos : undefined}
                       />
-                    )}
-
-                    <MapAutoBounds
-                      pharmacyPos={pharmacyPos}
-                      driverPos={hasDriverAssigned ? driverPos : undefined}
-                    />
-                  </Map>
-                  </APIProvider>
+                    </Map>
+                    </APIProvider>
+                  ) : (
+                    <div className="w-full h-full flex flex-col items-center justify-center p-6 text-center relative overflow-hidden bg-slate-900">
+                      <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#2dd4bf_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                      <div className="relative z-10 flex items-center justify-center gap-6 mb-4">
+                        <div className="flex flex-col items-center gap-1.5">
+                          <div className="w-12 h-12 rounded-2xl bg-amber-400/10 border border-amber-400/30 flex items-center justify-center text-amber-400">
+                            <Bike size={24} className={hasDriverAssigned ? "animate-pulse" : ""} />
+                          </div>
+                          <span className="text-[11px] font-bold text-slate-300">
+                            {hasDriverAssigned ? (driver?.name || order.driverName || "Livreur assigné") : "En attente d'un coursier"}
+                          </span>
+                        </div>
+                        <div className="flex flex-col items-center">
+                          <div className="w-16 border-t-2 border-dashed border-teal-500/50 my-auto"></div>
+                          <span className="text-[10px] font-mono text-teal-400 mt-1">{hasDriverAssigned ? "En route" : "Assignation"}</span>
+                        </div>
+                        <div className="flex flex-col items-center gap-1.5">
+                          <div className="w-12 h-12 rounded-2xl bg-[var(--app-primary-color)]/20 border border-[var(--app-primary-color)]/50 flex items-center justify-center text-teal-400">
+                            <Store size={24} />
+                          </div>
+                          <span className="text-[11px] font-bold text-slate-300">Votre Pharmacie</span>
+                        </div>
+                      </div>
+                      <p className="text-xs text-slate-400 relative z-10 font-medium">
+                        {order.pharmacyName || "Officine partenaire"} • Position & itinéraire en direct
+                      </p>
+                    </div>
+                  )}
                 </div>
 
                 {/* Infos Livreur */}

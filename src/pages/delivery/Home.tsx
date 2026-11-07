@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { User, Bell, MapPin, Clock, DollarSign, CheckCircle, Navigation, Menu, Power, X, Moon, Sun, Layers, Star, AlertTriangle, Loader2, MessageSquare } from "lucide-react";
 import toast from "react-hot-toast";
@@ -27,16 +27,26 @@ export function DeliveryHome() {
   const navigate = useNavigate();
   const { user, userData } = useAuth();
   const { isDarkMode, toggleDarkMode } = useDarkMode();
-  const [isOnline, setIsOnline] = useState(false);
+  const [isOnline, setIsOnline] = useState<boolean>(() => {
+    try {
+      const saved = localStorage.getItem('driver_is_online');
+      return saved === 'true';
+    } catch {
+      return false;
+    }
+  });
   const [orders, setOrders] = useState<any[]>([]);
   const [currentRequest, setCurrentRequest] = useState<any>(null);
+  const rejectedOrderIds = useRef<Set<string>>(new Set());
+  const userOnlineIntent = useRef<boolean | null>(null);
+  const lastUserToggleTime = useRef<number>(0);
   const [processing, setProcessing] = useState(false);
   const [todaysEarnings, setTodaysEarnings] = useState(0);
   const [driverRating, setDriverRating] = useState<number | null>(null);
   const [driverProfile, setDriverProfile] = useState<any>(null);
   const [driverPos, setDriverPos] = useState({ lat: 48.8566, lng: 2.3522 }); // Fallback location
   
-  const { mapsFailed } = useGoogleMapsStatus();
+  const { isAvailable, apiKey } = useGoogleMapsStatus();
   
   useEffect(() => {
     if (navigator.geolocation) {
@@ -57,7 +67,21 @@ export function DeliveryHome() {
         unsub = onSnapshot(doc(db, 'drivers', user.uid), async (snap) => {
            if (snap.exists()) {
               const data = snap.data();
-              setIsOnline(data.isOnline || false);
+              const remoteOnline = typeof data.isOnline === 'boolean' 
+                ? data.isOnline 
+                : (typeof data.is_online === 'boolean' ? data.is_online : null);
+              
+              if (remoteOnline !== null) {
+                 // Avoid race condition if user manually toggled within the last 8 seconds
+                 const recentlyToggled = Date.now() - lastUserToggleTime.current < 8000;
+                 if (!recentlyToggled || userOnlineIntent.current === null || userOnlineIntent.current === remoteOnline) {
+                   setIsOnline(remoteOnline);
+                   try {
+                     localStorage.setItem('driver_is_online', remoteOnline ? 'true' : 'false');
+                     localStorage.setItem(`driver_is_online_${user.uid}`, remoteOnline ? 'true' : 'false');
+                   } catch {}
+                 }
+              }
               
               // Self-healing: if drivers says pending, check users table
               if (data.status === 'pending_verification' || !data.status) {
@@ -75,7 +99,7 @@ export function DeliveryHome() {
                   } catch(e) { console.error("Self-heal check failed", e); }
               }
               
-              setDriverProfile(prev => ({ ...prev, ...data }));
+              setDriverProfile((prev: any) => ({ ...prev, ...data }));
            }
         });
         
@@ -114,15 +138,10 @@ export function DeliveryHome() {
           await updateDoc(doc(db, 'drivers', user.uid), {
              lat: latitude,
              lng: longitude,
+             isOnline: true,
+             is_online: true,
              updatedAt: serverTimestamp()
           });
-          // Also update active orders if we have current request, or any out_for_delivery orders
-          if (currentRequest) {
-            await updateDoc(doc(db, 'orders', currentRequest.id), {
-               driverLat: latitude,
-               driverLng: longitude
-            });
-          }
         } catch(e) {}
       },
       (error) => {
@@ -131,26 +150,65 @@ export function DeliveryHome() {
       { enableHighAccuracy: false, maximumAge: 15000, timeout: 10000 }
     );
     return () => navigator.geolocation.clearWatch(watchId);
-  }, [isOnline, user, currentRequest]);
+  }, [isOnline, user]);
 
   useEffect(() => {
     let unsubscribe: () => void;
     if (user && isOnline) {
       try {
-        const q = query(collection(db, 'orders'), where('status', '==', 'ready'), where('deliveryMethod', '==', 'delivery'));
+        const q = query(collection(db, 'orders'));
         unsubscribe = onSnapshot(q, (snapshot) => {
-          const fetched = sortByDateDesc(snapshot.docs.map(d => ({ id: d.id, ...d.data() })));
-          setOrders(fetched);
-          if (fetched.length > 0 && !currentRequest) {
-             setCurrentRequest(fetched[0]);
-          } else if (fetched.length === 0) {
-             setCurrentRequest(null);
-          }
+          const allOrders = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+          const readyOrders = sortByDateDesc(
+            allOrders.filter((o: any) => {
+              const status = (o.status || '').toLowerCase();
+              const isReady = status === 'ready' || 
+                              status === 'ready_for_pickup' || 
+                              status === 'ready_for_delivery';
+              const method = (o.deliveryMethod || o.delivery_method || o.delivery_mode || 'delivery').toLowerCase();
+              const isDelivery = method !== 'pickup' && method !== 'retrait';
+              const driverId = o.driverId || o.driver_id;
+              const unassigned = !driverId || driverId === user.uid;
+              const notRejected = !rejectedOrderIds.current.has(o.id);
+              return isReady && isDelivery && unassigned && notRejected;
+            })
+          );
+
+          setOrders(readyOrders);
+
+          // PERSIST MISSION DISPLAY:
+          // Keep the current request displayed if it's still available in readyOrders.
+          // Never flicker or disappear unless accepted, rejected, or assigned to another driver.
+          setCurrentRequest((prev: any) => {
+            if (prev) {
+              const stillValid = readyOrders.find(o => o.id === prev.id);
+              if (stillValid) {
+                return { ...prev, ...stillValid };
+              }
+              // If manually rejected by driver
+              if (rejectedOrderIds.current.has(prev.id)) {
+                return readyOrders.length > 0 ? readyOrders[0] : null;
+              }
+              // If driver accepted it (assigned to this driver)
+              const assignedToMe = allOrders.find(o => o.id === prev.id && (o.driverId === user.uid || o.driver_id === user.uid));
+              if (assignedToMe) {
+                return null;
+              }
+              // If taken by another driver
+              const assignedToOther = allOrders.find(o => o.id === prev.id && (o.driverId || o.driver_id) && o.driverId !== user.uid && o.driver_id !== user.uid);
+              if (assignedToOther) {
+                return readyOrders.length > 0 ? readyOrders[0] : null;
+              }
+              // Retain prev to prevent brief query flicker
+              return prev;
+            }
+            return readyOrders.length > 0 ? readyOrders[0] : null;
+          });
         }, (err) => {
-          console.error(err);
+          console.error("Orders onSnapshot error:", err);
         });
       } catch (error) {
-        console.error(error);
+        console.error("Orders query error:", error);
       }
     } else {
        setCurrentRequest(null);
@@ -196,10 +254,20 @@ export function DeliveryHome() {
   }, [user]);
 
   const toggleOnlineStatus = async (status: boolean) => {
-     if (!user) return;
+     userOnlineIntent.current = status;
+     lastUserToggleTime.current = Date.now();
      setIsOnline(status);
      try {
-        await setDoc(doc(db, 'drivers', user.uid), { isOnline: status }, { merge: true });
+        localStorage.setItem('driver_is_online', status ? 'true' : 'false');
+        if (user) localStorage.setItem(`driver_is_online_${user.uid}`, status ? 'true' : 'false');
+     } catch {}
+     if (!user) return;
+     try {
+        await setDoc(doc(db, 'drivers', user.uid), { 
+           isOnline: status, 
+           is_online: status, 
+           updatedAt: serverTimestamp() 
+        }, { merge: true });
      } catch (err) { console.error("Error updating online status", err); }
   };
 
@@ -239,7 +307,9 @@ export function DeliveryHome() {
   };
 
   const handleRejectOrder = () => {
-     const nextOrders = orders.filter(o => o.id !== currentRequest?.id);
+     if (!currentRequest) return;
+     rejectedOrderIds.current.add(currentRequest.id);
+     const nextOrders = orders.filter(o => o.id !== currentRequest.id);
      setOrders(nextOrders);
      if (nextOrders.length > 0) {
         setCurrentRequest(nextOrders[0]);
@@ -253,8 +323,16 @@ export function DeliveryHome() {
       
       {/* Map Background */}
       <div className="absolute inset-0 z-0 bg-[#e5e3df] overflow-hidden">
-         {API_KEY && !mapsFailed ? (
-            <APIProvider apiKey={API_KEY} version="weekly">
+         {isAvailable && apiKey ? (
+            <APIProvider 
+              apiKey={apiKey} 
+              version="weekly"
+              onError={() => {
+                (window as any).__googleMapsAuthFailed = true;
+                try { sessionStorage.setItem('gmp_auth_failed', 'true'); } catch {}
+                window.dispatchEvent(new Event('google-maps-auth-failed'));
+              }}
+            >
                <Map
                  defaultCenter={driverPos}
                  center={driverPos}

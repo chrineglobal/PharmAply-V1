@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from "react-i18next";
 import { APIProvider, Map, AdvancedMarker, useMap } from '@vis.gl/react-google-maps';
 import { Polyline } from '../../components/Polyline';
+import { useGoogleMapsStatus } from '../../hooks/useGoogleMapsStatus';
 import { doc, onSnapshot, getDoc, updateDoc, serverTimestamp, db } from '../../lib/firebase';
 import { supabase } from '../../lib/supabase';
 import { formatCurrency, parseDate } from '../../lib/utils';
@@ -65,6 +66,7 @@ export function PatientTracking() {
   const navigate = useNavigate();
   const { id } = useParams();
   const { t } = useTranslation();
+  const { isAvailable: mapsAvailable, apiKey: mapsApiKey } = useGoogleMapsStatus();
   
   const [order, setOrder] = useState<any>(null);
   const [driver, setDriver] = useState<any>(null);
@@ -535,43 +537,82 @@ export function PatientTracking() {
           /* =========================================================================
              VUE 2 : SUIVI GPS EN DIRECT AVEC LE VRAI LIVREUR ASSIGNÉ
              ========================================================================= */
-          <div className="w-full h-full">
-            <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
-            <Map
-              mapId="DEMO_MAP_ID"
-              defaultCenter={{ lat: (driverPos || destPos)[0], lng: (driverPos || destPos)[1] }}
-              defaultZoom={15}
-              gestureHandling="greedy"
-              disableDefaultUI={true}
-              className="w-full h-full"
-              style={{ width: '100%', height: '100%' }}
-              internalUsageAttributionIds={["gmp_mcp_codeassist_v1_aistudio"]}
-            >
-              <MapAutoCenter center={driverPos || destPos} />
-              
-              {/* Driver Marker */}
-              {driverPos && (
-                <AdvancedMarker position={{ lat: driverPos[0], lng: driverPos[1] }}>
-                  <DriverMotoMarkerUI />
+          <div className="w-full h-full bg-slate-900">
+            {mapsAvailable && mapsApiKey ? (
+              <APIProvider 
+                apiKey={mapsApiKey}
+                onError={() => {
+                  (window as any).__googleMapsAuthFailed = true;
+                  try { sessionStorage.setItem('gmp_auth_failed', 'true'); } catch {}
+                  window.dispatchEvent(new Event('google-maps-auth-failed'));
+                }}
+              >
+              <Map
+                mapId="DEMO_MAP_ID"
+                defaultCenter={{ lat: (driverPos || destPos)[0], lng: (driverPos || destPos)[1] }}
+                defaultZoom={15}
+                gestureHandling="greedy"
+                disableDefaultUI={true}
+                className="w-full h-full"
+                style={{ width: '100%', height: '100%' }}
+                internalUsageAttributionIds={["gmp_mcp_codeassist_v1_aistudio"]}
+              >
+                <MapAutoCenter center={driverPos || destPos} />
+                
+                {/* Driver Marker */}
+                {driverPos && (
+                  <AdvancedMarker position={{ lat: driverPos[0], lng: driverPos[1] }}>
+                    <DriverMotoMarkerUI />
+                  </AdvancedMarker>
+                )}
+
+                {/* Destination Marker */}
+                <AdvancedMarker position={{ lat: destPos[0], lng: destPos[1] }}>
+                  <DestPinMarkerUI />
                 </AdvancedMarker>
-              )}
 
-              {/* Destination Marker */}
-              <AdvancedMarker position={{ lat: destPos[0], lng: destPos[1] }}>
-                <DestPinMarkerUI />
-              </AdvancedMarker>
-
-              {/* Polyline Route */}
-              {driverPos && (
-                <Polyline 
-                  path={(roadCoordinates.length > 0 ? roadCoordinates : [driverPos, destPos]).map((c: any) => ({lat: c[0], lng: c[1]}))} 
-                  strokeColor="#194B4B" 
-                  strokeWeight={5} 
-                  strokeOpacity={0.9} 
-                />
-              )}
-            </Map>
-            </APIProvider>
+                {/* Polyline Route */}
+                {driverPos && (
+                  <Polyline 
+                    path={(roadCoordinates.length > 0 ? roadCoordinates : [driverPos, destPos]).map((c: any) => ({lat: c[0], lng: c[1]}))} 
+                    strokeColor="#194B4B" 
+                    strokeWeight={5} 
+                    strokeOpacity={0.9} 
+                  />
+                )}
+              </Map>
+              </APIProvider>
+            ) : (
+              <div className="w-full h-full flex flex-col items-center justify-center p-8 text-center relative overflow-hidden bg-slate-900">
+                <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#2dd4bf_1px,transparent_1px)] [background-size:20px_20px]"></div>
+                <div className="relative z-10 max-w-sm space-y-4">
+                  <div className="flex items-center justify-center gap-6">
+                    <div className="flex flex-col items-center gap-1.5">
+                      <div className="w-14 h-14 rounded-2xl bg-amber-400/10 border border-amber-400/30 flex items-center justify-center text-amber-400 shadow-lg">
+                        <Bike size={28} className="animate-pulse" />
+                      </div>
+                      <span className="text-xs font-bold text-slate-200">{driver?.name || 'Coursier'}</span>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <div className="w-20 border-t-2 border-dashed border-teal-500/50 my-auto"></div>
+                      <span className="text-[10px] font-mono text-teal-400 mt-1 font-bold">{eta ? `${eta} min` : 'En route'}</span>
+                    </div>
+                    <div className="flex flex-col items-center gap-1.5">
+                      <div className="w-14 h-14 rounded-2xl bg-[var(--app-primary-color)]/20 border border-[var(--app-primary-color)]/50 flex items-center justify-center text-teal-400 shadow-lg">
+                        <Home size={28} />
+                      </div>
+                      <span className="text-xs font-bold text-slate-200">Votre Adresse</span>
+                    </div>
+                  </div>
+                  <div className="pt-2">
+                    <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-teal-500/10 text-teal-300 border border-teal-500/20">
+                      <span className="w-2 h-2 rounded-full bg-teal-400 animate-ping"></span>
+                      Suivi GPS en temps réel actif
+                    </span>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         ) : (
           /* =========================================================================

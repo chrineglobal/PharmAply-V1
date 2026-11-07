@@ -13,7 +13,7 @@ export default defineConfig(({mode}) => {
       VitePWA({
         registerType: 'autoUpdate',
         devOptions: {
-          enabled: true
+          enabled: false
         },
         workbox: {
           globPatterns: ['**/*.{js,css,html,ico,png,svg,json}'],
@@ -83,14 +83,7 @@ export default defineConfig(({mode}) => {
     server: {
       host: true,
       port: 3000,
-      strictPort: true,
-      proxy: {
-        '/api': {
-          target: 'http://localhost:3000',
-          changeOrigin: true,
-          secure: false,
-        }
-      }
+      hmr: false,
     },
   };
 });

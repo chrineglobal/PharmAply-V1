@@ -4,6 +4,7 @@ import { supabase } from '../../lib/supabase';
 import { collection, onSnapshot, query, db } from '../../lib/firebase';
 import { APIProvider, Map, AdvancedMarker, useMap } from '@vis.gl/react-google-maps';
 import { Polyline } from '../../components/Polyline';
+import { useGoogleMapsStatus } from '../../hooks/useGoogleMapsStatus';
 import { 
   ExternalLink, ShieldAlert, Navigation, Clock, Truck, CheckCircle2, 
   ChevronRight, AlertTriangle, Monitor, Bike, Store, User, MapPin, 
@@ -120,6 +121,7 @@ function GoogleMapAutoCenter({ center }: { center: [number, number] }) {
 
 export function AdminLiveMap() {
   const { t } = useTranslation();
+  const { isAvailable: mapsAvailable, apiKey: mapsApiKey } = useGoogleMapsStatus();
   const [drivers, setDrivers] = useState<Driver[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
   const [deliveries, setDeliveries] = useState<Delivery[]>([]);
@@ -571,86 +573,124 @@ export function AdminLiveMap() {
       <div className="flex-1 flex flex-col lg:flex-row rounded-3xl overflow-hidden border border-gray-200 dark:border-zinc-800 shadow-xl bg-white dark:bg-zinc-900 relative">
         
         {/* CENTER MAP CONTAINER */}
-        <div className="flex-1 h-[45vh] lg:h-full relative z-0">
-          <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
-            <Map
-              mapId="DEMO_MAP_ID"
-              defaultCenter={{ lat: activeMapCenter[0], lng: activeMapCenter[1] }}
-              defaultZoom={13}
-              gestureHandling="greedy"
-              disableDefaultUI={true}
-              className="w-full h-full"
-              style={{ width: '100%', height: '100%' }}
-              internalUsageAttributionIds={["gmp_mcp_codeassist_v1_aistudio"]}
+        <div className="flex-1 h-[45vh] lg:h-full relative z-0 bg-slate-900">
+          {mapsAvailable && mapsApiKey ? (
+            <APIProvider 
+              apiKey={mapsApiKey}
+              onError={() => {
+                (window as any).__googleMapsAuthFailed = true;
+                try { sessionStorage.setItem('gmp_auth_failed', 'true'); } catch {}
+                window.dispatchEvent(new Event('google-maps-auth-failed'));
+              }}
             >
-              <GoogleMapAutoCenter center={activeMapCenter} />
+              <Map
+                mapId="DEMO_MAP_ID"
+                defaultCenter={{ lat: activeMapCenter[0], lng: activeMapCenter[1] }}
+                defaultZoom={13}
+                gestureHandling="greedy"
+                disableDefaultUI={true}
+                className="w-full h-full"
+                style={{ width: '100%', height: '100%' }}
+                internalUsageAttributionIds={["gmp_mcp_codeassist_v1_aistudio"]}
+              >
+                <GoogleMapAutoCenter center={activeMapCenter} />
 
-              {/* DRIVER MARKERS */}
-              {driverStatuses.map(st => {
-                const pos = (st.driver.lat && st.driver.lng && !isNaN(Number(st.driver.lat)))
-                  ? { lat: Number(st.driver.lat), lng: Number(st.driver.lng) }
-                  : null;
+                {/* DRIVER MARKERS */}
+                {driverStatuses.map(st => {
+                  const pos = (st.driver.lat && st.driver.lng && !isNaN(Number(st.driver.lat)))
+                    ? { lat: Number(st.driver.lat), lng: Number(st.driver.lng) }
+                    : null;
 
-                if (!pos) return null;
+                  if (!pos) return null;
 
-                const isAlert = st.isStalled;
+                  const isAlert = st.isStalled;
 
-                // Associated Points
-                const pharmaPos = (st.order?.pharmacyLat && st.order?.pharmacyLng)
-                  ? { lat: Number(st.order.pharmacyLat), lng: Number(st.order.pharmacyLng) }
-                  : null;
+                  // Associated Points
+                  const pharmaPos = (st.order?.pharmacyLat && st.order?.pharmacyLng)
+                    ? { lat: Number(st.order.pharmacyLat), lng: Number(st.order.pharmacyLng) }
+                    : null;
 
-                const patientPos = (st.order?.destLat && st.order?.destLng)
-                  ? { lat: Number(st.order.destLat), lng: Number(st.order.destLng) }
-                  : null;
+                  const patientPos = (st.order?.destLat && st.order?.destLng)
+                    ? { lat: Number(st.order.destLat), lng: Number(st.order.destLng) }
+                    : null;
 
-                const pharmaPolylinePath = routesMap[`${st.driver.id}_pharma`]?.coordinates.map(c => ({lat: c[0], lng: c[1]})) || [pos, pharmaPos];
-                const patientPolylinePath = routesMap[`${st.driver.id}_patient`]?.coordinates.map(c => ({lat: c[0], lng: c[1]})) || [pos, patientPos];
+                  const pharmaPolylinePath = routesMap[`${st.driver.id}_pharma`]?.coordinates.map(c => ({lat: c[0], lng: c[1]})) || [pos, pharmaPos];
+                  const patientPolylinePath = routesMap[`${st.driver.id}_patient`]?.coordinates.map(c => ({lat: c[0], lng: c[1]})) || [pos, patientPos];
 
-                return (
-                  <React.Fragment key={st.driver.id}>
-                    <AdvancedMarker 
-                      position={pos} 
-                      onClick={() => setSelectedDriverId(st.driver.id)}
-                      title={st.driver.name}
-                    >
-                      <DriverMarkerUI color={st.color} isAlert={isAlert} />
-                    </AdvancedMarker>
+                  return (
+                    <React.Fragment key={st.driver.id}>
+                      <AdvancedMarker 
+                        position={pos} 
+                        onClick={() => setSelectedDriverId(st.driver.id)}
+                        title={st.driver.name}
+                      >
+                        <DriverMarkerUI color={st.color} isAlert={isAlert} />
+                      </AdvancedMarker>
 
-                    {/* Road Network Route: Driver to Pharmacy */}
-                    {pharmaPos && (st.state === 'en_route_to_pharmacy' || selectedDriverId === st.driver.id) && (
-                      <>
-                        <AdvancedMarker position={pharmaPos}>
-                           <PharmacyMarkerUI />
-                        </AdvancedMarker>
-                        <Polyline 
-                          path={pharmaPolylinePath} 
-                          strokeColor="#f59e0b" 
-                          strokeWeight={selectedDriverId === st.driver.id ? 5 : 4} 
-                          strokeOpacity={0.85} 
-                        />
-                      </>
-                    )}
+                      {/* Road Network Route: Driver to Pharmacy */}
+                      {pharmaPos && (st.state === 'en_route_to_pharmacy' || selectedDriverId === st.driver.id) && (
+                        <>
+                          <AdvancedMarker position={pharmaPos}>
+                             <PharmacyMarkerUI />
+                          </AdvancedMarker>
+                          <Polyline 
+                            path={pharmaPolylinePath} 
+                            strokeColor="#f59e0b" 
+                            strokeWeight={selectedDriverId === st.driver.id ? 5 : 4} 
+                            strokeOpacity={0.85} 
+                          />
+                        </>
+                      )}
 
-                    {/* Road Network Route: Driver to Patient */}
-                    {patientPos && (st.state === 'delivering' || selectedDriverId === st.driver.id) && (
-                      <>
-                        <AdvancedMarker position={patientPos}>
-                          <PatientMarkerUI />
-                        </AdvancedMarker>
-                        <Polyline 
-                          path={patientPolylinePath} 
-                          strokeColor="#10b981" 
-                          strokeWeight={selectedDriverId === st.driver.id ? 5 : 4} 
-                          strokeOpacity={0.85} 
-                        />
-                      </>
-                    )}
-                  </React.Fragment>
-                );
-              })}
-            </Map>
-          </APIProvider>
+                      {/* Road Network Route: Driver to Patient */}
+                      {patientPos && (st.state === 'delivering' || selectedDriverId === st.driver.id) && (
+                        <>
+                          <AdvancedMarker position={patientPos}>
+                            <PatientMarkerUI />
+                          </AdvancedMarker>
+                          <Polyline 
+                            path={patientPolylinePath} 
+                            strokeColor="#10b981" 
+                            strokeWeight={selectedDriverId === st.driver.id ? 5 : 4} 
+                            strokeOpacity={0.85} 
+                          />
+                        </>
+                      )}
+                    </React.Fragment>
+                  );
+                })}
+              </Map>
+            </APIProvider>
+          ) : (
+            <div className="w-full h-full flex flex-col items-center justify-center p-8 text-center relative overflow-hidden bg-slate-900 border border-slate-800">
+              <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#14b8a6_1px,transparent_1px)] [background-size:20px_20px]"></div>
+              <div className="relative z-10 max-w-md space-y-4">
+                <div className="w-16 h-16 mx-auto rounded-3xl bg-teal-500/10 border border-teal-500/30 flex items-center justify-center text-teal-400 shadow-xl">
+                  <Radio size={32} className="animate-pulse" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-white tracking-wide">Radar de Flotte Opérationnel</h3>
+                  <p className="text-xs text-slate-400 mt-1">
+                    {driverStatuses.length} coursiers connectés • Suivi télémétrique des courses en temps réel.
+                  </p>
+                </div>
+                <div className="grid grid-cols-3 gap-2 pt-2 text-left">
+                  <div className="bg-slate-800/80 p-2.5 rounded-xl border border-slate-700/60">
+                    <span className="text-[10px] text-slate-400 uppercase font-semibold block">Actifs</span>
+                    <span className="text-base font-bold text-teal-400">{driverStatuses.filter(s => s.state !== 'idle').length}</span>
+                  </div>
+                  <div className="bg-slate-800/80 p-2.5 rounded-xl border border-slate-700/60">
+                    <span className="text-[10px] text-slate-400 uppercase font-semibold block">Disponibles</span>
+                    <span className="text-base font-bold text-emerald-400">{driverStatuses.filter(s => s.state === 'idle').length}</span>
+                  </div>
+                  <div className="bg-slate-800/80 p-2.5 rounded-xl border border-slate-700/60">
+                    <span className="text-[10px] text-slate-400 uppercase font-semibold block">Alertes</span>
+                    <span className="text-base font-bold text-rose-400">{driverStatuses.filter(s => s.isStalled).length}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Floating Action Button (Refresh Data) */}
           <div className="absolute top-4 right-4 z-10 flex gap-2">
