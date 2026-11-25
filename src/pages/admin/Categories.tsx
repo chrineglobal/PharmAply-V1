@@ -163,32 +163,32 @@ export function AdminCategories() {
   };
 
   return (
-    <div className="flex-1 bg-slate-50 flex flex-col h-full overflow-hidden relative">
-      <div className="bg-white dark:bg-zinc-950 px-8 pt-6 pb-6 shadow-sm z-10 border-b border-gray-200 shrink-0 flex items-center justify-between">
+    <div className="flex-1 bg-[#F5FAFA] dark:bg-[#062625] flex flex-col h-full overflow-hidden relative">
+      <div className="bg-white dark:bg-[#0A3D3B] px-8 pt-6 pb-6 shadow-xs z-10 border-b border-[#CFE4E3] dark:border-[#145250] shrink-0 flex items-center justify-between">
          <div>
-             <h1 className="font-bold text-gray-900 dark:text-white text-2xl mb-1"> {t('categories_directory', 'Categories Directory')} </h1>
-             <p className="text-gray-500 text-sm"> {t('organize_store_structure_and_v', 'Organize store structure and visual navigation')} </p>
+             <h1 className="font-bold text-[#0A3D3B] dark:text-white text-2xl mb-1"> {t('categories_directory', 'Categories Directory')} </h1>
+             <p className="text-[#5C807F] dark:text-[#9FC8C7] text-sm"> {t('organize_store_structure_and_v', 'Organize store structure and visual navigation')} </p>
          </div>
       </div>
 
       <div className="flex-1 overflow-y-auto p-8 space-y-6">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-wrap items-center justify-between gap-4">
              <div className="relative w-80">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#5C807F] dark:text-[#9FC8C7]" size={18} />
                 <input 
                   type="text" 
                   placeholder={t('search_categories', 'Search categories...')} 
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="w-full bg-white dark:bg-zinc-950 border border-slate-200 py-2.5 pl-12 pr-4 rounded-xl text-sm focus:ring-2 focus:ring-teal-500 outline-none transition"
+                  className="w-full bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] py-2.5 pl-12 pr-4 rounded-full text-sm text-[#0A3D3B] dark:text-white placeholder:text-[#5C807F] dark:placeholder:text-[#9FC8C7] focus:border-[#0E7673] dark:focus:border-[#38B794] outline-none transition shadow-xs"
                 />
              </div>
-             <div className="flex gap-3">
+             <div className="flex flex-wrap gap-3">
                {selectedIds.size > 0 && (
                  <button 
                     onClick={handleBulkDelete}
                     disabled={isBulkDeleting}
-                    className="bg-red-50 text-red-600 px-4 py-2.5 rounded-xl text-sm font-bold shadow-sm hover:bg-red-100 transition flex items-center gap-2 disabled:opacity-50"
+                    className="bg-red-50 dark:bg-red-950/40 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900 px-5 py-2.5 rounded-full text-sm font-bold shadow-xs hover:bg-red-100 transition flex items-center gap-2 disabled:opacity-50"
                  >
                     {isBulkDeleting ? <Loader2 size={18} className="animate-spin" /> : <Trash2 size={18} />}
                     {isBulkDeleting ? "Suppression..." : `Delete Selected (${selectedIds.size})`}
@@ -197,9 +197,9 @@ export function AdminCategories() {
                <button 
                   onClick={handleSeed}
                   disabled={seeding}
-                  className="bg-slate-100 text-slate-700 px-4 py-2.5 rounded-xl text-sm font-bold shadow-sm hover:bg-slate-200 transition flex items-center gap-2 disabled:opacity-50"
+                  className="bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] text-[#0A3D3B] dark:text-white px-5 py-2.5 rounded-full text-sm font-bold shadow-xs hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47] transition flex items-center gap-2 disabled:opacity-50"
                >
-                  {seeding ? <Loader2 size={18} className="animate-spin" /> : <Database size={18} />}
+                  {seeding ? <Loader2 size={18} className="animate-spin" /> : <Database size={18} className="text-[#0E7673] dark:text-[#38B794]" />}
                   {seeding ? "Seeding..." : "Seed Global Categories"}
                </button>
                <button 
@@ -209,24 +209,24 @@ export function AdminCategories() {
                     setNewCatImage("");
                     setShowModal(true);
                   }}
-                  className="bg-[var(--app-primary-color)] text-white px-4 py-2.5 rounded-xl text-sm font-bold shadow-sm hover:bg-[var(--app-primary-color)] transition flex items-center gap-2"
+                  className="bg-[#0E7673] hover:bg-[#0A5A58] text-white px-5 py-2.5 rounded-full text-sm font-bold shadow-xs transition flex items-center gap-2"
                >
                   <Plus size={18} />  {t('add_category', 'Add Category')} </button>
              </div>
           </div>
 
-          <div className="bg-white dark:bg-zinc-950 rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+          <div className="bg-white dark:bg-[#0A3D3B] rounded-3xl shadow-xs border border-[#CFE4E3] dark:border-[#145250] overflow-hidden">
              {loading ? (
-                <div className="p-8 text-center text-slate-500"> {t('loading_categories', 'Loading categories...')} </div>
+                <div className="p-8 text-center text-[#5C807F] dark:text-[#9FC8C7]"> {t('loading_categories', 'Loading categories...')} </div>
              ) : (
                 <div className="overflow-x-auto">
                    <table className="w-full text-sm text-left">
-                      <thead className="text-xs text-slate-500 bg-slate-50/50 border-b border-slate-100 uppercase mt-2">
+                      <thead className="text-xs text-[#5C807F] dark:text-[#9FC8C7] bg-[#F5FAFA] dark:bg-[#062625]/70 border-b border-[#CFE4E3] dark:border-[#145250] uppercase">
                          <tr>
                             <th className="py-4 px-6 font-semibold w-12">
                               <input 
                                 type="checkbox" 
-                                className="w-4 h-4 rounded text-[var(--app-primary-color)] focus:ring-[var(--app-primary-color)] border-gray-300 cursor-pointer"
+                                className="w-4 h-4 rounded text-[#0E7673] focus:ring-[#0E7673] border-[#CFE4E3] dark:border-[#145250] cursor-pointer"
                                 checked={selectedIds.size === filteredCategories.length && filteredCategories.length > 0}
                                 onChange={toggleSelectAll}
                               />
@@ -237,45 +237,45 @@ export function AdminCategories() {
                             <th className="py-4 px-6 font-semibold text-right"> {t('actions', 'Actions')} </th>
                          </tr>
                       </thead>
-                      <tbody className="divide-y divide-slate-100">
+                      <tbody className="divide-y divide-[#E7F1F1] dark:divide-[#145250]">
                          {filteredCategories.map((c) => (
-                           <tr key={c.id} className="hover:bg-slate-50 transition-colors">
+                           <tr key={c.id} className="hover:bg-[#F5FAFA] dark:hover:bg-[#0E4A47]/60 transition-colors">
                               <td className="py-4 px-6">
                                 <input 
                                   type="checkbox" 
-                                  className="w-4 h-4 rounded text-[var(--app-primary-color)] focus:ring-[var(--app-primary-color)] border-gray-300 cursor-pointer"
+                                  className="w-4 h-4 rounded text-[#0E7673] focus:ring-[#0E7673] border-[#CFE4E3] dark:border-[#145250] cursor-pointer"
                                   checked={selectedIds.has(c.id)}
                                   onChange={() => toggleSelection(c.id)}
                                 />
                               </td>
                               <td className="py-4 px-6">
-                                 <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center shrink-0 text-slate-500">
+                                 <div className="w-10 h-10 rounded-2xl bg-[#D7F1EA] dark:bg-[#0E4A47] flex items-center justify-center shrink-0 text-[#0E7673] dark:text-[#38B794]">
                                     {c.imageUrl ? (
-                                      <img src={c.imageUrl} className="w-full h-full object-cover rounded-xl" alt="" />
+                                      <img src={c.imageUrl} className="w-full h-full object-cover rounded-2xl" alt="" />
                                     ) : (
                                       getCategoryIcon(c.name, 20)
                                     )}
                                  </div>
                               </td>
                               <td className="py-4 px-6">
-                                 <span className="font-bold text-slate-800 dark:text-slate-100">{c.name}</span>
+                                 <span className="font-bold text-[#0A3D3B] dark:text-white">{c.name}</span>
                               </td>
                               <td className="py-4 px-6">
                                  {c.isActive ? (
-                                   <span className="px-2 py-1 bg-emerald-50 text-emerald-600 rounded-lg text-xs font-bold uppercase"> {t('active', 'Active')} </span>
+                                   <span className="px-2.5 py-1 bg-[#D7F1EA] dark:bg-[#0E4A47] text-[#0E7673] dark:text-[#38B794] rounded-full text-xs font-bold uppercase"> {t('active', 'Active')} </span>
                                  ) : (
-                                   <span className="px-2 py-1 bg-slate-100 text-slate-600 rounded-lg text-xs font-bold uppercase"> {t('inactive', 'Inactive')} </span>
+                                   <span className="px-2.5 py-1 bg-[#E7F1F1] dark:bg-[#062625] text-[#5C807F] dark:text-[#9FC8C7] rounded-full text-xs font-bold uppercase"> {t('inactive', 'Inactive')} </span>
                                  )}
                               </td>
                               <td className="py-4 px-6 text-right">
                                  <div className="flex items-center justify-end gap-2">
-                                    <button onClick={() => handleEditClick(c)} className="p-1.5 text-slate-400 hover:text-[var(--app-primary-color)] rounded-lg transition" title={t('edit', 'Edit')}>
+                                    <button onClick={() => handleEditClick(c)} className="p-2 text-[#5C807F] dark:text-[#9FC8C7] hover:text-[#0E7673] dark:hover:text-[#38B794] hover:bg-[#D7F1EA] dark:hover:bg-[#0E4A47] rounded-full transition" title={t('edit', 'Edit')}>
                                        <Edit2 size={16} />
                                     </button>
                                     <button 
                                       onClick={() => handleDelete(c.id)} 
                                       disabled={deletingId === c.id}
-                                      className="p-1.5 text-slate-400 hover:text-red-600 rounded-lg transition disabled:opacity-50" 
+                                      className="p-2 text-[#5C807F] dark:text-[#9FC8C7] hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-full transition disabled:opacity-50" 
                                       title={t('delete', 'Delete')}
                                     >
                                        {deletingId === c.id ? <Loader2 size={16} className="animate-spin text-red-500" /> : <Trash2 size={16} />}
@@ -286,7 +286,7 @@ export function AdminCategories() {
                          ))}
                          {filteredCategories.length === 0 && (
                            <tr>
-                              <td colSpan={5} className="py-8 text-center text-slate-500"> {t('no_categories_found', 'No categories found.')} </td>
+                              <td colSpan={5} className="py-8 text-center text-[#5C807F] dark:text-[#9FC8C7]"> {t('no_categories_found', 'No categories found.')} </td>
                            </tr>
                          )}
                       </tbody>
@@ -297,27 +297,27 @@ export function AdminCategories() {
       </div>
 
       {showModal && (
-        <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-           <div className="bg-white dark:bg-zinc-950 rounded-2xl p-6 w-full max-w-md shadow-xl border border-slate-100">
-              <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-6">{editingId ? "Edit Category" : "Create New Category"}</h2>
+        <div className="fixed inset-0 bg-[#062625]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+           <div className="bg-white dark:bg-[#0A3D3B] rounded-3xl p-6 w-full max-w-md shadow-xl border border-[#CFE4E3] dark:border-[#145250]">
+              <h2 className="text-lg font-bold text-[#0A3D3B] dark:text-white mb-6">{editingId ? "Edit Category" : "Create New Category"}</h2>
               <div className="space-y-4">
                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1"> {t('category_name', 'Category Name')} </label>
+                    <label className="block text-sm font-bold text-[#0A3D3B] dark:text-white mb-1.5"> {t('category_name', 'Category Name')} </label>
                     <input 
                       type="text" 
                       value={newCatName}
                       onChange={(e) => setNewCatName(e.target.value)}
-                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none"
+                      className="w-full bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] rounded-2xl px-4 py-2.5 text-sm text-[#0A3D3B] dark:text-white focus:border-[#0E7673] dark:focus:border-[#38B794] outline-none"
                     />
                  </div>
                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Image URL (Optional)</label>
+                    <label className="block text-sm font-bold text-[#0A3D3B] dark:text-white mb-1.5">Image URL (Optional)</label>
                     <input 
                       type="text" 
                       value={newCatImage}
                       onChange={(e) => setNewCatImage(e.target.value)}
                       placeholder={t('https_images_unsplash', 'https://images.unsplash...')}
-                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none"
+                      className="w-full bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] rounded-2xl px-4 py-2.5 text-sm text-[#0A3D3B] dark:text-white placeholder:text-[#5C807F] dark:placeholder:text-[#9FC8C7] focus:border-[#0E7673] dark:focus:border-[#38B794] outline-none"
                     />
                  </div>
                  <div className="flex justify-end gap-3 pt-4">
@@ -328,13 +328,13 @@ export function AdminCategories() {
                          setNewCatName("");
                          setNewCatImage("");
                       }}
-                      className="px-4 py-2 text-sm font-bold text-slate-600 hover:bg-slate-100 rounded-xl transition"
+                      className="px-5 py-2.5 text-sm font-bold text-[#0A3D3B] dark:text-white bg-white dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47] rounded-full transition"
                     >
                        {t('cancel', 'Cancel')} </button>
                     <button 
                       onClick={handleSave}
                       disabled={isSaving}
-                      className="px-4 py-2 text-sm font-bold text-white bg-[var(--app-primary-color)] hover:bg-[var(--app-primary-color)] rounded-xl transition shadow-sm disabled:opacity-50 flex items-center gap-2"
+                      className="px-5 py-2.5 text-sm font-bold text-white bg-[#0E7673] hover:bg-[#0A5A58] rounded-full transition shadow-xs disabled:opacity-50 flex items-center gap-2"
                     >
                       {isSaving && <Loader2 size={14} className="animate-spin" />}
                       {isSaving ? "Enregistrement..." : (editingId ? "Enregistrer" : "Créer la catégorie")}

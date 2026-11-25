@@ -37,25 +37,21 @@ export function FloatingAiAssistant({ className = '' }: FloatingAiAssistantProps
       <div 
         className={`fixed bottom-20 right-4 sm:bottom-6 sm:right-6 z-40 flex items-center gap-2 group ${className}`}
       >
-        {/* Tooltip / Label visible on desktop hover or mobile pulse */}
-        <div className="hidden sm:flex items-center px-3 py-1.5 rounded-full bg-slate-900/90 dark:bg-white/95 text-white dark:text-slate-900 text-xs font-semibold shadow-lg backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none translate-x-1 group-hover:translate-x-0">
+        {/* Tooltip / Label visible on desktop hover */}
+        <div className="hidden sm:flex items-center px-3.5 py-1.5 rounded-full bg-[#0A3D3B] dark:bg-white text-white dark:text-[#0A3D3B] text-xs font-bold shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none translate-x-1 group-hover:translate-x-0">
           <span>Conseil Pharmacien IA</span>
-          <span className="ml-1 text-[10px] text-emerald-400 dark:text-emerald-600 font-bold">• Maps</span>
+          <span className="ml-1.5 text-[10px] text-[#38B794] dark:text-[#0E7673] font-bold">• Maps</span>
         </div>
 
         <button
           onClick={() => handleOpen()}
           aria-label="Ouvrir l'assistant pharmacien IA"
-          className="relative w-14 h-14 rounded-2xl bg-gradient-to-tr from-emerald-600 via-teal-600 to-emerald-500 text-white shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-200 flex items-center justify-center border-2 border-white/30 focus:outline-none focus:ring-4 focus:ring-emerald-400/40"
+          className="relative w-14 h-14 rounded-full bg-[#0E7673] hover:bg-[#0A5A58] text-white shadow-xl hover:scale-105 active:scale-95 transition-all duration-200 flex items-center justify-center border-2 border-white/80 dark:border-[#38B794]/60 focus:outline-none focus:ring-4 focus:ring-[#38B794]/40"
         >
-          {/* Animated ping glow ring */}
-          <span className="absolute -inset-1 rounded-2xl bg-emerald-400 opacity-30 animate-pulse blur-sm -z-10" />
-
           {/* Icon */}
           <div className="relative">
-            <Sparkles className="w-7 h-7 text-white animate-pulse" />
-            <span className="absolute -top-1 -right-1 w-3 h-3 bg-amber-400 rounded-full border-2 border-emerald-600 animate-ping" />
-            <span className="absolute -top-1 -right-1 w-3 h-3 bg-amber-400 rounded-full border-2 border-emerald-600" />
+            <Sparkles className="w-6 h-6 text-white" />
+            <span className="absolute -top-1 -right-1 w-3 h-3 bg-[#38B794] rounded-full border-2 border-[#0E7673]" />
           </div>
         </button>
       </div>

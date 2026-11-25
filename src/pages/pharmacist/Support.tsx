@@ -187,48 +187,48 @@ export function PharmacistSupport() {
   return (
     <div className="flex-1 bg-transparent flex flex-col h-full overflow-hidden">
       {/* Top Header */}
-      <div className="px-8 pt-8 pb-4 flex items-center justify-between z-10 shrink-0">
+      <div className="px-6 lg:px-8 pt-8 pb-4 flex items-center justify-between z-10 shrink-0">
          <div className="flex items-center gap-4">
-            <button onClick={() => navigate(-1)} className="w-10 h-10 flex items-center justify-center bg-white dark:bg-slate-800 rounded-full border border-gray-100 dark:border-slate-700 shadow-sm transition-colors hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-slate-700">
-               <ArrowLeft size={20} className="text-gray-700 dark:text-gray-300" />
+            <button onClick={() => navigate(-1)} className="w-10 h-10 flex items-center justify-center bg-white dark:bg-[#0A3D3B] rounded-full border border-[#CFE4E3] dark:border-[#145250] shadow-xs transition-colors hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47]">
+               <ArrowLeft size={20} className="text-[#0A3D3B] dark:text-white" />
             </button>
             <div>
-                 <h1 className="font-bold text-gray-900 dark:text-white text-2xl tracking-tight">
+                 <h1 className="font-bold text-[#0A3D3B] dark:text-white text-2xl tracking-tight">
                    {t('support_technique', 'Support & Assistance')}
                 </h1>
-                <p className="text-sm text-gray-500 font-medium mt-1">
+                <p className="text-sm text-[#5C807F] dark:text-[#9FC8C7] font-medium mt-1">
                   {t('chat_with_admins', 'Real-time chat with administration')}
                 </p>
             </div>
          </div>
          <button 
            onClick={() => setShowNewTicketModal(true)} 
-           className="px-5 py-2.5 bg-[#0B3B3C] text-white rounded-full text-sm font-bold hover:bg-[#082a2b] transition flex items-center gap-2 shadow-sm"
+           className="px-5 py-2.5 bg-[#0E7673] text-white rounded-full text-sm font-bold hover:bg-[#0A5A58] transition flex items-center gap-2 shadow-xs"
          >
            <Plus size={16} />
            {t('new_ticket', 'New Ticket')}
          </button>
       </div>
 
-      <div className="flex-1 flex overflow-hidden px-8 pb-8 gap-4 custom-scrollbar">
+      <div className="flex-1 flex overflow-hidden px-6 lg:px-8 pb-8 gap-4 custom-scrollbar">
          {/* Sidebar with Query List */}
-         <div className={`w-full md:w-[320px] flex flex-col bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 shadow-sm rounded-3xl overflow-hidden shrink-0 ${selectedQueryId ? 'hidden md:flex' : 'flex'}`}>
-            <div className="p-5 border-b border-gray-100 dark:border-slate-700 bg-[#FAFBFC] dark:bg-slate-900/50">
-               <h2 className="font-bold text-[#0B3B3C] dark:text-gray-200 text-sm">{t('un_mes_ticket', 'Your Tickets')} ({queries.length})</h2>
+         <div className={`w-full md:w-[320px] flex flex-col bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] shadow-xs rounded-3xl overflow-hidden shrink-0 ${selectedQueryId ? 'hidden md:flex' : 'flex'}`}>
+            <div className="p-5 border-b border-[#CFE4E3] dark:border-[#145250] bg-[#F5FAFA] dark:bg-[#062625]/60">
+               <h2 className="font-bold text-[#0A3D3B] dark:text-white text-sm">{t('un_mes_ticket', 'Your Tickets')} ({queries.length})</h2>
             </div>
             
-            <div className="flex-1 overflow-y-auto divide-y divide-gray-50 dark:divide-slate-700 custom-scrollbar">
+            <div className="flex-1 overflow-y-auto divide-y divide-[#E7F1F1] dark:divide-[#145250] custom-scrollbar">
                {loadingQueries ? (
-                  <div className="p-8 text-center text-sm text-gray-400">
-                    <Loader2 size={18} className="animate-spin mx-auto mb-3 text-[#0B3B3C]" />
+                  <div className="p-8 text-center text-sm text-[#5C807F] dark:text-[#9FC8C7]">
+                    <Loader2 size={18} className="animate-spin mx-auto mb-3 text-[#0E7673] dark:text-[#38B794]" />
                     {t('loading_tickets', 'Synching tickets...')}
                   </div>
                ) : queries.length === 0 ? (
-                  <div className="p-8 text-center text-sm text-gray-400 dark:text-gray-500 flex flex-col items-center gap-3 mt-4">
-                     <div className="w-12 h-12 rounded-full bg-gray-50 dark:bg-slate-900 flex items-center justify-center">
-                        <HelpCircle size={24} className="text-gray-300 dark:text-slate-600" />
+                  <div className="p-8 text-center text-sm text-[#5C807F] dark:text-[#9FC8C7] flex flex-col items-center gap-3 mt-4">
+                     <div className="w-12 h-12 rounded-full bg-[#E7F1F1] dark:bg-[#0E4A47] flex items-center justify-center">
+                        <HelpCircle size={24} className="text-[#0E7673] dark:text-[#38B794]" />
                      </div>
-                     <p className="font-bold text-gray-900 dark:text-white">{t('no_tickets_yet', 'No tickets opened yet.')}</p>
+                     <p className="font-bold text-[#0A3D3B] dark:text-white">{t('no_tickets_yet', 'No tickets opened yet.')}</p>
                      <p className="text-xs leading-relaxed">{t('no_tickets_desc', 'Click "New Ticket" to chat with an admin about any platform issues.')}</p>
                   </div>
                ) : (
@@ -239,20 +239,20 @@ export function PharmacistSupport() {
                         <div 
                           key={q.id}
                           onClick={() => setSelectedQueryId(q.id)}
-                          className={`p-5 transition-colors cursor-pointer text-left flex flex-col gap-2 ${isSelected ? 'bg-[#FAFBFC] dark:bg-slate-900' : 'hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-slate-700/50'}`}
+                          className={`p-5 transition-colors cursor-pointer text-left flex flex-col gap-2 ${isSelected ? 'bg-[#D7F1EA]/50 dark:bg-[#0E4A47]' : 'hover:bg-[#F5FAFA] dark:hover:bg-[#0E4A47]/50'}`}
                         >
                            <div className="flex justify-between items-center">
-                              <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
-                                 isResolved ? 'bg-[#D3F5A8]/50 text-[#0B3B3C] border-[#D3F5A8]' : 'bg-amber-50 text-amber-700 border-amber-100'
+                              <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full border ${
+                                 isResolved ? 'bg-[#D7F1EA] text-[#0E7673] border-[#CFE4E3] dark:bg-[#0E4A47] dark:text-[#38B794] dark:border-[#145250]' : 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/40 dark:text-amber-300 dark:border-amber-800'
                               }`}>
                                  {isResolved ? t('resolved', 'Resolved') : t('open', 'Open')}
                               </span>
-                              <span className="text-xs text-gray-400 dark:text-gray-500 font-medium">
+                              <span className="text-xs text-[#5C807F] dark:text-[#9FC8C7] font-medium">
                                  {parseDate(q.createdAt) ? parseDate(q.createdAt)!.toLocaleDateString() : ''}
                               </span>
                            </div>
-                           <h3 className="font-bold text-gray-900 dark:text-white text-sm line-clamp-1">{q.subject}</h3>
-                           <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-1">{q.message}</p>
+                           <h3 className="font-bold text-[#0A3D3B] dark:text-white text-sm line-clamp-1">{q.subject}</h3>
+                           <p className="text-sm text-[#5C807F] dark:text-[#9FC8C7] line-clamp-1">{q.message}</p>
                         </div>
                      );
                   })
@@ -261,25 +261,25 @@ export function PharmacistSupport() {
          </div>
 
          {/* Chat Workspace */}
-         <div className={`flex-1 flex flex-col border border-gray-100 dark:border-slate-700 shadow-sm rounded-3xl overflow-hidden bg-white dark:bg-slate-800 ${!selectedQueryId ? 'hidden md:flex items-center justify-center' : 'flex'}`}>
+         <div className={`flex-1 flex flex-col border border-[#CFE4E3] dark:border-[#145250] shadow-xs rounded-3xl overflow-hidden bg-white dark:bg-[#0A3D3B] ${!selectedQueryId ? 'hidden md:flex items-center justify-center' : 'flex'}`}>
             {selectedQueryId && activeTicket ? (
                <div className="flex-1 flex flex-col h-full overflow-hidden relative">
                   {/* Active Ticket Header */}
-                  <div className="px-6 py-5 bg-[#FAFBFC] dark:bg-slate-900/50 border-b border-gray-100 dark:border-slate-700 flex items-center justify-between shrink-0">
+                  <div className="px-6 py-5 bg-[#F5FAFA] dark:bg-[#062625]/60 border-b border-[#CFE4E3] dark:border-[#145250] flex items-center justify-between shrink-0">
                      <div className="flex items-center gap-4">
-                        <button onClick={() => setSelectedQueryId(null)} className="md:hidden w-10 h-10 border border-gray-200 bg-white dark:bg-zinc-950 rounded-full flex items-center justify-center text-gray-600">
+                        <button onClick={() => setSelectedQueryId(null)} className="md:hidden w-10 h-10 border border-[#CFE4E3] dark:border-[#145250] bg-white dark:bg-[#0A3D3B] rounded-full flex items-center justify-center text-[#0A3D3B] dark:text-white">
                           <ArrowLeft size={18} />
                         </button>
                         <div>
                            <div className="flex items-center gap-3">
-                             <h2 className="font-bold text-base text-gray-900 dark:text-white max-w-[200px] sm:max-w-md truncate">{activeTicket.subject}</h2>
-                             <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
-                                 activeTicket.status === 'resolved' ? 'bg-[#D3F5A8]/50 text-[#0B3B3C] border-[#D3F5A8]' : 'bg-amber-50 text-amber-700 border-amber-100'
+                             <h2 className="font-bold text-base text-[#0A3D3B] dark:text-white max-w-[200px] sm:max-w-md truncate">{activeTicket.subject}</h2>
+                             <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full border ${
+                                 activeTicket.status === 'resolved' ? 'bg-[#D7F1EA] text-[#0E7673] border-[#CFE4E3] dark:bg-[#0E4A47] dark:text-[#38B794] dark:border-[#145250]' : 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/40 dark:text-amber-300 dark:border-amber-800'
                              }`}>
                                  {activeTicket.status === 'resolved' ? t('resolved', 'Resolved') : t('open', 'Open')}
                              </span>
                            </div>
-                           <p className="text-xs text-gray-500 font-medium mt-1">Ticket #{activeTicket.id?.substring(0, 8).toUpperCase()}</p>
+                           <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7] font-medium mt-1">Ticket #{activeTicket.id?.substring(0, 8).toUpperCase()}</p>
                         </div>
                      </div>
                   </div>
@@ -288,10 +288,10 @@ export function PharmacistSupport() {
                   <div className="flex-1 overflow-y-auto p-6 space-y-5 custom-scrollbar pb-24">
                      {/* Base Query/Ticket message from system/manager */}
                      <div className="flex justify-start">
-                        <div className="max-w-[85%] rounded-2xl p-5 bg-[#FAFBFC] dark:bg-slate-900 text-gray-800 dark:text-slate-100 rounded-tl-sm border border-gray-200 dark:border-slate-700 shadow-sm">
-                           <p className="text-xs font-bold text-[#0B3B3C] dark:text-gray-300 mb-2 uppercase tracking-wider">💡 {t('ticket_initial_subject', 'Initial Query')}</p>
+                        <div className="max-w-[85%] rounded-2xl p-5 bg-[#F5FAFA] dark:bg-[#062625] text-[#0A3D3B] dark:text-white rounded-tl-sm border border-[#CFE4E3] dark:border-[#145250] shadow-xs">
+                           <p className="text-xs font-bold text-[#0E7673] dark:text-[#38B794] mb-2 uppercase tracking-wider">{t('ticket_initial_subject', 'Initial Query')}</p>
                            <p className="text-sm font-medium leading-relaxed">{activeTicket.message}</p>
-                           <p className="text-xs mt-3 font-semibold text-gray-400">
+                           <p className="text-xs mt-3 font-semibold text-[#5C807F] dark:text-[#9FC8C7]">
                               {parseDate(activeTicket.createdAt) ? parseDate(activeTicket.createdAt)!.toLocaleString() : ''}
                            </p>
                         </div>
@@ -302,13 +302,13 @@ export function PharmacistSupport() {
                         return (
                            <div key={msg.id} className={`flex ${isMe ? 'justify-end' : 'justify-start'}`}>
                               <div className={`max-w-[75%] rounded-2xl p-4 ${
-                                 isMe ? 'bg-[#0B3B3C] text-white rounded-br-sm shadow-sm' : 'bg-white dark:bg-slate-700 text-gray-900 dark:text-slate-100 rounded-bl-sm border border-gray-100 dark:border-slate-600 shadow-sm'
+                                 isMe ? 'bg-[#0E7673] text-white rounded-br-sm shadow-xs' : 'bg-[#F5FAFA] dark:bg-[#0E4A47] text-[#0A3D3B] dark:text-white rounded-bl-sm border border-[#CFE4E3] dark:border-[#145250] shadow-xs'
                               }`}>
                                  {!isMe && (
-                                   <p className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-1">{t('administrator', 'Admin')}</p>
+                                   <p className="text-[10px] font-bold text-[#0E7673] dark:text-[#38B794] uppercase tracking-widest mb-1">{t('administrator', 'Admin')}</p>
                                  )}
                                  <p className="text-sm leading-relaxed">{msg.text}</p>
-                                 <p className={`text-[10px] mt-2 font-medium ${isMe ? 'text-white/70' : 'text-gray-400 dark:text-gray-500'}`}>
+                                 <p className={`text-[10px] mt-2 font-medium ${isMe ? 'text-[#D7F1EA]' : 'text-[#5C807F] dark:text-[#9FC8C7]'}`}>
                                     {parseDate(msg.createdAt) ? parseDate(msg.createdAt)!.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : t('now', 'Now')}
                                  </p>
                               </div>
@@ -319,7 +319,7 @@ export function PharmacistSupport() {
                   </div>
 
                   {/* Message Input Box */}
-                  <div className="absolute bottom-0 left-0 right-0 bg-white dark:bg-zinc-950/90 backdrop-blur-md dark:bg-slate-800/90 border-t border-gray-100 dark:border-slate-700 p-5 px-6 z-20 flex gap-3 items-center">
+                  <div className="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md dark:bg-[#0A3D3B]/95 border-t border-[#CFE4E3] dark:border-[#145250] p-4 px-6 z-20 flex gap-3 items-center">
                      <input 
                        disabled={activeTicket.status === 'resolved'}
                        type="text"
@@ -327,23 +327,23 @@ export function PharmacistSupport() {
                        onChange={(e) => setChatInput(e.target.value)}
                        onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                        placeholder={activeTicket.status === 'resolved' ? t('ticket_resolved_chat_warning', 'This ticket is marked as resolved.') : t('type_your_message', 'Type your message...')}
-                       className="flex-1 bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-full py-3.5 px-6 text-sm font-medium focus:outline-none focus:border-[#0B3B3C] disabled:opacity-50 transition-colors"
+                       className="flex-1 bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] text-[#0A3D3B] dark:text-white placeholder:text-[#5C807F] dark:placeholder:text-[#9FC8C7] rounded-full py-3.5 px-6 text-sm font-medium focus:outline-none focus:border-[#0E7673] dark:focus:border-[#38B794] disabled:opacity-50 transition-colors"
                      />
                      <button 
                        disabled={activeTicket.status === 'resolved' || !chatInput.trim()}
                        onClick={handleSendMessage} 
-                       className="w-12 h-12 bg-[#0B3B3C] text-white rounded-full flex items-center justify-center shadow-sm hover:bg-[#082a2b] transition shrink-0 disabled:opacity-50"
+                       className="w-12 h-12 bg-[#0E7673] text-white rounded-full flex items-center justify-center shadow-xs hover:bg-[#0A5A58] transition shrink-0 disabled:opacity-50"
                      >
                         <Send size={18} className="translate-x-0.5" />
                      </button>
                   </div>
                </div>
             ) : (
-               <div className="text-center p-12 text-gray-400 dark:text-gray-500 flex flex-col items-center gap-4">
-                  <div className="w-16 h-16 rounded-full bg-gray-50 dark:bg-slate-900 flex items-center justify-center">
-                    <MessageSquare size={32} className="text-gray-300 dark:text-slate-600 stroke-[1.5]" />
+               <div className="text-center p-12 text-[#5C807F] dark:text-[#9FC8C7] flex flex-col items-center gap-4">
+                  <div className="w-16 h-16 rounded-full bg-[#E7F1F1] dark:bg-[#0E4A47] flex items-center justify-center">
+                    <MessageSquare size={32} className="text-[#0E7673] dark:text-[#38B794] stroke-[1.5]" />
                   </div>
-                  <h3 className="text-base font-bold text-gray-900 dark:text-white">{t('select_a_conversations', 'Select a support ticket')}</h3>
+                  <h3 className="text-base font-bold text-[#0A3D3B] dark:text-white">{t('select_a_conversations', 'Select a support ticket')}</h3>
                   <p className="text-sm">{t('select_conversations_desc', 'Choose a ticket from the left column to view message thread.')}</p>
                </div>
             )}
@@ -353,24 +353,24 @@ export function PharmacistSupport() {
       {/* New Ticket Modal */}
       <AnimatePresence>
         {showNewTicketModal && (
-          <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
+          <div className="fixed inset-0 bg-[#062625]/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
             <motion.div 
                initial={{ opacity: 0, scale: 0.95, y: 10 }}
                animate={{ opacity: 1, scale: 1, y: 0 }}
                exit={{ opacity: 0, scale: 0.95, y: 10 }}
-               className="bg-white dark:bg-slate-800 rounded-3xl p-8 w-full max-w-md shadow-2xl relative border border-gray-100 dark:border-slate-700"
+               className="bg-white dark:bg-[#0A3D3B] rounded-3xl p-8 w-full max-w-md shadow-2xl relative border border-[#CFE4E3] dark:border-[#145250]"
             >
-               <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{t('nouvelle_demande_support', 'Submit Issue to Admin')}</h2>
-               <p className="text-sm font-medium text-gray-500 mb-8">{t('support_sub_desc', 'Open a support card. Administrators will assist you in real-time.')}</p>
+               <h2 className="text-xl font-bold text-[#0A3D3B] dark:text-white mb-2">{t('nouvelle_demande_support', 'Submit Issue to Admin')}</h2>
+               <p className="text-sm font-medium text-[#5C807F] dark:text-[#9FC8C7] mb-8">{t('support_sub_desc', 'Open a support card. Administrators will assist you in real-time.')}</p>
                
                <form onSubmit={handleCreateTicket} className="space-y-5">
                   <div>
-                     <label className="block text-sm font-bold text-[#0B3B3C] dark:text-gray-300 mb-2">{t('sujet_probleme', 'Subject / Topic')}</label>
+                     <label className="block text-sm font-bold text-[#0A3D3B] dark:text-white mb-2">{t('sujet_probleme', 'Subject / Topic')}</label>
                      <select 
                        value={newSubject}
                        onChange={(e) => setNewSubject(e.target.value)}
                        required
-                       className="w-full border border-gray-200 dark:border-slate-700 p-4 rounded-xl bg-[#FAFBFC] dark:bg-slate-900 text-sm font-medium focus:border-gray-400 outline-none transition"
+                       className="w-full border border-[#CFE4E3] dark:border-[#145250] p-4 rounded-2xl bg-[#F5FAFA] dark:bg-[#062625] text-[#0A3D3B] dark:text-white text-sm font-medium focus:border-[#0E7673] dark:focus:border-[#38B794] outline-none transition"
                      >
                        <option value="">{t('select_issue_type', 'What is the issue about?')}</option>
                        <option value="Problème de Paiement">{t('payment_issue', 'Payment & Payout / Finances')}</option>
@@ -382,13 +382,13 @@ export function PharmacistSupport() {
                   </div>
 
                   <div>
-                     <label className="block text-sm font-bold text-[#0B3B3C] dark:text-gray-300 mb-2">{t('details_explication', 'Detailed Explanation')}</label>
+                     <label className="block text-sm font-bold text-[#0A3D3B] dark:text-white mb-2">{t('details_explication', 'Detailed Explanation')}</label>
                      <textarea 
                        value={newMessage}
                        onChange={(e) => setNewMessage(e.target.value)}
                        required
                        placeholder={t('explain_problem_placeholder', 'Please provide error messages, order IDs or other details to help us investigate...')}
-                       className="w-full border border-gray-200 dark:border-slate-700 p-4 rounded-xl bg-[#FAFBFC] dark:bg-slate-900 text-sm font-medium focus:border-gray-400 outline-none h-32 resize-none"
+                       className="w-full border border-[#CFE4E3] dark:border-[#145250] p-4 rounded-2xl bg-[#F5FAFA] dark:bg-[#062625] text-[#0A3D3B] dark:text-white placeholder:text-[#5C807F] dark:placeholder:text-[#9FC8C7] text-sm font-medium focus:border-[#0E7673] dark:focus:border-[#38B794] outline-none h-32 resize-none"
                      ></textarea>
                   </div>
 
@@ -397,14 +397,14 @@ export function PharmacistSupport() {
                        type="button"
                        onClick={() => setShowNewTicketModal(false)}
                        disabled={submitting}
-                       className="flex-1 py-4 bg-white dark:bg-zinc-950 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-gray-300 rounded-full font-bold transition hover:bg-gray-50 dark:bg-zinc-900 focus:outline-none"
+                       className="flex-1 py-3.5 bg-white dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] text-[#0A3D3B] dark:text-white rounded-full font-bold transition hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47] focus:outline-none"
                      >
                        {t('cancel', 'Cancel')}
                      </button>
                      <button 
                        type="submit"
                        disabled={submitting || !newSubject || !newMessage.trim()}
-                       className="flex-1 py-4 bg-[#0B3B3C] hover:bg-[#082a2b] text-white rounded-full font-bold transition flex items-center justify-center gap-2 shadow-md disabled:opacity-50 focus:outline-none"
+                       className="flex-1 py-3.5 bg-[#0E7673] hover:bg-[#0A5A58] text-white rounded-full font-bold transition flex items-center justify-center gap-2 shadow-xs disabled:opacity-50 focus:outline-none"
                      >
                        {submitting && <Loader2 size={16} className="animate-spin" />}
                        {t('submit', 'Send Ticket')}

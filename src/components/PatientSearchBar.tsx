@@ -153,11 +153,11 @@ export function PatientSearchBar({ onOpenStepSearch, className = "" }: PatientSe
   return (
     <div className={`relative w-full ${className}`} ref={containerRef}>
       <form onSubmit={handleSearchSubmit} action="" method="get" className="relative flex items-center w-full">
-        <div className="absolute inset-y-0 left-0 pl-4 sm:pl-5 flex items-center pointer-events-none text-[var(--app-primary-color)] dark:text-teal-400 z-10">
+        <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none text-[#0E7673] dark:text-[#38B794] z-10">
           {loading ? (
-            <Loader2 className="h-5 w-5 sm:h-6 sm:w-6 animate-spin" />
+            <Loader2 className="h-5 w-5 animate-spin" />
           ) : (
-            <Search className="h-5 w-5 sm:h-6 sm:w-6" />
+            <Search className="h-5 w-5" />
           )}
         </div>
         <input
@@ -170,8 +170,8 @@ export function PatientSearchBar({ onOpenStepSearch, className = "" }: PatientSe
           autoComplete="off"
           autoCorrect="off"
           spellCheck="false"
-          className="block w-full min-h-[58px] sm:min-h-[64px] pl-12 sm:pl-14 pr-12 sm:pr-14 py-4 sm:py-4.5 border-2 border-gray-200/90 dark:border-zinc-700 rounded-2xl sm:rounded-3xl leading-5 bg-white dark:bg-zinc-800/95 placeholder-gray-400 dark:placeholder-zinc-500 text-gray-900 dark:text-white focus:outline-none focus:border-[var(--app-primary-color)] dark:focus:border-teal-400 focus:ring-4 focus:ring-[var(--app-primary-color)]/10 dark:focus:ring-teal-400/15 text-[15px] sm:text-base font-medium transition-all shadow-sm cursor-text"
-          placeholder={t('search_bar.placeholder', 'Rechercher vos médicaments par étapes...')}
+          className="block w-full min-h-[56px] sm:min-h-[60px] pl-12 sm:pl-14 pr-12 py-4 border border-[#CFE4E3] dark:border-[#145250] rounded-full leading-5 bg-white dark:bg-[#0A3D3B] placeholder:text-[#6EADAB] text-[#0A3D3B] dark:text-white focus:outline-none focus:border-[#0E7673] dark:focus:border-[#38B794] focus:ring-4 focus:ring-[#0E7673]/15 text-[15px] sm:text-base font-medium transition-all shadow-sm cursor-text"
+          placeholder={t('search_bar.placeholder', 'Rechercher un médicament, symptôme...')}
           value={queryText}
           onChange={(e) => setQueryText(e.target.value)}
           onFocus={() => {
@@ -187,7 +187,7 @@ export function PatientSearchBar({ onOpenStepSearch, className = "" }: PatientSe
           }}
         />
         {queryText.length > 0 && (
-          <div className="absolute inset-y-0 right-0 pr-3.5 sm:pr-4 flex items-center z-10">
+          <div className="absolute inset-y-0 right-0 pr-4 flex items-center z-10">
             <button
               type="button"
               onClick={() => {
@@ -196,7 +196,7 @@ export function PatientSearchBar({ onOpenStepSearch, className = "" }: PatientSe
                 setIsOpen(false);
                 inputRef.current?.focus();
               }}
-              className="p-1.5 sm:p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 rounded-full hover:bg-gray-100 dark:hover:bg-zinc-700 transition active:scale-95"
+              className="p-2 text-[#6EADAB] hover:text-[#0E7673] dark:hover:text-white rounded-full hover:bg-[#E7F1F1] dark:hover:bg-[#062625] transition active:scale-95"
               aria-label="Effacer le champ de recherche"
             >
               <X size={18} />
@@ -209,29 +209,29 @@ export function PatientSearchBar({ onOpenStepSearch, className = "" }: PatientSe
 
       {/* Autocomplete Results Dropdown */}
       {isOpen && (
-        <div className="absolute z-50 mt-2 w-full bg-white dark:bg-zinc-900 shadow-2xl max-h-[26rem] rounded-2xl py-2 text-sm ring-1 ring-black/5 overflow-y-auto border border-gray-100 dark:border-zinc-800">
+        <div className="absolute z-50 mt-2 w-full bg-white dark:bg-[#0A3D3B] shadow-2xl max-h-[26rem] rounded-3xl py-2 text-sm overflow-y-auto border border-[#CFE4E3] dark:border-[#145250]">
           {results.length > 0 ? (
             <>
-              <div className="px-4 py-2 border-b border-gray-100 dark:border-zinc-800/80 flex items-center justify-between text-[11px] font-bold text-gray-500 uppercase tracking-wider">
+              <div className="px-4 py-2 border-b border-[#E7F1F1] dark:border-[#145250] flex items-center justify-between text-[11px] font-bold text-[#0E7673] dark:text-[#9FC8C7]">
                 <span>{t('search_bar.suggested_results', 'Résultats suggérés')} ({results.length})</span>
                 <button
                   type="button"
                   onClick={() => handleSearchSubmit()}
-                  className="text-[var(--app-primary-color)] dark:text-teal-400 hover:underline flex items-center gap-0.5 normal-case font-semibold"
+                  className="text-[#0E7673] dark:text-[#38B794] hover:underline flex items-center gap-0.5 font-bold"
                 >
-                  {t('search_bar.view_all_catalog', 'Voir tout dans le catalogue')} <ArrowRight size={12} />
+                  {t('search_bar.view_all_catalog', 'Voir tout le catalogue')} <ArrowRight size={12} />
                 </button>
               </div>
 
-              <div className="divide-y divide-gray-50 dark:divide-zinc-800/60">
+              <div className="divide-y divide-[#E7F1F1] dark:divide-[#145250]">
                 {results.map((product) => (
                   <div
                     key={product.id}
                     onClick={() => handleSelectProduct(product)}
-                    className="p-3.5 hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-zinc-800/70 cursor-pointer transition flex items-center justify-between gap-3 group"
+                    className="p-3.5 hover:bg-[#F5FAFA] dark:hover:bg-[#062625] cursor-pointer transition flex items-center justify-between gap-3 group"
                   >
                     <div className="flex items-center gap-3 min-w-0">
-                      <div className="w-10 h-10 rounded-xl bg-gray-100 dark:bg-zinc-800 shrink-0 overflow-hidden flex items-center justify-center p-1 border border-gray-200/60 dark:border-zinc-700">
+                      <div className="w-10 h-10 rounded-2xl bg-[#E7F1F1] dark:bg-[#062625] shrink-0 overflow-hidden flex items-center justify-center p-1 border border-[#CFE4E3] dark:border-[#145250]">
                         {product.image_url ? (
                           <img src={product.image_url} alt="" className="w-full h-full object-contain" />
                         ) : (
@@ -240,41 +240,41 @@ export function PatientSearchBar({ onOpenStepSearch, className = "" }: PatientSe
                       </div>
                       <div className="min-w-0">
                         <div className="flex items-center gap-1.5 flex-wrap">
-                          <p className="font-bold text-gray-900 dark:text-white text-xs sm:text-sm truncate group-hover:text-[var(--app-primary-color)] dark:group-hover:text-teal-400 transition-colors">
+                          <p className="font-bold text-[#0A3D3B] dark:text-white text-xs sm:text-sm truncate group-hover:text-[#0E7673] dark:group-hover:text-[#38B794] transition-colors">
                             {product.nom_commercial || product.name || product.dci}
                           </p>
                           {product.is_prescription_required && (
-                            <span className="bg-red-50 text-red-600 dark:bg-red-950/40 text-[9px] font-bold px-1.5 py-0.2 rounded border border-red-200">
+                            <span className="bg-red-50 text-red-700 dark:bg-red-950/40 dark:text-red-300 text-[10px] font-bold px-2 py-0.5 rounded-full border border-red-200 dark:border-red-900">
                               {t('search_bar.prescription_tag', 'Ordonnance')}
                             </span>
                           )}
                           {product.is_essentiel && (
-                            <span className="bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 text-[9px] font-bold px-1.5 py-0.2 rounded border border-emerald-200">
+                            <span className="bg-[#D7F1EA] text-[#0A3D3B] text-[10px] font-bold px-2 py-0.5 rounded-full">
                               {t('search_bar.essential_tag', 'Essentiel')}
                             </span>
                           )}
                         </div>
-                        <p className="text-[11px] text-gray-500 dark:text-gray-400 truncate mt-0.5">
+                        <p className="text-[11px] text-[#0E7673] dark:text-[#9FC8C7] truncate mt-0.5">
                           {product.dci ? `DCI: ${product.dci} • ` : ''}{product.dosage || product.form || product.category_name}
                         </p>
                       </div>
                     </div>
 
                     <div className="text-right shrink-0">
-                      <p className="font-black text-xs sm:text-sm text-[var(--app-primary-color)] dark:text-teal-400">
+                      <p className="font-bold text-xs sm:text-sm text-[#0E7673] dark:text-[#38B794]">
                         {product.price ? formatCurrency(product.price) : t('search_bar.in_stock', 'En stock')}
                       </p>
-                      <span className="text-[10px] text-gray-400 font-medium">{t('search_bar.available', 'Disponible')}</span>
+                      <span className="text-[10px] text-[#0A3D3B]/70 dark:text-[#9FC8C7] font-medium">{t('search_bar.available', 'Disponible')}</span>
                     </div>
                   </div>
                 ))}
               </div>
 
-              <div className="p-2.5 bg-gray-50 dark:bg-zinc-800/40 border-t border-gray-100 dark:border-zinc-800 text-center">
+              <div className="p-2.5 bg-[#F5FAFA] dark:bg-[#062625] border-t border-[#CFE4E3] dark:border-[#145250] text-center">
                 <button
                   type="button"
                   onClick={() => handleSearchSubmit()}
-                  className="w-full py-2 bg-white dark:bg-zinc-800 hover:bg-gray-100 dark:bg-zinc-800 dark:hover:bg-zinc-700 rounded-xl text-xs font-bold text-[var(--app-primary-color)] dark:text-teal-300 border border-gray-200 dark:border-zinc-700 transition flex items-center justify-center gap-1.5"
+                  className="w-full py-2.5 bg-[#0E7673] hover:bg-[#0A5A58] text-white rounded-full text-xs font-bold transition flex items-center justify-center gap-1.5"
                 >
                   <Search size={13} />
                   <span>{t('search_bar.show_all_results_for', { query: queryText, defaultValue: `Afficher tous les résultats pour « ${queryText} »` })}</span>
@@ -283,14 +283,14 @@ export function PatientSearchBar({ onOpenStepSearch, className = "" }: PatientSe
             </>
           ) : (
             !loading && queryText.length >= 2 && (
-              <div className="p-6 text-center text-xs text-gray-500 dark:text-gray-400 space-y-2">
-                <Search className="mx-auto h-6 w-6 text-gray-300 dark:text-gray-600" />
-                <p className="font-bold text-gray-700 dark:text-gray-300">{t('search_bar.no_meds_found', { query: queryText, defaultValue: `Aucun médicament trouvé pour « ${queryText} »` })}</p>
-                <p className="text-[11px] text-gray-400">{t('search_bar.press_search_hint', 'Appuyez sur la touche Entrée de votre clavier pour explorer tout le catalogue.')}</p>
+              <div className="p-6 text-center text-xs text-[#0A3D3B] dark:text-[#CFE4E3] space-y-2">
+                <Search className="mx-auto h-6 w-6 text-[#6EADAB]" />
+                <p className="font-bold">{t('search_bar.no_meds_found', { query: queryText, defaultValue: `Aucun médicament trouvé pour « ${queryText} »` })}</p>
+                <p className="text-[11px] text-[#0E7673] dark:text-[#9FC8C7]">{t('search_bar.press_search_hint', 'Appuyez sur la touche Entrée de votre clavier pour explorer tout le catalogue.')}</p>
                 <button
                   type="button"
                   onClick={() => handleSearchSubmit()}
-                  className="mt-2 px-4 py-2 bg-[var(--app-primary-color)] text-white rounded-xl text-xs font-bold inline-flex items-center gap-1"
+                  className="mt-2 px-5 py-2.5 bg-[#0E7673] text-white rounded-full text-xs font-bold inline-flex items-center gap-1"
                 >
                   {t('search_bar.search_full_catalog', 'Rechercher dans le catalogue complet')}
                 </button>

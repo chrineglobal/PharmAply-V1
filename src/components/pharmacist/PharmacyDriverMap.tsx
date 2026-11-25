@@ -10,8 +10,8 @@ import { useGoogleMapsStatus } from '../../hooks/useGoogleMapsStatus';
 // Google Maps Custom Marker Components
 const PharmacyMarkerUI = () => (
   <div style={{
-    width: 44, height: 44, background: '#194B4B', border: '3px solid #ffffff', borderRadius: '50%',
-    boxShadow: '0 8px 20px rgba(25, 75, 75, 0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ffffff'
+    width: 44, height: 44, background: '#0E7673', border: '3px solid #ffffff', borderRadius: '50%',
+    boxShadow: '0 8px 20px rgba(14, 118, 115, 0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ffffff'
   }}>
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
       <path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/>
@@ -26,8 +26,8 @@ const PharmacyMarkerUI = () => (
 
 const DriverMotoMarkerUI = () => (
   <div style={{
-    width: 44, height: 44, background: '#FACC15', border: '3px solid #ffffff', borderRadius: '50%',
-    boxShadow: '0 8px 20px rgba(250, 204, 21, 0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#194B4B'
+    width: 44, height: 44, background: '#38B794', border: '3px solid #ffffff', borderRadius: '50%',
+    boxShadow: '0 8px 20px rgba(56, 183, 148, 0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0A3D3B'
   }}>
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="15" cy="5" r="1"/><path d="M12 17.5V14l-3-3 4-3 2 3h2"/>
@@ -130,17 +130,17 @@ export function PharmacyDriverMap({ orders, pharmacy }: PharmacyDriverMapProps) 
 
   if (activeDeliveryOrders.length === 0) {
     return (
-      <div className="bg-[#FAFBFC] dark:bg-slate-800 rounded-3xl p-6 border border-gray-100 dark:border-slate-700 shadow-sm flex flex-col items-center justify-center text-center min-h-[300px]">
-        <div className="w-14 h-14 rounded-full bg-[var(--app-primary-color)]/10 text-[var(--app-primary-color)] dark:text-teal-300 flex items-center justify-center mb-4">
+      <div className="bg-white dark:bg-[#0A3D3B] rounded-3xl p-6 border border-[#CFE4E3] dark:border-[#145250] shadow-sm flex flex-col items-center justify-center text-center min-h-[300px]">
+        <div className="w-14 h-14 rounded-full bg-[#D7F1EA] dark:bg-[#0E4A47] text-[#0E7673] dark:text-[#38B794] flex items-center justify-center mb-4">
           <Bike size={28} />
         </div>
-        <h3 className="text-base font-bold text-gray-900 dark:text-white mb-1">
+        <h3 className="text-base font-bold text-[#0A3D3B] dark:text-white mb-1">
           Suivi des Chauffeurs en Direct
         </h3>
-        <p className="text-xs text-gray-500 max-w-md mx-auto mb-4">
+        <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7] max-w-md mx-auto mb-4">
           Aucun livreur n'est actuellement en route vers votre pharmacie. Dès qu'un coursier est assigné à une commande prête, sa position et son heure d'arrivée estimée s'afficheront ici en temps réel.
         </p>
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 rounded-full text-xs font-semibold">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-[#E7F1F1] dark:bg-[#0E4A47] text-[#0A3D3B] dark:text-[#D7F1EA] rounded-full text-xs font-semibold">
           <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
           En attente de ramassage
         </div>
@@ -151,17 +151,17 @@ export function PharmacyDriverMap({ orders, pharmacy }: PharmacyDriverMapProps) 
   const mapCenter: [number, number] = driverPos || pharmaPos;
 
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-3xl border border-gray-100 dark:border-slate-700 shadow-sm overflow-hidden flex flex-col">
+    <div className="bg-white dark:bg-[#0A3D3B] rounded-3xl border border-[#CFE4E3] dark:border-[#145250] shadow-sm overflow-hidden flex flex-col">
       {/* Header */}
-      <div className="p-6 border-b border-gray-100 dark:border-slate-700 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="p-6 border-b border-[#CFE4E3] dark:border-[#145250] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-            <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#38B794] animate-pulse"></span>
+            <h3 className="text-lg font-bold text-[#0A3D3B] dark:text-white">
               Livreur en approche de l'officine
             </h3>
           </div>
-          <p className="text-xs text-gray-500 mt-0.5">
+          <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7] mt-0.5">
             Suivi GPS en temps réel du coursier assigné pour le ramassage des médicaments
           </p>
         </div>
@@ -173,10 +173,10 @@ export function PharmacyDriverMap({ orders, pharmacy }: PharmacyDriverMapProps) 
               <button
                 key={o.id}
                 onClick={() => setSelectedOrderId(o.id)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition ${
+                className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition ${
                   (currentOrder?.id === o.id) 
-                    ? 'bg-[var(--app-primary-color)] text-white shadow-sm' 
-                    : 'bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200'
+                    ? 'bg-[#0E7673] text-white shadow-sm' 
+                    : 'bg-[#E7F1F1] dark:bg-[#0E4A47] text-[#0A3D3B] dark:text-[#D7F1EA] hover:bg-[#D7F1EA] dark:hover:bg-[#145250]'
                 }`}
               >
                 #{o.id.slice(0, 6).toUpperCase()}
@@ -187,7 +187,7 @@ export function PharmacyDriverMap({ orders, pharmacy }: PharmacyDriverMapProps) 
       </div>
 
       {/* Map Container */}
-      <div className="w-full h-[320px] relative z-0 rounded-2xl overflow-hidden bg-slate-900">
+      <div className="w-full h-[320px] relative z-0 rounded-2xl overflow-hidden bg-[#062625]">
         {isAvailable && apiKey ? (
           <APIProvider 
             apiKey={apiKey}
@@ -222,36 +222,36 @@ export function PharmacyDriverMap({ orders, pharmacy }: PharmacyDriverMapProps) 
                   </AdvancedMarker>
                   <Polyline 
                     path={[{lat: driverPos[0], lng: driverPos[1]}, {lat: pharmaPos[0], lng: pharmaPos[1]}]} 
-                    strokeColor="#194B4B" 
+                    strokeColor="#0E7673" 
                     strokeWeight={4} 
-                    strokeOpacity={0.8} 
+                    strokeOpacity={0.85} 
                   />
                 </>
               )}
             </Map>
           </APIProvider>
         ) : (
-          <div className="w-full h-full flex flex-col items-center justify-center p-6 text-center relative overflow-hidden bg-slate-900 border border-slate-800">
-            <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#2dd4bf_1px,transparent_1px)] [background-size:16px_16px]"></div>
+          <div className="w-full h-full flex flex-col items-center justify-center p-6 text-center relative overflow-hidden bg-[#062625] border border-[#145250]">
+            <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#38B794_1px,transparent_1px)] [background-size:16px_16px]"></div>
             <div className="relative z-10 flex items-center justify-center gap-6 mb-4">
               <div className="flex flex-col items-center gap-1.5">
                 <div className="w-12 h-12 rounded-2xl bg-amber-400/10 border border-amber-400/30 flex items-center justify-center text-amber-400">
                   <Bike size={24} className="animate-pulse" />
                 </div>
-                <span className="text-[11px] font-bold text-slate-300">Livreur en approche</span>
+                <span className="text-[11px] font-bold text-[#D7F1EA]">Livreur en approche</span>
               </div>
               <div className="flex flex-col items-center">
-                <div className="w-20 border-t-2 border-dashed border-teal-500/50 my-auto"></div>
-                <span className="text-[10px] font-mono text-teal-400 mt-1">{distanceKm !== null ? `${distanceKm.toFixed(1)} km` : '--'}</span>
+                <div className="w-20 border-t-2 border-dashed border-[#38B794]/60 my-auto"></div>
+                <span className="text-[10px] font-mono text-[#38B794] mt-1">{distanceKm !== null ? `${distanceKm.toFixed(1)} km` : '--'}</span>
               </div>
               <div className="flex flex-col items-center gap-1.5">
-                <div className="w-12 h-12 rounded-2xl bg-[var(--app-primary-color)]/20 border border-[var(--app-primary-color)]/50 flex items-center justify-center text-teal-400">
+                <div className="w-12 h-12 rounded-2xl bg-[#0E7673]/30 border border-[#38B794]/50 flex items-center justify-center text-[#38B794]">
                   <Store size={24} />
                 </div>
-                <span className="text-[11px] font-bold text-slate-300">Votre Officine</span>
+                <span className="text-[11px] font-bold text-[#D7F1EA]">Votre Officine</span>
               </div>
             </div>
-            <p className="text-xs text-slate-400 relative z-10 font-medium">
+            <p className="text-xs text-[#9FC8C7] relative z-10 font-medium">
               Suivi GPS actif • {driverData?.name || currentOrder?.driverName || 'Livreur assigné'}
             </p>
           </div>
@@ -259,35 +259,35 @@ export function PharmacyDriverMap({ orders, pharmacy }: PharmacyDriverMapProps) 
 
         {/* Floating live driver card overlay */}
         <div className="absolute bottom-3 left-3 right-3 z-10 pointer-events-auto">
-          <div className="bg-white dark:bg-zinc-950/95 dark:bg-slate-900/95 backdrop-blur-md p-4 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-xl flex flex-wrap items-center justify-between gap-3">
+          <div className="bg-white/95 dark:bg-[#0A3D3B]/95 backdrop-blur-md p-4 rounded-2xl border border-[#CFE4E3] dark:border-[#145250] shadow-xl flex flex-wrap items-center justify-between gap-3">
             
             {/* Driver Info */}
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-[var(--app-primary-color)] text-white flex items-center justify-center font-bold text-sm shadow-sm">
+              <div className="w-10 h-10 rounded-full bg-[#0E7673] text-white flex items-center justify-center font-bold text-sm shadow-sm">
                 {driverData?.name?.charAt(0) || currentOrder?.driverName?.charAt(0) || 'L'}
               </div>
               <div>
-                <h4 className="font-bold text-sm text-gray-900 dark:text-white">
+                <h4 className="font-bold text-sm text-[#0A3D3B] dark:text-white">
                   {driverData?.name || currentOrder?.driverName || 'Chauffeur Assigné'}
                 </h4>
-                <p className="text-[11px] text-gray-500">
+                <p className="text-[11px] text-[#5C807F] dark:text-[#9FC8C7]">
                   {driverData?.vehicleModel || 'Moto de livraison'} • {driverData?.vehiclePlate || 'LT 482 AB'}
                 </p>
               </div>
             </div>
 
             {/* Distance & ETA */}
-            <div className="flex items-center gap-4 bg-gray-50 dark:bg-slate-800 px-4 py-2 rounded-xl border border-gray-100 dark:border-slate-700">
+            <div className="flex items-center gap-4 bg-[#F5FAFA] dark:bg-[#062625] px-4 py-2 rounded-xl border border-[#CFE4E3] dark:border-[#145250]">
               <div className="text-right">
-                <p className="text-[10px] uppercase font-bold text-gray-400">Distance</p>
-                <p className="text-xs font-black text-gray-900 dark:text-white">
+                <p className="text-[10px] uppercase font-bold text-[#5C807F] dark:text-[#9FC8C7]">Distance</p>
+                <p className="text-xs font-black text-[#0A3D3B] dark:text-white tabular-nums">
                   {distanceKm !== null ? `${distanceKm.toFixed(1)} km` : '--'}
                 </p>
               </div>
-              <div className="h-6 w-px bg-gray-200 dark:bg-slate-700"></div>
+              <div className="h-6 w-px bg-[#CFE4E3] dark:bg-[#145250]"></div>
               <div className="text-right">
-                <p className="text-[10px] uppercase font-bold text-gray-400">Arrivée estimée</p>
-                <p className="text-xs font-black text-[var(--app-primary-color)] dark:text-teal-300">
+                <p className="text-[10px] uppercase font-bold text-[#5C807F] dark:text-[#9FC8C7]">Arrivée estimée</p>
+                <p className="text-xs font-black text-[#0E7673] dark:text-[#38B794] tabular-nums">
                   {etaMinutes !== null ? `~${etaMinutes} min` : '--'}
                 </p>
               </div>
@@ -298,7 +298,7 @@ export function PharmacyDriverMap({ orders, pharmacy }: PharmacyDriverMapProps) 
               {(driverData?.phone || currentOrder?.driverPhone) && (
                 <a
                   href={`tel:${driverData?.phone || currentOrder?.driverPhone}`}
-                  className="p-2.5 bg-gray-100 dark:bg-zinc-800 hover:bg-gray-200 dark:bg-slate-800 text-gray-700 dark:text-gray-300 rounded-xl transition shadow-sm"
+                  className="p-2.5 bg-[#E7F1F1] dark:bg-[#0E4A47] hover:bg-[#D7F1EA] dark:hover:bg-[#145250] text-[#0A3D3B] dark:text-[#D7F1EA] rounded-full transition shadow-sm"
                   title="Appeler le chauffeur"
                 >
                   <Phone size={16} />
@@ -306,7 +306,7 @@ export function PharmacyDriverMap({ orders, pharmacy }: PharmacyDriverMapProps) 
               )}
               <button
                 onClick={() => navigate(`/pharmacist/orders/${currentOrder?.id}`)}
-                className="px-4 py-2.5 bg-[var(--app-primary-color)] hover:bg-[#143d3d] text-white text-xs font-bold rounded-xl flex items-center gap-1.5 shadow-sm transition"
+                className="px-4 py-2.5 bg-[#0E7673] hover:bg-[#0A5A58] text-white text-xs font-bold rounded-full flex items-center gap-1.5 shadow-sm transition"
               >
                 Voir commande
                 <ChevronRight size={14} />

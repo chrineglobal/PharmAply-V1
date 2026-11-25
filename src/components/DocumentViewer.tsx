@@ -50,27 +50,27 @@ export function DocumentViewer({ filePath, bucket = 'drivers', onClose }: Docume
   if (!filePath) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm" onClick={onClose}>
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-[#062625]/85 backdrop-blur-sm" onClick={onClose}>
       <div className="relative max-w-5xl w-full max-h-[90vh] flex flex-col" onClick={e => e.stopPropagation()}>
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-white font-bold text-xl drop-shadow-md"> {t('document_verification', 'Document Verification')} </h3>
           <button 
             onClick={onClose}
-            className="p-2 bg-white dark:bg-zinc-950/10 hover:bg-white dark:bg-zinc-950/20 text-white rounded-full transition backdrop-blur-md"
+            className="p-2 bg-white/15 hover:bg-white/25 text-white rounded-full transition backdrop-blur-md"
           >
             <X size={24} />
           </button>
         </div>
         
-        <div className="flex-1 overflow-auto rounded-2xl bg-black/50 border border-white/10 flex items-center justify-center min-h-[50vh]">
+        <div className="flex-1 overflow-auto rounded-2xl bg-[#0A3D3B]/60 border border-[#145250] flex items-center justify-center min-h-[50vh]">
           {loading ? (
              <div className="flex flex-col items-center justify-center text-white p-12">
-                <Loader2 className="animate-spin mb-4" size={48} />
+                <Loader2 className="animate-spin mb-4 text-[#38B794]" size={48} />
                 <span className="text-lg">Chargement du document sécurisé...</span>
              </div>
           ) : signedUrl ? (
             signedUrl.toLowerCase().includes('.pdf') ? (
-              <iframe src={`${signedUrl}#toolbar=0`} className="w-full h-[80vh] rounded-2xl bg-white dark:bg-zinc-950" title={t('document_viewer', 'Document Viewer')} />
+              <iframe src={`${signedUrl}#toolbar=0`} className="w-full h-[80vh] rounded-2xl bg-white dark:bg-[#0A3D3B]" title={t('document_viewer', 'Document Viewer')} />
             ) : (
               <img src={signedUrl} alt="Document View" className="max-w-full max-h-[80vh] object-contain rounded-xl" />
             )
@@ -85,7 +85,7 @@ export function DocumentViewer({ filePath, bucket = 'drivers', onClose }: Docume
                  href={signedUrl} 
                  target="_blank" 
                  rel="noreferrer" 
-                 className="flex-1 py-3 bg-white dark:bg-zinc-950/10 hover:bg-white dark:bg-zinc-950/20 text-white text-center font-bold rounded-xl transition backdrop-blur-md border border-white/10"
+                 className="flex-1 py-3 bg-[#0E7673] hover:bg-[#0A5A58] text-white text-center font-bold rounded-full transition shadow-md"
                >
                   {t('open_in_new_tab', 'Open in New Tab')} 
                </a>

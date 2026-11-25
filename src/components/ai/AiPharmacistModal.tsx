@@ -219,30 +219,30 @@ Je peux vous conseiller sur :
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-4 bg-slate-950/60 backdrop-blur-sm animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-4 bg-[#062625]/70 backdrop-blur-sm animate-in fade-in duration-200">
       <div 
-        className="w-full h-full sm:h-[88vh] sm:max-w-2xl bg-white dark:bg-slate-900 sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-slate-200/80 dark:border-slate-800"
+        className="w-full h-full sm:h-[88vh] sm:max-w-2xl bg-white dark:bg-[#062625] sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-[#CFE4E3] dark:border-[#145250]"
         role="dialog"
         aria-modal="true"
         aria-labelledby="ai-pharmacist-title"
       >
         {/* Header */}
-        <div className="bg-gradient-to-r from-emerald-700 via-teal-700 to-emerald-800 text-white px-4 py-3 sm:px-6 sm:py-4 shrink-0 flex items-center justify-between shadow-md">
+        <div className="bg-[#0E7673] text-white px-4 py-3.5 sm:px-6 sm:py-4 shrink-0 flex items-center justify-between shadow-sm">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-white/15 backdrop-blur-md flex items-center justify-center text-emerald-200 ring-2 ring-white/20">
-              <Sparkles className="w-5 h-5 animate-pulse text-amber-300" />
+            <div className="w-10 h-10 rounded-full bg-white/15 flex items-center justify-center text-[#D7F1EA] ring-2 ring-white/25">
+              <Sparkles className="w-5 h-5 text-[#D7F1EA]" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h2 id="ai-pharmacist-title" className="font-semibold text-base sm:text-lg tracking-tight">
+                <h2 id="ai-pharmacist-title" className="font-bold text-base sm:text-lg tracking-tight">
                   Pharmacien Conseil IA
                 </h2>
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-400/25 text-emerald-100 border border-emerald-300/30">
-                  Google Maps Grounding
+                <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-[#38B794] text-[#0A3D3B]">
+                  Google Maps
                 </span>
               </div>
-              <p className="text-xs text-emerald-100/90 flex items-center gap-1.5 mt-0.5">
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-300" />
+              <p className="text-xs text-[#D7F1EA] flex items-center gap-1.5 mt-0.5">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#38B794]" />
                 PharmAply • Conseils certifiés & Pharmacies de garde
               </p>
             </div>
@@ -252,13 +252,13 @@ Je peux vous conseiller sur :
             <button
               onClick={handleClearHistory}
               title="Nouvelle conversation"
-              className="p-2 rounded-xl text-emerald-100/80 hover:text-white hover:bg-white/10 transition"
+              className="p-2 rounded-full text-white/80 hover:text-white hover:bg-white/15 transition"
             >
               <RotateCcw className="w-4 h-4" />
             </button>
             <button
               onClick={onClose}
-              className="p-2 rounded-xl text-emerald-100/80 hover:text-white hover:bg-white/10 transition"
+              className="p-2 rounded-full text-white/80 hover:text-white hover:bg-white/15 transition"
               aria-label="Fermer la fenêtre"
             >
               <X className="w-5 h-5" />
@@ -267,9 +267,9 @@ Je peux vous conseiller sur :
         </div>
 
         {/* Sub-bar: Emergency disclaimer & Model selection */}
-        <div className="bg-amber-50 dark:bg-amber-950/40 border-b border-amber-200/60 dark:border-amber-800/40 px-3 py-1.5 flex items-center justify-between text-[11px] text-amber-900 dark:text-amber-200 shrink-0">
+        <div className="bg-[#EBF8F4] dark:bg-[#0A3D3B] border-b border-[#CFE4E3] dark:border-[#145250] px-3 py-1.5 flex items-center justify-between text-[11px] text-[#0A3D3B] dark:text-[#E7F1F1] shrink-0">
           <div className="flex items-center gap-1.5 truncate">
-            <AlertTriangle className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
+            <AlertTriangle className="w-3.5 h-3.5 text-[#0E7673] dark:text-[#38B794] shrink-0" />
             <span className="truncate">
               <strong>Urgence vitale ?</strong> Appelez le <strong>15</strong> (SAMU) ou le <strong>112</strong>.
             </span>
@@ -277,11 +277,11 @@ Je peux vous conseiller sur :
 
           {/* Model picker */}
           <div className="flex items-center gap-1 shrink-0 ml-2">
-            <label className="text-[10px] text-slate-500 dark:text-slate-400 hidden sm:inline">Modèle :</label>
+            <label className="text-[10px] text-[#0E7673] dark:text-[#9FC8C7] hidden sm:inline">Modèle :</label>
             <select
               value={selectedModel}
               onChange={(e) => setSelectedModel(e.target.value as any)}
-              className="text-[11px] font-medium bg-white dark:bg-slate-800 border border-amber-300/70 dark:border-amber-700/60 rounded-lg px-2 py-0.5 text-slate-700 dark:text-slate-200 outline-none cursor-pointer"
+              className="text-[11px] font-bold bg-white dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] rounded-full px-2.5 py-0.5 text-[#0A3D3B] dark:text-[#E7F1F1] outline-none cursor-pointer"
             >
               <option value="gemini-3.8-flash">gemini-3.8-flash (Standard & Maps)</option>
               <option value="gemini-3.1-flash-lite">gemini-3.1-flash-lite (Ultra-rapide)</option>
@@ -291,9 +291,9 @@ Je peux vous conseiller sur :
         </div>
 
         {/* Geolocation indicator banner */}
-        <div className="bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200/60 dark:border-slate-800 px-3 py-1.5 flex items-center justify-between text-xs text-slate-600 dark:text-slate-400 shrink-0">
+        <div className="bg-[#F5FAFA] dark:bg-[#082E2D] border-b border-[#CFE4E3] dark:border-[#145250] px-3 py-1.5 flex items-center justify-between text-xs text-[#0A3D3B] dark:text-[#CFE4E3] shrink-0">
           <div className="flex items-center gap-1.5">
-            <MapPin className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+            <MapPin className="w-3.5 h-3.5 text-[#0E7673] dark:text-[#38B794]" />
             <span>
               {locatingStatus === 'ready' 
                 ? "Position détectée pour la recherche de pharmacies" 
@@ -304,7 +304,7 @@ Je peux vous conseiller sur :
           </div>
           <button
             onClick={getUserLocation}
-            className="text-[11px] text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1"
+            className="text-[11px] font-bold text-[#0E7673] dark:text-[#38B794] hover:underline flex items-center gap-1"
           >
             <Compass className="w-3 h-3" />
             Actualiser ma position
@@ -312,7 +312,7 @@ Je peux vous conseiller sur :
         </div>
 
         {/* Message Thread */}
-        <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4 bg-slate-50/50 dark:bg-slate-900/50">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4 bg-[#E7F1F1]/40 dark:bg-[#062625]">
           {messages.map((msg) => (
             <div
               key={msg.id}
@@ -321,28 +321,28 @@ Je peux vous conseiller sur :
               <div className="flex items-center gap-1.5 mb-1 px-1">
                 {msg.role === 'model' ? (
                   <>
-                    <span className="font-semibold text-xs text-emerald-700 dark:text-emerald-400 flex items-center gap-1">
-                      <Sparkles className="w-3 h-3 text-amber-500" />
+                    <span className="font-bold text-xs text-[#0E7673] dark:text-[#38B794] flex items-center gap-1">
+                      <Sparkles className="w-3 h-3 text-[#38B794]" />
                       PharmAply IA
                     </span>
                     {msg.modelUsed && (
-                      <span className="text-[10px] text-slate-400 dark:text-slate-500">
+                      <span className="text-[10px] text-[#6EADAB]">
                         • {msg.modelUsed}
                       </span>
                     )}
                     {msg.isQuotaFallback && (
-                      <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-200 font-medium inline-flex items-center gap-1">
-                        <AlertTriangle className="w-2.5 h-2.5 text-amber-600 dark:text-amber-400" />
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#D7F1EA] text-[#0A3D3B] font-bold inline-flex items-center gap-1">
+                        <AlertTriangle className="w-2.5 h-2.5 text-[#0E7673]" />
                         Mode Relais Officine
                       </span>
                     )}
                   </>
                 ) : (
-                  <span className="font-semibold text-xs text-slate-600 dark:text-slate-400">
+                  <span className="font-bold text-xs text-[#0A3D3B] dark:text-[#CFE4E3]">
                     Vous
                   </span>
                 )}
-                <span className="text-[10px] text-slate-400 dark:text-slate-500">
+                <span className="text-[10px] text-[#6EADAB]">
                   {msg.timestamp}
                 </span>
               </div>
@@ -351,10 +351,10 @@ Je peux vous conseiller sur :
               <div
                 className={`max-w-[90%] sm:max-w-[85%] rounded-2xl p-3.5 sm:p-4 shadow-sm text-sm leading-relaxed ${
                   msg.role === 'user'
-                    ? 'bg-emerald-600 text-white rounded-tr-none'
+                    ? 'bg-[#0E7673] text-white rounded-tr-none'
                     : msg.isError
-                    ? 'bg-amber-50 dark:bg-amber-950/30 text-slate-800 dark:text-slate-100 border border-amber-300 dark:border-amber-800/60 rounded-tl-none'
-                    : 'bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 border border-slate-200/80 dark:border-slate-700 rounded-tl-none'
+                    ? 'bg-[#FFF8EB] dark:bg-amber-950/30 text-[#0A3D3B] dark:text-[#E7F1F1] border border-amber-300 dark:border-amber-800/60 rounded-tl-none'
+                    : 'bg-white dark:bg-[#0A3D3B] text-[#0A3D3B] dark:text-[#E7F1F1] border border-[#CFE4E3] dark:border-[#145250] rounded-tl-none'
                 }`}
               >
                 {/* Formatted body */}
@@ -365,13 +365,13 @@ Je peux vous conseiller sur :
                 {/* Retry action on error */}
                 {msg.isError && msg.retryText && (
                   <div className="mt-3 pt-2.5 border-t border-amber-200 dark:border-amber-800/50 flex items-center justify-between gap-2">
-                    <span className="text-[11px] text-amber-900/70 dark:text-amber-200/70">
+                    <span className="text-[11px] text-[#0A3D3B]/75 dark:text-[#CFE4E3]">
                       Une demande urgente ?
                     </span>
                     <button
                       onClick={() => sendMessage(msg.retryText)}
                       disabled={isLoading}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold shadow-sm transition active:scale-95 disabled:opacity-50"
+                      className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#0E7673] hover:bg-[#0A5A58] text-white text-xs font-bold shadow-sm transition active:scale-95 disabled:opacity-50"
                     >
                       <RefreshCw className="w-3.5 h-3.5" />
                       Réessayer
@@ -381,26 +381,26 @@ Je peux vous conseiller sur :
 
                 {/* Grounding Places Card (Google Maps Grounding results) */}
                 {msg.mapsPlaces && msg.mapsPlaces.length > 0 && (
-                  <div className="mt-4 pt-3 border-t border-slate-200 dark:border-slate-700 space-y-2">
-                    <div className="flex items-center gap-1.5 text-xs font-semibold text-emerald-700 dark:text-emerald-400">
-                      <Navigation className="w-3.5 h-3.5 text-emerald-600" />
+                  <div className="mt-4 pt-3 border-t border-[#CFE4E3] dark:border-[#145250] space-y-2">
+                    <div className="flex items-center gap-1.5 text-xs font-bold text-[#0E7673] dark:text-[#38B794]">
+                      <Navigation className="w-3.5 h-3.5" />
                       Pharmacies identifiées ({msg.mapsPlaces.length})
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
                       {msg.mapsPlaces.map((place, idx) => (
                         <div
                           key={idx}
-                          className="bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-700 rounded-xl p-3 flex flex-col justify-between hover:border-emerald-500 transition-colors"
+                          className="bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] rounded-2xl p-3 flex flex-col justify-between hover:border-[#0E7673] transition-colors"
                         >
                           <div>
-                            <div className="font-semibold text-xs text-slate-900 dark:text-white flex items-center justify-between">
+                            <div className="font-bold text-xs text-[#0A3D3B] dark:text-white flex items-center justify-between gap-1">
                               <span className="truncate">{place.title || "Pharmacie Partenaire"}</span>
-                              <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-300 font-medium">
+                              <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#D7F1EA] text-[#0A3D3B] font-bold shrink-0">
                                 Certifié Maps
                               </span>
                             </div>
                             {place.reviewSnippets && place.reviewSnippets.length > 0 && (
-                              <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 line-clamp-2 italic">
+                              <p className="text-[11px] text-[#0E7673] dark:text-[#9FC8C7] mt-1 line-clamp-2 italic">
                                 &ldquo;{place.reviewSnippets[0]}&rdquo;
                               </p>
                             )}
@@ -411,7 +411,7 @@ Je peux vous conseiller sur :
                               href={place.uri}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="mt-2 inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 pt-1"
+                              className="mt-2 inline-flex items-center gap-1 text-[11px] font-bold text-[#0E7673] dark:text-[#38B794] hover:underline pt-1"
                             >
                               <span>Voir l'itinéraire sur Google Maps</span>
                               <ExternalLink className="w-3 h-3" />
@@ -430,19 +430,19 @@ Je peux vous conseiller sur :
           {isLoading && (
             <div className="flex flex-col items-start animate-in fade-in duration-150">
               <div className="flex items-center gap-1.5 mb-1 px-1">
-                <span className="font-semibold text-xs text-emerald-700 dark:text-emerald-400 flex items-center gap-1">
-                  <Sparkles className="w-3 h-3 text-amber-500 animate-spin" />
+                <span className="font-bold text-xs text-[#0E7673] dark:text-[#38B794] flex items-center gap-1">
+                  <Sparkles className="w-3 h-3 text-[#38B794] animate-spin" />
                   PharmAply IA
                 </span>
-                <span className="text-[10px] text-slate-400">Analyse clinique et cartographique en cours...</span>
+                <span className="text-[10px] text-[#6EADAB]">Analyse clinique et cartographique en cours...</span>
               </div>
-              <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl rounded-tl-none p-4 shadow-sm flex items-center gap-3">
+              <div className="bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] rounded-2xl rounded-tl-none p-4 shadow-sm flex items-center gap-3">
                 <div className="flex gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-emerald-600 animate-bounce [animation-delay:-0.3s]" />
-                  <span className="w-2 h-2 rounded-full bg-teal-500 animate-bounce [animation-delay:-0.15s]" />
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-bounce" />
+                  <span className="w-2 h-2 rounded-full bg-[#0E7673] animate-bounce [animation-delay:-0.3s]" />
+                  <span className="w-2 h-2 rounded-full bg-[#38B794] animate-bounce [animation-delay:-0.15s]" />
+                  <span className="w-2 h-2 rounded-full bg-[#6EADAB] animate-bounce" />
                 </div>
-                <span className="text-xs text-slate-500 dark:text-slate-400">
+                <span className="text-xs text-[#0A3D3B] dark:text-[#CFE4E3]">
                   Consultation des données pharmaceutiques et de garde...
                 </span>
               </div>
@@ -453,22 +453,22 @@ Je peux vous conseiller sur :
         </div>
 
         {/* Quick Prompts Bar */}
-        <div className="px-3 py-2 bg-white dark:bg-slate-900 border-t border-slate-200/70 dark:border-slate-800 overflow-x-auto no-scrollbar flex items-center gap-1.5 shrink-0">
+        <div className="px-3 py-2 bg-white dark:bg-[#0A3D3B] border-t border-[#CFE4E3] dark:border-[#145250] overflow-x-auto no-scrollbar flex items-center gap-1.5 shrink-0">
           {QUICK_PROMPTS.map((qp, idx) => (
             <button
               key={idx}
               onClick={() => sendMessage(qp.query)}
               disabled={isLoading}
-              className="text-xs shrink-0 whitespace-nowrap px-3 py-1.5 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-800 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-emerald-300 border border-emerald-200/60 dark:border-slate-700 transition font-medium flex items-center gap-1 disabled:opacity-50"
+              className="text-xs shrink-0 whitespace-nowrap px-3.5 py-1.5 rounded-full bg-[#E7F1F1] hover:bg-[#D7F1EA] text-[#0A3D3B] dark:bg-[#062625] dark:hover:bg-[#0E7673]/30 dark:text-[#E7F1F1] border border-[#CFE4E3] dark:border-[#145250] transition font-bold flex items-center gap-1 disabled:opacity-50"
             >
               <span>{qp.label}</span>
-              <ChevronRight className="w-3 h-3 text-emerald-500" />
+              <ChevronRight className="w-3 h-3 text-[#0E7673] dark:text-[#38B794]" />
             </button>
           ))}
         </div>
 
         {/* Input Bar */}
-        <div className="p-3 sm:p-4 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 shrink-0">
+        <div className="p-3 sm:p-4 bg-white dark:bg-[#0A3D3B] border-t border-[#CFE4E3] dark:border-[#145250] shrink-0">
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -485,13 +485,13 @@ Je peux vous conseiller sur :
                 onKeyDown={handleKeyDown}
                 placeholder="Posez votre question (médicament, ordonnance, pharmacie de garde)..."
                 disabled={isLoading}
-                className="w-full pl-4 pr-10 py-3 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white dark:focus:bg-slate-900 transition"
+                className="w-full pl-4 pr-10 py-3 rounded-full bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] text-sm text-[#0A3D3B] dark:text-white placeholder:text-[#6EADAB] focus:outline-none focus:ring-2 focus:ring-[#0E7673] transition"
               />
               <button
                 type="button"
                 onClick={getUserLocation}
                 title="Actualiser la géolocalisation pour Google Maps"
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-emerald-600 transition"
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#6EADAB] hover:text-[#0E7673] transition"
               >
                 <MapPin className="w-4 h-4" />
               </button>
@@ -500,13 +500,13 @@ Je peux vous conseiller sur :
             <button
               type="submit"
               disabled={!input.trim() || isLoading}
-              className="w-12 h-12 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white flex items-center justify-center hover:from-emerald-700 hover:to-teal-700 disabled:opacity-40 disabled:cursor-not-allowed shadow-md transition shrink-0 active:scale-95"
+              className="w-12 h-12 rounded-full bg-[#0E7673] hover:bg-[#0A5A58] text-white flex items-center justify-center disabled:opacity-40 disabled:cursor-not-allowed shadow-sm transition shrink-0 active:scale-95"
               aria-label="Envoyer le message"
             >
               <Send className="w-5 h-5" />
             </button>
           </form>
-          <p className="text-[10px] text-slate-400 dark:text-slate-500 text-center mt-2">
+          <p className="text-[10px] text-[#6EADAB] text-center mt-2">
             L'IA fournit des conseils pharmaceutiques généraux et ne remplace pas une consultation médicale.
           </p>
         </div>

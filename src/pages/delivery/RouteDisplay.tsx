@@ -48,7 +48,7 @@ export function RouteDisplay({ origin, destination, onDuration }: {
            if (routes?.[0]) {
              const newPolylines = routes[0].createPolylines();
              newPolylines.forEach(p => {
-                 p.setOptions({ strokeColor: '#4f46e5', strokeWeight: 5 });
+                 p.setOptions({ strokeColor: '#0E7673', strokeWeight: 5 });
                  p.setMap(map);
              });
              polylinesRef.current = newPolylines;

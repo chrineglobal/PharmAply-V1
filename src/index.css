@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap');
 @import "leaflet/dist/leaflet.css";
 @import "tailwindcss";
 
@@ -13,9 +13,29 @@
 }
 
 @theme {
-  --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
-  --font-body: "Poppins", ui-sans-serif, system-ui, sans-serif;
-  --font-headline: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Comfortaa", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Comfortaa", "Segoe UI", system-ui, sans-serif;
+  --font-headline: "Comfortaa", "Segoe UI", system-ui, sans-serif;
+
+  /* Charte Graphique PharmAply v1.0 - Couleurs officielles */
+  --color-pharmaply-teal: #0E7673;
+  --color-pharmaply-teal-80: #3E918F;
+  --color-pharmaply-teal-60: #6EADAB;
+  --color-pharmaply-teal-40: #9FC8C7;
+  --color-pharmaply-teal-20: #CFE4E3;
+  --color-pharmaply-teal-10: #E7F1F1;
+
+  --color-pharmaply-green: #38B794;
+  --color-pharmaply-green-80: #60C5A9;
+  --color-pharmaply-green-60: #88D4BF;
+  --color-pharmaply-green-40: #AFE2D4;
+  --color-pharmaply-green-20: #D7F1EA;
+  --color-pharmaply-green-10: #EBF8F4;
+
+  --color-pharmaply-deep: #0A3D3B;
+  --color-pharmaply-dark-bg: #062625;
+  --color-pharmaply-dark-surface: #0A3D3B;
+
   --animate-fade-in: fadeIn 0.3s ease-out forwards;
   --animate-slide-up: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   --animate-shrink-x: shrinkX linear forwards;
@@ -39,30 +59,90 @@
   }
 }
 
+:root {
+  --app-primary-color: #0E7673;
+  --app-secondary-color: #38B794;
+  --app-deep-color: #0A3D3B;
+  --app-tint-10: #E7F1F1;
+  --app-tint-20: #CFE4E3;
+  --app-green-10: #EBF8F4;
+  --app-green-20: #D7F1EA;
+}
+
 .animate-laser {
   animation: laserScan 2.5s ease-in-out infinite;
 }
 
 @layer base {
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-headline);
+  html, body {
+    font-family: "Comfortaa", "Segoe UI", system-ui, sans-serif;
+    line-height: 1.55;
+    color: #0A3D3B;
+    background-color: #FFFFFF;
   }
+
+  .dark html,
+  html.dark body {
+    color: #E7F1F1;
+    background-color: #062625;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Comfortaa", "Segoe UI", system-ui, sans-serif;
+    letter-spacing: -0.01em;
+  }
+
+  /* Charte Graphique Section 10: Boutons officiels */
+  .btn-pharmaply-primary {
+    background-color: #0E7673;
+    color: #FFFFFF;
+    border-radius: 9999px;
+    font-weight: 700;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+  }
+  .btn-pharmaply-primary:hover {
+    background-color: #0A3D3B;
+  }
+
+  .btn-pharmaply-secondary {
+    background-color: #38B794;
+    color: #0A3D3B;
+    border-radius: 9999px;
+    font-weight: 700;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+  }
+  .btn-pharmaply-secondary:hover {
+    background-color: #60C5A9;
+  }
+
+  .btn-pharmaply-tertiary {
+    background-color: transparent;
+    color: #0E7673;
+    border: 2px solid #0E7673;
+    border-radius: 9999px;
+    font-weight: 700;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+  }
+  .btn-pharmaply-tertiary:hover {
+    background-color: #E7F1F1;
+  }
+
   ::-webkit-scrollbar {
-    width: 2px;
-    height: 2px;
+    width: 3px;
+    height: 3px;
   }
   ::-webkit-scrollbar-track {
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.08);
+    background: rgba(14, 118, 115, 0.18);
     border-radius: 10px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 0, 0, 0.15);
+    background: rgba(14, 118, 115, 0.35);
   }
   * {
     scrollbar-width: thin;
-    scrollbar-color: rgba(0, 0, 0, 0.08) transparent;
+    scrollbar-color: rgba(14, 118, 115, 0.18) transparent;
   }
 }

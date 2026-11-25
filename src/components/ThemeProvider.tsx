@@ -13,12 +13,12 @@ interface ThemeSettings {
 }
 
 const defaultTheme: ThemeSettings = {
-  primaryColor: '#194B4B',
-  secondaryColor: '#F59E0B',
-  logoUrl: '',
+  primaryColor: '#0E7673',
+  secondaryColor: '#38B794',
+  logoUrl: '/assets/aistudio/logo_pharmaply_trp_426c2760.png',
   defaultPharmacyLogo: '',
-  dashboardWelcomeText: 'Bienvenue sur votre espace santé',
-  dashboardSubtitleText: 'Retrouvez vos médicaments et services de santé en un clic.'
+  dashboardWelcomeText: 'Trouvez Commandez Recevez',
+  dashboardSubtitleText: 'Votre pharmacie, en quelques clics.'
 };
 
 const ThemeContext = createContext<ThemeSettings>(defaultTheme);
@@ -33,7 +33,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         const docRef = doc(db, 'settings', 'theme');
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-          setTheme({ ...defaultTheme, ...docSnap.data() });
+          const data = docSnap.data() as Partial<ThemeSettings>;
+          // Enforce official brand teal if legacy default was stored
+          const normalizedPrimary = (!data.primaryColor || data.primaryColor === '#194B4B' || data.primaryColor === '#1a3b8d' || data.primaryColor === '#4f46e5')
+            ? '#0E7673'
+            : data.primaryColor;
+          setTheme({ ...defaultTheme, ...data, primaryColor: normalizedPrimary });
           return;
         }
 
@@ -41,7 +46,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         const { data: supaSettings } = await supabase.from('settings').select('*').eq('key', 'theme').maybeSingle();
         if (supaSettings?.value) {
           const parsed = typeof supaSettings.value === 'string' ? JSON.parse(supaSettings.value) : supaSettings.value;
-          setTheme({ ...defaultTheme, ...parsed });
+          const normalizedPrimary = (!parsed.primaryColor || parsed.primaryColor === '#194B4B' || parsed.primaryColor === '#1a3b8d' || parsed.primaryColor === '#4f46e5')
+            ? '#0E7673'
+            : parsed.primaryColor;
+          setTheme({ ...defaultTheme, ...parsed, primaryColor: normalizedPrimary });
         }
       } catch (error) {
         console.warn('Theme fetch notice (using defaults):', error);
@@ -51,7 +59,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
-    const primary = theme.primaryColor || '#194B4B';
+    const primary = theme.primaryColor || '#0E7673';
+    const secondary = theme.secondaryColor || '#38B794';
     const styleId = 'dynamic-theme-styles';
     let styleEl = document.getElementById(styleId) as HTMLStyleElement;
     if (!styleEl) {
@@ -63,29 +72,28 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     styleEl.innerHTML = `
       :root {
         --app-primary-color: ${primary};
+        --app-secondary-color: ${secondary};
         --color-indigo-600: var(--app-primary-color);
         --color-indigo-500: var(--app-primary-color);
         --color-primary: var(--app-primary-color);
       }
       .bg-primary-app, 
       .bg-[var(--app-primary-color)], 
-      .bg-[#1a3b8d], 
-      .bg-[var(--app-primary-color)] { 
+      .bg-[#1a3b8d],
+      .bg-[#194B4B] { 
         background-color: var(--app-primary-color) !important; 
       }
       .text-primary-app, 
       .text-[var(--app-primary-color)], 
-      .text-[#1a3b8d], 
-      .text-[var(--app-primary-color)] { 
+      .text-[#1a3b8d],
+      .text-[#194B4B] { 
         color: var(--app-primary-color) !important; 
       }
       .border-primary-app, 
-      .border-[var(--app-primary-color)], 
       .border-[var(--app-primary-color)] { 
         border-color: var(--app-primary-color) !important; 
       }
       .fill-primary-app, 
-      .fill-[var(--app-primary-color)], 
       .fill-[var(--app-primary-color)] { 
         fill: var(--app-primary-color) !important; 
       }
@@ -97,7 +105,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         accent-color: var(--app-primary-color) !important;
       }
     `;
-  }, [theme.primaryColor]);
+  }, [theme.primaryColor, theme.secondaryColor]);
 
   return (
     <ThemeContext.Provider value={theme}>

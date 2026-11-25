@@ -90,14 +90,14 @@ export function DPMLDashboard() {
   }, []);
 
   return (
-    <div className="bg-white dark:bg-zinc-900 rounded-2xl shadow-sm border border-gray-100 dark:border-zinc-800 overflow-hidden">
-      <div className="px-6 py-5 border-b border-gray-100 dark:border-zinc-800 flex justify-between items-center bg-gray-50 dark:bg-zinc-800/50">
+    <div className="bg-white dark:bg-[#0A3D3B] rounded-2xl shadow-sm border border-[#CFE4E3] dark:border-[#145250] overflow-hidden">
+      <div className="px-6 py-5 border-b border-[#CFE4E3] dark:border-[#145250] flex justify-between items-center bg-[#F5FAFA] dark:bg-[#062625]">
         <div>
-          <h2 className="text-lg font-bold text-gray-900 dark:text-white flex items-center">
+          <h2 className="text-lg font-bold text-[#0A3D3B] dark:text-white flex items-center">
             <ShieldAlert className="w-5 h-5 mr-2 text-red-500" />
             Vigilance DPML
           </h2>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+          <p className="text-sm text-[#5C807F] dark:text-[#9FC8C7] mt-1">
             Registre officiel des alertes et retraits de lots du Ministère de la Santé
           </p>
         </div>
@@ -105,53 +105,53 @@ export function DPMLDashboard() {
       
       <div className="p-0">
         {loading ? (
-          <div className="p-8 text-center text-gray-500">Chargement...</div>
+          <div className="p-8 text-center text-[#5C807F] dark:text-[#9FC8C7]">Chargement...</div>
         ) : alerts.length === 0 ? (
           <div className="p-8 text-center">
-            <CheckCircle className="mx-auto h-12 w-12 text-green-500 mb-3" />
-            <p className="text-gray-500 dark:text-gray-400">Aucune alerte DPML enregistrée.</p>
+            <CheckCircle className="mx-auto h-12 w-12 text-[#0E7673] dark:text-[#38B794] mb-3" />
+            <p className="text-[#5C807F] dark:text-[#9FC8C7]">Aucune alerte DPML enregistrée.</p>
           </div>
         ) : (
-          <div className="divide-y divide-gray-100 dark:divide-zinc-800">
+          <div className="divide-y divide-[#CFE4E3] dark:divide-[#145250]">
             {alerts.map(alert => (
-              <div key={alert.id} className="p-6 hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-zinc-800/50 transition-colors">
+              <div key={alert.id} className="p-6 hover:bg-[#F5FAFA] dark:hover:bg-[#0E4A47] transition-colors">
                 <div className="flex justify-between items-start">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold ${
                          alert.statut === 'Actif' 
                            ? 'bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-400'
-                           : 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-400'
+                           : 'bg-[#D7F1EA] text-[#0A3D3B] dark:bg-[#0E4A47] dark:text-[#38B794]'
                        }`}>
                          {alert.statut}
                        </span>
-                       <span className="text-sm text-gray-500 dark:text-gray-400">
+                       <span className="text-sm text-[#5C807F] dark:text-[#9FC8C7]">
                          {new Date(alert.date_alerte).toLocaleDateString()}
                        </span>
                     </div>
-                    <h3 className="text-base font-semibold text-gray-900 dark:text-white">
+                    <h3 className="text-base font-semibold text-[#0A3D3B] dark:text-white">
                       {alert.titre}
                     </h3>
-                    <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
+                    <p className="mt-1 text-sm text-[#5C807F] dark:text-[#9FC8C7]">
                       {alert.description}
                     </p>
                     <div className="mt-3 grid grid-cols-2 gap-4">
                       <div>
-                        <span className="block text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Numéro de Lot</span>
-                        <span className="block text-sm text-gray-900 dark:text-white font-mono bg-gray-100 dark:bg-zinc-800 px-2 py-1 rounded inline-block mt-1">
+                        <span className="block text-xs font-medium text-[#5C807F] dark:text-[#9FC8C7] uppercase">Numéro de Lot</span>
+                        <span className="block text-sm text-[#0A3D3B] dark:text-white font-mono bg-[#E7F1F1] dark:bg-[#062625] px-2 py-1 rounded inline-block mt-1">
                           {alert.num_lot_concerne}
                         </span>
                       </div>
                       <div>
-                        <span className="block text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Cible</span>
-                        <span className="block text-sm text-gray-900 dark:text-white mt-1">
+                        <span className="block text-xs font-medium text-[#5C807F] dark:text-[#9FC8C7] uppercase">Cible</span>
+                        <span className="block text-sm text-[#0A3D3B] dark:text-white mt-1">
                           {alert.dci_concerne ? `DCI: ${alert.dci_concerne}` : `Médicament: ${alert.nom_commercial_concerne}`}
                         </span>
                       </div>
                     </div>
                   </div>
                   <div className="ml-6 flex-shrink-0">
-                    <span className="inline-flex items-center px-3 py-1 rounded-md text-xs font-bold bg-amber-100 text-amber-800 border border-amber-200 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-800">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-200 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-800">
                       {alert.action_requise}
                     </span>
                   </div>

@@ -35,45 +35,45 @@ export function AdminOrders() {
 
   const getStatusBadge = (status: string) => {
     switch (status) {
-      case 'pending': return <span className="px-2 py-1 bg-amber-50 text-amber-600 rounded-lg text-xs font-bold uppercase">{t('status_pending', 'Pending')}</span>;
-      case 'processing': return <span className="px-2 py-1 bg-blue-50 text-blue-600 rounded-lg text-xs font-bold uppercase">{t('status_processing', 'Processing')}</span>;
-      case 'out_for_delivery': return <span className="px-2 py-1 bg-purple-50 text-purple-600 rounded-lg text-xs font-bold uppercase">{t('status_out_for_delivery', 'Out for Delivery')}</span>;
-      case 'delivered': return <span className="px-2 py-1 bg-emerald-50 text-emerald-600 rounded-lg text-xs font-bold uppercase">{t('status_delivered', 'Delivered')}</span>;
-      case 'cancelled': return <span className="px-2 py-1 bg-red-50 text-red-600 rounded-lg text-xs font-bold uppercase">{t('status_cancelled', 'Cancelled')}</span>;
-      default: return <span className="px-2 py-1 bg-slate-50 text-slate-600 rounded-lg text-xs font-bold uppercase">{status}</span>;
+      case 'pending': return <span className="px-2.5 py-1 bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800 rounded-full text-xs font-bold uppercase">{t('status_pending', 'Pending')}</span>;
+      case 'processing': return <span className="px-2.5 py-1 bg-[#D7F1EA] dark:bg-[#0E4A47] text-[#0E7673] dark:text-[#38B794] border border-[#CFE4E3] dark:border-[#145250] rounded-full text-xs font-bold uppercase">{t('status_processing', 'Processing')}</span>;
+      case 'out_for_delivery': return <span className="px-2.5 py-1 bg-[#D7F1EA] dark:bg-[#0E4A47] text-[#0A3D3B] dark:text-[#38B794] border border-[#CFE4E3] dark:border-[#145250] rounded-full text-xs font-bold uppercase">{t('status_out_for_delivery', 'Out for Delivery')}</span>;
+      case 'delivered': return <span className="px-2.5 py-1 bg-[#38B794]/20 text-[#0E7673] dark:text-[#38B794] border border-[#38B794]/40 rounded-full text-xs font-bold uppercase">{t('status_delivered', 'Delivered')}</span>;
+      case 'cancelled': return <span className="px-2.5 py-1 bg-red-50 dark:bg-red-950/40 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900 rounded-full text-xs font-bold uppercase">{t('status_cancelled', 'Cancelled')}</span>;
+      default: return <span className="px-2.5 py-1 bg-[#E7F1F1] dark:bg-[#0E4A47] text-[#5C807F] dark:text-[#9FC8C7] rounded-full text-xs font-bold uppercase">{status}</span>;
     }
   };
 
   return (
-    <div className="flex-1 bg-slate-50 flex flex-col h-full overflow-hidden">
-      <div className="bg-white dark:bg-zinc-950 px-8 pt-6 pb-6 shadow-sm z-10 border-b border-gray-200 shrink-0 flex items-center justify-between">
+    <div className="flex-1 bg-[#F5FAFA] dark:bg-[#062625] flex flex-col h-full overflow-hidden">
+      <div className="bg-white dark:bg-[#0A3D3B] px-8 pt-6 pb-6 shadow-xs z-10 border-b border-[#CFE4E3] dark:border-[#145250] shrink-0 flex items-center justify-between">
          <div>
-             <h1 className="font-bold text-gray-900 dark:text-white text-2xl mb-1">{t('admin_orders', 'Orders')}</h1>
-             <p className="text-gray-500 text-sm">{t('admin_orders_desc', 'Monitor all platform deliveries')}</p>
+             <h1 className="font-bold text-[#0A3D3B] dark:text-white text-2xl mb-1">{t('admin_orders', 'Orders')}</h1>
+             <p className="text-[#5C807F] dark:text-[#9FC8C7] text-sm">{t('admin_orders_desc', 'Monitor all platform deliveries')}</p>
          </div>
       </div>
 
       <div className="flex-1 overflow-y-auto p-8 space-y-6">
           <div className="flex items-center justify-between">
              <div className="relative w-80">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#5C807F] dark:text-[#9FC8C7]" size={18} />
                 <input 
                   type="text" 
                   placeholder={t('search_order_id', 'Search order ID...')}
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="w-full bg-white dark:bg-zinc-950 border border-slate-200 py-2.5 pl-12 pr-4 rounded-xl text-sm focus:ring-2 focus:ring-teal-500 outline-none transition"
+                  className="w-full bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] py-2.5 pl-12 pr-4 rounded-full text-sm text-[#0A3D3B] dark:text-white placeholder:text-[#5C807F] dark:placeholder:text-[#9FC8C7] focus:border-[#0E7673] dark:focus:border-[#38B794] outline-none transition shadow-xs"
                 />
              </div>
           </div>
 
-          <div className="bg-white dark:bg-zinc-950 rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+          <div className="bg-white dark:bg-[#0A3D3B] rounded-3xl shadow-xs border border-[#CFE4E3] dark:border-[#145250] overflow-hidden">
              {loading ? (
-                <div className="p-8 text-center text-slate-500">{t('loading', 'Loading...')}</div>
+                <div className="p-8 text-center text-[#5C807F] dark:text-[#9FC8C7]">{t('loading', 'Loading...')}</div>
              ) : (
                 <div className="overflow-x-auto">
                    <table className="w-full text-sm text-left">
-                      <thead className="text-xs text-slate-500 bg-slate-50/50 border-b border-slate-100 uppercase mt-2">
+                      <thead className="text-xs text-[#5C807F] dark:text-[#9FC8C7] bg-[#F5FAFA] dark:bg-[#062625]/70 border-b border-[#CFE4E3] dark:border-[#145250] uppercase">
                          <tr>
                             <th className="py-4 px-6 font-semibold">{t('order_id', 'Order ID')}</th>
                             <th className="py-4 px-6 font-semibold">{t('date', 'Date')}</th>
@@ -82,27 +82,27 @@ export function AdminOrders() {
                             <th className="py-4 px-6 font-semibold text-right">{t('details', 'Details')}</th>
                          </tr>
                       </thead>
-                      <tbody className="divide-y divide-slate-100">
+                      <tbody className="divide-y divide-[#E7F1F1] dark:divide-[#145250]">
                          {filteredOrders.map((o) => {
                             const dateStr = parseDate(o.createdAt) ? parseDate(o.createdAt)!.toLocaleString() : "Unknown";
                             return (
-                               <tr key={o.id} className="hover:bg-slate-50 transition-colors">
-                                  <td className="py-4 px-6 font-mono font-medium text-[var(--app-primary-color)] block">
+                               <tr key={o.id} className="hover:bg-[#F5FAFA] dark:hover:bg-[#0E4A47]/60 transition-colors">
+                                  <td className="py-4 px-6 font-mono font-bold text-[#0E7673] dark:text-[#38B794] block">
                                      #{o.id.slice(0, 8)}...
                                   </td>
-                                  <td className="py-4 px-6 text-slate-500">
+                                  <td className="py-4 px-6 text-[#5C807F] dark:text-[#9FC8C7]">
                                     <div className="flex items-center gap-1.5">
                                       <Calendar size={14} /> {dateStr}
                                     </div>
                                   </td>
-                                  <td className="py-4 px-6 font-bold text-slate-700">
+                                  <td className="py-4 px-6 font-bold text-[#0A3D3B] dark:text-white tabular-nums">
                                      {formatCurrency(Number(o.total || 0))}
                                   </td>
                                   <td className="py-4 px-6">
                                      {getStatusBadge(o.status)}
                                   </td>
                                   <td className="py-4 px-6 text-right">
-                                     <button className="text-slate-400 hover:text-[var(--app-primary-color)] p-1.5 transition">
+                                     <button className="text-[#5C807F] dark:text-[#9FC8C7] hover:text-[#0E7673] dark:hover:text-[#38B794] p-1.5 transition">
                                         <ExternalLink size={18} />
                                      </button>
                                   </td>
@@ -111,7 +111,7 @@ export function AdminOrders() {
                          })}
                          {filteredOrders.length === 0 && (
                            <tr>
-                              <td colSpan={5} className="py-8 text-center text-slate-500">{t('no_orders', 'No orders found.')}</td>
+                              <td colSpan={5} className="py-8 text-center text-[#5C807F] dark:text-[#9FC8C7]">{t('no_orders', 'No orders found.')}</td>
                            </tr>
                          )}
                       </tbody>

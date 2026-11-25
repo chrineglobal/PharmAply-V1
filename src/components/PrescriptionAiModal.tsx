@@ -61,28 +61,28 @@ export const PrescriptionAiModal: React.FC<PrescriptionAiModalProps> = ({
       case 'Liste_1':
         return 'bg-amber-500 text-white border-amber-600';
       case 'Liste_2':
-        return 'bg-blue-600 text-white border-blue-700';
+        return 'bg-[#0E7673] text-white border-[#0A5A58]';
       default:
-        return 'bg-emerald-600 text-white border-emerald-700';
+        return 'bg-[#D7F1EA] text-[#0A3D3B] border-[#38B794]';
     }
   };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="bg-white dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800 rounded-3xl w-full max-w-4xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+      <div className="bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] rounded-3xl w-full max-w-4xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
         
         {/* Header */}
-        <div className="px-6 py-4 bg-gradient-to-r from-[#194B4B] to-[#0f2e2e] text-white flex items-center justify-between shrink-0">
+        <div className="px-6 py-4 bg-[#0E7673] text-white flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-white dark:bg-zinc-950/10 flex items-center justify-center backdrop-blur-md">
-              <ShieldCheck className="text-yellow-400" size={24} />
+            <div className="w-10 h-10 rounded-2xl bg-white/15 flex items-center justify-center backdrop-blur-md">
+              <ShieldCheck className="text-[#38B794]" size={24} />
             </div>
             <div>
               <h2 className="text-lg font-bold">Audit IA & Conformité DPML (Gemini 1.5 Pro)</h2>
-              <p className="text-xs text-emerald-200">Validation pharmaceutique & contrôle des substances réglementées</p>
+              <p className="text-xs text-[#D7F1EA]">Validation pharmaceutique & contrôle des substances réglementées</p>
             </div>
           </div>
-          <button onClick={onClose} className="w-8 h-8 rounded-full bg-white dark:bg-zinc-950/10 hover:bg-white dark:bg-zinc-950/20 flex items-center justify-center text-white transition-colors">
+          <button onClick={onClose} className="w-8 h-8 rounded-full bg-white/15 hover:bg-white/25 flex items-center justify-center text-white transition-colors">
             <X size={18} />
           </button>
         </div>
@@ -107,14 +107,14 @@ export const PrescriptionAiModal: React.FC<PrescriptionAiModalProps> = ({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
             
             {/* Colonne Ordonnance Visuelle */}
-            <div className="lg:col-span-4 bg-gray-50 dark:bg-zinc-800/50 rounded-2xl p-4 border border-gray-100 dark:border-zinc-800 flex flex-col items-center">
-              <span className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">Document Source</span>
+            <div className="lg:col-span-4 bg-[#F5FAFA] dark:bg-[#062625] rounded-2xl p-4 border border-[#CFE4E3] dark:border-[#145250] flex flex-col items-center">
+              <span className="text-xs font-bold text-[#5C807F] dark:text-[#9FC8C7] uppercase tracking-wider mb-3">Document Source</span>
               {prescriptionUrl ? (
-                <div className="w-full rounded-xl overflow-hidden border border-gray-200 dark:border-zinc-700 max-h-72 flex items-center justify-center bg-black/5">
+                <div className="w-full rounded-xl overflow-hidden border border-[#CFE4E3] dark:border-[#145250] max-h-72 flex items-center justify-center bg-black/5">
                   <img src={prescriptionUrl} alt="Ordonnance" className="w-full h-full object-contain hover:scale-105 transition-transform duration-300 cursor-pointer" onClick={() => window.open(prescriptionUrl, '_blank')} />
                 </div>
               ) : (
-                <div className="w-full h-48 rounded-xl bg-gray-200 dark:bg-zinc-700 flex flex-col items-center justify-center text-gray-400 text-xs">
+                <div className="w-full h-48 rounded-xl bg-[#E7F1F1] dark:bg-[#0E4A47] flex flex-col items-center justify-center text-[#5C807F] dark:text-[#9FC8C7] text-xs">
                   <FileText size={32} className="mb-2" />
                   <span>Aucun visuel direct</span>
                 </div>
@@ -122,17 +122,17 @@ export const PrescriptionAiModal: React.FC<PrescriptionAiModalProps> = ({
 
               {/* Métadonnées Médecin / Patient */}
               <div className="w-full mt-4 space-y-2 text-xs">
-                <div className="flex justify-between py-1 border-b border-gray-200 dark:border-zinc-700">
-                  <span className="text-gray-500">Médecin prescripteur:</span>
-                  <span className="font-bold text-gray-900 dark:text-white">{scanData?.doctor_name || 'Non détecté'}</span>
+                <div className="flex justify-between py-1 border-b border-[#CFE4E3] dark:border-[#145250]">
+                  <span className="text-[#5C807F] dark:text-[#9FC8C7]">Médecin prescripteur:</span>
+                  <span className="font-bold text-[#0A3D3B] dark:text-white">{scanData?.doctor_name || 'Non détecté'}</span>
                 </div>
-                <div className="flex justify-between py-1 border-b border-gray-200 dark:border-zinc-700">
-                  <span className="text-gray-500">Patient:</span>
-                  <span className="font-bold text-gray-900 dark:text-white">{scanData?.patient_name || 'Non détecté'}</span>
+                <div className="flex justify-between py-1 border-b border-[#CFE4E3] dark:border-[#145250]">
+                  <span className="text-[#5C807F] dark:text-[#9FC8C7]">Patient:</span>
+                  <span className="font-bold text-[#0A3D3B] dark:text-white">{scanData?.patient_name || 'Non détecté'}</span>
                 </div>
-                <div className="flex justify-between py-1 border-b border-gray-200 dark:border-zinc-700">
-                  <span className="text-gray-500">Date ordonnance:</span>
-                  <span className="font-bold text-gray-900 dark:text-white">{scanData?.date || 'Récente'}</span>
+                <div className="flex justify-between py-1 border-b border-[#CFE4E3] dark:border-[#145250]">
+                  <span className="text-[#5C807F] dark:text-[#9FC8C7]">Date ordonnance:</span>
+                  <span className="font-bold text-[#0A3D3B] dark:text-white">{scanData?.date || 'Récente'}</span>
                 </div>
               </div>
             </div>
@@ -140,11 +140,11 @@ export const PrescriptionAiModal: React.FC<PrescriptionAiModalProps> = ({
             {/* Colonne Médicaments Détectés */}
             <div className="lg:col-span-8 space-y-4">
               <div className="flex items-center justify-between">
-                <h3 className="font-bold text-gray-900 dark:text-white text-sm flex items-center gap-2">
-                  <Pill size={16} className="text-[var(--app-primary-color)] dark:text-teal-400" />
+                <h3 className="font-bold text-[#0A3D3B] dark:text-white text-sm flex items-center gap-2">
+                  <Pill size={16} className="text-[#0E7673] dark:text-[#38B794]" />
                   Médicaments Détectés & Classifications DPML
                 </h3>
-                <span className="text-xs text-gray-500">
+                <span className="text-xs text-[#5C807F] dark:text-[#9FC8C7]">
                   {scanData?.medications?.length || 0} molécule(s) identifiée(s)
                 </span>
               </div>
@@ -152,11 +152,11 @@ export const PrescriptionAiModal: React.FC<PrescriptionAiModalProps> = ({
               {scanData?.medications && scanData.medications.length > 0 ? (
                 <div className="space-y-3">
                   {scanData.medications.map((med, idx) => (
-                    <div key={idx} className="bg-gray-50 dark:bg-zinc-800/70 border border-gray-200 dark:border-zinc-700/80 rounded-2xl p-4 space-y-2">
+                    <div key={idx} className="bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] rounded-2xl p-4 space-y-2">
                       <div className="flex items-start justify-between gap-3">
                         <div>
-                          <h4 className="font-bold text-gray-900 dark:text-white text-sm">{med.name}</h4>
-                          <p className="text-xs text-gray-500 mt-0.5">{med.dosage || 'Dosage usuel'} • {med.form || 'Comprimé'} • Qté: {med.quantity || 1}</p>
+                          <h4 className="font-bold text-[#0A3D3B] dark:text-white text-sm">{med.name}</h4>
+                          <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7] mt-0.5">{med.dosage || 'Dosage usuel'} • {med.form || 'Comprimé'} • Qté: {med.quantity || 1}</p>
                         </div>
                         <span className={`text-[10px] font-extrabold px-2.5 py-1 rounded-full border shadow-sm ${getBadgeClass(med.dpml_classification)}`}>
                           {med.dpml_classification || 'Liste_1'}
@@ -164,7 +164,7 @@ export const PrescriptionAiModal: React.FC<PrescriptionAiModalProps> = ({
                       </div>
 
                       {med.frequency && (
-                        <div className="text-xs text-[var(--app-primary-color)] dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/40 p-2 rounded-xl">
+                        <div className="text-xs text-[#0A3D3B] dark:text-[#D7F1EA] bg-[#E7F1F1] dark:bg-[#0E4A47] p-2.5 rounded-xl border border-[#CFE4E3] dark:border-[#145250]">
                           <strong>Posologie :</strong> {med.frequency} {med.duration ? `(${med.duration})` : ''}
                         </div>
                       )}
@@ -179,16 +179,16 @@ export const PrescriptionAiModal: React.FC<PrescriptionAiModalProps> = ({
                   ))}
                 </div>
               ) : (
-                <div className="p-8 text-center bg-gray-50 dark:bg-zinc-800/40 rounded-2xl border border-gray-100 dark:border-zinc-800 text-xs text-gray-500">
+                <div className="p-8 text-center bg-[#F5FAFA] dark:bg-[#062625] rounded-2xl border border-[#CFE4E3] dark:border-[#145250] text-xs text-[#5C807F] dark:text-[#9FC8C7]">
                   Aucun médicament extrait automatiquement. Veuillez vérifier le document manuellement.
                 </div>
               )}
 
               {/* Résumé de conformité DPML */}
               {scanData?.dpml_safety_checks && (
-                <div className="p-4 bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/50 rounded-2xl text-xs text-emerald-900 dark:text-emerald-300 space-y-1">
-                  <span className="font-bold block flex items-center gap-1.5">
-                    <CheckCircle2 size={15} className="text-emerald-600" />
+                <div className="p-4 bg-[#D7F1EA]/70 dark:bg-[#0E4A47] border border-[#38B794]/50 rounded-2xl text-xs text-[#0A3D3B] dark:text-[#D7F1EA] space-y-1">
+                  <span className="font-bold flex items-center gap-1.5">
+                    <CheckCircle2 size={15} className="text-[#0E7673] dark:text-[#38B794]" />
                     Contrôle de validité DPML
                   </span>
                   <p>{scanData.dpml_safety_checks.compliance_notes || "Ordonnance conforme aux exigences réglementaires de délivrance."}</p>
@@ -200,10 +200,10 @@ export const PrescriptionAiModal: React.FC<PrescriptionAiModalProps> = ({
         </div>
 
         {/* Footer Actions */}
-        <div className="px-6 py-4 bg-gray-50 dark:bg-zinc-800/80 border-t border-gray-100 dark:border-zinc-800 flex items-center justify-between shrink-0">
+        <div className="px-6 py-4 bg-[#F5FAFA] dark:bg-[#062625] border-t border-[#CFE4E3] dark:border-[#145250] flex items-center justify-between shrink-0">
           <button
             onClick={onClose}
-            className="px-5 py-2.5 rounded-xl border border-gray-300 dark:border-zinc-700 text-gray-700 dark:text-gray-300 text-xs font-bold hover:bg-gray-100 dark:bg-zinc-800 dark:hover:bg-zinc-700 transition"
+            className="px-5 py-2.5 rounded-full border border-[#CFE4E3] dark:border-[#145250] text-[#0A3D3B] dark:text-white text-xs font-bold hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47] transition"
           >
             Fermer
           </button>
@@ -213,7 +213,7 @@ export const PrescriptionAiModal: React.FC<PrescriptionAiModalProps> = ({
               <button
                 disabled={isProcessing}
                 onClick={onReject}
-                className="px-5 py-2.5 rounded-xl border border-red-300 bg-red-50 text-red-700 hover:bg-red-100 text-xs font-bold transition disabled:opacity-50"
+                className="px-5 py-2.5 rounded-full border border-red-300 bg-red-50 text-red-700 hover:bg-red-100 text-xs font-bold transition disabled:opacity-50"
               >
                 Refuser l'ordonnance
               </button>
@@ -222,7 +222,7 @@ export const PrescriptionAiModal: React.FC<PrescriptionAiModalProps> = ({
               <button
                 disabled={isProcessing}
                 onClick={onApprove}
-                className="px-6 py-2.5 rounded-xl bg-[var(--app-primary-color)] hover:bg-[#123838] text-white text-xs font-bold transition shadow-sm disabled:opacity-50 flex items-center gap-2"
+                className="px-6 py-2.5 rounded-full bg-[#0E7673] hover:bg-[#0A5A58] text-white text-xs font-bold transition shadow-sm disabled:opacity-50 flex items-center gap-2"
               >
                 <CheckCircle2 size={16} />
                 Valider & Approuver la délivrance

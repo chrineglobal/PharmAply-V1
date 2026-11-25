@@ -63,7 +63,7 @@ export function generateInvoiceHtml(order: InvoiceData): string {
           right: 0;
           width: 280px;
           height: 140px;
-          background: linear-gradient(135deg, #2563eb15 0%, #194b4b25 100%);
+          background: linear-gradient(135deg, #38B79425 0%, #0E767325 100%);
           border-bottom-left-radius: 120px;
           z-index: 0;
         }
@@ -81,7 +81,7 @@ export function generateInvoiceHtml(order: InvoiceData): string {
         .logo-icon {
           width: 42px;
           height: 42px;
-          background-color: #194B4B;
+          background-color: #0E7673;
           border-radius: 10px;
           display: flex;
           align-items: center;
@@ -93,7 +93,7 @@ export function generateInvoiceHtml(order: InvoiceData): string {
         .brand-name {
           font-size: 22px;
           font-weight: 800;
-          color: #194B4B;
+          color: #0E7673;
           letter-spacing: -0.5px;
         }
         .brand-sub {
@@ -153,7 +153,7 @@ export function generateInvoiceHtml(order: InvoiceData): string {
           border-collapse: collapse;
         }
         thead th {
-          background-color: #194B4B;
+          background-color: #0E7673;
           color: #ffffff;
           font-size: 12px;
           font-weight: 700;
@@ -221,7 +221,7 @@ export function generateInvoiceHtml(order: InvoiceData): string {
           color: #475569;
         }
         .summary-row.total-row {
-          background-color: #194B4B;
+          background-color: #0E7673;
           color: #ffffff;
           font-weight: 800;
           font-size: 16px;
@@ -245,22 +245,22 @@ export function generateInvoiceHtml(order: InvoiceData): string {
           font-weight: 600;
         }
         .footer-pills {
-          background-color: #f1f5f9;
+          background-color: #E7F1F1;
           padding: 16px 48px;
           display: flex;
           justify-content: center;
           align-items: center;
           gap: 16px;
-          border-top: 1px solid #e2e8f0;
+          border-top: 1px solid #CFE4E3;
         }
         .pill {
           background: #ffffff;
-          border: 1px solid #cbd5e1;
+          border: 1px solid #CFE4E3;
           padding: 6px 16px;
           border-radius: 20px;
           font-size: 11px;
           font-weight: 600;
-          color: #194B4B;
+          color: #0E7673;
           display: flex;
           align-items: center;
           gap: 6px;

@@ -13,7 +13,7 @@ export function BottomNav({ role }: BottomNavProps) {
   const { t } = useTranslation();
   const { cartCount } = useCart();
   const theme = useTheme();
-  const primaryColor = theme.primaryColor || '#194B4B';
+  const primaryColor = theme.primaryColor || '#0E7673';
 
   const patientLinks = [
     { to: "/patient", icon: Home, label: t('nav.home', 'Accueil'), badge: 0 },
@@ -55,7 +55,7 @@ export function BottomNav({ role }: BottomNavProps) {
       : adminLinks;
 
   return (
-    <div className="h-[4.5rem] bg-white dark:bg-zinc-950/95 dark:bg-zinc-950/95 backdrop-blur-xl border-t border-gray-100 dark:border-zinc-800 flex items-center justify-around px-2 sm:px-6 z-40 pb-[env(safe-area-inset-bottom)] transition-colors shrink-0 shadow-sm relative">
+    <div className="h-[4.5rem] bg-white/95 dark:bg-[#0A3D3B]/95 backdrop-blur-xl border-t border-[#CFE4E3] dark:border-[#145250] flex items-center justify-around px-2 sm:px-6 z-40 pb-[env(safe-area-inset-bottom)] transition-colors shrink-0 shadow-sm relative">
       {links.map((link) => {
         const Icon = link.icon;
         const isCenter = (link as any).isCenter;
@@ -69,16 +69,16 @@ export function BottomNav({ role }: BottomNavProps) {
             >
               <div className="absolute -top-6 flex items-center justify-center">
                 <div 
-                  className="rounded-full w-14 h-14 flex items-center justify-center text-white transition-all active:scale-95 border-4 border-white dark:border-zinc-900 shadow-md"
+                  className="rounded-full w-14 h-14 flex items-center justify-center text-white transition-all active:scale-95 border-4 border-white dark:border-[#062625] shadow-md"
                   style={{
                     backgroundColor: primaryColor,
-                    boxShadow: `0 8px 20px ${primaryColor}40`
+                    boxShadow: `0 8px 20px ${primaryColor}45`
                   }}
                 >
                   <Icon size={24} strokeWidth={2.5} />
                 </div>
               </div>
-              <span className="font-headline text-[10px] font-bold text-gray-500 dark:text-zinc-400 mt-6 group-hover:text-gray-700 dark:group-hover:text-zinc-200 transition-colors">
+              <span className="font-headline text-[10px] font-bold text-[#0A3D3B] dark:text-[#CFE4E3] mt-6 group-hover:text-[#0E7673] transition-colors">
                 {link.label}
               </span>
             </NavLink>
@@ -94,35 +94,27 @@ export function BottomNav({ role }: BottomNavProps) {
               cn(
                 "group relative flex flex-col items-center justify-center w-16 h-full transition-all duration-300",
                 isActive 
-                  ? "font-bold" 
-                  : "text-gray-400 dark:text-zinc-500 hover:text-gray-600 dark:hover:text-zinc-300"
+                  ? "font-bold text-[#0E7673] dark:text-[#38B794]" 
+                  : "text-[#6EADAB] dark:text-[#6EADAB] hover:text-[#0E7673] dark:hover:text-[#E7F1F1]"
               )
             }
-            style={({ isActive }) => ({
-              color: isActive ? primaryColor : undefined
-            })}
           >
             {({ isActive }) => (
               <>
                 <div 
                   className={cn(
-                    "flex items-center justify-center transition-all duration-300 rounded-2xl relative z-10",
-                    isActive ? "h-8 w-14 mb-1" : "h-8 w-8 mb-0.5 group-hover:bg-gray-50 dark:bg-zinc-900 dark:group-hover:bg-zinc-800"
+                    "flex items-center justify-center transition-all duration-300 rounded-full relative z-10",
+                    isActive ? "h-8 w-14 mb-1 bg-[#E7F1F1] dark:bg-[#062625]" : "h-8 w-8 mb-0.5 group-hover:bg-[#E7F1F1]/60 dark:group-hover:bg-[#062625]/60"
                   )}
-                  style={{
-                    backgroundColor: isActive ? `${primaryColor}15` : undefined
-                  }}
                 >
                    <Icon 
                      size={20} 
                      strokeWidth={isActive ? 2.5 : 2} 
-                     className={cn("transition-all duration-300", isActive ? "scale-110" : "scale-100")} 
-                     style={{ color: isActive ? primaryColor : undefined }}
+                     className={cn("transition-all duration-300", isActive ? "scale-105 text-[#0E7673] dark:text-[#38B794]" : "scale-100")} 
                    />
                    {(link as any).badge > 0 && (
                      <span 
-                       className="absolute -top-1 -right-1 text-white text-[10px] font-bold px-1.5 py-0.5 min-w-[18px] text-center rounded-full"
-                       style={{ backgroundColor: '#EF4444' }}
+                       className="absolute -top-1 -right-1 text-white text-[10px] font-bold px-1.5 py-0.5 min-w-[18px] text-center rounded-full bg-[#0E7673] border border-white dark:border-[#0A3D3B]"
                      >
                        {(link as any).badge}
                      </span>
@@ -131,9 +123,8 @@ export function BottomNav({ role }: BottomNavProps) {
                 <span 
                   className={cn(
                     "font-headline transition-all duration-300", 
-                    isActive ? "text-[11px] font-bold tracking-wide" : "text-[10px] font-medium"
+                    isActive ? "text-[11px] font-bold tracking-wide text-[#0E7673] dark:text-[#38B794]" : "text-[10px] font-medium"
                   )}
-                  style={{ color: isActive ? primaryColor : undefined }}
                 >
                   {link.label}
                 </span>

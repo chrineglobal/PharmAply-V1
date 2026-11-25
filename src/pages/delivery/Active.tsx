@@ -46,10 +46,10 @@ const DriverMarkerUI = () => (
     position: 'relative', width: 48, height: 48, display: 'flex', alignItems: 'center', justifyContent: 'center'
   }}>
     <div style={{
-      position: 'absolute', inset: -6, background: 'rgba(25, 75, 75, 0.25)', borderRadius: '50%', animation: 'ping 2s cubic-bezier(0, 0, 0.2, 1) infinite'
+      position: 'absolute', inset: -6, background: 'rgba(14, 118, 115, 0.25)', borderRadius: '50%', animation: 'ping 2s cubic-bezier(0, 0, 0.2, 1) infinite'
     }}></div>
     <div style={{
-      width: 42, height: 42, background: '#194B4B', border: '3.5px solid #ffffff', borderRadius: '50%',
+      width: 42, height: 42, background: '#0E7673', border: '3.5px solid #ffffff', borderRadius: '50%',
       boxShadow: '0 8px 20px rgba(0,0,0,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white'
     }}>
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -61,8 +61,8 @@ const DriverMarkerUI = () => (
 
 const PharmacyMarkerUI = () => (
   <div style={{
-    width: 46, height: 46, background: '#0d9488', border: '3.5px solid #ffffff', borderRadius: '50%',
-    boxShadow: '0 8px 20px rgba(13,148,136,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white'
+    width: 46, height: 46, background: '#38B794', border: '3.5px solid #ffffff', borderRadius: '50%',
+    boxShadow: '0 8px 20px rgba(56,183,148,0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0A3D3B'
   }}>
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
       <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
@@ -382,26 +382,26 @@ export function DeliveryActive() {
 
   if (loading) {
     return (
-      <div className="flex-1 flex flex-col items-center justify-center bg-white dark:bg-zinc-950 text-gray-900 dark:text-white p-8 text-center">
-        <Loader2 size={36} className="animate-spin text-teal-400 mb-3" />
-        <span className="font-medium text-sm text-gray-500 dark:text-gray-600 dark:text-slate-300">Initialisation de la navigation GPS...</span>
+      <div className="flex-1 flex flex-col items-center justify-center bg-[#F5FAFA] dark:bg-[#062625] text-[#0A3D3B] dark:text-white p-8 text-center">
+        <Loader2 size={36} className="animate-spin text-[#0E7673] dark:text-[#38B794] mb-3" />
+        <span className="font-medium text-sm text-[#5C807F] dark:text-[#9FC8C7]">Initialisation de la navigation GPS...</span>
       </div>
     );
   }
 
   if (!order) {
     return (
-      <div className="flex-1 flex flex-col items-center justify-center bg-gray-50 dark:bg-black p-6 text-center">
-        <div className="w-16 h-16 bg-gray-100 dark:bg-zinc-800 rounded-full flex items-center justify-center text-gray-400 mb-4">
+      <div className="flex-1 flex flex-col items-center justify-center bg-[#F5FAFA] dark:bg-[#062625] p-6 text-center">
+        <div className="w-16 h-16 bg-[#E7F1F1] dark:bg-[#0A3D3B] rounded-full flex items-center justify-center text-[#0E7673] dark:text-[#38B794] mb-4 border border-[#CFE4E3] dark:border-[#145250]">
           <Package size={28} />
         </div>
-        <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Aucune livraison active</h2>
-        <p className="text-sm text-gray-500 dark:text-gray-400 max-w-xs mb-6">
+        <h2 className="text-lg font-bold text-[#0A3D3B] dark:text-white mb-2">Aucune livraison active</h2>
+        <p className="text-sm text-[#5C807F] dark:text-[#9FC8C7] max-w-xs mb-6">
           Vous n'avez aucune course en cours d'exécution pour le moment.
         </p>
         <button
           onClick={() => navigate('/delivery')}
-          className="px-6 py-3 bg-[var(--app-primary-color)] text-gray-900 dark:text-white rounded-xl font-bold hover:opacity-90 transition"
+          className="px-6 py-3 bg-[#0E7673] hover:bg-[#0A5A58] text-white rounded-full font-bold transition shadow-sm"
         >
           Retour aux courses
         </button>
@@ -439,10 +439,10 @@ export function DeliveryActive() {
   };
 
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-slate-950 flex flex-col">
+    <div className="relative w-full h-screen overflow-hidden bg-[#062625] flex flex-col">
       
       {/* 1. FULLSCREEN MAP CANVAS / FALLBACK */}
-      <div className="absolute inset-0 z-0 bg-slate-950">
+      <div className="absolute inset-0 z-0 bg-[#062625]">
         {mapsAvailable && mapsApiKey ? (
           <APIProvider 
             apiKey={mapsApiKey}
@@ -480,14 +480,14 @@ export function DeliveryActive() {
                 {/* Outer stroke casing */}
                 <Polyline
                   path={routeCoordinates.map((c: any) => ({lat: c[0], lng: c[1]}))}
-                  strokeColor="#0f172a"
+                  strokeColor="#0A3D3B"
                   strokeWeight={8}
                   strokeOpacity={0.4}
                 />
                 {/* Main colored navigation polyline */}
                 <Polyline
                   path={routeCoordinates.map((c: any) => ({lat: c[0], lng: c[1]}))}
-                  strokeColor={isPharmacyStep ? "#0d9488" : "#194B4B"}
+                  strokeColor={isPharmacyStep ? "#38B794" : "#0E7673"}
                   strokeWeight={5}
                   strokeOpacity={0.95}
                 />
@@ -497,7 +497,7 @@ export function DeliveryActive() {
             {routeCoordinates.length === 0 && (
               <Polyline
                 path={[{lat: driverPos[0], lng: driverPos[1]}, {lat: activeTargetPos[0], lng: activeTargetPos[1]}]}
-                strokeColor={isPharmacyStep ? "#0d9488" : "#194B4B"}
+                strokeColor={isPharmacyStep ? "#38B794" : "#0E7673"}
                 strokeWeight={5}
                 strokeOpacity={0.85}
               />
@@ -505,31 +505,31 @@ export function DeliveryActive() {
           </Map>
           </APIProvider>
         ) : (
-          <div className="w-full h-full flex flex-col items-center justify-center p-8 text-center relative overflow-hidden bg-slate-950">
-            <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#14b8a6_1px,transparent_1px)] [background-size:24px_24px]"></div>
+          <div className="w-full h-full flex flex-col items-center justify-center p-8 text-center relative overflow-hidden bg-[#062625]">
+            <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#38B794_1px,transparent_1px)] [background-size:24px_24px]"></div>
             <div className="relative z-10 max-w-sm space-y-6">
-              <div className="w-20 h-20 mx-auto rounded-full bg-teal-500/10 border border-teal-500/30 flex items-center justify-center text-teal-400 shadow-2xl relative">
-                <Navigation size={36} className="text-teal-400 transform rotate-45 animate-pulse" />
-                <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-emerald-500 border-2 border-slate-950 flex items-center justify-center text-[10px] font-black text-slate-950">
+              <div className="w-20 h-20 mx-auto rounded-full bg-[#0E7673]/25 border border-[#38B794]/40 flex items-center justify-center text-[#38B794] shadow-2xl relative">
+                <Navigation size={36} className="text-[#38B794] transform rotate-45 animate-pulse" />
+                <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-[#38B794] border-2 border-[#062625] flex items-center justify-center text-[10px] font-black text-[#0A3D3B]">
                   GPS
                 </div>
               </div>
               <div className="space-y-2">
                 <h3 className="text-xl font-bold text-white tracking-wide">Mode Navigation Active</h3>
-                <p className="text-sm font-semibold text-teal-300">
+                <p className="text-sm font-semibold text-[#D7F1EA]">
                   {isPharmacyStep ? "Étape 1 : Vers l'Officine" : "Étape 2 : Livraison Patient"}
                 </p>
-                <p className="text-xs text-slate-400 max-w-xs mx-auto">
+                <p className="text-xs text-[#9FC8C7] max-w-xs mx-auto">
                   Destination : {targetName} ({targetAddress || 'Douala'})
                 </p>
               </div>
               <div className="flex items-center justify-center gap-4 py-2">
-                <div className="px-4 py-2 rounded-2xl bg-slate-900 border border-slate-800 text-center">
-                  <span className="text-[10px] text-slate-400 uppercase font-semibold block">Distance</span>
-                  <span className="text-base font-bold text-teal-400">{distance ? `${distance.toFixed(1)} km` : (routeDistanceText || '--')}</span>
+                <div className="px-4 py-2 rounded-2xl bg-[#0A3D3B] border border-[#145250] text-center">
+                  <span className="text-[10px] text-[#9FC8C7] uppercase font-semibold block">Distance</span>
+                  <span className="text-base font-bold text-[#38B794]">{distance ? `${distance.toFixed(1)} km` : (routeDistanceText || '--')}</span>
                 </div>
-                <div className="px-4 py-2 rounded-2xl bg-slate-900 border border-slate-800 text-center">
-                  <span className="text-[10px] text-slate-400 uppercase font-semibold block">Temps estimé</span>
+                <div className="px-4 py-2 rounded-2xl bg-[#0A3D3B] border border-[#145250] text-center">
+                  <span className="text-[10px] text-[#9FC8C7] uppercase font-semibold block">Temps estimé</span>
                   <span className="text-base font-bold text-amber-400">{eta ? `${eta} min` : (routeEtaMins ? `${routeEtaMins} min` : '--')}</span>
                 </div>
               </div>
@@ -542,11 +542,11 @@ export function DeliveryActive() {
       <div className="absolute top-4 left-4 right-4 z-10 flex flex-col gap-3 pointer-events-none">
         
         {/* Navigation HUD Banner */}
-        <div className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-md text-gray-900 dark:text-white p-3 sm:p-4 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 pointer-events-auto flex items-center justify-between gap-2">
+        <div className="bg-white/95 dark:bg-[#0A3D3B]/95 backdrop-blur-md text-[#0A3D3B] dark:text-white p-3 sm:p-4 rounded-2xl shadow-2xl border border-[#CFE4E3] dark:border-[#145250] pointer-events-auto flex items-center justify-between gap-2">
           <div className="flex items-center gap-2.5 min-w-0 flex-1">
             <button 
               onClick={() => navigate('/delivery')} 
-              className="w-10 h-10 shrink-0 rounded-full bg-gray-100 dark:bg-slate-800 flex items-center justify-center text-gray-900 dark:text-white hover:bg-gray-200 dark:bg-slate-700 transition"
+              className="w-10 h-10 shrink-0 rounded-full bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] flex items-center justify-center text-[#0A3D3B] dark:text-white hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47] transition"
               title="Retour"
             >
               <ArrowLeft size={20} />
@@ -554,23 +554,23 @@ export function DeliveryActive() {
             
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2">
-                <span className={`w-2.5 h-2.5 rounded-full ${isPharmacyStep ? 'bg-teal-400' : 'bg-amber-400'} animate-ping shrink-0`} />
-                <span className="text-[11px] font-bold uppercase tracking-wider text-gray-600 dark:text-slate-300 truncate">
+                <span className={`w-2.5 h-2.5 rounded-full ${isPharmacyStep ? 'bg-[#38B794]' : 'bg-amber-400'} animate-ping shrink-0`} />
+                <span className="text-[11px] font-bold uppercase tracking-wider text-[#5C807F] dark:text-[#9FC8C7] truncate">
                   {isPharmacyStep ? 'Étape 1 : Pharmacie' : 'Étape 2 : Client'}
                 </span>
               </div>
-              <p className="font-black text-gray-900 dark:text-white text-sm sm:text-base truncate mt-0.5" title={targetAddress}>
+              <p className="font-black text-[#0A3D3B] dark:text-white text-sm sm:text-base truncate mt-0.5" title={targetAddress}>
                 {targetAddress}
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 shrink-0 pl-2 sm:pl-3 border-l border-slate-200 dark:border-slate-800">
+          <div className="flex items-center gap-2 shrink-0 pl-2 sm:pl-3 border-l border-[#CFE4E3] dark:border-[#145250]">
             <div className="text-right hidden xs:block">
-              <div className="text-base sm:text-lg font-black text-emerald-500 dark:text-emerald-400 leading-tight">
-                {routeEtaMins} <span className="text-xs font-semibold text-gray-600 dark:text-slate-300">min</span>
+              <div className="text-base sm:text-lg font-black text-[#0E7673] dark:text-[#38B794] leading-tight">
+                {routeEtaMins} <span className="text-xs font-semibold text-[#5C807F] dark:text-[#9FC8C7]">min</span>
               </div>
-              <div className="text-[10px] sm:text-[11px] font-bold text-slate-400">
+              <div className="text-[10px] sm:text-[11px] font-bold text-[#5C807F] dark:text-[#9FC8C7]">
                 {routeDistanceText}
               </div>
             </div>
@@ -590,8 +590,8 @@ export function DeliveryActive() {
               onClick={() => setLockOnDriver(!lockOnDriver)}
               className={`flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-bold shadow-lg transition backdrop-blur-md ${
                 lockOnDriver 
-                  ? 'bg-[var(--app-primary-color)] text-white' 
-                  : 'bg-white/90 dark:bg-slate-900/90 text-gray-600 dark:text-slate-300 hover:bg-gray-100 dark:bg-slate-800'
+                  ? 'bg-[#0E7673] text-white' 
+                  : 'bg-white/90 dark:bg-[#0A3D3B]/90 text-[#5C807F] dark:text-[#D7F1EA] hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47]'
               }`}
             >
               <LocateFixed size={15} />
@@ -600,15 +600,15 @@ export function DeliveryActive() {
 
             <button
               onClick={() => setVoiceGuidance(!voiceGuidance)}
-              className="p-2 rounded-full bg-white/90 dark:bg-slate-900/90 text-gray-600 dark:text-slate-300 shadow-lg hover:bg-gray-100 dark:bg-slate-800 transition backdrop-blur-md"
+              className="p-2 rounded-full bg-white/90 dark:bg-[#0A3D3B]/90 text-[#5C807F] dark:text-[#D7F1EA] shadow-lg hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47] transition backdrop-blur-md"
               title="Guide vocal"
             >
-              {voiceGuidance ? <Volume2 size={16} className="text-emerald-400" /> : <VolumeX size={16} />}
+              {voiceGuidance ? <Volume2 size={16} className="text-[#38B794]" /> : <VolumeX size={16} />}
             </button>
 
             <button
               onClick={() => setNavModalOpen(true)}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-bold shadow-lg transition backdrop-blur-md bg-white/90 dark:bg-slate-900/90 text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-slate-800"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-bold shadow-lg transition backdrop-blur-md bg-white/90 dark:bg-[#0A3D3B]/90 text-[#0E7673] dark:text-[#38B794] hover:bg-[#D7F1EA] dark:hover:bg-[#0E4A47]"
               title="Ouvrir Google Maps ou Waze"
             >
               <Navigation size={13} />
@@ -616,28 +616,28 @@ export function DeliveryActive() {
             </button>
           </div>
 
-          <span className="bg-white/90 dark:bg-slate-900/90 text-gray-900 dark:text-white text-[11px] font-bold px-3 py-1.5 rounded-full shadow-lg backdrop-blur-md flex items-center gap-1.5">
-            <Compass size={14} className="text-teal-400 animate-spin" />
+          <span className="bg-white/90 dark:bg-[#0A3D3B]/90 text-[#0A3D3B] dark:text-white text-[11px] font-bold px-3 py-1.5 rounded-full shadow-lg backdrop-blur-md flex items-center gap-1.5 border border-[#CFE4E3] dark:border-[#145250]">
+            <Compass size={14} className="text-[#38B794] animate-spin" />
             Vitesse ~ 28 km/h
           </span>
         </div>
       </div>
 
       {/* 3. SLIDING BOTTOM SHEET */}
-      <div className={`absolute bottom-0 left-0 right-0 z-20 bg-white dark:bg-zinc-900 rounded-t-[32px] shadow-[0_-10px_40px_rgba(0,0,0,0.3)] border-t border-gray-100 dark:border-zinc-800 transition-all duration-300 ${sheetExpanded ? 'p-6 pb-8' : 'p-4 pb-6'}`}>
+      <div className={`absolute bottom-0 left-0 right-0 z-20 bg-white dark:bg-[#0A3D3B] rounded-t-[32px] shadow-[0_-10px_40px_rgba(0,0,0,0.3)] border-t border-[#CFE4E3] dark:border-[#145250] transition-all duration-300 ${sheetExpanded ? 'p-6 pb-8' : 'p-4 pb-6'}`}>
         
         {/* Sheet Drag Handle */}
         <button 
           onClick={() => setSheetExpanded(!sheetExpanded)}
           className="w-full flex flex-col items-center justify-center py-1 mb-2 group"
         >
-          <div className="w-12 h-1.5 bg-gray-300 dark:bg-zinc-700 rounded-full group-hover:bg-[var(--app-primary-color)] transition-colors" />
+          <div className="w-12 h-1.5 bg-[#CFE4E3] dark:bg-[#145250] rounded-full group-hover:bg-[#0E7673] transition-colors" />
         </button>
 
         {/* Header Bar */}
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
-            <div className={`w-12 h-12 rounded-2xl overflow-hidden flex items-center justify-center text-gray-900 dark:text-white shadow-md ${isPharmacyStep ? 'bg-teal-600' : 'bg-amber-600'}`}>
+            <div className={`w-12 h-12 rounded-2xl overflow-hidden flex items-center justify-center shadow-md ${isPharmacyStep ? 'bg-[#0E7673] text-white' : 'bg-[#38B794] text-[#0A3D3B]'}`}>
               {targetPhoto ? (
                 <img 
                   src={targetPhoto} 
@@ -654,10 +654,10 @@ export function DeliveryActive() {
               )}
             </div>
             <div>
-              <h2 className="font-bold text-gray-900 dark:text-white text-lg leading-snug">
+              <h2 className="font-bold text-[#0A3D3B] dark:text-white text-lg leading-snug">
                 {targetName}
               </h2>
-              <p className="text-xs text-gray-500 dark:text-gray-400 truncate max-w-[200px] sm:max-w-[280px]">
+              <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7] truncate max-w-[200px] sm:max-w-[280px]">
                 {targetAddress}
               </p>
             </div>
@@ -673,7 +673,7 @@ export function DeliveryActive() {
             {targetPhone && (
               <a 
                 href={`tel:${targetPhone}`}
-                className="w-10 h-10 rounded-xl bg-teal-50 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 flex items-center justify-center hover:bg-teal-100 transition shadow-sm"
+                className="w-10 h-10 rounded-xl bg-[#E7F1F1] dark:bg-[#0E4A47] text-[#0E7673] dark:text-[#38B794] flex items-center justify-center hover:bg-[#D7F1EA] transition shadow-sm"
                 title="Appeler"
               >
                 <Phone size={18} />
@@ -681,7 +681,7 @@ export function DeliveryActive() {
             )}
             <button
               onClick={() => navigate(`/delivery/messages/${order.id}`)}
-              className="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 flex items-center justify-center hover:bg-emerald-100 transition shadow-sm"
+              className="w-10 h-10 rounded-xl bg-[#D7F1EA] dark:bg-[#0E4A47] text-[#0A3D3B] dark:text-[#38B794] flex items-center justify-center hover:bg-[#38B794]/30 transition shadow-sm"
               title="Message"
             >
               <MessageCircle size={18} />
@@ -691,24 +691,24 @@ export function DeliveryActive() {
 
         {/* Expanded Sheet Content */}
         {sheetExpanded && (
-          <div className="space-y-4 pt-2 border-t border-gray-100 dark:border-zinc-800">
+          <div className="space-y-4 pt-2 border-t border-[#CFE4E3] dark:border-[#145250]">
             
             {/* Stage Guidance Note & Direct Launch Buttons */}
-            <div className="bg-emerald-50 dark:bg-emerald-950/40 p-3.5 rounded-2xl border border-emerald-100 dark:border-emerald-900/50 space-y-3">
+            <div className="bg-[#E7F1F1] dark:bg-[#062625] p-3.5 rounded-2xl border border-[#CFE4E3] dark:border-[#145250] space-y-3">
               <div className="flex items-start gap-3">
-                <Navigation size={18} className="text-[var(--app-primary-color)] dark:text-emerald-400 mt-0.5 shrink-0" />
-                <div className="text-xs text-slate-800 dark:text-slate-200 flex-1">
+                <Navigation size={18} className="text-[#0E7673] dark:text-[#38B794] mt-0.5 shrink-0" />
+                <div className="text-xs text-[#0A3D3B] dark:text-[#D7F1EA] flex-1">
                   <span className="font-bold block mb-0.5">Guidage GPS virage par virage</span>
                   Lancez votre application favorite (Google Maps ou Waze) avec les coordonnées exactes ({currentNavTarget.lat.toFixed(4)}, {currentNavTarget.lng.toFixed(4)}).
                 </div>
               </div>
 
               {/* Direct Quick Launch Buttons */}
-              <div className="grid grid-cols-2 gap-2 pt-1 border-t border-emerald-200/50 dark:border-emerald-900/40">
+              <div className="grid grid-cols-2 gap-2 pt-1 border-t border-[#CFE4E3] dark:border-[#145250]">
                 <button
                   type="button"
                   onClick={() => launchNavigation('google_maps', currentNavTarget)}
-                  className="py-2.5 px-3 rounded-xl bg-white dark:bg-zinc-800 hover:bg-blue-50 dark:hover:bg-blue-950/40 text-blue-700 dark:text-blue-300 font-bold text-xs flex items-center justify-center gap-2 border border-blue-200 dark:border-blue-800 transition shadow-xs"
+                  className="py-2.5 px-3 rounded-full bg-white dark:bg-[#0A3D3B] hover:bg-[#D7F1EA] dark:hover:bg-[#0E4A47] text-[#0E7673] dark:text-[#D7F1EA] font-bold text-xs flex items-center justify-center gap-2 border border-[#CFE4E3] dark:border-[#145250] transition shadow-xs"
                 >
                   <span>Google Maps</span>
                   <ExternalLink size={13} />
@@ -717,7 +717,7 @@ export function DeliveryActive() {
                 <button
                   type="button"
                   onClick={() => launchNavigation('waze', currentNavTarget)}
-                  className="py-2.5 px-3 rounded-xl bg-white dark:bg-zinc-800 hover:bg-cyan-50 dark:hover:bg-cyan-950/40 text-cyan-700 dark:text-cyan-300 font-bold text-xs flex items-center justify-center gap-2 border border-cyan-200 dark:border-cyan-800 transition shadow-xs"
+                  className="py-2.5 px-3 rounded-full bg-white dark:bg-[#0A3D3B] hover:bg-[#D7F1EA] dark:hover:bg-[#0E4A47] text-[#0A3D3B] dark:text-[#38B794] font-bold text-xs flex items-center justify-center gap-2 border border-[#CFE4E3] dark:border-[#145250] transition shadow-xs"
                 >
                   <span>Waze</span>
                   <ExternalLink size={13} />
@@ -727,8 +727,8 @@ export function DeliveryActive() {
 
             {/* Proof of delivery photo picker (Step 2 - At customer) */}
             {stage === 'at_customer' && (
-              <div className="bg-gray-50 dark:bg-black p-4 rounded-2xl border border-dashed border-gray-300 dark:border-zinc-800">
-                <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2">
+              <div className="bg-[#F5FAFA] dark:bg-[#062625] p-4 rounded-2xl border border-dashed border-[#CFE4E3] dark:border-[#145250]">
+                <label className="block text-xs font-bold text-[#0A3D3B] dark:text-[#D7F1EA] mb-2">
                   Preuve de livraison (Photo obligatoire) :
                 </label>
                 
@@ -742,11 +742,11 @@ export function DeliveryActive() {
                 />
 
                 {proofPreview ? (
-                  <div className="relative rounded-xl overflow-hidden border border-gray-200 dark:border-zinc-700 max-h-40 flex items-center justify-center bg-black">
+                  <div className="relative rounded-xl overflow-hidden border border-[#CFE4E3] dark:border-[#145250] max-h-40 flex items-center justify-center bg-[#062625]">
                     <img src={proofPreview} alt="Preuve" className="max-h-40 object-contain" />
                     <button 
                       onClick={() => { setProofPreview(null); setProofFile(null); }}
-                      className="absolute top-2 right-2 bg-red-600 text-gray-900 dark:text-white p-1 rounded-full shadow"
+                      className="absolute top-2 right-2 bg-red-600 text-white p-1 rounded-full shadow"
                     >
                       <X size={14} />
                     </button>
@@ -755,7 +755,7 @@ export function DeliveryActive() {
                   <button
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
-                    className="w-full py-4 bg-white dark:bg-zinc-900 rounded-xl border border-gray-200 dark:border-zinc-800 flex items-center justify-center gap-2 text-[var(--app-primary-color)] dark:text-teal-400 font-bold text-xs"
+                    className="w-full py-4 bg-white dark:bg-[#0A3D3B] rounded-full border border-[#CFE4E3] dark:border-[#145250] flex items-center justify-center gap-2 text-[#0E7673] dark:text-[#38B794] font-bold text-xs hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47] transition"
                   >
                     <Camera size={18} />
                     <span>Prendre la photo de livraison</span>
@@ -770,7 +770,7 @@ export function DeliveryActive() {
                 <button
                   disabled={processing}
                   onClick={handleAdvanceStage}
-                  className="w-full py-4 bg-[var(--app-primary-color)] hover:opacity-90 text-gray-900 dark:text-white rounded-2xl font-black transition flex items-center justify-center gap-2 shadow-xl text-base disabled:opacity-75"
+                  className="w-full py-4 bg-[#0E7673] hover:bg-[#0A5A58] text-white rounded-full font-black transition flex items-center justify-center gap-2 shadow-xl text-base disabled:opacity-75"
                 >
                   {processing && actionLoading === 'to_pharmacy' ? (
                     <>
@@ -790,7 +790,7 @@ export function DeliveryActive() {
                 <button
                   disabled={processing}
                   onClick={handleAdvanceStage}
-                  className="w-full py-4 bg-teal-600 hover:bg-teal-700 text-gray-900 dark:text-white rounded-2xl font-black transition flex items-center justify-center gap-2 shadow-xl text-base disabled:opacity-75"
+                  className="w-full py-4 bg-[#0E7673] hover:bg-[#0A5A58] text-white rounded-full font-black transition flex items-center justify-center gap-2 shadow-xl text-base disabled:opacity-75"
                 >
                   {processing && actionLoading === 'at_pharmacy' ? (
                     <>
@@ -810,7 +810,7 @@ export function DeliveryActive() {
                 <button
                   disabled={processing}
                   onClick={handleAdvanceStage}
-                  className="w-full py-4 bg-[var(--app-primary-color)] hover:opacity-90 text-gray-900 dark:text-white rounded-2xl font-black transition flex items-center justify-center gap-2 shadow-xl text-base disabled:opacity-75"
+                  className="w-full py-4 bg-[#0E7673] hover:bg-[#0A5A58] text-white rounded-full font-black transition flex items-center justify-center gap-2 shadow-xl text-base disabled:opacity-75"
                 >
                   {processing && actionLoading === 'to_customer' ? (
                     <>
@@ -830,7 +830,7 @@ export function DeliveryActive() {
                 <button
                   disabled={processing || !proofPreview || uploadingProof}
                   onClick={handleAdvanceStage}
-                  className="w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-gray-900 dark:text-white rounded-2xl font-black transition flex items-center justify-center gap-2 shadow-xl text-base disabled:opacity-50"
+                  className="w-full py-4 bg-[#38B794] hover:bg-[#2EA181] text-[#0A3D3B] rounded-full font-black transition flex items-center justify-center gap-2 shadow-xl text-base disabled:opacity-50"
                 >
                   {processing && actionLoading === 'at_customer' ? (
                     <>

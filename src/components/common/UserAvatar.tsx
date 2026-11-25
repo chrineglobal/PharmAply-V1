@@ -32,7 +32,7 @@ export function UserAvatar({
   if (finalPhoto) {
     return (
       <div 
-        className={`relative shrink-0 rounded-full overflow-hidden border border-gray-200/80 dark:border-slate-700/80 bg-gray-100 dark:bg-slate-800 ${sizeClassName} ${className}`}
+        className={`relative shrink-0 rounded-full overflow-hidden border border-[#CFE4E3] dark:border-[#145250] bg-[#E7F1F1] dark:bg-[#0E4A47] ${sizeClassName} ${className}`}
       >
         <img
           src={finalPhoto}
@@ -47,7 +47,7 @@ export function UserAvatar({
   // Fallback initial
   return (
     <div 
-      className={`relative shrink-0 rounded-full bg-[#E2EBE9] dark:bg-slate-700/90 flex items-center justify-center text-[#0B3B3C] dark:text-teal-300 font-bold border border-[#0B3B3C]/10 dark:border-slate-600 ${sizeClassName} ${textSizeClassName} ${className}`}
+      className={`relative shrink-0 rounded-full bg-[#E7F1F1] dark:bg-[#062625] flex items-center justify-center text-[#0E7673] dark:text-[#38B794] font-bold border border-[#CFE4E3] dark:border-[#145250] ${sizeClassName} ${textSizeClassName} ${className}`}
       title={finalName}
     >
       {initial}

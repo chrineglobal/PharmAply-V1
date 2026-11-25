@@ -12,8 +12,10 @@ export default defineConfig(({mode}) => {
       tailwindcss(),
       VitePWA({
         registerType: 'autoUpdate',
+        includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'icon.svg', 'pwa-192x192.png', 'pwa-512x512.png', 'pwa-maskable-512x512.png'],
         devOptions: {
-          enabled: false
+          enabled: true,
+          type: 'module',
         },
         workbox: {
           globPatterns: ['**/*.{js,css,html,ico,png,svg,json}'],
@@ -51,20 +53,34 @@ export default defineConfig(({mode}) => {
           ]
         },
         manifest: {
-          name: 'MedFleet Live',
-          short_name: 'MedFleet',
-          description: 'Live delivery operations map',
-          theme_color: '#ffffff',
+          id: '/',
+          name: 'PharmAply — Pharmacie Client',
+          short_name: 'PharmAply',
+          description: 'Trouvez Commandez Recevez — Pharmacie en ligne, scan d\'ordonnance IA et livraison express.',
+          theme_color: '#0E7673',
+          background_color: '#FFFFFF',
+          display: 'standalone',
+          orientation: 'portrait',
+          start_url: '/patient',
+          scope: '/',
           icons: [
             {
-              src: 'path-to-icon-192.png',
+              src: '/pwa-192x192.png',
               sizes: '192x192',
-              type: 'image/png'
+              type: 'image/png',
+              purpose: 'any'
             },
             {
-              src: 'path-to-icon-512.png',
+              src: '/pwa-512x512.png',
               sizes: '512x512',
-              type: 'image/png'
+              type: 'image/png',
+              purpose: 'any'
+            },
+            {
+              src: '/pwa-maskable-512x512.png',
+              sizes: '512x512',
+              type: 'image/png',
+              purpose: 'maskable'
             }
           ]
         }

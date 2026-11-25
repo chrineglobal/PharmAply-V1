@@ -23,7 +23,7 @@ export function DeliveryHome() {
   const [mapType, setMapType] = useState('roadmap');
   const { t } = useTranslation();
   const { primaryColor } = useTheme();
-  const brandPrimary = primaryColor || '#194B4B';
+  const brandPrimary = primaryColor || '#0E7673';
   const navigate = useNavigate();
   const { user, userData } = useAuth();
   const { isDarkMode, toggleDarkMode } = useDarkMode();
@@ -319,10 +319,10 @@ export function DeliveryHome() {
   };
 
   return (
-    <div className="flex-1 bg-slate-100 flex flex-col relative pb-16 h-full overflow-hidden">
+    <div className="flex-1 bg-[#F5FAFA] dark:bg-[#062625] flex flex-col relative pb-16 h-full overflow-hidden">
       
       {/* Map Background */}
-      <div className="absolute inset-0 z-0 bg-[#e5e3df] overflow-hidden">
+      <div className="absolute inset-0 z-0 bg-[#E7F1F1] dark:bg-[#062625] overflow-hidden">
          {isAvailable && apiKey ? (
             <APIProvider 
               apiKey={apiKey} 
@@ -346,8 +346,8 @@ export function DeliveryHome() {
                   {isOnline && (
                     <AdvancedMarker position={driverPos}>
                       <div className="flex flex-col items-center justify-center">
-                         <div className="w-16 h-16 bg-[var(--app-primary-color)]/80/20 rounded-full absolute animate-ping"></div>
-                         <div className="w-8 h-8 bg-[var(--app-primary-color)] rounded-full border-4 border-white shadow-lg z-10 flex items-center justify-center">
+                         <div className="w-16 h-16 bg-[#38B794]/25 rounded-full absolute animate-ping"></div>
+                         <div className="w-8 h-8 bg-[#0E7673] rounded-full border-4 border-white shadow-lg z-10 flex items-center justify-center">
                             <Navigation size={12} className="text-white fill-current transform rotate-45" />
                          </div>
                       </div>
@@ -362,10 +362,10 @@ export function DeliveryHome() {
                </Map>
             </APIProvider>
          ) : (
-            <div className="w-full h-full flex flex-col items-center justify-center bg-gray-50 dark:bg-zinc-800 dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 dark:border-zinc-800 p-6 text-center">
-               <Navigation className="w-10 h-10 text-teal-600 dark:text-teal-400 mb-2 opacity-80 animate-pulse" />
-               <p className="text-xs font-bold text-gray-800 dark:text-zinc-200 dark:text-gray-200 uppercase tracking-wider mb-1">Géo-localisation livreur active</p>
-               <p className="text-[11px] text-gray-500 dark:text-zinc-400 max-w-xs">{isOnline ? "En ligne — Prêt à recevoir des courses" : "Hors ligne — Basculez en ligne pour débuter"}</p>
+            <div className="w-full h-full flex flex-col items-center justify-center bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] p-6 text-center">
+               <Navigation className="w-10 h-10 text-[#0E7673] dark:text-[#38B794] mb-2 opacity-80 animate-pulse" />
+               <p className="text-xs font-bold text-[#0A3D3B] dark:text-[#D7F1EA] uppercase tracking-wider mb-1">Géo-localisation livreur active</p>
+               <p className="text-[11px] text-[#5C807F] dark:text-[#9FC8C7] max-w-xs">{isOnline ? "En ligne — Prêt à recevoir des courses" : "Hors ligne — Basculez en ligne pour débuter"}</p>
             </div>
          )}
       </div>
@@ -374,18 +374,17 @@ export function DeliveryHome() {
       <div className="absolute top-32 right-6 z-10">
          <button 
            onClick={() => setMapType(prev => prev === 'roadmap' ? 'satellite' : 'roadmap')}
-           className="w-10 h-10 bg-white dark:bg-zinc-900 dark:bg-black rounded-full shadow-lg flex items-center justify-center border border-gray-100 dark:border-zinc-800 dark:border-zinc-800"
+           className="w-10 h-10 bg-white dark:bg-[#0A3D3B] rounded-full shadow-lg flex items-center justify-center border border-[#CFE4E3] dark:border-[#145250]"
          >
-           <Layers size={20} className="text-gray-700 dark:text-gray-300" />
+           <Layers size={20} className="text-[#0A3D3B] dark:text-[#D7F1EA]" />
          </button>
       </div>
 
       {/* Top HUD */}
       <div className="absolute top-0 left-0 right-0 p-6 pt-12 z-10 flex items-start justify-between">
-         <div className="bg-white dark:bg-zinc-900 dark:bg-black/90 backdrop-blur shadow-sm rounded-2xl p-2 flex items-center gap-3 pr-4 pointer-events-auto cursor-pointer" onClick={() => navigate('/delivery/profile')}>
+         <div className="bg-white/95 dark:bg-[#0A3D3B]/95 backdrop-blur shadow-sm border border-[#CFE4E3] dark:border-[#145250] rounded-2xl p-2 flex items-center gap-3 pr-4 pointer-events-auto cursor-pointer" onClick={() => navigate('/delivery/profile')}>
             <div 
-              className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center shrink-0 relative"
-              style={{ backgroundColor: `${brandPrimary}15`, color: brandPrimary }}
+              className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center shrink-0 relative bg-[#D7F1EA] dark:bg-[#0E4A47] text-[#0E7673] dark:text-[#38B794]"
             >
                {(driverProfile?.photoURL || driverProfile?.photoUrl || user?.photoURL) ? (
                  <img src={driverProfile?.photoURL || driverProfile?.photoUrl || user?.photoURL} alt={driverProfile?.name || user?.displayName || 'Driver'} className="w-full h-full object-cover" />
@@ -395,25 +394,25 @@ export function DeliveryHome() {
             </div>
             <div>
                <div className="flex items-center gap-1.5 mb-0.5">
-                  <p className="font-bold text-gray-900 dark:text-white text-sm leading-tight">{driverProfile?.name || userData?.name || user?.displayName || t('driver', 'Livreur')}</p>
+                  <p className="font-bold text-[#0A3D3B] dark:text-white text-sm leading-tight">{driverProfile?.name || userData?.name || user?.displayName || t('driver', 'Livreur')}</p>
                   {driverRating !== null ? (
-                    <span className="bg-amber-50 text-amber-900 border border-amber-200 text-[10px] px-1.5 py-0.5 rounded-full font-bold flex items-center gap-0.5">
+                    <span className="bg-amber-50 dark:bg-amber-950/40 text-amber-900 dark:text-amber-300 border border-amber-200 dark:border-amber-800/40 text-[10px] px-1.5 py-0.5 rounded-full font-bold flex items-center gap-0.5">
                       <Star size={10} className="fill-current text-[#FACC15]"/> {driverRating}
                     </span>
                   ) : (
-                    <span className="bg-slate-100 text-slate-700 text-[10px] px-1.5 py-0.5 rounded-full font-bold">
+                    <span className="bg-[#E7F1F1] dark:bg-[#062625] text-[#0A3D3B] dark:text-[#D7F1EA] text-[10px] px-2 py-0.5 rounded-full font-bold">
                       {t('new_driver', 'Nouveau')}
                     </span>
                   )}
                </div>
                <div className="flex items-center gap-2">
                  <span 
-                   className="text-[10px] font-bold px-1.5 py-0.5 rounded-md uppercase tracking-wider text-white"
+                   className="text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider text-white"
                    style={{ backgroundColor: brandPrimary }}
                  >
                    {driverProfile?.vehicleType === 'car' ? t('car', 'Voiture') : (driverProfile?.vehicleType === 'motorcycle' ? t('moto', 'Moto') : (driverProfile?.vehicleType === 'bicycle' ? t('bicycle', 'Vélo') : t('vehicle', 'Véhicule')))}
                  </span>
-                 <p className="text-[11px] text-gray-500 dark:text-zinc-400 font-bold tracking-wider uppercase font-mono"> 
+                 <p className="text-[11px] text-[#5C807F] dark:text-[#9FC8C7] font-bold tracking-wider uppercase font-mono"> 
                    {driverProfile?.vehiclePlate || t('no_plate', 'NON RENSEIGNÉ')} 
                  </p>
                </div>
@@ -421,16 +420,16 @@ export function DeliveryHome() {
          </div>
          
          <div className="flex flex-row items-center gap-2 pointer-events-auto">
-            <div className="hidden sm:flex bg-white dark:bg-zinc-900 dark:bg-black/90 backdrop-blur rounded-2xl shadow-sm px-3 py-1 flex-col items-center justify-center text-gray-900 dark:text-white relative font-bold text-sm">
-               <span className="text-[9px] text-gray-400 font-medium tracking-wide uppercase">Aujourd'hui</span>
+            <div className="hidden sm:flex bg-white/95 dark:bg-[#0A3D3B]/95 backdrop-blur border border-[#CFE4E3] dark:border-[#145250] rounded-2xl shadow-sm px-3 py-1 flex-col items-center justify-center text-[#0A3D3B] dark:text-white relative font-bold text-sm">
+               <span className="text-[9px] text-[#5C807F] dark:text-[#9FC8C7] font-medium tracking-wide uppercase">Aujourd'hui</span>
                <span className="text-xs">{formatCurrency(todaysEarnings)}</span>
             </div>
             
-            <DarkModeToggle className="w-10 h-10 bg-white dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800 dark:border-zinc-700 shadow-sm" />
+            <DarkModeToggle className="w-10 h-10 bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] shadow-sm" />
             
             <button 
               onClick={() => navigate('/delivery/messages')}
-              className="w-10 h-10 bg-white dark:bg-zinc-900 rounded-full flex items-center justify-center border border-gray-100 dark:border-zinc-800 dark:border-zinc-700 shadow-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:bg-zinc-800 dark:bg-zinc-900 dark:hover:bg-zinc-700 transition-colors"
+              className="w-10 h-10 bg-white dark:bg-[#0A3D3B] rounded-full flex items-center justify-center border border-[#CFE4E3] dark:border-[#145250] shadow-sm text-[#0A3D3B] dark:text-[#D7F1EA] hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47] transition-colors"
               title="Messages"
               aria-label="Messages"
             >
@@ -454,69 +453,69 @@ export function DeliveryHome() {
 
       {/* Status Overlay */}
       {isOnline && !currentRequest && (
-         <div className="absolute top-36 left-1/2 -translate-x-1/2 bg-gray-900/80 backdrop-blur text-white px-6 py-2.5 rounded-full font-bold text-sm shadow-lg animate-fade-in whitespace-nowrap">
+         <div className="absolute top-36 left-1/2 -translate-x-1/2 bg-[#0A3D3B]/90 backdrop-blur border border-[#145250] text-white px-6 py-2.5 rounded-full font-bold text-sm shadow-lg animate-fade-in whitespace-nowrap">
              {t('searching_for_orders', 'Searching for orders...')} </div>
       )}
 
       {/* Bottom Panel */}
-      <div className="absolute bottom-0 left-0 right-0 z-20 pointer-events-auto px-6 pb-20 pt-4 bg-gradient-to-t from-white via-white/90 to-transparent">
+      <div className="absolute bottom-0 left-0 right-0 z-20 pointer-events-auto px-6 pb-20 pt-4 bg-gradient-to-t from-white via-white/95 to-transparent dark:from-[#062625] dark:via-[#062625]/95">
          {!isOnline ? (
-            <div className="bg-white dark:bg-zinc-900 dark:bg-black rounded-3xl p-6 shadow-xl border border-gray-100 dark:border-zinc-800 dark:border-zinc-800 transform transition-all duration-300 translate-y-0">
-               <h2 className="font-bold text-gray-900 dark:text-white text-xl text-center mb-2"> {t('you_re_offline', 'You\'re Offline')} </h2>
-               <p className="text-gray-500 dark:text-zinc-400 dark:text-gray-400 dark:text-gray-500 dark:text-zinc-400 text-sm text-center mb-6"> {t('go_online_to_start_receiving_d', 'Go online to start receiving delivery requests')} </p>
+            <div className="bg-white dark:bg-[#0A3D3B] rounded-3xl p-6 shadow-xl border border-[#CFE4E3] dark:border-[#145250] transform transition-all duration-300 translate-y-0">
+               <h2 className="font-bold text-[#0A3D3B] dark:text-white text-xl text-center mb-2"> {t('you_re_offline', 'You\'re Offline')} </h2>
+               <p className="text-[#5C807F] dark:text-[#9FC8C7] text-sm text-center mb-6"> {t('go_online_to_start_receiving_d', 'Go online to start receiving delivery requests')} </p>
                <button 
                   onClick={() => toggleOnlineStatus(true)}
                   disabled={driverProfile?.status === 'pending_verification' && driverProfile?.kyc_status !== 'approved'}
-                  className="w-full bg-[var(--app-primary-color)] disabled:bg-indigo-300 disabled:cursor-not-allowed border border-indigo-700 disabled:border-indigo-300 shadow-indigo-200 shadow-lg text-white font-bold py-4 rounded-2xl hover:bg-[var(--app-primary-color)] disabled:hover:bg-indigo-300 transition flex justify-center items-center gap-2 text-lg uppercase tracking-wide"
+                  className="w-full bg-[#0E7673] hover:bg-[#0A5A58] disabled:bg-[#CFE4E3] disabled:text-[#5C807F] disabled:cursor-not-allowed shadow-lg text-white font-bold py-4 rounded-full transition flex justify-center items-center gap-2 text-lg uppercase tracking-wide"
                >
                   <Power size={22} className="mr-1" />  {t('go_online', 'Go Online')} </button>
             </div>
          ) : !currentRequest ? (
-            <div className="bg-white dark:bg-zinc-900 dark:bg-black rounded-3xl p-6 shadow-xl border border-gray-100 dark:border-zinc-800 dark:border-zinc-800 transform transition-all duration-300 translate-y-0 flex flex-col items-center text-center">
-               <div className="w-16 h-1 bg-gray-200 rounded-full mb-6"></div>
-               <h2 className="font-bold text-[var(--app-primary-color)] text-xl mb-1"> {t('you_re_online', 'You\'re Online')} </h2>
-               <p className="text-gray-500 dark:text-zinc-400 dark:text-gray-400 dark:text-gray-500 dark:text-zinc-400 text-sm mb-6"> {t('waiting_for_the_next_delivery_', 'Waiting for the next delivery request...')} </p>
+            <div className="bg-white dark:bg-[#0A3D3B] rounded-3xl p-6 shadow-xl border border-[#CFE4E3] dark:border-[#145250] transform transition-all duration-300 translate-y-0 flex flex-col items-center text-center">
+               <div className="w-16 h-1 bg-[#CFE4E3] dark:bg-[#145250] rounded-full mb-6"></div>
+               <h2 className="font-bold text-[#0E7673] dark:text-[#38B794] text-xl mb-1"> {t('you_re_online', 'You\'re Online')} </h2>
+               <p className="text-[#5C807F] dark:text-[#9FC8C7] text-sm mb-6"> {t('waiting_for_the_next_delivery_', 'Waiting for the next delivery request...')} </p>
                
                <button 
                   onClick={() => toggleOnlineStatus(false)}
-                  className="w-full bg-gray-100 dark:bg-zinc-900 text-gray-600 font-bold py-4 rounded-2xl hover:bg-gray-200 transition text-sm uppercase tracking-wide"
+                  className="w-full bg-[#E7F1F1] dark:bg-[#062625] text-[#0A3D3B] dark:text-[#D7F1EA] border border-[#CFE4E3] dark:border-[#145250] font-bold py-4 rounded-full hover:bg-[#D7F1EA] dark:hover:bg-[#0E4A47] transition text-sm uppercase tracking-wide"
                >
                    {t('go_offline', 'Go Offline')} </button>
             </div>
          ) : (
-            <div className="bg-white dark:bg-zinc-900 dark:bg-black rounded-3xl overflow-hidden shadow-2xl border border-indigo-100 transform transition-all duration-300 translate-y-0 relative animate-slide-up">
-               {/* Progress bar timer mock */}
-               <div className="absolute top-0 left-0 right-0 h-1.5 bg-gray-100 dark:bg-zinc-900">
-                  <div className="h-full bg-[var(--app-primary-color)] animate-shrink-x" style={{ animationDuration: '30s', transformOrigin: 'left' }}></div>
+            <div className="bg-white dark:bg-[#0A3D3B] rounded-3xl overflow-hidden shadow-2xl border border-[#CFE4E3] dark:border-[#145250] transform transition-all duration-300 translate-y-0 relative animate-slide-up">
+               {/* Progress bar timer */}
+               <div className="absolute top-0 left-0 right-0 h-1.5 bg-[#E7F1F1] dark:bg-[#062625]">
+                  <div className="h-full bg-[#0E7673] dark:bg-[#38B794] animate-shrink-x" style={{ animationDuration: '30s', transformOrigin: 'left' }}></div>
                </div>
                
                <div className="p-6">
                   <div className="flex justify-between items-start mb-6 pt-2">
                      <div>
-                        <span className="bg-indigo-100 text-[var(--app-primary-color)] px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-2 inline-block"> {t('new_delivery', 'New Delivery')} </span>
-                        <h2 className="font-bold text-gray-900 dark:text-white text-3xl tracking-tight">{formatCurrency(currentRequest.total)} <span className="text-sm text-gray-400 dark:text-gray-500 dark:text-zinc-400 font-medium tracking-normal"> {t('tips', '+ tips')} </span></h2>
+                        <span className="bg-[#D7F1EA] text-[#0A3D3B] dark:bg-[#0E4A47] dark:text-[#D7F1EA] px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-2 inline-block"> {t('new_delivery', 'New Delivery')} </span>
+                        <h2 className="font-bold text-[#0A3D3B] dark:text-white text-3xl tracking-tight">{formatCurrency(currentRequest.total)} <span className="text-sm text-[#5C807F] dark:text-[#9FC8C7] font-medium tracking-normal"> {t('tips', '+ tips')} </span></h2>
                      </div>
-                     <div className="flex bg-gray-50 dark:bg-zinc-800 dark:bg-black rounded-xl p-2 items-center gap-2">
-                        <Clock size={16} className="text-gray-400 dark:text-gray-500 dark:text-zinc-400" />
-                        <div className="font-bold text-gray-700 text-sm"> {t('calculating', 'Calculating...')} </div>
+                     <div className="flex bg-[#E7F1F1] dark:bg-[#062625] rounded-xl p-2 items-center gap-2 border border-[#CFE4E3] dark:border-[#145250]">
+                        <Clock size={16} className="text-[#0E7673] dark:text-[#38B794]" />
+                        <div className="font-bold text-[#0A3D3B] dark:text-white text-sm"> {t('calculating', 'Calculating...')} </div>
                      </div>
                   </div>
 
                   <div className="relative pl-6 space-y-5 mb-8">
-                     <div className="absolute left-[9px] top-[4px] bottom-[4px] w-0.5 bg-gray-200"></div>
+                     <div className="absolute left-[9px] top-[4px] bottom-[4px] w-0.5 bg-[#CFE4E3] dark:bg-[#145250]"></div>
                      <div className="relative">
-                        <div className="w-5 h-5 bg-[var(--app-primary-color)] rounded-full absolute -left-6 top-0 border-4 border-white flex items-center justify-center shadow-sm">
-                           <div className="w-1 h-1 bg-white dark:bg-zinc-900 dark:bg-black rounded-full"></div>
+                        <div className="w-5 h-5 bg-[#0E7673] rounded-full absolute -left-6 top-0 border-4 border-white flex items-center justify-center shadow-sm">
+                           <div className="w-1 h-1 bg-white rounded-full"></div>
                         </div>
-                        <p className="text-xs text-gray-400 dark:text-gray-500 dark:text-zinc-400 font-medium">Pickup</p>
-                        <p className="font-bold text-gray-900 dark:text-white mt-0.5">{currentRequest.pharmacyName || t('pharmacy', 'Pharmacy')} </p>
+                        <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7] font-medium">Pickup</p>
+                        <p className="font-bold text-[#0A3D3B] dark:text-white mt-0.5">{currentRequest.pharmacyName || t('pharmacy', 'Pharmacy')} </p>
                      </div>
                      <div className="relative">
-                        <div className="w-5 h-5 bg-green-500 rounded-full absolute -left-6 top-0 border-4 border-white flex items-center justify-center shadow-sm">
-                           <div className="w-1 h-1 bg-white dark:bg-zinc-900 dark:bg-black rounded-full"></div>
+                        <div className="w-5 h-5 bg-[#38B794] rounded-full absolute -left-6 top-0 border-4 border-white flex items-center justify-center shadow-sm">
+                           <div className="w-1 h-1 bg-[#0A3D3B] rounded-full"></div>
                         </div>
-                        <p className="text-xs text-gray-400 dark:text-gray-500 dark:text-zinc-400 font-medium">Drop-off</p>
-                        <p className="font-bold text-gray-900 dark:text-white mt-0.5">{currentRequest.deliveryAddress || 'Customer Address'}</p>
+                        <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7] font-medium">Drop-off</p>
+                        <p className="font-bold text-[#0A3D3B] dark:text-white mt-0.5">{currentRequest.deliveryAddress || 'Customer Address'}</p>
                      </div>
                   </div>
 
@@ -524,7 +523,7 @@ export function DeliveryHome() {
                      <button 
                         disabled={processing}
                         onClick={handleRejectOrder}
-                        className="w-16 h-16 shrink-0 bg-gray-100 dark:bg-zinc-900 text-gray-600 border border-gray-200 dark:border-zinc-800 dark:border-zinc-800 font-bold rounded-2xl hover:bg-gray-200 transition flex justify-center items-center"
+                        className="w-14 h-14 shrink-0 bg-[#E7F1F1] dark:bg-[#062625] text-[#0A3D3B] dark:text-white border border-[#CFE4E3] dark:border-[#145250] font-bold rounded-full hover:bg-[#D7F1EA] dark:hover:bg-[#0E4A47] transition flex justify-center items-center"
                         aria-label="Reject Request"
                      >
                         <X size={24} />
@@ -532,7 +531,7 @@ export function DeliveryHome() {
                      <button 
                         disabled={processing}
                         onClick={handleAcceptOrder}
-                        className="flex-1 bg-[var(--app-primary-color)] disabled:bg-indigo-400 shadow-indigo-300 shadow-xl text-white font-bold py-4 rounded-2xl hover:bg-[var(--app-primary-color)] transition flex justify-center items-center gap-2 text-xl"
+                        className="flex-1 bg-[#0E7673] hover:bg-[#0A5A58] disabled:bg-[#CFE4E3] disabled:text-[#5C807F] shadow-lg text-white font-bold py-4 rounded-full transition flex justify-center items-center gap-2 text-lg"
                      >
                         {processing ? (
                           <>

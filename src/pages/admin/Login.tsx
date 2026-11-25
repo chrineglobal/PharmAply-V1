@@ -3,10 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from '../../lib/firebase';
 import { auth, db } from "../../lib/firebase";
 import { doc, getDoc, setDoc, serverTimestamp } from '../../lib/firebase';
-import { MapPin, AlertCircle } from "lucide-react";
+import { AlertCircle } from "lucide-react";
 import { useAuth } from "../../components/AuthProvider";
 import { useTranslation } from "react-i18next";
 import toast from 'react-hot-toast';
+import { PharmAplyLogo } from "../../components/common/PharmAplyLogo";
 
 export function AdminLogin() {
   const navigate = useNavigate();
@@ -139,69 +140,76 @@ export function AdminLogin() {
   };
 
   return (
-    <div className="w-full h-full bg-white dark:bg-zinc-950 rounded-[2rem] shadow-xl flex overflow-hidden relative">
+    <div className="w-full h-full bg-white dark:bg-[#062625] rounded-[2rem] shadow-xl flex overflow-hidden relative border border-[#CFE4E3] dark:border-[#145250]">
       {/* Left Panel */}
-      <div className="hidden md:flex w-1/2 bg-teal-900 relative flex-col justify-between p-12 overflow-hidden">
-        {/* Abstract Shapes */}
-        <div className="absolute top-[-10%] right-[-10%] w-[120%] h-[120%] rounded-full border-[120px] border-teal-800/40 pointer-events-none"></div>
-        <div className="absolute bottom-[-30%] left-[-20%] w-[150%] h-[150%] rounded-full border-[100px] border-teal-800/30 pointer-events-none"></div>
+      <div className="hidden md:flex w-1/2 bg-[#0E7673] relative flex-col justify-between p-12 overflow-hidden">
+        {/* Charte Abstract Arcs */}
+        <div className="absolute top-[-12%] right-[-14%] w-[115%] h-[115%] rounded-full border-[96px] border-[#38B794]/15 pointer-events-none"></div>
+        <div className="absolute bottom-[-32%] left-[-22%] w-[140%] h-[140%] rounded-full border-[80px] border-white/10 pointer-events-none"></div>
 
         <div className="relative z-10">
-          <div className="flex items-center gap-3 text-white mb-16">
-            <div className="w-8 h-8 rounded-full bg-white dark:bg-zinc-950 flex items-center justify-center">
-              <MapPin size={18} className="text-teal-900" />
-            </div>
-            <span className="font-bold text-2xl tracking-tight">{t("app_name")}</span>
+          <div className="mb-14">
+            <PharmAplyLogo variant="horizontal" tone="white" size="lg" />
           </div>
 
-          <h1 className="text-4xl text-white font-bold leading-tight max-w-sm">
-            {t("slogan")}
+          <h1 className="text-4xl text-white font-bold leading-snug max-w-sm">
+            {t("slogan", "Trouvez Commandez Recevez")}
           </h1>
+          <p className="text-[#D7F1EA] text-sm mt-4 max-w-sm leading-relaxed">
+            {t("admin_portal_subtitle", "Plateforme de gestion et de coordination pharmaceutique PharmAply.")}
+          </p>
         </div>
 
         <div className="relative z-10">
-          <p className="text-teal-100/60 text-sm font-medium">{t("terms")}  {t('nbsp_nbsp', '&nbsp;|&nbsp;')} {t("privacy")}</p>
+          <p className="text-[#CFE4E3] text-sm font-medium">{t("terms")}  {t('nbsp_nbsp', '|')} {t("privacy")}</p>
         </div>
       </div>
 
       {/* Right Panel */}
-      <div className="flex-1 flex flex-col items-center justify-center relative p-8">
+      <div className="flex-1 flex flex-col items-center justify-center relative p-6 sm:p-10 bg-white dark:bg-[#062625]">
         {/* Language selector */}
-        <div className="absolute top-8 right-8 z-20">
+        <div className="absolute top-6 right-6 sm:top-8 sm:right-8 z-20">
            <div className="relative">
              <button 
+               type="button"
                onClick={() => setShowLangMenu(!showLangMenu)}
-               className="flex items-center gap-2 bg-white dark:bg-zinc-950 border border-gray-200 px-4 py-2 rounded-xl text-sm font-medium text-gray-700 shadow-sm"
+               className="flex items-center gap-2 bg-[#E7F1F1] dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] px-4 py-2 rounded-full text-sm font-bold text-[#0E7673] dark:text-[#E7F1F1] shadow-sm hover:bg-[#CFE4E3]/60 transition"
              >
-                <span className="text-gray-400">文A</span> 
+                <span className="opacity-70">文A</span> 
                 {i18n.language === 'fr' ? 'Français' : 'English'} 
-                <span className="text-gray-400 text-[10px]">▼</span>
+                <span className="opacity-70 text-[10px]">▼</span>
              </button>
              {showLangMenu && (
-               <div className="absolute right-0 mt-2 w-32 bg-white dark:bg-zinc-950 rounded-xl shadow-lg border border-gray-100 py-1 overflow-hidden">
-                 <button onClick={() => toggleLang('en')} className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-teal-50 hover:text-teal-700"> {t('english', 'English')} </button>
-                 <button onClick={() => toggleLang('fr')} className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-teal-50 hover:text-teal-700"> {t('fran_ais', 'Français')} </button>
+               <div className="absolute right-0 mt-2 w-36 bg-white dark:bg-[#0A3D3B] rounded-2xl shadow-lg border border-[#CFE4E3] dark:border-[#145250] py-1.5 overflow-hidden">
+                 <button type="button" onClick={() => toggleLang('en')} className="w-full text-left px-4 py-2 text-sm font-medium text-[#0A3D3B] dark:text-[#E7F1F1] hover:bg-[#E7F1F1] dark:hover:bg-[#0E7673]/30"> {t('english', 'English')} </button>
+                 <button type="button" onClick={() => toggleLang('fr')} className="w-full text-left px-4 py-2 text-sm font-medium text-[#0A3D3B] dark:text-[#E7F1F1] hover:bg-[#E7F1F1] dark:hover:bg-[#0E7673]/30"> {t('fran_ais', 'Français')} </button>
                </div>
              )}
            </div>
         </div>
 
         <div className="w-full max-w-md">
+          <div className="mb-6 flex md:hidden justify-center">
+            <PharmAplyLogo variant="horizontal" tone="color" size="md" />
+          </div>
+
           <div className="mb-8 block">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{t("admin_welcome")}</h2>
-            <p className="text-gray-500 text-sm mb-6">{t("admin_role_select")}</p>
+            <h2 className="text-2xl font-bold text-[#0A3D3B] dark:text-white mb-2">{t("admin_welcome")}</h2>
+            <p className="text-[#0E7673] dark:text-[#9FC8C7] text-sm mb-6">{t("admin_role_select")}</p>
             
             {/* Role Switcher */}
-            <div className="flex bg-gray-50 dark:bg-zinc-900 p-1.5 rounded-xl border border-gray-100 mb-8">
+            <div className="flex bg-[#E7F1F1] dark:bg-[#0A3D3B] p-1.5 rounded-full border border-[#CFE4E3] dark:border-[#145250] mb-8">
                <button 
+                 type="button"
                  onClick={() => setSelectedRole("admin")}
-                 className={`flex-1 font-bold py-2.5 rounded-lg text-sm transition ${selectedRole === "admin" ? "bg-teal-100 text-teal-900 border border-teal-200" : "text-gray-500 hover:bg-gray-100 dark:bg-zinc-800"}`}
+                 className={`flex-1 font-bold py-2.5 rounded-full text-sm transition ${selectedRole === "admin" ? "bg-[#0E7673] text-white shadow-sm" : "text-[#0A3D3B] dark:text-[#CFE4E3] hover:bg-white/60 dark:hover:bg-[#062625]/40"}`}
                >
                  {t("admin_role_admin")}
                </button>
                <button 
+                 type="button"
                  onClick={() => setSelectedRole("cashier")}
-                 className={`flex-1 font-bold py-2.5 rounded-lg text-sm transition ${selectedRole === "cashier" ? "bg-teal-100 text-teal-900 border border-teal-200" : "text-gray-500 hover:bg-gray-100 dark:bg-zinc-800"}`}
+                 className={`flex-1 font-bold py-2.5 rounded-full text-sm transition ${selectedRole === "cashier" ? "bg-[#0E7673] text-white shadow-sm" : "text-[#0A3D3B] dark:text-[#CFE4E3] hover:bg-white/60 dark:hover:bg-[#062625]/40"}`}
                >
                  {t("admin_role_cashier")}
                </button>
@@ -210,51 +218,51 @@ export function AdminLogin() {
 
           <form onSubmit={handleLogin} className="space-y-5">
             {error && (
-              <div className="bg-red-50 text-red-600 p-3 rounded-xl flex items-start gap-2 text-sm border border-red-100">
+              <div className="bg-red-50 dark:bg-red-950/40 text-red-700 dark:text-red-300 p-3.5 rounded-2xl flex items-start gap-2 text-sm border border-red-200 dark:border-red-900/50">
                  <AlertCircle size={16} className="mt-0.5 shrink-0" />
                  <p>{error}</p>
               </div>
             )}
 
             <div>
-              <label className="block text-xs font-bold text-gray-900 dark:text-white mb-2">{t("email")}</label>
+              <label className="block text-sm font-bold text-[#0A3D3B] dark:text-[#E7F1F1] mb-2">{t("email")}</label>
               <input
                 type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-[#f8f9fa] border border-gray-200 py-3 px-4 rounded-xl text-sm focus:ring-2 focus:ring-teal-600 focus:border-transparent outline-none transition"
-                placeholder={t('admin_example_com', 'admin@example.com')}
+                className="w-full bg-[#F5FAFA] dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] text-[#0A3D3B] dark:text-white py-3.5 px-4 rounded-2xl text-sm focus:ring-2 focus:ring-[#0E7673] focus:border-transparent outline-none transition placeholder:text-[#6EADAB]"
+                placeholder={t('admin_example_com', 'admin@pharmaply.com')}
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-gray-900 dark:text-white mb-2">{t("password")}</label>
+              <label className="block text-sm font-bold text-[#0A3D3B] dark:text-[#E7F1F1] mb-2">{t("password")}</label>
               <input
                 type="password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-[#f8f9fa] border border-gray-200 py-3 px-4 rounded-xl text-sm focus:ring-2 focus:ring-teal-600 focus:border-transparent outline-none transition"
+                className="w-full bg-[#F5FAFA] dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] text-[#0A3D3B] dark:text-white py-3.5 px-4 rounded-2xl text-sm focus:ring-2 focus:ring-[#0E7673] focus:border-transparent outline-none transition placeholder:text-[#6EADAB]"
                 placeholder="••••••••"
               />
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2.5">
               <input
                 type="checkbox"
                 id="rememberMe"
                 checked={rememberMe}
                 onChange={(e) => setRememberMe(e.target.checked)}
-                className="w-4 h-4 text-teal-600 rounded border-gray-300 focus:ring-teal-500"
+                className="w-4 h-4 accent-[#0E7673] rounded border-[#CFE4E3] focus:ring-[#0E7673]"
               />
-              <label htmlFor="rememberMe" className="text-sm font-medium text-gray-700"> {t('remember_me', 'Remember me')} </label>
+              <label htmlFor="rememberMe" className="text-sm font-medium text-[#0A3D3B] dark:text-[#CFE4E3]"> {t('remember_me', 'Remember me')} </label>
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-teal-800 hover:bg-teal-900 text-white font-bold py-3.5 rounded-xl transition flex items-center justify-center gap-2 mt-4"
+              className="w-full bg-[#0E7673] hover:bg-[#0A5A58] text-white font-bold py-4 rounded-full transition shadow-sm flex items-center justify-center gap-2 mt-4 disabled:opacity-60"
             >
               {loading ? t("verifying") : t("login_btn")}
             </button>

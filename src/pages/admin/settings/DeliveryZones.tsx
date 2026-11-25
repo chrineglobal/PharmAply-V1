@@ -51,53 +51,53 @@ export function DeliveryZones() {
   };
 
   return (
-    <div className="flex-1 bg-slate-50 flex flex-col h-full overflow-hidden">
-      <div className="bg-white dark:bg-zinc-950 px-8 pt-6 pb-6 shadow-sm z-10 border-b border-gray-200 shrink-0 flex items-center justify-between">
+    <div className="flex-1 bg-[#F5FAFA] dark:bg-[#062625] flex flex-col h-full overflow-hidden">
+      <div className="bg-white dark:bg-[#0A3D3B] px-8 pt-6 pb-6 shadow-sm z-10 border-b border-[#CFE4E3] dark:border-[#145250] shrink-0 flex items-center justify-between gap-4">
          <div>
-             <button onClick={() => navigate("/admin/settings")} className="flex items-center text-sm font-medium text-slate-500 hover:text-slate-800 dark:text-slate-100 mb-2">
+             <button onClick={() => navigate("/admin/settings")} className="flex items-center text-sm font-medium text-[#5C807F] dark:text-[#9FC8C7] hover:text-[#0E7673] dark:hover:text-[#38B794] mb-2 transition">
                <ArrowLeft size={16} className="mr-1" />  {t('back_to_settings', 'Back to Settings')} </button>
-             <h1 className="font-bold text-gray-900 dark:text-white text-2xl mb-1"> {t('delivery_zones_maps', 'Delivery Zones & Maps')} </h1>
-             <p className="text-gray-500 text-sm"> {t('manage_service_regions_and_sur', 'Manage service regions and surge pricing')} </p>
+             <h1 className="font-bold text-[#0A3D3B] dark:text-white text-2xl mb-1"> {t('delivery_zones_maps', 'Delivery Zones & Maps')} </h1>
+             <p className="text-[#5C807F] dark:text-[#9FC8C7] text-sm"> {t('manage_service_regions_and_sur', 'Manage service regions and surge pricing')} </p>
          </div>
          <button 
            onClick={handleSave} 
            disabled={loading}
-           className="bg-[var(--app-primary-color)] hover:bg-[var(--app-primary-color)] text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-sm transition flex items-center gap-2"
+           className="bg-[#0E7673] hover:bg-[#0A5A58] text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-sm transition flex items-center gap-2 disabled:opacity-50 shrink-0"
          >
             <Save size={16} />  {t('save_changes', 'Save Changes')} </button>
       </div>
 
       <div className="flex-1 overflow-y-auto p-8 max-w-3xl space-y-6">
-         <div className="bg-white dark:bg-zinc-950 rounded-2xl p-6 shadow-sm border border-gray-100">
-            <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4"> {t('pricing_configuration', 'Pricing Configuration')} </h2>
+         <div className="bg-white dark:bg-[#0A3D3B] rounded-2xl p-6 shadow-sm border border-[#CFE4E3] dark:border-[#145250]">
+            <h2 className="text-lg font-bold text-[#0A3D3B] dark:text-white mb-4"> {t('pricing_configuration', 'Pricing Configuration')} </h2>
             <div className="space-y-4">
                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Base Delivery Fee (FCFA)</label>
+                  <label className="block text-sm font-medium text-[#0A3D3B] dark:text-[#D7F1EA] mb-1">Base Delivery Fee (FCFA)</label>
                   <input 
                     type="number" 
                     value={baseFee} 
                     onChange={e => setBaseFee(Number(e.target.value))}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none"
+                    className="w-full bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] rounded-xl px-4 py-2 text-sm text-[#0A3D3B] dark:text-white focus:ring-2 focus:ring-[#0E7673] outline-none tabular-nums"
                   />
                </div>
                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1"> {t('surge_pricing_multiplier', 'Surge Pricing Multiplier')} </label>
+                  <label className="block text-sm font-medium text-[#0A3D3B] dark:text-[#D7F1EA] mb-1"> {t('surge_pricing_multiplier', 'Surge Pricing Multiplier')} </label>
                   <input 
                     type="number" 
                     step="0.1"
                     value={surgeMultiplier} 
                     onChange={e => setSurgeMultiplier(Number(e.target.value))}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none"
+                    className="w-full bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] rounded-xl px-4 py-2 text-sm text-[#0A3D3B] dark:text-white focus:ring-2 focus:ring-[#0E7673] outline-none tabular-nums"
                   />
-                  <p className="text-xs text-slate-500 mt-1">Multiplies the base fee during high demand (e.g., 1.5x).</p>
+                  <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7] mt-1">Multiplies the base fee during high demand (e.g., 1.5x).</p>
                </div>
                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Maximum Delivery Distance (km)</label>
+                  <label className="block text-sm font-medium text-[#0A3D3B] dark:text-[#D7F1EA] mb-1">Maximum Delivery Distance (km)</label>
                   <input 
                     type="number" 
                     value={maxDistance} 
                     onChange={e => setMaxDistance(Number(e.target.value))}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none"
+                    className="w-full bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] rounded-xl px-4 py-2 text-sm text-[#0A3D3B] dark:text-white focus:ring-2 focus:ring-[#0E7673] outline-none tabular-nums"
                   />
                </div>
             </div>

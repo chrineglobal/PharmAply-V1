@@ -98,21 +98,21 @@ export function PharmacistPrescriptions() {
     <div className="flex-1 bg-transparent flex flex-col h-full overflow-hidden relative">
       <div className="px-8 pt-8 pb-4 shrink-0 z-10 flex items-center justify-between">
          <div>
-            <h1 className="font-bold text-gray-900 dark:text-white text-2xl tracking-tight">{t('prescriptions', 'Prescriptions')}</h1>
-            <p className="text-gray-500 font-medium text-sm mt-1">{t('review_uploaded_rx', 'Review and approve uploaded prescriptions with DPML AI assistance')}</p>
+            <h1 className="font-bold text-[#0A3D3B] dark:text-white text-2xl tracking-tight">{t('prescriptions', 'Prescriptions')}</h1>
+            <p className="text-[#5C807F] dark:text-[#9FC8C7] font-medium text-sm mt-1">{t('review_uploaded_rx', 'Review and approve uploaded prescriptions with DPML AI assistance')}</p>
          </div>
       </div>
 
       <div className="flex-1 overflow-y-auto px-8 pb-8 space-y-6 custom-scrollbar">
         {loading ? (
-          <div className="flex justify-center py-12 text-[#0B3B3C]"><Loader2 className="animate-spin" size={32} /></div>
+          <div className="flex justify-center py-12 text-[#0E7673] dark:text-[#38B794]"><Loader2 className="animate-spin" size={32} /></div>
         ) : prescriptions.length === 0 ? (
-          <div className="text-center py-16 bg-white dark:bg-slate-800 rounded-3xl border border-gray-100 dark:border-slate-700 shadow-sm flex flex-col items-center">
-             <div className="w-16 h-16 bg-gray-50 dark:bg-slate-900 rounded-full flex items-center justify-center mb-4">
-               <FileText size={32} className="text-gray-300 dark:text-slate-600 stroke-[1.5]" />
+          <div className="text-center py-16 bg-white dark:bg-[#0A3D3B] rounded-3xl border border-[#CFE4E3] dark:border-[#145250] shadow-sm flex flex-col items-center">
+             <div className="w-16 h-16 bg-[#E7F1F1] dark:bg-[#062625] rounded-full flex items-center justify-center mb-4">
+               <FileText size={32} className="text-[#5C807F] dark:text-[#9FC8C7] stroke-[1.5]" />
              </div>
-             <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">{t('no_prescriptions', 'No prescriptions to review')}</h3>
-             <p className="text-sm font-medium text-gray-500">{t('no_prescriptions_desc', 'When a patient uploads a prescription it will appear here.')}</p>
+             <h3 className="text-lg font-bold text-[#0A3D3B] dark:text-white mb-1">{t('no_prescriptions', 'No prescriptions to review')}</h3>
+             <p className="text-sm font-medium text-[#5C807F] dark:text-[#9FC8C7]">{t('no_prescriptions_desc', 'When a patient uploads a prescription it will appear here.')}</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -124,18 +124,18 @@ export function PharmacistPrescriptions() {
                const hasAiScan = Boolean(p.aiScanData);
 
                return (
-                  <div key={p.id} className="bg-white dark:bg-slate-800 rounded-3xl border border-gray-100 dark:border-slate-700 shadow-sm flex flex-col overflow-hidden group">
+                  <div key={p.id} className="bg-white dark:bg-[#0A3D3B] rounded-3xl border border-[#CFE4E3] dark:border-[#145250] shadow-sm flex flex-col overflow-hidden group">
                      {/* Preview Area */}
-                     <div className="h-48 bg-[#FAFBFC] dark:bg-slate-900/80 w-full flex flex-col relative overflow-hidden group-hover:bg-gray-50 dark:bg-zinc-900 transition-colors">
+                     <div className="h-48 bg-[#F5FAFA] dark:bg-[#062625] w-full flex flex-col relative overflow-hidden group-hover:bg-[#E7F1F1] dark:group-hover:bg-[#0E4A47] transition-colors">
                         <div className="absolute top-4 left-4 z-10 flex gap-2">
-                           <span className={`text-[10px] font-bold px-3 py-1 rounded-full shadow-sm flex items-center gap-1 border ${p.status === 'approved' ? 'bg-[#D3F5A8]/90 text-[#0B3B3C] border-[#D3F5A8] backdrop-blur-md' : p.status === 'rejected' ? 'bg-red-50/90 text-red-700 border-red-100/50 backdrop-blur-md' : 'bg-white dark:bg-zinc-950/90 text-amber-700 border-gray-200 backdrop-blur-md'}`}>
+                           <span className={`text-[10px] font-bold px-3 py-1 rounded-full shadow-sm flex items-center gap-1 border ${p.status === 'approved' ? 'bg-[#D7F1EA]/95 text-[#0E7673] border-[#CFE4E3] backdrop-blur-md' : p.status === 'rejected' ? 'bg-red-50/90 text-red-700 border-red-200 backdrop-blur-md' : 'bg-white/95 dark:bg-[#0A3D3B]/95 text-amber-700 dark:text-amber-300 border-[#CFE4E3] dark:border-[#145250] backdrop-blur-md'}`}>
                              {p.status === 'approved' ? <CheckCircle size={12} /> : p.status === 'rejected' ? <XCircle size={12} /> : <Clock size={12} className="text-amber-500" />}
                              {t(p.status || 'pending', p.status || 'Pending')}
                            </span>
 
                            {hasAiScan && (
-                             <span className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-[var(--app-primary-color)] text-yellow-300 shadow-sm flex items-center gap-1 backdrop-blur-md">
-                               <Sparkles size={11} /> AI DPML
+                             <span className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-[#0E7673] text-[#D7F1EA] shadow-sm flex items-center gap-1 backdrop-blur-md">
+                               <Sparkles size={11} className="text-[#38B794]" /> AI DPML
                              </span>
                            )}
                         </div>
@@ -144,32 +144,32 @@ export function PharmacistPrescriptions() {
                            {isImage ? (
                               <img src={p.fileUrl} className="w-full h-full object-contain filter drop-shadow-sm group-hover:scale-105 transition-all duration-300" alt={displayFilename} />
                            ) : (
-                              <div className="w-20 h-20 bg-white dark:bg-zinc-950 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center group-hover:-translate-y-1 transition-transform">
-                                <FileText size={36} strokeWidth={1.5} className="text-gray-400" />
+                              <div className="w-20 h-20 bg-white dark:bg-[#0A3D3B] rounded-2xl shadow-sm border border-[#CFE4E3] dark:border-[#145250] flex items-center justify-center group-hover:-translate-y-1 transition-transform">
+                                <FileText size={36} strokeWidth={1.5} className="text-[#5C807F] dark:text-[#9FC8C7]" />
                               </div>
                            )}
                         </div>
                      </div>
                      
-                     <div className="p-5 flex flex-col flex-1 border-t border-gray-100 dark:border-slate-700">
+                     <div className="p-5 flex flex-col flex-1 border-t border-[#CFE4E3] dark:border-[#145250]">
                         <div className="flex items-center gap-3 mb-2">
-                           <div className={`w-8 h-8 shrink-0 rounded-xl flex items-center justify-center border ${isPdf ? 'bg-red-50 border-red-100 text-red-500' : isImage ? 'bg-blue-50 border-blue-100 text-blue-500' : 'bg-gray-50 dark:bg-zinc-900 border-gray-100 text-gray-500'}`}>
+                           <div className={`w-8 h-8 shrink-0 rounded-xl flex items-center justify-center border ${isPdf ? 'bg-red-50 border-red-200 text-red-500 dark:bg-red-950/40 dark:border-red-900/40' : isImage ? 'bg-[#E7F1F1] border-[#CFE4E3] text-[#0E7673] dark:bg-[#062625] dark:border-[#145250] dark:text-[#38B794]' : 'bg-[#F5FAFA] dark:bg-[#062625] border-[#CFE4E3] dark:border-[#145250] text-[#5C807F] dark:text-[#9FC8C7]'}`}>
                               {isPdf ? <FileText size={16} /> : isImage ? <ImageIcon size={16} /> : <FileText size={16} />}
                            </div>
                            <div className="flex-1 overflow-hidden">
-                             <p className="font-bold text-gray-900 dark:text-gray-100 text-sm truncate" title={displayFilename}>
+                             <p className="font-bold text-[#0A3D3B] dark:text-white text-sm truncate" title={displayFilename}>
                                 {displayFilename}
                              </p>
-                             <p className="text-xs font-medium text-gray-500 mt-0.5 truncate">{parseDate(p.createdAt) ? parseDate(p.createdAt)!.toLocaleDateString() : 'Just now'}</p>
+                             <p className="text-xs font-medium text-[#5C807F] dark:text-[#9FC8C7] mt-0.5 truncate">{parseDate(p.createdAt) ? parseDate(p.createdAt)!.toLocaleDateString() : 'Just now'}</p>
                            </div>
                         </div>
 
                         {/* AI Quick Button */}
                         <button
                           onClick={() => handleOpenAiModal(p)}
-                          className="w-full mt-2 mb-3 bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-950/30 dark:to-teal-950/30 border border-emerald-200 dark:border-emerald-800 text-[var(--app-primary-color)] dark:text-teal-300 font-bold py-2.5 rounded-xl text-xs flex justify-center items-center gap-2 transition hover:shadow-sm"
+                          className="w-full mt-2 mb-3 bg-[#D7F1EA]/70 dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] text-[#0E7673] dark:text-[#38B794] font-bold py-2.5 rounded-full text-xs flex justify-center items-center gap-2 transition hover:bg-[#D7F1EA] dark:hover:bg-[#0E4A47]"
                         >
-                           <ShieldCheck size={15} className="text-[var(--app-primary-color)] dark:text-teal-400" />
+                           <ShieldCheck size={15} className="text-[#0E7673] dark:text-[#38B794]" />
                            {hasAiScan ? "Consulter l'Audit DPML (IA)" : "Analyser avec l'IA"}
                         </button>
 
@@ -178,20 +178,20 @@ export function PharmacistPrescriptions() {
                            <button 
                              disabled={!isPending || processingId === p.id}
                              onClick={() => handleUpdateStatus(p.id, 'approved')}
-                             className="bg-white dark:bg-zinc-950 border-2 border-gray-100 hover:border-[#D3F5A8] hover:bg-[#D3F5A8]/20 hover:text-[#0B3B3C] text-gray-700 disabled:opacity-50 disabled:bg-gray-50 dark:bg-slate-700 disabled:border-transparent disabled:text-gray-400 font-bold py-3 rounded-2xl text-xs flex justify-center items-center gap-1.5 transition-all"
+                             className="bg-white dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] hover:border-[#38B794] hover:bg-[#D7F1EA]/40 hover:text-[#0E7673] text-[#0A3D3B] dark:text-[#D7F1EA] disabled:opacity-50 disabled:bg-[#F5FAFA] dark:disabled:bg-[#062625] disabled:border-transparent disabled:text-[#5C807F] font-bold py-2.5 rounded-full text-xs flex justify-center items-center gap-1.5 transition-all"
                            >
                               {processingId === p.id ? <Loader2 size={16} className="animate-spin" /> : <CheckCircle size={16} />} Approve
                            </button>
                            <button 
                              disabled={!isPending || processingId === p.id}
                              onClick={() => handleUpdateStatus(p.id, 'rejected')}
-                             className="bg-white dark:bg-zinc-950 border-2 border-gray-100 hover:border-red-200 hover:bg-red-50 hover:text-red-700 text-gray-700 disabled:opacity-50 disabled:bg-gray-50 dark:bg-slate-700 disabled:border-transparent disabled:text-gray-400 font-bold py-3 rounded-2xl text-xs flex justify-center items-center gap-1.5 transition-all"
+                             className="bg-white dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] hover:border-red-300 hover:bg-red-50 dark:hover:bg-red-950/30 hover:text-red-700 text-[#0A3D3B] dark:text-[#D7F1EA] disabled:opacity-50 disabled:bg-[#F5FAFA] dark:disabled:bg-[#062625] disabled:border-transparent disabled:text-[#5C807F] font-bold py-2.5 rounded-full text-xs flex justify-center items-center gap-1.5 transition-all"
                            >
                               <XCircle size={16} /> Reject
                            </button>
                         </div>
                         
-                        <button className="w-full mt-3 bg-white dark:bg-zinc-950 border border-[#0B3B3C]/10 hover:border-[#0B3B3C]/30 text-[#0B3B3C] font-bold py-3.5 rounded-2xl text-xs flex justify-center items-center gap-2 transition-all shadow-sm">
+                        <button className="w-full mt-3 bg-[#0E7673] hover:bg-[#0A5A58] text-white font-bold py-3 rounded-full text-xs flex justify-center items-center gap-2 transition-all shadow-sm">
                            <MessageSquare size={16} /> Contact Patient
                         </button>
                      </div>

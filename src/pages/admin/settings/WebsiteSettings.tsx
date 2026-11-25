@@ -98,42 +98,42 @@ export function WebsiteSettings() {
     );
   };
 
-  if (loading) return <div className="p-8 text-slate-500"> {t('loading_settings', 'Loading settings...')} </div>;
+  if (loading) return <div className="p-8 text-[#5C807F] dark:text-[#9FC8C7] bg-[#F5FAFA] dark:bg-[#062625] flex-1"> {t('loading_settings', 'Loading settings...')} </div>;
 
   return (
-    <div className="flex-1 bg-slate-50 flex flex-col h-full overflow-hidden">
-      <div className="bg-white dark:bg-zinc-950 px-8 pt-6 pb-6 shadow-sm z-10 border-b border-gray-200 shrink-0 flex items-center justify-between">
+    <div className="flex-1 bg-[#F5FAFA] dark:bg-[#062625] flex flex-col h-full overflow-hidden">
+      <div className="bg-white dark:bg-[#0A3D3B] px-8 pt-6 pb-6 shadow-sm z-10 border-b border-[#CFE4E3] dark:border-[#145250] shrink-0 flex items-center justify-between gap-4">
          <div>
-             <h1 className="font-bold text-gray-900 dark:text-white text-2xl mb-1 flex items-center gap-2"><Monitor size={24} />  {t('website_settings', 'Website Settings')} </h1>
-             <p className="text-gray-500 text-sm"> {t('configure_marketing_website_de', 'Configure marketing website details, SEO, and contact info')} </p>
+             <h1 className="font-bold text-[#0A3D3B] dark:text-white text-2xl mb-1 flex items-center gap-2"><Monitor size={24} className="text-[#0E7673] dark:text-[#38B794]" />  {t('website_settings', 'Website Settings')} </h1>
+             <p className="text-[#5C807F] dark:text-[#9FC8C7] text-sm"> {t('configure_marketing_website_de', 'Configure marketing website details, SEO, and contact info')} </p>
          </div>
          <button 
            onClick={handleSave}
            disabled={saving}
-           className="bg-slate-900 text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-sm hover:bg-slate-800 transition flex items-center gap-2 disabled:opacity-50"
+           className="bg-[#0E7673] hover:bg-[#0A5A58] text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-sm transition flex items-center gap-2 disabled:opacity-50 shrink-0"
          >
            <Save size={18} /> {saving ? "Saving..." : "Save Changes"}
          </button>
       </div>
 
       <div className="flex-1 overflow-y-auto p-8 max-w-3xl space-y-8">
-         <div className="bg-white dark:bg-zinc-950 rounded-2xl p-6 shadow-sm border border-slate-100">
-            <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2"><ImageIcon size={18} />  {t('website_assets', 'Website Assets')} </h2>
+         <div className="bg-white dark:bg-[#0A3D3B] rounded-2xl p-6 shadow-sm border border-[#CFE4E3] dark:border-[#145250]">
+            <h2 className="text-lg font-bold text-[#0A3D3B] dark:text-white mb-6 flex items-center gap-2"><ImageIcon size={18} className="text-[#0E7673] dark:text-[#38B794]" />  {t('website_assets', 'Website Assets')} </h2>
             <div className="space-y-6">
                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-2"> {t('patient_homepage_hero_image', 'Patient Homepage Hero Image')} </label>
-                  <div className="w-full h-48 rounded-xl border-2 border-dashed border-slate-300 bg-slate-50 flex items-center justify-center relative overflow-hidden group">
+                  <label className="block text-sm font-medium text-[#0A3D3B] dark:text-[#D7F1EA] mb-2"> {t('patient_homepage_hero_image', 'Patient Homepage Hero Image')} </label>
+                  <div className="w-full h-48 rounded-2xl border-2 border-dashed border-[#CFE4E3] dark:border-[#145250] bg-[#F5FAFA] dark:bg-[#062625] flex items-center justify-center relative overflow-hidden group">
                      {settings.heroImageUrl ? (
                         <img src={settings.heroImageUrl} alt="Hero" className="w-full h-full object-cover" />
                      ) : (
-                        <div className="text-center text-slate-500">
-                           <ImageIcon size={32} className="mx-auto mb-2 opacity-50" />
+                        <div className="text-center text-[#5C807F] dark:text-[#9FC8C7]">
+                           <ImageIcon size={32} className="mx-auto mb-2 opacity-60" />
                            <span className="text-sm font-medium"> {t('no_image_uploaded', 'No image uploaded')} </span>
                         </div>
                      )}
                      <div 
                         onClick={() => !uploading && heroInputRef.current?.click()}
-                        className="absolute inset-0 bg-black/50 text-white flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer disabled:cursor-not-allowed"
+                        className="absolute inset-0 bg-[#062625]/60 text-white flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer disabled:cursor-not-allowed"
                      >
                         <UploadCloud size={24} className={uploading === 'heroImageUrl' ? "animate-bounce" : ""} />
                         <span className="text-xs font-bold mt-2 uppercase">{uploading === 'heroImageUrl' ? "Uploading..." : "Change Image"}</span>
@@ -150,19 +150,19 @@ export function WebsiteSettings() {
                </div>
 
                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-2"> {t('promotional_banner_image', 'Promotional Banner Image')} </label>
-                  <div className="w-full h-32 rounded-xl border-2 border-dashed border-slate-300 bg-slate-50 flex items-center justify-center relative overflow-hidden group">
+                  <label className="block text-sm font-medium text-[#0A3D3B] dark:text-[#D7F1EA] mb-2"> {t('promotional_banner_image', 'Promotional Banner Image')} </label>
+                  <div className="w-full h-32 rounded-2xl border-2 border-dashed border-[#CFE4E3] dark:border-[#145250] bg-[#F5FAFA] dark:bg-[#062625] flex items-center justify-center relative overflow-hidden group">
                      {settings.promoBannerUrl ? (
                         <img src={settings.promoBannerUrl} alt="Banner" className="w-full h-full object-cover" />
                      ) : (
-                        <div className="text-center text-slate-500">
-                           <ImageIcon size={24} className="mx-auto mb-2 opacity-50" />
+                        <div className="text-center text-[#5C807F] dark:text-[#9FC8C7]">
+                           <ImageIcon size={24} className="mx-auto mb-2 opacity-60" />
                            <span className="text-sm font-medium"> {t('no_image_uploaded', 'No image uploaded')} </span>
                         </div>
                      )}
                      <div 
                         onClick={() => !uploading && bannerInputRef.current?.click()}
-                        className="absolute inset-0 bg-black/50 text-white flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer disabled:cursor-not-allowed"
+                        className="absolute inset-0 bg-[#062625]/60 text-white flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer disabled:cursor-not-allowed"
                      >
                         <UploadCloud size={24} className={uploading === 'promoBannerUrl' ? "animate-bounce" : ""} />
                         <span className="text-xs font-bold mt-2 uppercase">{uploading === 'promoBannerUrl' ? "Uploading..." : "Change Image"}</span>
@@ -180,89 +180,89 @@ export function WebsiteSettings() {
             </div>
          </div>
 
-         <div className="bg-white dark:bg-zinc-950 rounded-2xl p-6 shadow-sm border border-slate-100">
-            <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2"><Globe size={18} />  {t('seo_meta_data', 'SEO & Meta Data')} </h2>
+         <div className="bg-white dark:bg-[#0A3D3B] rounded-2xl p-6 shadow-sm border border-[#CFE4E3] dark:border-[#145250]">
+            <h2 className="text-lg font-bold text-[#0A3D3B] dark:text-white mb-6 flex items-center gap-2"><Globe size={18} className="text-[#0E7673] dark:text-[#38B794]" />  {t('seo_meta_data', 'SEO & Meta Data')} </h2>
             <div className="space-y-4">
                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1"> {t('global_seo_title', 'Global SEO Title')} </label>
+                  <label className="block text-sm font-medium text-[#0A3D3B] dark:text-[#D7F1EA] mb-1"> {t('global_seo_title', 'Global SEO Title')} </label>
                   <input 
                     type="text" 
                     name="seoTitle"
                     value={settings.seoTitle}
                     onChange={handleChange}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none"
+                    className="w-full bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] rounded-xl px-4 py-2.5 text-sm text-[#0A3D3B] dark:text-white focus:ring-2 focus:ring-[#0E7673] outline-none"
                   />
                </div>
                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1"> {t('global_seo_description', 'Global SEO Description')} </label>
+                  <label className="block text-sm font-medium text-[#0A3D3B] dark:text-[#D7F1EA] mb-1"> {t('global_seo_description', 'Global SEO Description')} </label>
                   <textarea 
                     name="seoDescription"
                     value={settings.seoDescription}
                     onChange={handleChange}
                     rows={3}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none resize-none"
+                    className="w-full bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] rounded-xl px-4 py-2.5 text-sm text-[#0A3D3B] dark:text-white focus:ring-2 focus:ring-[#0E7673] outline-none resize-none"
                   />
                </div>
             </div>
          </div>
 
-         <div className="bg-white dark:bg-zinc-950 rounded-2xl p-6 shadow-sm border border-slate-100">
-            <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-6"> {t('company_information', 'Company Information')} </h2>
+         <div className="bg-white dark:bg-[#0A3D3B] rounded-2xl p-6 shadow-sm border border-[#CFE4E3] dark:border-[#145250]">
+            <h2 className="text-lg font-bold text-[#0A3D3B] dark:text-white mb-6"> {t('company_information', 'Company Information')} </h2>
             <div className="space-y-4">
                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1"> {t('contact_phone_number', 'Contact Phone Number')} </label>
+                  <label className="block text-sm font-medium text-[#0A3D3B] dark:text-[#D7F1EA] mb-1"> {t('contact_phone_number', 'Contact Phone Number')} </label>
                   <input 
                     type="text" 
                     name="contactNumber"
                     value={settings.contactNumber}
                     onChange={handleChange}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none"
+                    className="w-full bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] rounded-xl px-4 py-2.5 text-sm text-[#0A3D3B] dark:text-white focus:ring-2 focus:ring-[#0E7673] outline-none tabular-nums"
                   />
                </div>
                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1"> {t('company_physical_address', 'Company Physical Address')} </label>
+                  <label className="block text-sm font-medium text-[#0A3D3B] dark:text-[#D7F1EA] mb-1"> {t('company_physical_address', 'Company Physical Address')} </label>
                   <input 
                     type="text" 
                     name="companyAddress"
                     value={settings.companyAddress}
                     onChange={handleChange}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none"
+                    className="w-full bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] rounded-xl px-4 py-2.5 text-sm text-[#0A3D3B] dark:text-white focus:ring-2 focus:ring-[#0E7673] outline-none"
                   />
                </div>
             </div>
          </div>
 
-         <div className="bg-white dark:bg-zinc-950 rounded-2xl p-6 shadow-sm border border-slate-100">
-            <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-6"> {t('social_links', 'Social Links')} </h2>
+         <div className="bg-white dark:bg-[#0A3D3B] rounded-2xl p-6 shadow-sm border border-[#CFE4E3] dark:border-[#145250]">
+            <h2 className="text-lg font-bold text-[#0A3D3B] dark:text-white mb-6"> {t('social_links', 'Social Links')} </h2>
             <div className="space-y-4">
                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1"> {t('facebook_url', 'Facebook URL')} </label>
+                  <label className="block text-sm font-medium text-[#0A3D3B] dark:text-[#D7F1EA] mb-1"> {t('facebook_url', 'Facebook URL')} </label>
                   <input 
                     type="url" 
                     name="facebookUrl"
                     value={settings.facebookUrl}
                     onChange={handleChange}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none"
+                    className="w-full bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] rounded-xl px-4 py-2.5 text-sm text-[#0A3D3B] dark:text-white focus:ring-2 focus:ring-[#0E7673] outline-none"
                   />
                </div>
                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1"> {t('instagram_url', 'Instagram URL')} </label>
+                  <label className="block text-sm font-medium text-[#0A3D3B] dark:text-[#D7F1EA] mb-1"> {t('instagram_url', 'Instagram URL')} </label>
                   <input 
                     type="url" 
                     name="instagramUrl"
                     value={settings.instagramUrl}
                     onChange={handleChange}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none"
+                    className="w-full bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] rounded-xl px-4 py-2.5 text-sm text-[#0A3D3B] dark:text-white focus:ring-2 focus:ring-[#0E7673] outline-none"
                   />
                </div>
                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1"> {t('twitter_x_url', 'Twitter / X URL')} </label>
+                  <label className="block text-sm font-medium text-[#0A3D3B] dark:text-[#D7F1EA] mb-1"> {t('twitter_x_url', 'Twitter / X URL')} </label>
                   <input 
                     type="url" 
                     name="twitterUrl"
                     value={settings.twitterUrl}
                     onChange={handleChange}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none"
+                    className="w-full bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] rounded-xl px-4 py-2.5 text-sm text-[#0A3D3B] dark:text-white focus:ring-2 focus:ring-[#0E7673] outline-none"
                   />
                </div>
             </div>

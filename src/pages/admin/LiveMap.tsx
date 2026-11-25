@@ -86,8 +86,8 @@ const DriverMarkerUI = ({ color, isAlert }: { color: string, isAlert: boolean })
 
 const PharmacyMarkerUI = () => (
   <div style={{
-    width: 36, height: 36, background: '#194B4B', border: '2.5px solid #ffffff', borderRadius: '50%',
-    boxShadow: '0 6px 18px rgba(25, 75, 75, 0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ffffff'
+    width: 36, height: 36, background: '#0E7673', border: '2.5px solid #ffffff', borderRadius: '50%',
+    boxShadow: '0 6px 18px rgba(14, 118, 115, 0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ffffff'
   }}>
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
       <path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/>
@@ -393,26 +393,26 @@ export function AdminLiveMap() {
       const delivery = deliveries.find(del => del.driver_id === d.id);
 
       let state: 'idle' | 'en_route_to_pharmacy' | 'delivering' | 'offline' = 'idle';
-      let color = '#10b981'; // Vert Émeraude (Disponible)
+      let color = '#38B794'; // Vert Menthe Charte (Disponible)
 
       if (!d.isOnline) {
         state = 'offline';
-        color = '#94a3b8';
+        color = '#5C807F';
       } else if (order) {
         if (['to_pharmacy', 'at_pharmacy', 'preparing', 'ready'].includes(order.status)) {
           state = 'en_route_to_pharmacy';
-          color = '#f59e0b'; // Jaune / Ambre (Approche Pharmacie)
+          color = '#F59E0B'; // Ambre (Approche Pharmacie)
         } else if (['out_for_delivery', 'to_customer', 'delivering'].includes(order.status)) {
           state = 'delivering';
-          color = '#6366f1'; // Indigo / Bleu (En cours vers Patient)
+          color = '#0E7673'; // Teal Principal Charte (En cours vers Patient)
         }
       } else if (delivery) {
         if (delivery.status === 'en_route_to_pharmacy') {
           state = 'en_route_to_pharmacy';
-          color = '#f59e0b';
+          color = '#F59E0B';
         } else if (delivery.status === 'delivering') {
           state = 'delivering';
-          color = '#6366f1';
+          color = '#0E7673';
         }
       }
 
@@ -522,58 +522,58 @@ export function AdminLiveMap() {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-64px)] w-full bg-slate-50 dark:bg-zinc-950 p-4 md:p-6 overflow-hidden">
+    <div className="flex flex-col h-[calc(100vh-64px)] w-full bg-[#F5FAFA] dark:bg-[#062625] p-4 md:p-6 overflow-hidden">
       
       {/* Top Stats Banner */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5 mb-4 shrink-0">
-        <div className="bg-white dark:bg-zinc-900 p-4 rounded-2xl border border-gray-100 dark:border-zinc-800 shadow-sm flex items-center justify-between">
+        <div className="bg-white dark:bg-[#0A3D3B] p-4 rounded-2xl border border-[#CFE4E3] dark:border-[#145250] shadow-sm flex items-center justify-between">
           <div>
-            <p className="text-[10px] uppercase font-black tracking-wider text-gray-400">Flotte Active</p>
-            <p className="text-xl font-extrabold text-gray-900 dark:text-white mt-0.5">{drivers.length}</p>
+            <p className="text-[10px] uppercase font-bold tracking-wider text-[#5C807F] dark:text-[#9FC8C7]">Flotte Active</p>
+            <p className="text-xl font-extrabold text-[#0A3D3B] dark:text-white mt-0.5 tabular-nums">{drivers.length}</p>
           </div>
-          <div className="w-10 h-10 rounded-xl bg-[var(--app-primary-color)]/10 text-[var(--app-primary-color)] dark:text-teal-400 flex items-center justify-center font-black">
+          <div className="w-10 h-10 rounded-xl bg-[#D7F1EA] dark:bg-[#0E4A47] text-[#0E7673] dark:text-[#38B794] flex items-center justify-center">
             <Bike size={20} />
           </div>
         </div>
 
-        <div className="bg-white dark:bg-zinc-900 p-4 rounded-2xl border border-gray-100 dark:border-zinc-800 shadow-sm flex items-center justify-between">
+        <div className="bg-white dark:bg-[#0A3D3B] p-4 rounded-2xl border border-[#CFE4E3] dark:border-[#145250] shadow-sm flex items-center justify-between">
           <div>
-            <p className="text-[10px] uppercase font-black tracking-wider text-gray-400">En Livraison</p>
-            <p className="text-xl font-extrabold text-[var(--app-primary-color)] dark:text-teal-400 mt-0.5">{deliveringDrivers.length}</p>
+            <p className="text-[10px] uppercase font-bold tracking-wider text-[#5C807F] dark:text-[#9FC8C7]">En Livraison</p>
+            <p className="text-xl font-extrabold text-[#0E7673] dark:text-[#38B794] mt-0.5 tabular-nums">{deliveringDrivers.length}</p>
           </div>
-          <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center font-black">
-            <Radio size={20} className="animate-pulse" />
+          <div className="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 flex items-center justify-center">
+            <Radio size={20} />
           </div>
         </div>
 
-        <div className="bg-white dark:bg-zinc-900 p-4 rounded-2xl border border-gray-100 dark:border-zinc-800 shadow-sm flex items-center justify-between">
+        <div className="bg-white dark:bg-[#0A3D3B] p-4 rounded-2xl border border-[#CFE4E3] dark:border-[#145250] shadow-sm flex items-center justify-between">
           <div>
-            <p className="text-[10px] uppercase font-black tracking-wider text-gray-400">Disponibles</p>
-            <p className="text-xl font-extrabold text-emerald-600 mt-0.5">{idleDrivers.length}</p>
+            <p className="text-[10px] uppercase font-bold tracking-wider text-[#5C807F] dark:text-[#9FC8C7]">Disponibles</p>
+            <p className="text-xl font-extrabold text-[#38B794] mt-0.5 tabular-nums">{idleDrivers.length}</p>
           </div>
-          <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center font-black">
+          <div className="w-10 h-10 rounded-xl bg-[#D7F1EA] dark:bg-[#0E4A47] text-[#0E7673] dark:text-[#38B794] flex items-center justify-center">
             <CheckCircle2 size={20} />
           </div>
         </div>
 
-        <div className="bg-white dark:bg-zinc-900 p-4 rounded-2xl border border-gray-100 dark:border-zinc-800 shadow-sm flex items-center justify-between">
+        <div className="bg-white dark:bg-[#0A3D3B] p-4 rounded-2xl border border-[#CFE4E3] dark:border-[#145250] shadow-sm flex items-center justify-between">
           <div>
-            <p className="text-[10px] uppercase font-black tracking-wider text-gray-400">Alertes Stagnation</p>
-            <p className={`text-xl font-extrabold mt-0.5 ${activeAlerts.length > 0 ? 'text-red-500' : 'text-gray-900 dark:text-white'}`}>
+            <p className="text-[10px] uppercase font-bold tracking-wider text-[#5C807F] dark:text-[#9FC8C7]">Alertes Stagnation</p>
+            <p className={`text-xl font-extrabold mt-0.5 tabular-nums ${activeAlerts.length > 0 ? 'text-red-500' : 'text-[#0A3D3B] dark:text-white'}`}>
               {activeAlerts.length}
             </p>
           </div>
-          <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-black ${activeAlerts.length > 0 ? 'bg-red-500 text-white animate-bounce' : 'bg-gray-100 dark:bg-zinc-800 text-gray-400'}`}>
+          <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${activeAlerts.length > 0 ? 'bg-red-500 text-white' : 'bg-[#E7F1F1] dark:bg-[#0E4A47] text-[#5C807F] dark:text-[#9FC8C7]'}`}>
             <AlertOctagon size={20} />
           </div>
         </div>
       </div>
 
       {/* Main Map + Sidebars Layout */}
-      <div className="flex-1 flex flex-col lg:flex-row rounded-3xl overflow-hidden border border-gray-200 dark:border-zinc-800 shadow-xl bg-white dark:bg-zinc-900 relative">
+      <div className="flex-1 flex flex-col lg:flex-row rounded-3xl overflow-hidden border border-[#CFE4E3] dark:border-[#145250] shadow-lg bg-white dark:bg-[#0A3D3B] relative">
         
         {/* CENTER MAP CONTAINER */}
-        <div className="flex-1 h-[45vh] lg:h-full relative z-0 bg-slate-900">
+        <div className="flex-1 h-[45vh] lg:h-full relative z-0 bg-[#062625]">
           {mapsAvailable && mapsApiKey ? (
             <APIProvider 
               apiKey={mapsApiKey}
@@ -635,7 +635,7 @@ export function AdminLiveMap() {
                           </AdvancedMarker>
                           <Polyline 
                             path={pharmaPolylinePath} 
-                            strokeColor="#f59e0b" 
+                            strokeColor="#F59E0B" 
                             strokeWeight={selectedDriverId === st.driver.id ? 5 : 4} 
                             strokeOpacity={0.85} 
                           />
@@ -650,7 +650,7 @@ export function AdminLiveMap() {
                           </AdvancedMarker>
                           <Polyline 
                             path={patientPolylinePath} 
-                            strokeColor="#10b981" 
+                            strokeColor="#38B794" 
                             strokeWeight={selectedDriverId === st.driver.id ? 5 : 4} 
                             strokeOpacity={0.85} 
                           />
@@ -662,30 +662,30 @@ export function AdminLiveMap() {
               </Map>
             </APIProvider>
           ) : (
-            <div className="w-full h-full flex flex-col items-center justify-center p-8 text-center relative overflow-hidden bg-slate-900 border border-slate-800">
-              <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#14b8a6_1px,transparent_1px)] [background-size:20px_20px]"></div>
+            <div className="w-full h-full flex flex-col items-center justify-center p-8 text-center relative overflow-hidden bg-[#062625] border border-[#145250]">
+              <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#38B794_1px,transparent_1px)] [background-size:20px_20px]"></div>
               <div className="relative z-10 max-w-md space-y-4">
-                <div className="w-16 h-16 mx-auto rounded-3xl bg-teal-500/10 border border-teal-500/30 flex items-center justify-center text-teal-400 shadow-xl">
-                  <Radio size={32} className="animate-pulse" />
+                <div className="w-16 h-16 mx-auto rounded-3xl bg-[#0E7673]/25 border border-[#38B794]/40 flex items-center justify-center text-[#38B794] shadow-xl">
+                  <Radio size={32} />
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-white tracking-wide">Radar de Flotte Opérationnel</h3>
-                  <p className="text-xs text-slate-400 mt-1">
-                    {driverStatuses.length} coursiers connectés • Suivi télémétrique des courses en temps réel.
+                  <p className="text-xs text-[#9FC8C7] mt-1">
+                    {driverStatuses.length} coursiers connectés · Suivi télémétrique des courses en temps réel.
                   </p>
                 </div>
                 <div className="grid grid-cols-3 gap-2 pt-2 text-left">
-                  <div className="bg-slate-800/80 p-2.5 rounded-xl border border-slate-700/60">
-                    <span className="text-[10px] text-slate-400 uppercase font-semibold block">Actifs</span>
-                    <span className="text-base font-bold text-teal-400">{driverStatuses.filter(s => s.state !== 'idle').length}</span>
+                  <div className="bg-[#0A3D3B] p-2.5 rounded-xl border border-[#145250]">
+                    <span className="text-[10px] text-[#9FC8C7] uppercase font-semibold block">Actifs</span>
+                    <span className="text-base font-bold text-[#38B794] tabular-nums">{driverStatuses.filter(s => s.state !== 'idle').length}</span>
                   </div>
-                  <div className="bg-slate-800/80 p-2.5 rounded-xl border border-slate-700/60">
-                    <span className="text-[10px] text-slate-400 uppercase font-semibold block">Disponibles</span>
-                    <span className="text-base font-bold text-emerald-400">{driverStatuses.filter(s => s.state === 'idle').length}</span>
+                  <div className="bg-[#0A3D3B] p-2.5 rounded-xl border border-[#145250]">
+                    <span className="text-[10px] text-[#9FC8C7] uppercase font-semibold block">Disponibles</span>
+                    <span className="text-base font-bold text-[#D7F1EA] tabular-nums">{driverStatuses.filter(s => s.state === 'idle').length}</span>
                   </div>
-                  <div className="bg-slate-800/80 p-2.5 rounded-xl border border-slate-700/60">
-                    <span className="text-[10px] text-slate-400 uppercase font-semibold block">Alertes</span>
-                    <span className="text-base font-bold text-rose-400">{driverStatuses.filter(s => s.isStalled).length}</span>
+                  <div className="bg-[#0A3D3B] p-2.5 rounded-xl border border-[#145250]">
+                    <span className="text-[10px] text-[#9FC8C7] uppercase font-semibold block">Alertes</span>
+                    <span className="text-base font-bold text-rose-400 tabular-nums">{driverStatuses.filter(s => s.isStalled).length}</span>
                   </div>
                 </div>
               </div>
@@ -696,60 +696,60 @@ export function AdminLiveMap() {
           <div className="absolute top-4 right-4 z-10 flex gap-2">
             <button
               onClick={() => fetchData()}
-              className="p-3 bg-white dark:bg-zinc-950/95 dark:bg-zinc-900/95 backdrop-blur-md rounded-2xl shadow-lg border border-gray-100 dark:border-zinc-800 text-gray-700 dark:text-gray-200 hover:bg-white dark:bg-zinc-950 transition active:scale-95"
+              className="p-3 bg-white/95 dark:bg-[#0A3D3B]/95 backdrop-blur-md rounded-full shadow-lg border border-[#CFE4E3] dark:border-[#145250] text-[#0A3D3B] dark:text-[#D7F1EA] hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47] transition active:scale-95"
               title="Rafraîchir les données"
             >
-              <RefreshCw size={18} className={loading ? "animate-spin text-[var(--app-primary-color)]" : ""} />
+              <RefreshCw size={18} className={loading ? "animate-spin text-[#0E7673] dark:text-[#38B794]" : ""} />
             </button>
           </div>
 
           {/* Floating Selected Driver Card */}
           {selectedDriver && (
             <div className="absolute bottom-4 left-4 right-4 sm:left-6 sm:right-auto sm:w-96 z-10 pointer-events-auto animate-in slide-in-from-bottom duration-200">
-              <div className="bg-white dark:bg-zinc-950/95 dark:bg-zinc-900/95 backdrop-blur-md p-4 rounded-3xl border border-gray-100 dark:border-zinc-800 shadow-2xl space-y-3">
+              <div className="bg-white/95 dark:bg-[#0A3D3B]/95 backdrop-blur-md p-4 rounded-3xl border border-[#CFE4E3] dark:border-[#145250] shadow-2xl space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-[var(--app-primary-color)] text-white flex items-center justify-center font-bold">
+                    <div className="w-10 h-10 rounded-full bg-[#0E7673] text-white flex items-center justify-center font-bold">
                       {selectedDriver.driver.name.charAt(0)}
                     </div>
                     <div>
-                      <h4 className="font-bold text-sm text-gray-900 dark:text-white">{selectedDriver.driver.name}</h4>
-                      <p className="text-[11px] text-gray-500">{selectedDriver.driver.vehicle_model} • {selectedDriver.driver.vehicle_plate}</p>
+                      <h4 className="font-bold text-sm text-[#0A3D3B] dark:text-white">{selectedDriver.driver.name}</h4>
+                      <p className="text-[11px] text-[#5C807F] dark:text-[#9FC8C7]">{selectedDriver.driver.vehicle_model} · {selectedDriver.driver.vehicle_plate}</p>
                     </div>
                   </div>
                   <button 
                     onClick={() => setSelectedDriverId(null)}
-                    className="w-7 h-7 rounded-full bg-gray-100 dark:bg-zinc-800 text-gray-500 flex items-center justify-center"
+                    className="w-7 h-7 rounded-full bg-[#E7F1F1] dark:bg-[#0E4A47] text-[#5C807F] dark:text-[#9FC8C7] hover:text-[#0A3D3B] dark:hover:text-white flex items-center justify-center transition"
                   >
                     ✕
                   </button>
                 </div>
 
                 {selectedDriver.order ? (
-                  <div className="bg-gray-50 dark:bg-zinc-800/60 p-3 rounded-2xl text-xs space-y-1.5 border border-gray-100 dark:border-zinc-800">
+                  <div className="bg-[#F5FAFA] dark:bg-[#062625]/70 p-3 rounded-2xl text-xs space-y-1.5 border border-[#CFE4E3] dark:border-[#145250]">
                     <div className="flex justify-between font-bold">
-                      <span className="text-gray-500">Mission:</span>
-                      <span className="text-[var(--app-primary-color)] dark:text-teal-300">#{selectedDriver.order.id.slice(0, 8).toUpperCase()}</span>
+                      <span className="text-[#5C807F] dark:text-[#9FC8C7]">Mission:</span>
+                      <span className="text-[#0E7673] dark:text-[#38B794]">#{selectedDriver.order.id.slice(0, 8).toUpperCase()}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-500">Patient:</span>
-                      <span className="font-bold text-gray-900 dark:text-white">{selectedDriver.order.patientName || 'Patient'}</span>
+                      <span className="text-[#5C807F] dark:text-[#9FC8C7]">Patient:</span>
+                      <span className="font-bold text-[#0A3D3B] dark:text-white">{selectedDriver.order.patientName || 'Patient'}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-500">Total:</span>
-                      <span className="font-bold text-gray-900 dark:text-white">{formatCurrency(selectedDriver.order.total || 0)}</span>
+                      <span className="text-[#5C807F] dark:text-[#9FC8C7]">Total:</span>
+                      <span className="font-bold text-[#0A3D3B] dark:text-white tabular-nums">{formatCurrency(selectedDriver.order.total || 0)}</span>
                     </div>
 
                     {(selectedDriver.order.proofOfDeliveryUrl || selectedDriver.order.proof_of_delivery_url || selectedDriver.order.deliveryProofPhoto) && (
-                      <div className="pt-2 mt-2 border-t border-gray-200 dark:border-zinc-700">
-                        <span className="text-[10px] font-bold text-emerald-700 dark:text-emerald-400 flex items-center gap-1 mb-1">
+                      <div className="pt-2 mt-2 border-t border-[#CFE4E3] dark:border-[#145250]">
+                        <span className="text-[10px] font-bold text-[#0E7673] dark:text-[#38B794] flex items-center gap-1 mb-1">
                           <ShieldCheck size={13} /> Preuve photo de remise enregistrée
                         </span>
                         <a 
                           href={selectedDriver.order.proofOfDeliveryUrl || selectedDriver.order.proof_of_delivery_url || selectedDriver.order.deliveryProofPhoto}
                           target="_blank"
                           rel="noreferrer"
-                          className="block rounded-lg overflow-hidden h-24 w-full border border-emerald-300"
+                          className="block rounded-xl overflow-hidden h-24 w-full border border-[#38B794]/50"
                         >
                           <img 
                             src={selectedDriver.order.proofOfDeliveryUrl || selectedDriver.order.proof_of_delivery_url || selectedDriver.order.deliveryProofPhoto} 
@@ -761,7 +761,7 @@ export function AdminLiveMap() {
                     )}
                   </div>
                 ) : (
-                  <p className="text-xs text-emerald-600 font-bold bg-emerald-50 dark:bg-emerald-950/40 p-2.5 rounded-xl text-center">
+                  <p className="text-xs text-[#0E7673] dark:text-[#38B794] font-bold bg-[#D7F1EA] dark:bg-[#0E4A47] p-2.5 rounded-xl text-center">
                     En attente de nouvelle mission
                   </p>
                 )}
@@ -769,7 +769,7 @@ export function AdminLiveMap() {
                 {selectedDriver.driver.phone && (
                   <a
                     href={`tel:${selectedDriver.driver.phone}`}
-                    className="w-full py-2.5 bg-[var(--app-primary-color)] text-white rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition"
+                    className="w-full py-2.5 bg-[#0E7673] hover:bg-[#0A5A58] text-white rounded-full text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition"
                   >
                     <Phone size={14} /> Contacter le livreur ({selectedDriver.driver.phone})
                   </a>
@@ -780,35 +780,35 @@ export function AdminLiveMap() {
         </div>
 
         {/* RIGHT SIDEBAR: AUDIT TRAIL & FLEET LIST */}
-        <div className="w-full lg:w-[420px] bg-white dark:bg-zinc-950 border-t lg:border-t-0 lg:border-l border-gray-200 dark:border-zinc-800 flex flex-col h-[55vh] lg:h-full shrink-0">
+        <div className="w-full lg:w-[420px] bg-white dark:bg-[#0A3D3B] border-t lg:border-t-0 lg:border-l border-[#CFE4E3] dark:border-[#145250] flex flex-col h-[55vh] lg:h-full shrink-0">
           
           {/* Header */}
-          <div className="p-5 border-b border-gray-100 dark:border-zinc-800 flex items-center justify-between shrink-0">
+          <div className="p-5 border-b border-[#CFE4E3] dark:border-[#145250] flex items-center justify-between gap-2 shrink-0">
             <div>
-              <h3 className="font-extrabold text-base text-gray-900 dark:text-white flex items-center gap-2">
-                <ShieldAlert size={18} className="text-[var(--app-primary-color)] dark:text-teal-400" />
+              <h3 className="font-extrabold text-base text-[#0A3D3B] dark:text-white flex items-center gap-2">
+                <ShieldAlert size={18} className="text-[#0E7673] dark:text-[#38B794]" />
                 Centre de Contrôle Live
               </h3>
-              <p className="text-[11px] text-gray-500 mt-0.5">Supervision de la logistique temps réel</p>
+              <p className="text-[11px] text-[#5C807F] dark:text-[#9FC8C7] mt-0.5">Supervision de la logistique temps réel</p>
             </div>
 
             {/* Filter Tabs */}
-            <div className="flex bg-gray-100 dark:bg-zinc-800 p-1 rounded-xl gap-1 text-[11px] font-bold">
+            <div className="flex bg-[#E7F1F1] dark:bg-[#062625] p-1 rounded-full gap-1 text-[11px] font-bold shrink-0">
               <button
                 onClick={() => setSelectedFilter('all')}
-                className={`px-2.5 py-1 rounded-lg transition ${selectedFilter === 'all' ? 'bg-white dark:bg-zinc-900 text-[var(--app-primary-color)] dark:text-teal-300 shadow-sm' : 'text-gray-500'}`}
+                className={`px-2.5 py-1 rounded-full transition whitespace-nowrap ${selectedFilter === 'all' ? 'bg-[#0E7673] text-white shadow-sm' : 'text-[#5C807F] dark:text-[#9FC8C7]'}`}
               >
                 Tous
               </button>
               <button
                 onClick={() => setSelectedFilter('delivering')}
-                className={`px-2.5 py-1 rounded-lg transition ${selectedFilter === 'delivering' ? 'bg-white dark:bg-zinc-900 text-[var(--app-primary-color)] dark:text-teal-300 shadow-sm' : 'text-gray-500'}`}
+                className={`px-2.5 py-1 rounded-full transition whitespace-nowrap ${selectedFilter === 'delivering' ? 'bg-[#0E7673] text-white shadow-sm' : 'text-[#5C807F] dark:text-[#9FC8C7]'}`}
               >
                 Actifs
               </button>
               <button
                 onClick={() => setSelectedFilter('alert')}
-                className={`px-2.5 py-1 rounded-lg transition ${selectedFilter === 'alert' ? 'bg-red-500 text-white shadow-sm' : 'text-red-500'}`}
+                className={`px-2.5 py-1 rounded-full transition whitespace-nowrap ${selectedFilter === 'alert' ? 'bg-red-500 text-white shadow-sm' : 'text-red-500 dark:text-red-400'}`}
               >
                 Alertes ({activeAlerts.length})
               </button>
@@ -825,15 +825,15 @@ export function AdminLiveMap() {
                   <AlertOctagon size={16} /> Immobilisme Détecté (&gt; 5 min)
                 </div>
                 {activeAlerts.map(al => (
-                  <div key={al.driver.id} className="bg-white dark:bg-zinc-900 p-3 rounded-xl border border-red-100 dark:border-red-900/40 flex justify-between items-center text-xs">
+                  <div key={al.driver.id} className="bg-white dark:bg-[#0A3D3B] p-3 rounded-xl border border-red-100 dark:border-red-900/40 flex justify-between items-center text-xs">
                     <div>
-                      <p className="font-bold text-gray-900 dark:text-white">{al.driver.name}</p>
+                      <p className="font-bold text-[#0A3D3B] dark:text-white">{al.driver.name}</p>
                       <p className="text-[11px] text-red-500 font-medium">Mission #{al.order?.id?.slice(0, 6)} à l'arrêt</p>
                     </div>
                     {al.order && (
                       <button
                         onClick={() => handleRevokeMission(al.order!.id)}
-                        className="px-2.5 py-1.5 bg-red-500 hover:bg-red-600 text-white rounded-lg font-bold text-[10px] uppercase tracking-wider transition"
+                        className="px-3 py-1.5 bg-red-500 hover:bg-red-600 text-white rounded-full font-bold text-[10px] uppercase tracking-wider transition"
                       >
                         Réassigner
                       </button>
@@ -845,7 +845,7 @@ export function AdminLiveMap() {
 
             {/* Drivers List */}
             <div className="space-y-3">
-              <p className="text-[10px] font-black uppercase tracking-wider text-gray-400">
+              <p className="text-[10px] font-bold uppercase tracking-wider text-[#5C807F] dark:text-[#9FC8C7]">
                 Livreurs Connectés ({filteredStatuses.length})
               </p>
 
@@ -855,8 +855,8 @@ export function AdminLiveMap() {
                   onClick={() => setSelectedDriverId(st.driver.id)}
                   className={`p-3.5 rounded-2xl border transition cursor-pointer flex items-center justify-between ${
                     selectedDriverId === st.driver.id
-                      ? 'border-[var(--app-primary-color)] bg-[var(--app-primary-color)]/5 dark:border-teal-500 dark:bg-teal-950/20'
-                      : 'border-gray-100 dark:border-zinc-800/80 bg-white dark:bg-zinc-900 hover:border-gray-300'
+                      ? 'border-[#0E7673] bg-[#D7F1EA]/50 dark:border-[#38B794] dark:bg-[#0E4A47]'
+                      : 'border-[#CFE4E3] dark:border-[#145250] bg-white dark:bg-[#062625]/40 hover:border-[#0E7673]/50'
                   }`}
                 >
                   <div className="flex items-center gap-3">
@@ -867,20 +867,20 @@ export function AdminLiveMap() {
                       {st.driver.name.charAt(0)}
                     </div>
                     <div>
-                      <h4 className="font-bold text-xs text-gray-900 dark:text-white">{st.driver.name}</h4>
-                      <p className="text-[11px] font-medium text-gray-500 flex items-center gap-1.5 mt-0.5">
+                      <h4 className="font-bold text-xs text-[#0A3D3B] dark:text-white">{st.driver.name}</h4>
+                      <p className="text-[11px] font-medium text-[#5C807F] dark:text-[#9FC8C7] flex items-center gap-1.5 mt-0.5">
                         <span className="w-2 h-2 rounded-full" style={{ backgroundColor: st.color }}></span>
                         {st.state === 'idle' ? 'Disponible' : st.state === 'en_route_to_pharmacy' ? 'Vers Officine' : 'En route Client'}
                       </p>
                     </div>
                   </div>
 
-                  <ChevronRight size={16} className="text-gray-400" />
+                  <ChevronRight size={16} className="text-[#5C807F] dark:text-[#9FC8C7]" />
                 </div>
               ))}
 
               {filteredStatuses.length === 0 && (
-                <div className="text-center py-10 text-xs text-gray-400">
+                <div className="text-center py-10 text-xs text-[#5C807F] dark:text-[#9FC8C7]">
                   Aucun livreur ne correspond aux filtres sélectionnés.
                 </div>
               )}

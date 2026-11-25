@@ -159,24 +159,26 @@ export function AdminGmail() {
   };
 
   if (loading) {
-    return <div className="flex-1 flex items-center justify-center h-full"><Loader2 className="animate-spin text-slate-400" /></div>;
+    return <div className="flex-1 flex items-center justify-center h-full bg-[#F5FAFA] dark:bg-[#062625]"><Loader2 className="animate-spin text-[#0E7673] dark:text-[#38B794]" /></div>;
   }
 
   if (!token || !user) {
     return (
-      <div className="flex-1 flex flex-col items-center justify-center h-full bg-slate-50 dark:bg-zinc-950 p-8 rounded-3xl border border-gray-100 dark:border-zinc-800">
-        <Mail size={48} className="text-slate-300 mb-6" />
-        <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-2">Workspace Email Integration</h2>
-        <p className="text-slate-500 mb-8 max-w-md text-center">
+      <div className="flex-1 flex flex-col items-center justify-center h-full bg-[#F5FAFA] dark:bg-[#062625] p-8 rounded-3xl border border-[#CFE4E3] dark:border-[#145250]">
+        <div className="w-16 h-16 rounded-2xl bg-[#D7F1EA] dark:bg-[#0E4A47] flex items-center justify-center mb-6">
+          <Mail size={32} className="text-[#0E7673] dark:text-[#38B794]" />
+        </div>
+        <h2 className="text-2xl font-bold text-[#0A3D3B] dark:text-white mb-2">Workspace Email Integration</h2>
+        <p className="text-[#5C807F] dark:text-[#9FC8C7] mb-8 max-w-md text-center text-sm">
           Sign in with Google to read, manage, and reply to patient and pharmacy inquiries directly from the admin panel.
         </p>
         <button 
           onClick={handleLogin}
           disabled={isLoggingIn}
-          className="flex items-center gap-3 px-6 py-3 bg-white dark:bg-zinc-950 border border-gray-200 text-gray-700 hover:bg-gray-50 dark:bg-zinc-900 font-medium rounded-full shadow-sm transition"
+          className="flex items-center gap-3 px-6 py-3 bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] text-[#0A3D3B] dark:text-white hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47] font-bold rounded-full shadow-sm transition"
         >
           {isLoggingIn ? <Loader2 size={20} className="animate-spin" /> : (
-            <svg width="20" height="20" viewBox="0 0 48 48" className="mr-2">
+            <svg width="20" height="20" viewBox="0 0 48 48" className="mr-1">
               <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>
               <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path>
               <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path>
@@ -191,28 +193,28 @@ export function AdminGmail() {
   }
 
   return (
-    <div className="flex-1 bg-white dark:bg-zinc-950 rounded-3xl shadow-sm border border-gray-100 dark:border-zinc-800 flex flex-col h-full overflow-hidden">
+    <div className="flex-1 bg-white dark:bg-[#0A3D3B] rounded-3xl shadow-sm border border-[#CFE4E3] dark:border-[#145250] flex flex-col h-full overflow-hidden">
       {/* Header */}
-      <div className="p-6 border-b border-gray-100 dark:border-zinc-850 flex items-center justify-between bg-slate-50/50 dark:bg-zinc-900/30">
+      <div className="p-6 border-b border-[#CFE4E3] dark:border-[#145250] flex items-center justify-between bg-[#F5FAFA] dark:bg-[#062625]/60">
         <div className="flex items-center gap-4">
-          <div className="w-10 h-10 bg-indigo-100 text-[var(--app-primary-color)] rounded-full flex items-center justify-center">
+          <div className="w-10 h-10 bg-[#D7F1EA] dark:bg-[#0E4A47] text-[#0E7673] dark:text-[#38B794] rounded-full flex items-center justify-center">
             <Mail size={20} />
           </div>
           <div>
-            <h1 className="text-xl font-bold text-slate-800 dark:text-white">Admin Inbox</h1>
-            <p className="text-sm text-slate-500">{user.email}</p>
+            <h1 className="text-xl font-bold text-[#0A3D3B] dark:text-white">Admin Inbox</h1>
+            <p className="text-sm text-[#5C807F] dark:text-[#9FC8C7]">{user.email}</p>
           </div>
         </div>
         <div className="flex items-center gap-3">
           <button 
             onClick={() => { setIsComposing(true); setSelectedMessage(null); }}
-            className="flex items-center gap-2 px-4 py-2 bg-[var(--app-primary-color)] text-white rounded-full text-sm font-bold shadow-sm shadow-indigo-200 hover:bg-[var(--app-primary-color)] transition"
+            className="flex items-center gap-2 px-4 py-2 bg-[#0E7673] hover:bg-[#0A5A58] text-white rounded-full text-sm font-bold shadow-sm transition"
           >
             <Send size={16} /> Compose
           </button>
           <button 
             onClick={handleLogout}
-            className="flex items-center gap-2 px-4 py-2 bg-slate-100 text-slate-600 rounded-full text-sm font-bold hover:bg-slate-200 transition"
+            className="flex items-center gap-2 px-4 py-2 bg-[#E7F1F1] dark:bg-[#0E4A47] text-[#0A3D3B] dark:text-[#D7F1EA] rounded-full text-sm font-bold hover:bg-[#D7F1EA] dark:hover:bg-[#145250] transition"
           >
             <LogOut size={16} /> Logout
           </button>
@@ -221,13 +223,13 @@ export function AdminGmail() {
 
       <div className="flex-1 flex overflow-hidden">
         {/* Sidebar / List */}
-        <div className={`w-1/3 border-r border-gray-100 dark:border-zinc-850 overflow-y-auto ${selectedMessage || isComposing ? 'hidden md:block' : 'w-full'}`}>
+        <div className={`w-1/3 border-r border-[#CFE4E3] dark:border-[#145250] overflow-y-auto ${selectedMessage || isComposing ? 'hidden md:block' : 'w-full'}`}>
           {loadingMessages ? (
-            <div className="p-8 text-center text-slate-400"><Loader2 className="animate-spin inline mr-2" /> Loading...</div>
+            <div className="p-8 text-center text-[#5C807F] dark:text-[#9FC8C7]"><Loader2 className="animate-spin inline mr-2" /> Loading...</div>
           ) : messages.length === 0 ? (
-            <div className="p-8 text-center text-slate-400">No emails found in Inbox.</div>
+            <div className="p-8 text-center text-[#5C807F] dark:text-[#9FC8C7]">No emails found in Inbox.</div>
           ) : (
-            <div className="divide-y divide-slate-100 dark:divide-zinc-850">
+            <div className="divide-y divide-[#CFE4E3]/60 dark:divide-[#145250]">
               {messages.map(msg => {
                 const subject = getHeader(msg, 'Subject') || '(No Subject)';
                 const from = getHeader(msg, 'From');
@@ -237,11 +239,11 @@ export function AdminGmail() {
                   <div 
                     key={msg.id} 
                     onClick={() => { fetchFullMessage(msg.id); setIsComposing(false); }}
-                    className={`p-4 cursor-pointer hover:bg-slate-50 dark:hover:bg-zinc-900 transition ${selectedMessage?.id === msg.id ? 'bg-indigo-50 dark:bg-indigo-900/10' : ''}`}
+                    className={`p-4 cursor-pointer hover:bg-[#F5FAFA] dark:hover:bg-[#0E4A47]/40 transition ${selectedMessage?.id === msg.id ? 'bg-[#D7F1EA]/60 dark:bg-[#0E4A47]' : ''}`}
                   >
-                    <div className="font-bold text-sm text-slate-900 dark:text-slate-100 truncate mb-1">{from}</div>
-                    <div className="text-sm text-slate-800 dark:text-slate-300 font-medium truncate mb-1">{subject}</div>
-                    <div className="text-xs text-slate-500">{new Date(date).toLocaleDateString()}</div>
+                    <div className="font-bold text-sm text-[#0A3D3B] dark:text-white truncate mb-1">{from}</div>
+                    <div className="text-sm text-[#0E7673] dark:text-[#D7F1EA] font-medium truncate mb-1">{subject}</div>
+                    <div className="text-xs text-[#5C807F] dark:text-[#9FC8C7]">{new Date(date).toLocaleDateString()}</div>
                   </div>
                 );
               })}
@@ -250,9 +252,9 @@ export function AdminGmail() {
         </div>
 
         {/* Content Area */}
-        <div className={`flex-1 overflow-y-auto bg-slate-50 dark:bg-zinc-950 ${!selectedMessage && !isComposing ? 'hidden md:flex items-center justify-center' : 'block'}`}>
+        <div className={`flex-1 overflow-y-auto bg-[#F5FAFA] dark:bg-[#062625] ${!selectedMessage && !isComposing ? 'hidden md:flex items-center justify-center' : 'block'}`}>
           {!selectedMessage && !isComposing && (
-            <div className="text-center text-slate-400 flex flex-col items-center">
+            <div className="text-center text-[#5C807F] dark:text-[#9FC8C7] flex flex-col items-center">
               <Inbox size={48} className="mb-4 opacity-50" />
               <p>Select a message to read</p>
             </div>
@@ -262,27 +264,27 @@ export function AdminGmail() {
             <div className="p-8">
               <button 
                 onClick={() => setSelectedMessage(null)}
-                className="mb-6 md:hidden flex items-center gap-2 text-slate-500 hover:text-slate-800"
+                className="mb-6 md:hidden flex items-center gap-2 text-[#5C807F] dark:text-[#9FC8C7] hover:text-[#0A3D3B] dark:hover:text-white"
               >
                 <ChevronLeft size={16} /> Back to Inbox
               </button>
               
-              <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">
+              <h2 className="text-2xl font-bold text-[#0A3D3B] dark:text-white mb-4">
                 {getHeader(selectedMessage, 'Subject') || '(No Subject)'}
               </h2>
               
-              <div className="flex items-center gap-3 mb-8 pb-4 border-b border-gray-200 dark:border-zinc-800">
-                <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center font-bold text-slate-600">
+              <div className="flex items-center gap-3 mb-8 pb-4 border-b border-[#CFE4E3] dark:border-[#145250]">
+                <div className="w-10 h-10 rounded-full bg-[#D7F1EA] dark:bg-[#0E4A47] flex items-center justify-center font-bold text-[#0E7673] dark:text-[#38B794]">
                   {getHeader(selectedMessage, 'From').charAt(0).toUpperCase()}
                 </div>
                 <div>
-                  <div className="font-bold text-sm text-slate-900 dark:text-slate-100">{getHeader(selectedMessage, 'From')}</div>
-                  <div className="text-xs text-slate-500">to {getHeader(selectedMessage, 'To')} • {new Date(getHeader(selectedMessage, 'Date')).toLocaleString()}</div>
+                  <div className="font-bold text-sm text-[#0A3D3B] dark:text-white">{getHeader(selectedMessage, 'From')}</div>
+                  <div className="text-xs text-[#5C807F] dark:text-[#9FC8C7]">to {getHeader(selectedMessage, 'To')} · {new Date(getHeader(selectedMessage, 'Date')).toLocaleString()}</div>
                 </div>
               </div>
 
               <div 
-                className="text-sm text-slate-800 dark:text-slate-300 leading-relaxed whitespace-pre-wrap max-w-3xl"
+                className="text-sm text-[#0A3D3B] dark:text-[#D7F1EA] leading-relaxed whitespace-pre-wrap max-w-3xl"
                 dangerouslySetInnerHTML={{ __html: selectedMessage.decodedBody || 'No content to display' }}
               />
             </div>
@@ -291,38 +293,38 @@ export function AdminGmail() {
           {isComposing && (
             <div className="p-8 max-w-3xl">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-slate-900 dark:text-white">New Message</h2>
-                <button onClick={() => setIsComposing(false)} className="text-slate-400 hover:text-slate-700">Cancel</button>
+                <h2 className="text-2xl font-bold text-[#0A3D3B] dark:text-white">New Message</h2>
+                <button onClick={() => setIsComposing(false)} className="text-[#5C807F] dark:text-[#9FC8C7] hover:text-[#0A3D3B] dark:hover:text-white font-semibold">Cancel</button>
               </div>
               
               <div className="space-y-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase mb-2">To</label>
+                  <label className="block text-xs font-bold text-[#5C807F] dark:text-[#9FC8C7] uppercase mb-2">To</label>
                   <input 
                     type="email" 
                     value={composeTo}
                     onChange={(e) => setComposeTo(e.target.value)}
-                    className="w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none"
+                    className="w-full bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] text-[#0A3D3B] dark:text-white rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-[#0E7673] outline-none"
                     placeholder="recipient@example.com"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Subject</label>
+                  <label className="block text-xs font-bold text-[#5C807F] dark:text-[#9FC8C7] uppercase mb-2">Subject</label>
                   <input 
                     type="text" 
                     value={composeSubject}
                     onChange={(e) => setComposeSubject(e.target.value)}
-                    className="w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none"
+                    className="w-full bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] text-[#0A3D3B] dark:text-white rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-[#0E7673] outline-none"
                     placeholder="Subject line"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Message</label>
+                  <label className="block text-xs font-bold text-[#5C807F] dark:text-[#9FC8C7] uppercase mb-2">Message</label>
                   <textarea 
                     value={composeBody}
                     onChange={(e) => setComposeBody(e.target.value)}
                     rows={12}
-                    className="w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none resize-none"
+                    className="w-full bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] text-[#0A3D3B] dark:text-white rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-[#0E7673] outline-none resize-none"
                     placeholder="Write your message here..."
                   />
                 </div>
@@ -330,7 +332,7 @@ export function AdminGmail() {
                 <button 
                   onClick={handleSendEmail}
                   disabled={sending || !composeTo || !composeSubject || !composeBody}
-                  className="w-full py-3 bg-[var(--app-primary-color)] text-white rounded-xl font-bold hover:bg-[var(--app-primary-color)] transition disabled:opacity-50 flex items-center justify-center gap-2"
+                  className="w-full py-3 bg-[#0E7673] hover:bg-[#0A5A58] text-white rounded-full font-bold transition disabled:opacity-50 flex items-center justify-center gap-2 shadow-sm"
                 >
                   {sending ? <Loader2 size={18} className="animate-spin" /> : <Send size={18} />}
                   Send Email

@@ -19,7 +19,7 @@ export function PatientProductDetails() {
   const { user } = useAuth();
   const { addToCart } = useCart();
   const theme = useTheme();
-  const primaryColor = theme.primaryColor || '#194B4B';
+  const primaryColor = theme.primaryColor || '#0E7673';
 
   const [product, setProduct] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -171,25 +171,25 @@ export function PatientProductDetails() {
 
   if (loading) {
     return (
-      <div className="flex-1 bg-white dark:bg-zinc-950 flex flex-col items-center justify-center p-8">
+      <div className="flex-1 bg-[#F5FAFA] dark:bg-[#062625] flex flex-col items-center justify-center p-8">
         <div 
           className="w-10 h-10 border-4 border-t-transparent rounded-full animate-spin mb-4" 
           style={{ borderColor: primaryColor, borderTopColor: 'transparent' }}
         />
-        <p className="text-sm font-medium text-gray-500">Chargement de la fiche produit...</p>
+        <p className="text-sm font-medium text-[#5C807F] dark:text-[#9FC8C7]">Chargement de la fiche produit...</p>
       </div>
     );
   }
 
   if (!product) {
     return (
-      <div className="flex-1 bg-white dark:bg-zinc-950 flex flex-col items-center justify-center p-8 text-center">
+      <div className="flex-1 bg-[#F5FAFA] dark:bg-[#062625] flex flex-col items-center justify-center p-8 text-center">
         <AlertCircle size={48} className="text-amber-500 mb-3" />
-        <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-1">Médicament introuvable</h2>
-        <p className="text-sm text-gray-500 mb-6">Ce produit n'est plus disponible ou a été déplacé dans le catalogue.</p>
+        <h2 className="text-lg font-bold text-[#0A3D3B] dark:text-white mb-1">Médicament introuvable</h2>
+        <p className="text-sm text-[#5C807F] dark:text-[#9FC8C7] mb-6">Ce produit n'est plus disponible ou a été déplacé dans le catalogue.</p>
         <button
           onClick={() => navigate('/patient/search')}
-          className="text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow-sm transition hover:opacity-90 active:scale-95"
+          className="text-white px-6 py-3 rounded-full font-bold text-sm shadow-sm transition hover:opacity-90 active:scale-95"
           style={{ backgroundColor: primaryColor }}
         >
           Parcourir les médicaments
@@ -216,36 +216,33 @@ export function PatientProductDetails() {
     : `Posologie habituelle : Se conformer scrupuleusement à la prescription médicale ou à la notice officielle. Prendre avec un verre d'eau. Respecter les intervalles recommandés entre les prises. Tenir hors de portée des enfants.`;
 
   return (
-    <div className="flex-1 bg-white dark:bg-zinc-950 flex flex-col h-full overflow-hidden">
+    <div className="flex-1 bg-[#F5FAFA] dark:bg-[#062625] flex flex-col h-full overflow-hidden">
       {/* Header */}
-      <div className="px-6 pt-12 pb-4 flex items-center justify-between z-10 sticky top-0 bg-white dark:bg-zinc-950/95 dark:bg-zinc-950/95 backdrop-blur-md border-b border-gray-100 dark:border-zinc-900">
+      <div className="px-6 pt-12 pb-4 flex items-center justify-between z-10 sticky top-0 bg-white/95 dark:bg-[#0A3D3B]/95 backdrop-blur-md border-b border-[#CFE4E3] dark:border-[#145250]">
          <button
             onClick={() => navigate(-1)}
-            className="w-10 h-10 flex items-center justify-center bg-gray-50 dark:bg-zinc-900 rounded-full border border-gray-200 dark:border-zinc-800 shadow-sm transition hover:bg-gray-100 dark:bg-zinc-800"
+            className="w-10 h-10 flex items-center justify-center bg-[#F5FAFA] dark:bg-[#062625] rounded-full border border-[#CFE4E3] dark:border-[#145250] shadow-sm transition hover:bg-[#D7F1EA] dark:hover:bg-[#0E4A47]"
          >
-            <ArrowLeft size={20} className="text-gray-900 dark:text-white" />
+            <ArrowLeft size={20} className="text-[#0A3D3B] dark:text-white" />
          </button>
          <div className="text-center">
-            <h1 className="font-bold text-gray-900 dark:text-white text-sm">Fiche Médicament</h1>
-            <p 
-              className="text-[11px] font-bold uppercase tracking-wider"
-              style={{ color: primaryColor }}
-            >
+            <h1 className="font-bold text-[#0A3D3B] dark:text-white text-sm">Fiche Médicament</h1>
+            <p className="text-[11px] font-bold uppercase tracking-wider text-[#0E7673] dark:text-[#38B794]">
               {rawCategory}
             </p>
          </div>
          <button
             onClick={toggleWishlist}
-            className="w-10 h-10 flex items-center justify-center bg-gray-50 dark:bg-zinc-900 rounded-full border border-gray-200 dark:border-zinc-800 shadow-sm transition-transform active:scale-95"
+            className="w-10 h-10 flex items-center justify-center bg-[#F5FAFA] dark:bg-[#062625] rounded-full border border-[#CFE4E3] dark:border-[#145250] shadow-sm transition-transform active:scale-95"
          >
-            <Heart size={20} className={isWishlist ? "fill-red-500 text-red-500" : "text-gray-600 dark:text-gray-400"} />
+            <Heart size={20} className={isWishlist ? "fill-red-500 text-red-500" : "text-[#5C807F] dark:text-[#9FC8C7]"} />
          </button>
       </div>
 
       {/* Main Content Area */}
       <div className="flex-1 overflow-y-auto pb-8">
          {/* Product Visual Banner */}
-         <div className="bg-white dark:bg-zinc-900 flex items-center justify-center p-8 mx-6 rounded-2xl mb-6 mt-4 relative overflow-hidden border border-gray-100 dark:border-zinc-800 shadow-sm min-h-[220px]">
+         <div className="bg-white dark:bg-[#0A3D3B] flex items-center justify-center p-8 mx-6 rounded-2xl mb-6 mt-4 relative overflow-hidden border border-[#CFE4E3] dark:border-[#145250] shadow-sm min-h-[220px]">
             {product.imageUrl ? (
                <img
                   src={product.imageUrl}
@@ -254,12 +251,12 @@ export function PatientProductDetails() {
                   referrerPolicy="no-referrer"
                />
             ) : (
-               <div className="p-8 flex flex-col items-center" style={{ color: primaryColor }}>
+               <div className="p-8 flex flex-col items-center text-[#0E7673] dark:text-[#38B794]">
                   {getCategoryIcon(product.category, 64)}
-                  <span className="text-xs font-semibold mt-2 text-gray-500">{rawCategory}</span>
+                  <span className="text-xs font-semibold mt-2 text-[#5C807F] dark:text-[#9FC8C7]">{rawCategory}</span>
                </div>
             )}
-            <div className="absolute top-4 right-4 bg-white dark:bg-zinc-950/90 dark:bg-zinc-800/90 backdrop-blur-md px-3 py-1 rounded-full flex items-center gap-1.5 text-xs font-bold text-gray-800 dark:text-gray-200 border border-gray-100 dark:border-zinc-700 shadow-sm">
+            <div className="absolute top-4 right-4 bg-[#F5FAFA]/95 dark:bg-[#062625]/95 backdrop-blur-md px-3 py-1 rounded-full flex items-center gap-1.5 text-xs font-bold text-[#0A3D3B] dark:text-white border border-[#CFE4E3] dark:border-[#145250] shadow-sm">
                <Star size={13} className="text-amber-500 fill-amber-500" />
                <span>4.9</span>
             </div>
@@ -276,31 +273,31 @@ export function PatientProductDetails() {
             <div>
                <div className="flex justify-between items-start mb-2">
                   <div className="flex-1 pr-4">
-                     <h2 className="text-2xl font-bold text-gray-900 dark:text-white leading-tight">{product.name}</h2>
-                     <p className="text-sm font-bold mt-1" style={{ color: primaryColor }}>{rawDci}</p>
-                     <p className="text-xs text-gray-500 font-medium mt-0.5">
+                     <h2 className="text-2xl font-bold text-[#0A3D3B] dark:text-white leading-tight">{product.name}</h2>
+                     <p className="text-sm font-bold mt-1 text-[#0E7673] dark:text-[#38B794]">{rawDci}</p>
+                     <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7] font-medium mt-0.5">
                         {product.dosage ? `${product.dosage} • ` : ''}{product.form || 'Boîte'} • {rawBrand}
                      </p>
                   </div>
                   <div className="flex flex-col items-end">
-                     <span className="text-2xl font-black" style={{ color: primaryColor }}>{formatCurrency(product.price)}</span>
-                     <span className="text-[11px] text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 rounded-full mt-1">
+                     <span className="text-2xl font-extrabold text-[#0E7673] dark:text-[#38B794]">{formatCurrency(product.price)}</span>
+                     <span className="text-[11px] text-[#0A3D3B] dark:text-[#38B794] font-bold bg-[#D7F1EA] dark:bg-[#0E4A47] px-2.5 py-0.5 rounded-full mt-1 border border-[#CFE4E3] dark:border-[#145250]">
                         En stock
                      </span>
                   </div>
                </div>
 
-               <div className="flex items-center gap-2 mt-3 text-xs">
-                  <div className={`px-2.5 py-1 rounded-full font-bold flex items-center gap-1.5 ${
+               <div className="flex items-center flex-wrap gap-2 mt-3 text-xs">
+                  <div className={`px-3 py-1 rounded-full font-bold flex items-center gap-1.5 ${
                      isPrescription 
                        ? "bg-amber-100 text-amber-800 dark:bg-amber-950/50 dark:text-amber-300 border border-amber-200 dark:border-amber-900" 
-                       : "bg-emerald-100 text-emerald-800 dark:bg-emerald-950/50 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-900"
+                       : "bg-[#D7F1EA] text-[#0A3D3B] dark:bg-[#0E4A47] dark:text-[#D7F1EA] border border-[#CFE4E3] dark:border-[#145250]"
                   }`}>
                      <FileText size={12} />
                      <span>{isPrescription ? "Ordonnance requise" : "Vente libre (Sans ordonnance)"}</span>
                   </div>
-                  <div className="bg-gray-100 dark:bg-zinc-800 text-gray-700 dark:text-gray-300 px-2.5 py-1 rounded-full font-semibold flex items-center gap-1">
-                     <Pill size={12} style={{ color: primaryColor }} />
+                  <div className="bg-[#E7F1F1] dark:bg-[#0A3D3B] text-[#0A3D3B] dark:text-[#D7F1EA] border border-[#CFE4E3] dark:border-[#145250] px-3 py-1 rounded-full font-semibold flex items-center gap-1">
+                     <Pill size={12} className="text-[#0E7673] dark:text-[#38B794]" />
                      <span>{rawCategory}</span>
                   </div>
                </div>
@@ -321,7 +318,7 @@ export function PatientProductDetails() {
 
             {/* Tabs Médicaux */}
             <div className="pt-2">
-               <div className="flex p-1 bg-gray-100 dark:bg-zinc-900 rounded-xl shadow-sm border border-gray-200 dark:border-zinc-800">
+               <div className="flex p-1 bg-white dark:bg-[#0A3D3B] rounded-xl shadow-sm border border-[#CFE4E3] dark:border-[#145250]">
                   {[
                      { id: 'details', label: 'Indications' },
                      { id: 'effects', label: 'Effets' },
@@ -331,11 +328,9 @@ export function PatientProductDetails() {
                     <button 
                       key={tab.id}
                       onClick={() => setActiveTab(tab.id as any)}
-                      className="flex-1 text-xs font-bold py-2.5 rounded-lg transition-colors"
-                      style={{
-                        backgroundColor: activeTab === tab.id ? primaryColor : 'transparent',
-                        color: activeTab === tab.id ? '#FFFFFF' : undefined
-                      }}
+                      className={`flex-1 text-xs font-bold py-2.5 rounded-lg transition-colors ${
+                        activeTab === tab.id ? 'bg-[#0E7673] text-white shadow-sm' : 'text-[#5C807F] dark:text-[#9FC8C7] hover:text-[#0A3D3B] dark:hover:text-white'
+                      }`}
                     >
                       {tab.label}
                     </button>
@@ -352,48 +347,45 @@ export function PatientProductDetails() {
                        transition={{ duration: 0.15 }}
                      >
                        {activeTab === 'details' && (
-                         <div className="bg-gray-50 dark:bg-zinc-900 rounded-xl p-4 border border-gray-100 dark:border-zinc-800">
-                            <h5 className="font-bold text-xs uppercase tracking-wider mb-2" style={{ color: primaryColor }}>
+                         <div className="bg-white dark:bg-[#0A3D3B] rounded-xl p-4 border border-[#CFE4E3] dark:border-[#145250]">
+                            <h5 className="font-bold text-xs uppercase tracking-wider mb-2 text-[#0E7673] dark:text-[#38B794]">
                                Description & Indication Thérapeutique
                             </h5>
-                            <p className="text-xs text-gray-700 dark:text-gray-300 leading-relaxed font-medium">
+                            <p className="text-xs text-[#0A3D3B]/90 dark:text-[#D7F1EA] leading-relaxed font-medium">
                                {medicalDetails}
                             </p>
-                            <div className="mt-3 pt-3 border-t border-gray-200 dark:border-zinc-800 grid grid-cols-2 gap-2 text-[11px]">
-                               <div><span className="font-bold text-gray-500">DCI :</span> <span className="text-gray-900 dark:text-white font-medium">{rawDci}</span></div>
-                               <div><span className="font-bold text-gray-500">Fabricant :</span> <span className="text-gray-900 dark:text-white font-medium">{rawBrand}</span></div>
-                               <div><span className="font-bold text-gray-500">Dosage :</span> <span className="text-gray-900 dark:text-white font-medium">{product.dosage || 'Standard'}</span></div>
-                               <div><span className="font-bold text-gray-500">Forme :</span> <span className="text-gray-900 dark:text-white font-medium">{product.form || 'Boîte'}</span></div>
+                            <div className="mt-3 pt-3 border-t border-[#CFE4E3] dark:border-[#145250] grid grid-cols-2 gap-2 text-[11px]">
+                               <div><span className="font-bold text-[#5C807F] dark:text-[#9FC8C7]">DCI :</span> <span className="text-[#0A3D3B] dark:text-white font-medium">{rawDci}</span></div>
+                               <div><span className="font-bold text-[#5C807F] dark:text-[#9FC8C7]">Fabricant :</span> <span className="text-[#0A3D3B] dark:text-white font-medium">{rawBrand}</span></div>
+                               <div><span className="font-bold text-[#5C807F] dark:text-[#9FC8C7]">Dosage :</span> <span className="text-[#0A3D3B] dark:text-white font-medium">{product.dosage || 'Standard'}</span></div>
+                               <div><span className="font-bold text-[#5C807F] dark:text-[#9FC8C7]">Forme :</span> <span className="text-[#0A3D3B] dark:text-white font-medium">{product.form || 'Boîte'}</span></div>
                             </div>
                          </div>
                        )}
 
                        {activeTab === 'effects' && (
-                         <div className="bg-gray-50 dark:bg-zinc-900 rounded-xl p-4 border border-gray-100 dark:border-zinc-800">
-                            <h5 className="font-bold text-xs uppercase tracking-wider mb-2" style={{ color: primaryColor }}>
+                         <div className="bg-white dark:bg-[#0A3D3B] rounded-xl p-4 border border-[#CFE4E3] dark:border-[#145250]">
+                            <h5 className="font-bold text-xs uppercase tracking-wider mb-2 text-[#0E7673] dark:text-[#38B794]">
                                Action & Tolérance Clinique
                             </h5>
-                            <p className="text-xs text-gray-700 dark:text-gray-300 leading-relaxed font-medium">
+                            <p className="text-xs text-[#0A3D3B]/90 dark:text-[#D7F1EA] leading-relaxed font-medium">
                                {medicalEffects}
                             </p>
                          </div>
                        )}
 
                        {activeTab === 'directions' && (
-                         <div className="bg-gray-50 dark:bg-zinc-900 rounded-xl p-4 border border-gray-100 dark:border-zinc-800 space-y-3">
+                         <div className="bg-white dark:bg-[#0A3D3B] rounded-xl p-4 border border-[#CFE4E3] dark:border-[#145250] space-y-3">
                             <div className="flex items-center gap-3">
-                               <div 
-                                 className="w-9 h-9 rounded-full flex items-center justify-center shrink-0"
-                                 style={{ backgroundColor: `${primaryColor}15`, color: primaryColor }}
-                               >
+                               <div className="w-9 h-9 rounded-full bg-[#D7F1EA] dark:bg-[#0E4A47] text-[#0E7673] dark:text-[#38B794] flex items-center justify-center shrink-0">
                                   <FileText size={18} />
                                </div>
                                <div>
-                                  <p className="font-bold text-gray-900 dark:text-white text-xs">Conseils d'utilisation & Posologie</p>
-                                  <p className="text-[11px] text-gray-500 font-medium">Consultez la notice du laboratoire pharmaceutique</p>
+                                  <p className="font-bold text-[#0A3D3B] dark:text-white text-xs">Conseils d'utilisation & Posologie</p>
+                                  <p className="text-[11px] text-[#5C807F] dark:text-[#9FC8C7] font-medium">Consultez la notice du laboratoire pharmaceutique</p>
                                </div>
                             </div>
-                            <p className="text-xs text-gray-700 dark:text-gray-300 leading-relaxed font-medium">
+                            <p className="text-xs text-[#0A3D3B]/90 dark:text-[#D7F1EA] leading-relaxed font-medium">
                                {medicalDirections}
                             </p>
                          </div>
@@ -403,22 +395,22 @@ export function PatientProductDetails() {
                          <div className="space-y-3">
                            {reviews.length > 0 ? (
                              reviews.map(rev => (
-                               <div key={rev.id} className="bg-gray-50 dark:bg-zinc-900 p-3.5 rounded-xl border border-gray-100 dark:border-zinc-800 shadow-sm">
+                               <div key={rev.id} className="bg-white dark:bg-[#0A3D3B] p-3.5 rounded-xl border border-[#CFE4E3] dark:border-[#145250] shadow-sm">
                                   <div className="flex justify-between items-start mb-1.5">
-                                    <h5 className="font-bold text-gray-900 dark:text-white text-xs">{rev.userName || rev.user_name || "Patient vérifié"}</h5>
+                                    <h5 className="font-bold text-[#0A3D3B] dark:text-white text-xs">{rev.userName || rev.user_name || "Patient vérifié"}</h5>
                                     <div className="flex gap-0.5">
                                       {[1, 2, 3, 4, 5].map(star => (
-                                        <Star key={star} size={11} className={star <= (rev.rating || 5) ? "text-amber-500 fill-amber-500" : "text-gray-300"} />
+                                        <Star key={star} size={11} className={star <= (rev.rating || 5) ? "text-amber-500 fill-amber-500" : "text-[#CFE4E3]"} />
                                       ))}
                                     </div>
                                   </div>
-                                  <p className="text-xs text-gray-600 dark:text-gray-300 font-medium">{rev.comment}</p>
-                                  {rev.date && <p className="text-[10px] text-gray-400 mt-1.5">{rev.date}</p>}
+                                  <p className="text-xs text-[#5C807F] dark:text-[#D7F1EA] font-medium">{rev.comment}</p>
+                                  {rev.date && <p className="text-[10px] text-[#5C807F] dark:text-[#9FC8C7] mt-1.5">{rev.date}</p>}
                                </div>
                              ))
                            ) : (
-                             <div className="bg-gray-50 dark:bg-zinc-900 p-6 rounded-xl border border-gray-100 dark:border-zinc-800 text-center">
-                                <p className="text-xs text-gray-500 font-medium">Aucun avis pour le moment sur ce produit.</p>
+                             <div className="bg-white dark:bg-[#0A3D3B] p-6 rounded-xl border border-[#CFE4E3] dark:border-[#145250] text-center">
+                                <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7] font-medium">Aucun avis pour le moment sur ce produit.</p>
                              </div>
                            )}
                          </div>
@@ -430,28 +422,25 @@ export function PatientProductDetails() {
          </div>
       </div>
 
-      {/* Fixed Sticky Action Bar at Bottom (without price on button, themed) */}
-      <div className="bg-white dark:bg-zinc-900 border-t border-gray-100 dark:border-zinc-800 p-4 px-6 flex items-center gap-3 z-30 shrink-0 shadow-lg">
-         <div className="flex items-center bg-gray-100 dark:bg-zinc-800 rounded-xl px-3 py-2 border border-gray-200 dark:border-zinc-700">
+      {/* Fixed Sticky Action Bar at Bottom */}
+      <div className="bg-white dark:bg-[#0A3D3B] border-t border-[#CFE4E3] dark:border-[#145250] p-4 px-6 flex items-center gap-3 z-30 shrink-0 shadow-lg">
+         <div className="flex items-center bg-[#F5FAFA] dark:bg-[#062625] rounded-full px-3 py-1.5 border border-[#CFE4E3] dark:border-[#145250]">
             <button
                onClick={decrementQty}
-               className="font-bold text-lg px-2 active:scale-90 transition-transform"
-               style={{ color: primaryColor }}
+               className="font-bold text-lg px-2 active:scale-90 transition-transform text-[#0E7673] dark:text-[#38B794]"
             >
                -
             </button>
-            <span className="font-bold text-gray-900 dark:text-white mx-3 text-base">{quantity}</span>
+            <span className="font-bold text-[#0A3D3B] dark:text-white mx-3 text-base">{quantity}</span>
             <button
                onClick={incrementQty}
-               className="font-bold text-lg px-2 active:scale-90 transition-transform"
-               style={{ color: primaryColor }}
+               className="font-bold text-lg px-2 active:scale-90 transition-transform text-[#0E7673] dark:text-[#38B794]"
             >
                +
             </button>
          </div>
          <button 
-           className="flex-1 text-white rounded-xl font-bold py-3.5 transition shadow-sm flex items-center justify-center gap-2 text-sm active:scale-[0.98]"
-           style={{ backgroundColor: primaryColor }}
+           className="flex-1 bg-[#0E7673] hover:bg-[#0A5A58] text-white rounded-full font-bold py-3.5 transition shadow-sm flex items-center justify-center gap-2 text-sm active:scale-[0.98]"
            onClick={handleAddToCart}
          >
             <ShoppingCart size={18} />

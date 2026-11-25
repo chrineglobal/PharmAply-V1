@@ -82,21 +82,21 @@ export function LanguageSwitcher({
         type="button"
         id="language-switcher-button"
         onClick={() => setIsOpen(prev => !prev)}
-        className="flex items-center gap-2 bg-[#FAFBFA] dark:bg-zinc-800 hover:bg-gray-100 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-gray-800 dark:text-gray-200 px-3 py-1.5 rounded-full text-xs font-semibold shadow-xs border border-gray-200/80 dark:border-zinc-700 transition"
+        className="flex items-center gap-2 bg-[#F5FAFA] dark:bg-[#0E4A47] hover:bg-[#E7F1F1] dark:hover:bg-[#145250] text-[#0A3D3B] dark:text-[#D7F1EA] px-3 py-1.5 rounded-full text-xs font-semibold shadow-xs border border-[#CFE4E3] dark:border-[#145250] transition"
         aria-expanded={isOpen}
         aria-haspopup="true"
         title={t('choose_language', 'Choisir la langue')}
       >
-        <Globe size={14} className="text-gray-500 dark:text-gray-400 shrink-0" />
+        <Globe size={14} className="text-[#0E7673] dark:text-[#38B794] shrink-0" />
         <span className="text-xs">{currentLang.flag}</span>
         {showLabels && <span className="uppercase tracking-wider font-bold">{currentLang.code}</span>}
-        <ChevronDown size={12} className={`text-gray-400 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+        <ChevronDown size={12} className={`text-[#5C807F] dark:text-[#9FC8C7] transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
       {isOpen && (
         <div 
           id="language-dropdown-menu"
-          className="absolute right-0 mt-2 w-44 rounded-xl bg-white dark:bg-zinc-900 shadow-xl border border-gray-100 dark:border-zinc-800 p-1.5 z-50 animate-in fade-in zoom-in-95 duration-100"
+          className="absolute right-0 mt-2 w-44 rounded-2xl bg-white dark:bg-[#0A3D3B] shadow-xl border border-[#CFE4E3] dark:border-[#145250] p-1.5 z-50 animate-in fade-in zoom-in-95 duration-100"
           role="menu"
         >
           {SUPPORTED_LANGUAGES.map((lang) => {
@@ -107,20 +107,20 @@ export function LanguageSwitcher({
                 type="button"
                 role="menuitem"
                 onClick={() => changeLanguage(lang.code)}
-                className={`w-full flex items-center justify-between px-3 py-2 text-xs rounded-lg transition-colors text-left ${
+                className={`w-full flex items-center justify-between px-3 py-2 text-xs rounded-xl transition-colors text-left ${
                   isSelected
-                    ? 'bg-[var(--app-primary-color)]/10 dark:bg-[var(--app-primary-color)]/30 text-[var(--app-primary-color)] dark:text-teal-300 font-bold'
-                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-zinc-800'
+                    ? 'bg-[#D7F1EA] dark:bg-[#0E4A47] text-[#0E7673] dark:text-[#38B794] font-bold'
+                    : 'text-[#0A3D3B] dark:text-[#D7F1EA] hover:bg-[#F5FAFA] dark:hover:bg-[#0E4A47]'
                 }`}
               >
                 <div className="flex items-center gap-2.5">
                   <span className="text-sm">{lang.flag}</span>
                   <div className="flex flex-col">
                     <span className="leading-none font-medium">{lang.nativeName}</span>
-                    <span className="text-[10px] text-gray-400 dark:text-gray-500">{lang.name}</span>
+                    <span className="text-[10px] text-[#5C807F] dark:text-[#9FC8C7]">{lang.name}</span>
                   </div>
                 </div>
-                {isSelected && <Check size={14} className="text-[var(--app-primary-color)] dark:text-teal-400 shrink-0" />}
+                {isSelected && <Check size={14} className="text-[#0E7673] dark:text-[#38B794] shrink-0" />}
               </button>
             );
           })}

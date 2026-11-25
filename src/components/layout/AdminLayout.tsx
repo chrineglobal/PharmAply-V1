@@ -13,12 +13,15 @@ import { collection, query, where, onSnapshot } from "../../lib/firebase";
 
 import { DarkModeToggle } from '../DarkModeToggle';
 import { NotificationBell } from '../NotificationBell';
+import { PharmAplyLogo } from '../common/PharmAplyLogo';
+import { useDarkMode } from '../DarkModeProvider';
 
 export function AdminLayout() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { user, role, loading: authLoading } = useAuth();
   const { t, i18n } = useTranslation();
+  const { isDark } = useDarkMode();
 
   const [pendingPharmaciesCount, setPendingPharmaciesCount] = useState(0);
   const [pendingDriversCount, setPendingDriversCount] = useState(0);
@@ -45,7 +48,7 @@ export function AdminLayout() {
   }, [user, role]);
 
   if (authLoading || !user || role !== 'admin') {
-    return <div className="h-screen w-screen flex items-center justify-center bg-[#F0F5F2]"> {t('loading', 'Loading...')} </div>;
+    return <div className="h-screen w-screen flex items-center justify-center bg-[#E7F1F1] dark:bg-[#062625] text-[#0A3D3B] dark:text-[#E7F1F1] font-bold"> {t('loading', 'Loading...')} </div>;
   }
 
   const handleLogout = async () => {
@@ -108,20 +111,17 @@ export function AdminLayout() {
   ];
 
   return (
-    <div className="flex w-full h-screen bg-[#F0F5F2] dark:bg-slate-900 overflow-hidden text-slate-800 dark:text-slate-200 font-sans p-4 transition-colors">
+    <div className="flex w-full h-screen bg-[#E7F1F1] dark:bg-[#062625] overflow-hidden text-[#0A3D3B] dark:text-[#E7F1F1] font-sans p-4 transition-colors">
       {/* Sidebar */}
-      <aside className="w-72 bg-white dark:bg-slate-800 rounded-3xl flex flex-col pt-8 pb-6 shadow-sm shrink-0 h-full relative z-20 transition-colors">
-        <div className="px-8 mb-8 flex items-center gap-3 text-slate-900 dark:text-white">
-          <div className="w-8 h-8 rounded-full bg-[#1650ee] flex items-center justify-center">
-             <Package size={16} className="text-white" />
-          </div>
-          <h1 className="font-bold text-xl tracking-tight text-[#0d4ff4]"> {t('pharmaply', 'PharmAply')} </h1>
+      <aside className="w-72 bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] rounded-3xl flex flex-col pt-7 pb-6 shadow-sm shrink-0 h-full relative z-20 transition-colors">
+        <div className="px-7 mb-7 flex items-center justify-between">
+          <PharmAplyLogo variant="horizontal" tone={isDark ? "white" : "color"} size="sm" />
         </div>
 
         <div className="flex-1 overflow-y-auto px-4 space-y-6 min-h-0 pb-4 scrollbar-hide">
           {menuSections.map((section, idx) => (
             <div key={idx}>
-              <p className="px-4 text-[10px] font-bold text-slate-400 tracking-wider mb-2">{section.label}</p>
+              <p className="px-4 text-[11px] font-bold text-[#6EADAB] tracking-wider mb-2">{section.label}</p>
               <nav className="space-y-1">
                 {section.items.map((link) => {
                   const Icon = link.icon;
@@ -133,8 +133,8 @@ export function AdminLayout() {
                       className={({ isActive }) =>
                         `flex items-center justify-between px-4 py-2.5 rounded-2xl text-sm font-medium transition-colors ${
                           isActive
-                            ? "bg-slate-900 text-white dark:bg-[var(--app-primary-color)]"
-                            : "text-slate-500 hover:bg-slate-50 hover:text-slate-900 dark:text-white dark:hover:bg-slate-700 dark:hover:text-white"
+                            ? "bg-[#0E7673] text-white font-bold shadow-sm"
+                            : "text-[#0A3D3B]/80 dark:text-[#CFE4E3] hover:bg-[#E7F1F1] dark:hover:bg-[#062625] hover:text-[#0E7673] dark:hover:text-white"
                         }`
                       }
                     >
@@ -156,37 +156,37 @@ export function AdminLayout() {
         </div>
 
         <div className="px-6 mt-auto shrink-0">
-           <div className="bg-gradient-to-r from-teal-50 to-teal-100 p-4 rounded-3xl flex items-center gap-3 mb-4">
+           <div className="bg-[#D7F1EA] dark:bg-[#062625] border border-[#AFE2D4] dark:border-[#145250] p-4 rounded-3xl flex items-center gap-3 mb-4">
               <div className="w-12 h-12 relative flex-shrink-0">
                   <svg viewBox="0 0 36 36" className="w-full h-full transform -rotate-90">
                     <path
-                      className="text-teal-200"
+                      className="text-[#AFE2D4] dark:text-[#145250]"
                       strokeWidth="3"
                       stroke="currentColor"
                       fill="none"
                       d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                     />
                     <path
-                      className="text-teal-600"
+                      className="text-[#0E7673] dark:text-[#38B794]"
                       strokeWidth="3"
-                      strokeDasharray="50, 100"
+                      strokeDasharray="98, 100"
                       strokeLinecap="round"
                       stroke="currentColor"
                       fill="none"
                       d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                     />
                   </svg>
-                  <div className="absolute inset-0 flex items-center justify-center text-teal-800 font-bold text-[10px]">50%</div>
+                  <div className="absolute inset-0 flex items-center justify-center text-[#0A3D3B] dark:text-[#E7F1F1] font-bold text-[10px]">98%</div>
               </div>
               <div>
-                 <p className="text-xs font-bold text-slate-800 dark:text-slate-100"> {t('system_health', 'System Health')} </p>
-                 <p className="text-[10px] text-slate-500 leading-tight"> {t('all_systems_operational', 'All systems operational')} </p>
+                 <p className="text-xs font-bold text-[#0A3D3B] dark:text-white"> {t('system_health', 'System Health')} </p>
+                 <p className="text-[11px] text-[#0E7673] dark:text-[#9FC8C7] leading-tight"> {t('all_systems_operational', 'All systems operational')} </p>
               </div>
            </div>
            
            <button 
              onClick={handleLogout}
-             className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-bold bg-slate-900 text-white hover:bg-slate-800 transition-colors"
+             className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-full text-sm font-bold bg-[#0E7673] text-white hover:bg-[#0A5A58] transition-colors shadow-sm"
            >
               <LogOut size={16} />
               {t('logout', 'Sign Out')}
@@ -197,36 +197,36 @@ export function AdminLayout() {
       {/* Main Content Area */}
       <main className="flex-1 overflow-auto flex flex-col h-full pl-6 pr-2 py-2">
         {/* Top Header */}
-        <header className="flex items-center justify-between mb-8">
+        <header className="flex items-center justify-between mb-6 gap-4">
            <div className="relative w-96">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#0E7673] dark:text-[#9FC8C7]" size={18} />
               <input 
                 type="text" 
                 placeholder={t('search_placeholder', 'Search')}
-                className="w-full bg-white dark:bg-slate-800 dark:text-white border-0 py-3 pl-12 pr-4 rounded-full text-sm shadow-sm focus:ring-2 focus:ring-slate-900 dark:focus:ring-[var(--app-primary-color)] outline-none"
+                className="w-full bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] text-[#0A3D3B] dark:text-white placeholder:text-[#6EADAB] py-3 pl-12 pr-4 rounded-full text-sm shadow-sm focus:ring-2 focus:ring-[#0E7673] outline-none"
               />
            </div>
            
-           <div className="flex items-center gap-6">
+           <div className="flex items-center gap-4">
               <div className="relative group">
-                 <button className="flex items-center gap-2 bg-slate-900 dark:bg-[var(--app-primary-color)] text-white px-4 py-2 rounded-full shadow-sm text-xs font-bold hover:bg-slate-800 dark:hover:bg-[var(--app-primary-color)] transition">
+                 <button className="flex items-center gap-2 bg-[#0E7673] hover:bg-[#0A5A58] text-white px-5 py-2.5 rounded-full shadow-sm text-xs font-bold transition">
                     <Plus size={14} /> {t('add_new', 'Add New')}
                  </button>
-                 <div className="absolute top-full right-0 mt-2 w-48 bg-white dark:bg-zinc-950 rounded-xl shadow-lg border border-slate-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+                 <div className="absolute top-full right-0 mt-2 w-48 bg-white dark:bg-[#0A3D3B] rounded-2xl shadow-lg border border-[#CFE4E3] dark:border-[#145250] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
                     <div className="p-2 flex flex-col gap-1">
-                       <button onClick={() => navigate('/admin/products')} className="text-left px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 rounded-lg font-medium"> {t('add_product', 'Add Product')} </button>
-                       <button onClick={() => navigate('/admin/categories')} className="text-left px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 rounded-lg font-medium"> {t('add_category', 'Add Category')} </button>
-                       <button onClick={() => navigate('/admin/vendors')} className="text-left px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 rounded-lg font-medium"> {t('add_pharmacy', 'Add Pharmacy')} </button>
-                       <button onClick={() => navigate('/admin/drivers')} className="text-left px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 rounded-lg font-medium"> {t('add_driver', 'Add Driver')} </button>
+                       <button onClick={() => navigate('/admin/products')} className="text-left px-3 py-2 text-sm text-[#0A3D3B] dark:text-[#E7F1F1] hover:bg-[#E7F1F1] dark:hover:bg-[#062625] rounded-xl font-medium"> {t('add_product', 'Add Product')} </button>
+                       <button onClick={() => navigate('/admin/categories')} className="text-left px-3 py-2 text-sm text-[#0A3D3B] dark:text-[#E7F1F1] hover:bg-[#E7F1F1] dark:hover:bg-[#062625] rounded-xl font-medium"> {t('add_category', 'Add Category')} </button>
+                       <button onClick={() => navigate('/admin/vendors')} className="text-left px-3 py-2 text-sm text-[#0A3D3B] dark:text-[#E7F1F1] hover:bg-[#E7F1F1] dark:hover:bg-[#062625] rounded-xl font-medium"> {t('add_pharmacy', 'Add Pharmacy')} </button>
+                       <button onClick={() => navigate('/admin/drivers')} className="text-left px-3 py-2 text-sm text-[#0A3D3B] dark:text-[#E7F1F1] hover:bg-[#E7F1F1] dark:hover:bg-[#062625] rounded-xl font-medium"> {t('add_driver', 'Add Driver')} </button>
                     </div>
                  </div>
               </div>
               
-              <div className="flex items-center gap-3 text-slate-500">
-                 <DarkModeToggle className="shadow-sm bg-white dark:bg-slate-800 dark:text-slate-200" />
+              <div className="flex items-center gap-2.5 text-[#0E7673]">
+                 <DarkModeToggle className="shadow-sm bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250]" />
                  <button 
                    onClick={() => navigate('/admin/support')} 
-                   className="w-10 h-10 bg-white dark:bg-slate-800 dark:text-slate-200 rounded-full flex items-center justify-center border border-gray-100 dark:border-zinc-700 shadow-sm hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-zinc-700 transition"
+                   className="w-10 h-10 bg-white dark:bg-[#0A3D3B] text-[#0E7673] dark:text-[#E7F1F1] rounded-full flex items-center justify-center border border-[#CFE4E3] dark:border-[#145250] shadow-sm hover:bg-[#E7F1F1] dark:hover:bg-[#062625] transition"
                    title="Messages & Support"
                  >
                     <MessageSquare size={18} />
@@ -234,8 +234,8 @@ export function AdminLayout() {
                  <NotificationBell />
               </div>
 
-              <div className="relative flex items-center gap-2 bg-white dark:bg-slate-800 px-3 py-1.5 rounded-full shadow-sm text-xs font-medium text-slate-600 dark:text-slate-300 border border-transparent hover:border-slate-200 transition">
-                <Globe size={14} /> 
+              <div className="relative flex items-center gap-2 bg-white dark:bg-[#0A3D3B] px-3.5 py-2 rounded-full shadow-sm text-xs font-bold text-[#0A3D3B] dark:text-[#E7F1F1] border border-[#CFE4E3] dark:border-[#145250] transition">
+                <Globe size={14} className="text-[#0E7673] dark:text-[#38B794]" /> 
                 <span className="uppercase">{i18n.language}</span>
                 <ChevronDown size={14} />
                 <select 
@@ -254,14 +254,14 @@ export function AdminLayout() {
                 onClick={() => navigate('/admin/profile')}
               >
                  <div className="text-right hidden md:block">
-                    <p className="text-sm font-bold text-slate-900 dark:text-white">{user?.displayName || "Platform Admin"}</p>
-                    <p className="text-xs text-slate-500 dark:text-slate-400">{user?.email || "admin@pharmaply.com"}</p>
+                    <p className="text-sm font-bold text-[#0A3D3B] dark:text-white">{user?.displayName || "Platform Admin"}</p>
+                    <p className="text-xs text-[#0E7673] dark:text-[#9FC8C7]">{user?.email || "admin@pharmaply.com"}</p>
                  </div>
-                 <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden border-2 border-white dark:border-slate-800 shadow-sm flex items-center justify-center">
+                 <div className="w-10 h-10 rounded-full bg-[#D7F1EA] dark:bg-[#0A3D3B] overflow-hidden border-2 border-white dark:border-[#145250] shadow-sm flex items-center justify-center">
                     {user?.photoURL ? (
                        <img src={user.photoURL} alt="Admin" className="w-full h-full object-cover" />
                     ) : (
-                       <User size={20} className="text-slate-400" />
+                       <User size={20} className="text-[#0E7673] dark:text-[#38B794]" />
                     )}
                  </div>
               </div>

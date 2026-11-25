@@ -10,9 +10,11 @@ export function DarkModeToggle({ className = '' }: { className?: string }) {
   return (
     <button
       onClick={toggleDarkMode}
-      className={`relative p-2 rounded-full transition-colors flex items-center justify-center ${className} ${
-        isDarkMode ? 'bg-slate-800 text-yellow-400 hover:bg-slate-700' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-      }`}
+      className={`relative p-2 rounded-full transition-colors flex items-center justify-center ${
+        isDarkMode
+          ? 'bg-[#0A3D3B] text-[#38B794] hover:bg-[#0E7673] hover:text-white'
+          : 'bg-[#E7F1F1] text-[#0E7673] hover:bg-[#CFE4E3]'
+      } ${className}`}
       aria-label="Toggle Dark Mode"
       title={t('toggle_dark_mode', 'Toggle Dark Mode')}
     >

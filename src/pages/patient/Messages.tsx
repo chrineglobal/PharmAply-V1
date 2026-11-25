@@ -423,81 +423,81 @@ export function Messages() {
   const liveActivePartnerPhoto = (activePartner?.partnerId && userProfiles[activePartner.partnerId]?.photoUrl) || activePartner?.photoUrl;
 
   return (
-    <div className="flex-1 bg-slate-50 dark:bg-slate-900 flex h-full overflow-hidden relative">
+    <div className="flex-1 bg-[#F5FAFA] dark:bg-[#062625] flex h-full overflow-hidden relative">
       
       {/* ========================================================================= */}
       {/* 1. LEFT SIDEBAR: LISTE DES CONVERSATIONS (PATIENTS, CHAUFFEURS, SUPPORT) */}
       {/* ========================================================================= */}
-      <div className={`w-full md:w-80 lg:w-96 bg-white dark:bg-slate-800 border-r border-gray-100 dark:border-slate-700 flex flex-col h-full shrink-0 z-10 transition-all ${
+      <div className={`w-full md:w-80 lg:w-96 bg-white dark:bg-[#0A3D3B] border-r border-[#CFE4E3] dark:border-[#145250] flex flex-col h-full shrink-0 z-10 transition-all ${
         mobileShowChat ? 'hidden md:flex' : 'flex'
       }`}>
         {/* Header de la liste */}
-        <div className="p-4 border-b border-gray-100 dark:border-slate-700 space-y-3">
+        <div className="p-4 border-b border-[#CFE4E3] dark:border-[#145250] space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-teal-50 dark:bg-teal-950/50 flex items-center justify-center text-[var(--app-primary-color)] dark:text-teal-400 font-bold">
+              <div className="w-9 h-9 rounded-xl bg-[#D7F1EA] dark:bg-[#0E4A47] flex items-center justify-center text-[#0E7673] dark:text-[#38B794] font-bold">
                 <MessageCircle size={18} />
               </div>
-              <h2 className="font-bold text-gray-900 dark:text-white text-base">
+              <h2 className="font-bold text-[#0A3D3B] dark:text-white text-base">
                 {t('messages', 'Messagerie')}
               </h2>
             </div>
             <div className="flex items-center gap-2">
               <LanguageSwitcher variant="pill" />
-              <DarkModeToggle className="w-8 h-8 bg-gray-50 dark:bg-slate-700 border border-gray-100 dark:border-slate-600" />
+              <DarkModeToggle className="w-8 h-8 bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250]" />
             </div>
           </div>
 
           {/* Barre de recherche */}
           <div className="relative">
-            <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
+            <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#5C807F] dark:text-[#9FC8C7]" />
             <input 
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder={t('search_conversations', 'Rechercher un client, chauffeur...')}
-              className="w-full pl-9 pr-4 py-2 bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-xl text-xs text-gray-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-[#194B4B]"
+              className="w-full pl-9 pr-4 py-2 bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] rounded-full text-xs text-[#0A3D3B] dark:text-white placeholder-[#5C807F] dark:placeholder-[#9FC8C7] focus:outline-none focus:ring-2 focus:ring-[#0E7673]"
             />
           </div>
 
           {/* Onglets Filtres */}
-          <div className="flex items-center gap-1 p-1 bg-gray-100 dark:bg-slate-900 rounded-xl">
+          <div className="flex items-center gap-1 p-1 bg-[#E7F1F1] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] rounded-full">
             <button
               onClick={() => setActiveTab('all')}
-              className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition ${
+              className={`flex-1 py-1.5 text-xs font-bold rounded-full transition ${
                 activeTab === 'all' 
-                  ? 'bg-white dark:bg-slate-800 text-[var(--app-primary-color)] dark:text-teal-400 shadow-xs' 
-                  : 'text-gray-500 hover:text-gray-800 dark:text-gray-100 dark:hover:text-gray-200'
+                  ? 'bg-[#0E7673] text-white shadow-xs' 
+                  : 'text-[#5C807F] hover:text-[#0A3D3B] dark:text-[#9FC8C7] dark:hover:text-white'
               }`}
             >
               {t('all_tab', 'Tous')}
             </button>
             <button
               onClick={() => setActiveTab('patients')}
-              className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition ${
+              className={`flex-1 py-1.5 text-xs font-bold rounded-full transition ${
                 activeTab === 'patients' 
-                  ? 'bg-white dark:bg-slate-800 text-[var(--app-primary-color)] dark:text-teal-400 shadow-xs' 
-                  : 'text-gray-500 hover:text-gray-800 dark:text-gray-100 dark:hover:text-gray-200'
+                  ? 'bg-[#0E7673] text-white shadow-xs' 
+                  : 'text-[#5C807F] hover:text-[#0A3D3B] dark:text-[#9FC8C7] dark:hover:text-white'
               }`}
             >
               {t('patients_tab', 'Patients')}
             </button>
             <button
               onClick={() => setActiveTab('drivers')}
-              className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition ${
+              className={`flex-1 py-1.5 text-xs font-bold rounded-full transition ${
                 activeTab === 'drivers' 
-                  ? 'bg-white dark:bg-slate-800 text-[var(--app-primary-color)] dark:text-teal-400 shadow-xs' 
-                  : 'text-gray-500 hover:text-gray-800 dark:text-gray-100 dark:hover:text-gray-200'
+                  ? 'bg-[#0E7673] text-white shadow-xs' 
+                  : 'text-[#5C807F] hover:text-[#0A3D3B] dark:text-[#9FC8C7] dark:hover:text-white'
               }`}
             >
               {t('drivers_tab', 'Chauffeurs')}
             </button>
             <button
               onClick={() => setActiveTab('support')}
-              className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition ${
+              className={`flex-1 py-1.5 text-xs font-bold rounded-full transition ${
                 activeTab === 'support' 
-                  ? 'bg-white dark:bg-slate-800 text-[var(--app-primary-color)] dark:text-teal-400 shadow-xs' 
-                  : 'text-gray-500 hover:text-gray-800 dark:text-gray-100 dark:hover:text-gray-200'
+                  ? 'bg-[#0E7673] text-white shadow-xs' 
+                  : 'text-[#5C807F] hover:text-[#0A3D3B] dark:text-[#9FC8C7] dark:hover:text-white'
               }`}
             >
               {t('support_tab', 'Support')}
@@ -506,7 +506,7 @@ export function Messages() {
         </div>
 
         {/* Liste défilante des discussions */}
-        <div className="flex-1 overflow-y-auto divide-y divide-gray-50 dark:divide-slate-700/50 custom-scrollbar">
+        <div className="flex-1 overflow-y-auto divide-y divide-[#CFE4E3]/60 dark:divide-[#145250] custom-scrollbar">
           
           {/* CARTE SUPPORT ADMIN ÉPINGLÉE EN TÊTE */}
           <div 
@@ -518,31 +518,31 @@ export function Messages() {
             }}
             className={`p-3.5 flex items-center gap-3 cursor-pointer transition border-l-4 ${
               activeId.startsWith('support_') 
-                ? 'bg-teal-50/70 dark:bg-teal-950/30 border-[var(--app-primary-color)] dark:border-teal-400' 
-                : 'bg-amber-50/40 dark:bg-slate-800/80 border-amber-500 hover:bg-amber-50 dark:hover:bg-slate-700'
+                ? 'bg-[#D7F1EA]/70 dark:bg-[#0E4A47] border-[#0E7673] dark:border-[#38B794]' 
+                : 'bg-amber-50/40 dark:bg-[#0A3D3B] border-amber-500 hover:bg-amber-50 dark:hover:bg-[#0E4A47]/60'
             }`}
           >
-            <div className="w-11 h-11 rounded-full bg-[var(--app-primary-color)] text-white flex items-center justify-center font-bold shrink-0 shadow-sm">
+            <div className="w-11 h-11 rounded-full bg-[#0E7673] text-white flex items-center justify-center font-bold shrink-0 shadow-sm">
               <Headphones size={20} />
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center justify-between">
-                <span className="font-bold text-gray-900 dark:text-white text-xs truncate flex items-center gap-1">
+                <span className="font-bold text-[#0A3D3B] dark:text-white text-xs truncate flex items-center gap-1">
                   {t('support_client_admin', 'Support Client Admin')}
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block animate-pulse" />
+                  <span className="w-2 h-2 rounded-full bg-[#38B794] inline-block animate-pulse" />
                 </span>
                 <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 font-bold">
                   24/7
                 </span>
               </div>
-              <p className="text-[11px] text-gray-500 truncate mt-0.5">
+              <p className="text-[11px] text-[#5C807F] dark:text-[#9FC8C7] truncate mt-0.5">
                 {t('direct_admin_contact', 'Contact direct avec l\'administrateur')}
               </p>
             </div>
           </div>
 
           {filteredConversations.filter(c => c.type !== 'support').length === 0 ? (
-            <div className="p-8 text-center text-gray-400 dark:text-gray-500 text-xs">
+            <div className="p-8 text-center text-[#5C807F] dark:text-[#9FC8C7] text-xs">
               {t('no_conversations_found', 'Aucune conversation trouvée dans cette catégorie.')}
             </div>
           ) : (
@@ -561,8 +561,8 @@ export function Messages() {
                   }}
                   className={`p-3.5 flex items-center gap-3 cursor-pointer transition border-l-4 ${
                     isSelected 
-                      ? 'bg-teal-50/60 dark:bg-teal-950/30 border-[var(--app-primary-color)] dark:border-teal-400' 
-                      : 'border-transparent hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-slate-700/50'
+                      ? 'bg-[#D7F1EA]/70 dark:bg-[#0E4A47] border-[#0E7673] dark:border-[#38B794]' 
+                      : 'border-transparent hover:bg-[#F5FAFA] dark:hover:bg-[#0E4A47]/40'
                   }`}
                 >
                   <div className="shrink-0">
@@ -576,23 +576,23 @@ export function Messages() {
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between">
-                      <span className="font-bold text-gray-900 dark:text-white text-xs truncate">
+                      <span className="font-bold text-[#0A3D3B] dark:text-white text-xs truncate">
                         {liveName}
                       </span>
                       {conv.orderNumber && (
-                        <span className="text-[10px] text-gray-400 font-mono">
+                        <span className="text-[10px] text-[#5C807F] dark:text-[#9FC8C7] font-mono">
                           #{conv.orderNumber}
                         </span>
                       )}
                     </div>
-                    <p className="text-[11px] text-gray-500 dark:text-gray-400 truncate mt-0.5">
+                    <p className="text-[11px] text-[#5C807F] dark:text-[#9FC8C7] truncate mt-0.5">
                       {conv.subtitle}
                     </p>
                     <div className="flex items-center gap-1.5 mt-1">
-                      <span className={`text-[9px] font-bold px-1.5 py-0.2 rounded ${
+                      <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full ${
                         conv.type === 'driver' 
-                          ? 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300' 
-                          : 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
+                          ? 'bg-[#D7F1EA] text-[#0A3D3B] dark:bg-[#0E4A47] dark:text-[#38B794]' 
+                          : 'bg-[#E7F1F1] text-[#0E7673] dark:bg-[#062625] dark:text-[#D7F1EA]'
                       }`}>
                         {conv.roleBadge}
                       </span>
@@ -608,16 +608,16 @@ export function Messages() {
       {/* ========================================================================= */}
       {/* 2. RIGHT AREA: CHAT ACTIF EN DIRECT */}
       {/* ========================================================================= */}
-      <div className={`flex-1 flex flex-col h-full overflow-hidden bg-slate-50 dark:bg-slate-900 ${
+      <div className={`flex-1 flex flex-col h-full overflow-hidden bg-[#F5FAFA] dark:bg-[#062625] ${
         !mobileShowChat ? 'hidden md:flex' : 'flex'
       }`}>
         {/* Header de la conversation active */}
-        <div className="px-6 py-3.5 flex items-center justify-between bg-white dark:bg-slate-800 shadow-xs z-10 border-b border-gray-100 dark:border-slate-700 shrink-0">
+        <div className="px-6 py-3.5 flex items-center justify-between bg-white dark:bg-[#0A3D3B] shadow-xs z-10 border-b border-[#CFE4E3] dark:border-[#145250] shrink-0">
           <div className="flex items-center gap-3">
             <button 
               type="button"
               onClick={() => setMobileShowChat(false)} 
-              className="md:hidden w-9 h-9 flex items-center justify-center bg-gray-50 dark:bg-slate-700 rounded-full hover:bg-gray-100 dark:bg-zinc-800 transition text-gray-700 dark:text-gray-200"
+              className="md:hidden w-9 h-9 flex items-center justify-center bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] rounded-full hover:bg-[#E7F1F1] transition text-[#0A3D3B] dark:text-white"
               title="Retour à la liste"
             >
               <ArrowLeft size={18} />
@@ -626,7 +626,7 @@ export function Messages() {
             <div className="flex items-center gap-3">
               <div className="shrink-0">
                 {activePartner?.type === 'support' ? (
-                  <div className="w-10 h-10 rounded-full bg-[var(--app-primary-color)] text-white flex items-center justify-center font-bold">
+                  <div className="w-10 h-10 rounded-full bg-[#0E7673] text-white flex items-center justify-center font-bold">
                     <Headphones size={20} />
                   </div>
                 ) : (
@@ -640,20 +640,20 @@ export function Messages() {
               </div>
 
               <div>
-                <h1 className="font-bold text-gray-900 dark:text-white text-sm leading-tight">
+                <h1 className="font-bold text-[#0A3D3B] dark:text-white text-sm leading-tight">
                   {loadingContext ? (
-                    <span className="inline-block w-28 h-4 bg-gray-200 dark:bg-slate-700 rounded animate-pulse" />
+                    <span className="inline-block w-28 h-4 bg-[#E7F1F1] dark:bg-[#0E4A47] rounded animate-pulse" />
                   ) : (
                     liveActivePartnerName
                   )}
                 </h1>
                 <div className="flex items-center gap-2 mt-0.5">
-                  <span className="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block animate-pulse" />
+                  <span className="text-[11px] text-[#0E7673] dark:text-[#38B794] font-medium flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#38B794] inline-block animate-pulse" />
                     {activePartner?.roleBadge || t('online', 'En ligne')}
                   </span>
                   {activePartner?.orderNumber && (
-                    <span className="text-[10px] bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 px-1.5 py-0.2 rounded font-bold">
+                    <span className="text-[10px] bg-[#E7F1F1] dark:bg-[#062625] text-[#0A3D3B] dark:text-[#D7F1EA] px-2 py-0.5 rounded-full font-bold border border-[#CFE4E3] dark:border-[#145250]">
                       #{activePartner.orderNumber}
                     </span>
                   )}
@@ -667,9 +667,9 @@ export function Messages() {
               <button
                 type="button"
                 onClick={() => navigate(`/pharmacist/order/${activePartner.id}`)}
-                className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 dark:bg-slate-700 text-gray-700 dark:text-gray-200 rounded-xl text-xs font-bold hover:bg-gray-100 dark:bg-zinc-800 transition border border-gray-200 dark:border-slate-600"
+                className="hidden sm:flex items-center gap-1.5 px-3.5 py-1.5 bg-[#F5FAFA] dark:bg-[#062625] text-[#0A3D3B] dark:text-[#D7F1EA] rounded-full text-xs font-bold hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47] transition border border-[#CFE4E3] dark:border-[#145250]"
               >
-                <FileText size={13} />
+                <FileText size={13} className="text-[#0E7673] dark:text-[#38B794]" />
                 {t('view_order', 'Voir commande')}
               </button>
             )}
@@ -677,7 +677,7 @@ export function Messages() {
             {activePartner?.phone && (
               <a 
                 href={`tel:${activePartner.phone}`}
-                className="w-9 h-9 rounded-full flex items-center justify-center transition shadow-xs bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 hover:bg-emerald-100"
+                className="w-9 h-9 rounded-full flex items-center justify-center transition shadow-xs bg-[#D7F1EA] text-[#0E7673] dark:bg-[#0E4A47] dark:text-[#38B794] hover:bg-[#CFE4E3]"
                 title={t('call', 'Appeler')}
               >
                 <Phone size={16} />
@@ -689,20 +689,20 @@ export function Messages() {
         {/* Message List */}
         <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 pb-28 custom-scrollbar">
           {messages.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-64 text-center text-gray-400 dark:text-gray-500">
-              <div className="w-14 h-14 bg-white dark:bg-slate-800 rounded-full flex items-center justify-center mb-3 shadow-xs">
+            <div className="flex flex-col items-center justify-center h-64 text-center text-[#5C807F] dark:text-[#9FC8C7]">
+              <div className="w-14 h-14 bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] rounded-full flex items-center justify-center mb-3 shadow-xs">
                 {activePartner?.type === 'support' ? (
-                  <Headphones size={24} className="text-[var(--app-primary-color)] dark:text-teal-400" />
+                  <Headphones size={24} className="text-[#0E7673] dark:text-[#38B794]" />
                 ) : (
-                  <Package size={24} className="text-gray-400 dark:text-gray-500" />
+                  <Package size={24} className="text-[#5C807F] dark:text-[#9FC8C7]" />
                 )}
               </div>
-              <p className="text-sm font-bold text-gray-700 dark:text-gray-200">
+              <p className="text-sm font-bold text-[#0A3D3B] dark:text-white">
                 {activePartner?.type === 'support' 
                   ? t('support_welcome_title', "Assistance PharmAply") 
                   : t('no_messages_yet', 'Aucun message pour l\'instant.')}
               </p>
-              <p className="text-xs text-gray-400 mt-1 max-w-sm">
+              <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7] mt-1 max-w-sm">
                 {activePartner?.type === 'support' 
                   ? t('support_welcome_desc', "Posez votre question à notre équipe technique. Un agent vous répondra sous quelques minutes.") 
                   : t('exchange_with_partner', "Échangez directement avec votre interlocuteur pour le bon déroulement de la commande.")}
@@ -731,23 +731,23 @@ export function Messages() {
                   <div 
                     className={`max-w-[78%] rounded-2xl p-3.5 shadow-xs ${
                       isMe 
-                        ? 'bg-[var(--app-primary-color)] text-white rounded-br-none' 
-                        : 'bg-white dark:bg-slate-800 text-gray-900 dark:text-slate-100 rounded-bl-none border border-gray-100 dark:border-slate-700'
+                        ? 'bg-[#0E7673] text-white rounded-br-none' 
+                        : 'bg-white dark:bg-[#0A3D3B] text-[#0A3D3B] dark:text-[#D7F1EA] rounded-bl-none border border-[#CFE4E3] dark:border-[#145250]'
                     }`}
                   >
                     {!isMe && resolvedSenderName && (
-                      <p className="text-[11px] font-bold text-teal-700 dark:text-teal-400 mb-1">
+                      <p className="text-[11px] font-bold text-[#0E7673] dark:text-[#38B794] mb-1">
                         {resolvedSenderName}
                       </p>
                     )}
                     <p className="text-sm leading-relaxed whitespace-pre-wrap">{msg.text}</p>
-                    <div className={`flex items-center justify-end gap-1 mt-1.5 text-[10px] font-medium ${isMe ? 'text-teal-100' : 'text-gray-400'}`}>
+                    <div className={`flex items-center justify-end gap-1 mt-1.5 text-[10px] font-medium ${isMe ? 'text-[#D7F1EA]' : 'text-[#5C807F] dark:text-[#9FC8C7]'}`}>
                       <span>
                         {parseDate(msg.createdAt) 
                           ? parseDate(msg.createdAt)!.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) 
                           : t('now', 'À l\'instant')}
                       </span>
-                      {isMe && <CheckCheck size={12} className="text-teal-200" />}
+                      {isMe && <CheckCheck size={12} className="text-[#38B794]" />}
                     </div>
                   </div>
 
@@ -769,20 +769,20 @@ export function Messages() {
         </div>
 
         {/* Input Bar */}
-        <div className="p-4 px-6 bg-white dark:bg-zinc-950/95 dark:bg-slate-800/95 backdrop-blur-md border-t border-gray-100 dark:border-slate-700 z-20 flex gap-2 items-center shadow-lg">
+        <div className="p-4 px-6 bg-white/95 dark:bg-[#0A3D3B]/95 backdrop-blur-md border-t border-[#CFE4E3] dark:border-[#145250] z-20 flex gap-2 items-center shadow-lg">
           <input 
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSend()}
             placeholder={activePartner?.type === 'support' ? t('write_to_support', "Écrivez au support administrateur...") : t('type_your_message', 'Saisissez votre message...')}
-            className="flex-1 bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-full py-3 px-6 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#194B4B] dark:focus:ring-teal-500 transition"
+            className="flex-1 bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] rounded-full py-3 px-6 text-sm text-[#0A3D3B] dark:text-white placeholder-[#5C807F] dark:placeholder-[#9FC8C7] focus:outline-none focus:ring-2 focus:ring-[#0E7673] dark:focus:ring-[#38B794] transition"
           />
           <button 
             type="button"
             onClick={handleSend} 
             disabled={!input.trim()}
-            className="w-12 h-12 disabled:opacity-50 text-white rounded-full flex items-center justify-center shadow-md transition hover:bg-[#133a3a] bg-[var(--app-primary-color)] shrink-0"
+            className="w-12 h-12 disabled:opacity-50 text-white rounded-full flex items-center justify-center shadow-md transition bg-[#0E7673] hover:bg-[#0A5A58] shrink-0"
           >
             <Send size={18} className="translate-x-0.5" />
           </button>

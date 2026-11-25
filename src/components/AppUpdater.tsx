@@ -3,6 +3,7 @@ import { doc, getDoc } from '../lib/firebase';
 import { db } from "../lib/firebase";
 import { AlertTriangle, Download } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { PharmAplyLogo } from "./common/PharmAplyLogo";
 
 const CURRENT_VERSION = "1.0.0";
 
@@ -21,7 +22,7 @@ function isVersionLower(current: string, required: string) {
 }
 
 export function AppUpdater({ children }: { children: React.ReactNode }) {
-    const { t } = useTranslation();
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [needsUpdate, setNeedsUpdate] = useState(false);
 
@@ -46,21 +47,28 @@ export function AppUpdater({ children }: { children: React.ReactNode }) {
   }, []);
 
   if (loading) {
-     return <div className="min-h-screen w-full flex bg-[#F0F5F2] items-center justify-center"> {t('loading', 'Loading...')} </div>;
+     return (
+       <div className="min-h-screen w-full flex flex-col gap-4 bg-white dark:bg-[#062625] items-center justify-center p-6">
+         <PharmAplyLogo variant="vertical" tone="color" showTagline size={130} />
+         <p className="text-sm font-medium text-[#0E7673] dark:text-[#88D4BF] animate-pulse">
+           {t('loading', 'Chargement...')}
+         </p>
+       </div>
+     );
   }
 
   if (needsUpdate) {
      return (
-       <div className="min-h-screen w-full flex flex-col items-center justify-center bg-[#F0F5F2] p-6 text-center">
-          <div className="bg-white dark:bg-zinc-950 p-8 rounded-3xl shadow-sm max-w-md w-full flex flex-col items-center">
-             <div className="w-16 h-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center mb-6">
+       <div className="min-h-screen w-full flex flex-col items-center justify-center bg-[#E7F1F1] dark:bg-[#062625] p-6 text-center">
+          <div className="bg-white dark:bg-[#0A3D3B] p-8 rounded-3xl shadow-sm border border-[#CFE4E3] dark:border-[#0E7673] max-w-md w-full flex flex-col items-center">
+             <div className="w-16 h-16 bg-[#E7F1F1] dark:bg-[#0E7673]/40 text-[#0E7673] dark:text-[#38B794] rounded-full flex items-center justify-center mb-6">
                 <AlertTriangle size={32} />
              </div>
-             <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2"> {t('update_required', 'Update Required')} </h1>
-             <p className="text-gray-500 mb-8">
-                {t('your_current_version_of_the_ap', 'Your current version of the app is outdated. Please update to the latest version to safely continue using PharmAply.')} </p>
-             <button className="w-full bg-slate-900 text-white font-bold rounded-xl py-3.5 flex items-center justify-center gap-2 hover:bg-slate-800 transition shadow-sm">
-                <Download size={20} />  {t('download_update', 'Download Update')} </button>
+             <h1 className="text-2xl font-bold text-[#0E7673] dark:text-white mb-2"> {t('update_required', 'Mise à jour requise')} </h1>
+             <p className="text-[#0A3D3B]/80 dark:text-[#CFE4E3] text-sm mb-8">
+                {t('your_current_version_of_the_ap', 'Votre version actuelle de PharmAply doit être mise à jour pour continuer en toute sécurité.')} </p>
+             <button className="w-full bg-[#0E7673] hover:bg-[#0A3D3B] text-white font-bold rounded-full py-3.5 flex items-center justify-center gap-2 transition shadow-sm">
+                <Download size={20} />  {t('download_update', 'Télécharger la mise à jour')} </button>
           </div>
        </div>
      );

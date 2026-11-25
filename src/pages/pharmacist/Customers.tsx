@@ -204,79 +204,79 @@ export function PharmacistCustomers() {
       {/* Top Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2.5">
-            <div className="p-2.5 bg-teal-50 dark:bg-teal-950/40 rounded-xl text-[var(--app-primary-color)] dark:text-teal-400">
-              <Users size={24} />
+          <h1 className="text-2xl font-bold text-[#0A3D3B] dark:text-white flex items-center gap-3">
+            <div className="p-2.5 bg-[#D7F1EA] dark:bg-[#0E4A47] rounded-2xl text-[#0E7673] dark:text-[#38B794] border border-[#CFE4E3] dark:border-[#145250]">
+              <Users size={22} />
             </div>
             {t('customers', 'Fichier Clients & Patients')}
           </h1>
-          <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
+          <p className="text-[#5C807F] dark:text-[#9FC8C7] text-sm mt-1">
             {t('manage_customers_desc', 'Consultez la base de vos patients, leur historique d\'achats et contactez-les en un clic.')}
           </p>
         </div>
 
         <button 
           onClick={handleExportCSV}
-          className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl text-xs font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-slate-700 transition shadow-xs"
+          className="flex items-center gap-2 px-5 py-2.5 bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] rounded-full text-xs font-bold text-[#0A3D3B] dark:text-white hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47] transition shadow-xs"
         >
-          <Download size={15} />
+          <Download size={15} className="text-[#0E7673] dark:text-[#38B794]" />
           {t('export_csv', 'Exporter CSV')}
         </button>
       </div>
 
       {/* Metrics Row */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-        <div className="bg-white dark:bg-slate-800 rounded-3xl p-5 shadow-xs border border-gray-100 dark:border-slate-700 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-teal-50 dark:bg-teal-950/40 text-[var(--app-primary-color)] dark:text-teal-400 flex items-center justify-center">
-            <Users size={24} />
+        <div className="bg-white dark:bg-[#0A3D3B] rounded-3xl p-5 shadow-xs border border-[#CFE4E3] dark:border-[#145250] flex items-center gap-4">
+          <div className="w-12 h-12 rounded-2xl bg-[#D7F1EA] dark:bg-[#0E4A47] text-[#0E7673] dark:text-[#38B794] flex items-center justify-center shrink-0">
+            <Users size={22} />
           </div>
           <div>
-            <p className="text-xs text-gray-500 font-medium">Total Clients Uniques</p>
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white">{customers.length}</h3>
+            <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7] font-semibold">Total Clients Uniques</p>
+            <h3 className="text-xl font-extrabold text-[#0A3D3B] dark:text-white tabular-nums">{customers.length}</h3>
           </div>
         </div>
 
-        <div className="bg-white dark:bg-slate-800 rounded-3xl p-5 shadow-xs border border-gray-100 dark:border-slate-700 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 flex items-center justify-center">
-            <UserCheck size={24} />
+        <div className="bg-white dark:bg-[#0A3D3B] rounded-3xl p-5 shadow-xs border border-[#CFE4E3] dark:border-[#145250] flex items-center gap-4">
+          <div className="w-12 h-12 rounded-2xl bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
+            <UserCheck size={22} />
           </div>
           <div>
-            <p className="text-xs text-gray-500 font-medium">Clients Réguliers & VIP</p>
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+            <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7] font-semibold">Clients Réguliers & VIP</p>
+            <h3 className="text-xl font-extrabold text-[#0A3D3B] dark:text-white tabular-nums">
               {customers.filter(c => c.totalOrders > 1).length}
             </h3>
           </div>
         </div>
 
-        <div className="bg-white dark:bg-slate-800 rounded-3xl p-5 shadow-xs border border-gray-100 dark:border-slate-700 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
-            <ShoppingBag size={24} />
+        <div className="bg-white dark:bg-[#0A3D3B] rounded-3xl p-5 shadow-xs border border-[#CFE4E3] dark:border-[#145250] flex items-center gap-4">
+          <div className="w-12 h-12 rounded-2xl bg-[#D7F1EA] dark:bg-[#0E4A47] text-[#0E7673] dark:text-[#38B794] flex items-center justify-center shrink-0">
+            <ShoppingBag size={22} />
           </div>
           <div>
-            <p className="text-xs text-gray-500 font-medium">Commandes Totales</p>
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white">{orders.length}</h3>
+            <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7] font-semibold">Commandes Totales</p>
+            <h3 className="text-xl font-extrabold text-[#0A3D3B] dark:text-white tabular-nums">{orders.length}</h3>
           </div>
         </div>
       </div>
 
       {/* Search Input */}
-      <div className="bg-white dark:bg-slate-800 rounded-2xl p-3 shadow-xs border border-gray-100 dark:border-slate-700 flex items-center gap-3">
-        <Search className="text-gray-400 ml-2" size={18} />
+      <div className="bg-white dark:bg-[#0A3D3B] rounded-full px-4 py-2.5 shadow-xs border border-[#CFE4E3] dark:border-[#145250] flex items-center gap-3 focus-within:border-[#0E7673] dark:focus-within:border-[#38B794] transition-colors">
+        <Search className="text-[#5C807F] dark:text-[#9FC8C7] ml-1 shrink-0" size={18} />
         <input 
           type="text" 
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder={t('search_customers', 'Rechercher un client par nom, numéro de téléphone ou e-mail...')}
-          className="flex-1 bg-transparent border-none focus:ring-0 text-sm text-gray-900 dark:text-white placeholder:text-gray-400"
+          className="flex-1 bg-transparent border-none focus:ring-0 focus:outline-none text-sm text-[#0A3D3B] dark:text-white placeholder:text-[#5C807F] dark:placeholder:text-[#9FC8C7]"
         />
       </div>
 
       {/* Customers Table */}
-      <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-xs border border-gray-100 dark:border-slate-700 overflow-hidden">
+      <div className="bg-white dark:bg-[#0A3D3B] rounded-3xl shadow-xs border border-[#CFE4E3] dark:border-[#145250] overflow-hidden">
         <div className="w-full overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-gray-100 dark:border-slate-700 bg-gray-50 dark:bg-zinc-900/50 dark:bg-slate-800/50 text-xs font-bold text-gray-400 uppercase tracking-wider">
+              <tr className="border-b border-[#CFE4E3] dark:border-[#145250] bg-[#F5FAFA] dark:bg-[#062625]/70 text-[11px] font-bold text-[#5C807F] dark:text-[#9FC8C7] uppercase tracking-wider">
                 <th className="p-4 pl-6">{t('customer', 'Client / Patient')}</th>
                 <th className="p-4">{t('contact', 'Contact')}</th>
                 <th className="p-4">{t('total_orders', 'Commandes')}</th>
@@ -285,16 +285,16 @@ export function PharmacistCustomers() {
                 <th className="p-4 text-right pr-6">{t('actions', 'Actions')}</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-50 dark:divide-slate-700/50 text-sm">
+            <tbody className="divide-y divide-[#E7F1F1] dark:divide-[#145250] text-sm">
               {loading ? (
                 <tr>
-                  <td colSpan={6} className="p-8 text-center text-gray-400 text-xs animate-pulse">
+                  <td colSpan={6} className="p-8 text-center text-[#5C807F] dark:text-[#9FC8C7] text-xs animate-pulse">
                     Chargement des clients en cours...
                   </td>
                 </tr>
               ) : filteredCustomers.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="p-8 text-center text-gray-500 dark:text-gray-400 text-sm">
+                  <td colSpan={6} className="p-8 text-center text-[#5C807F] dark:text-[#9FC8C7] text-sm">
                     {t('no_customers_found', 'Aucun client trouvé.')}
                   </td>
                 </tr>
@@ -306,7 +306,7 @@ export function PharmacistCustomers() {
                   const liveEmail = userProfiles[cust.id]?.email || cust.email;
 
                   return (
-                    <tr key={cust.id} className="hover:bg-gray-50 dark:bg-zinc-900/70 dark:hover:bg-slate-700/40 transition">
+                    <tr key={cust.id} className="hover:bg-[#F5FAFA] dark:hover:bg-[#0E4A47]/60 transition">
                       <td className="p-4 pl-6">
                         <div className="flex items-center gap-3">
                           <UserAvatar
@@ -317,16 +317,16 @@ export function PharmacistCustomers() {
                           />
                           <div>
                             <div className="flex items-center gap-1.5">
-                              <span className="font-bold text-gray-900 dark:text-white">
+                              <span className="font-bold text-[#0A3D3B] dark:text-white">
                                 {liveName}
                               </span>
                               {cust.status === 'vip' && (
-                                <span className="px-2 py-0.2 rounded-full text-[9px] font-extrabold bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300">
+                                <span className="px-2 py-0.5 rounded-full text-[9px] font-extrabold bg-[#D7F1EA] text-[#0E7673] dark:bg-[#0E4A47] dark:text-[#38B794] border border-[#CFE4E3] dark:border-[#145250]">
                                   VIP
                                 </span>
                               )}
                             </div>
-                            <span className="text-xs text-gray-400">
+                            <span className="text-xs text-[#5C807F] dark:text-[#9FC8C7]">
                               ID: {cust.id.slice(0, 6)}
                             </span>
                           </div>
@@ -336,29 +336,29 @@ export function PharmacistCustomers() {
                       <td className="p-4">
                         <div className="space-y-0.5">
                           {livePhone ? (
-                            <a href={`tel:${livePhone}`} className="flex items-center gap-1 text-xs text-teal-700 dark:text-teal-400 hover:underline">
+                            <a href={`tel:${livePhone}`} className="flex items-center gap-1 text-xs font-semibold text-[#0E7673] dark:text-[#38B794] hover:underline">
                               <Phone size={12} /> {livePhone}
                             </a>
                           ) : (
-                            <span className="text-xs text-gray-400">Non renseigné</span>
+                            <span className="text-xs text-[#5C807F] dark:text-[#9FC8C7]">Non renseigné</span>
                           )}
                           {liveEmail && (
-                            <p className="text-[11px] text-gray-400 flex items-center gap-1">
+                            <p className="text-[11px] text-[#5C807F] dark:text-[#9FC8C7] flex items-center gap-1">
                               <Mail size={11} /> {liveEmail}
                             </p>
                           )}
                         </div>
                       </td>
 
-                      <td className="p-4 font-bold text-gray-900 dark:text-white">
+                      <td className="p-4 font-bold text-[#0A3D3B] dark:text-white tabular-nums">
                         {cust.totalOrders}
                       </td>
 
-                      <td className="p-4 font-bold text-emerald-600 dark:text-emerald-400">
+                      <td className="p-4 font-bold text-[#0E7673] dark:text-[#38B794] tabular-nums">
                         {formatCurrency(cust.totalSpent)}
                       </td>
 
-                      <td className="p-4 text-xs text-gray-500">
+                      <td className="p-4 text-xs text-[#5C807F] dark:text-[#9FC8C7]">
                         {cust.lastOrderDate ? cust.lastOrderDate.toLocaleDateString([], { day: '2-digit', month: 'short', year: 'numeric' }) : 'N/A'}
                       </td>
 
@@ -372,7 +372,7 @@ export function PharmacistCustomers() {
                               navigate(`/pharmacist/messages`);
                             }
                           }}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[var(--app-primary-color)] hover:bg-[#133a3a] text-white rounded-xl text-xs font-bold transition shadow-xs"
+                          className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-[#0E7673] hover:bg-[#0A5A58] text-white rounded-full text-xs font-bold transition shadow-xs"
                           title="Ouvrir la discussion avec ce client"
                         >
                           <MessageCircle size={14} />

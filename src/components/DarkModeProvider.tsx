@@ -9,13 +9,16 @@ const DarkModeContext = createContext<DarkModeContextProps | undefined>(undefine
 
 export function DarkModeProvider({ children }: { children: React.ReactNode }) {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
-    // Check local storage first
-    const saved = localStorage.getItem('darkMode');
-    if (saved !== null) {
-      return JSON.parse(saved);
+    try {
+      const saved = localStorage.getItem('darkMode');
+      if (saved !== null) {
+        return JSON.parse(saved);
+      }
+    } catch {
+      // ignore storage errors
     }
-    // Check system preference
-    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    // Charte PharmAply : mode clair par défaut (Blanc 60%, Teal 30%, Vert 10%)
+    return false;
   });
 
   useEffect(() => {

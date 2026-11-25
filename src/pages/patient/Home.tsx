@@ -11,6 +11,7 @@ import { NotificationBell } from "../../components/NotificationBell";
 import { DarkModeToggle } from "../../components/DarkModeToggle";
 import { SearchHeroBanner, CategoryItem, GeneralProductItem } from '../../components/SearchHeroBanner';
 import { StepMedicationSearchModal } from '../../components/patient/StepMedicationSearchModal';
+import { PharmAplyLogo } from '../../components/common/PharmAplyLogo';
 
 // Fallback admin categories if not yet created in Firestore
 const DEFAULT_CATEGORIES: CategoryItem[] = [
@@ -205,15 +206,32 @@ export function PatientHome() {
   };
 
   return (
-    <div className="flex-1 bg-white dark:bg-zinc-950 flex flex-col relative pb-20 h-full overflow-hidden">
+    <div className="flex-1 bg-[#F5FAFA] dark:bg-[#062625] flex flex-col relative pb-20 h-full overflow-hidden">
       
-      {/* 1. Header Profile & Delivery Address */}
-      <div className="bg-white dark:bg-zinc-900 px-6 pt-12 pb-4 rounded-b-[2rem] shadow-sm z-20 flex flex-col gap-4 border-b border-gray-100 dark:border-zinc-800">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate('/patient/profile')}>
-            <div 
-              className="w-12 h-12 bg-gray-100 dark:bg-zinc-800 rounded-full overflow-hidden border-2 flex items-center justify-center text-lg text-[var(--app-primary-color)] dark:text-teal-400 font-bold uppercase shrink-0 shadow-sm"
-              style={{ borderColor: theme.primaryColor || '#194B4B' }}
+      {/* 1. Official Page 13 Header: #0E7673 with white PharmAply logo & actions */}
+      <div className="bg-[#0E7673] text-white px-5 pt-10 pb-5 rounded-b-[1.75rem] shadow-sm z-20 flex flex-col gap-3">
+        <div className="flex items-center justify-between gap-2">
+          <PharmAplyLogo variant="horizontal" tone="white" size="sm" />
+
+          <div className="flex items-center gap-2">
+            <DarkModeToggle className="w-9 h-9 bg-white/15 hover:bg-white/25 text-white border border-white/20 shadow-none" />
+            
+            <button 
+              onClick={() => navigate('/patient/messages')}
+              className="w-9 h-9 bg-white/15 hover:bg-white/25 rounded-full flex items-center justify-center border border-white/20 text-white transition-colors"
+              title={t('messages', 'Messagerie')}
+              aria-label={t('messages', 'Messagerie')}
+            >
+              <MessageSquare size={17} />
+            </button>
+
+            <NotificationBell className="[&_button]:w-9 [&_button]:h-9 [&_button]:bg-white/15 [&_button]:hover:bg-white/25 [&_button]:text-white [&_button]:border-white/20 [&_button]:shadow-none" />
+
+            <button
+              type="button"
+              onClick={() => navigate('/patient/profile')}
+              aria-label={t('nav.profile', 'Profil')}
+              className="w-9 h-9 bg-white/20 rounded-full overflow-hidden border-2 border-[#38B794] flex items-center justify-center text-sm text-white font-bold uppercase shrink-0"
             >
               {(user?.photoURL || userData?.photoURL || userData?.photoUrl || userData?.avatar_url) ? (
                 <img 
@@ -227,39 +245,30 @@ export function PatientHome() {
               ) : (
                 (userData?.name || user?.displayName) ? (userData?.name || user?.displayName)[0].toUpperCase() : 'U'
               )}
-            </div>
-            <div>
-              <p className="text-base font-bold text-gray-900 dark:text-white leading-tight">
-                {t('hello', 'Bonjour')}, {userData?.name || user?.displayName || t('user', 'Client')}
-              </p>
-              <div className="flex items-center text-gray-500 dark:text-gray-400 text-xs mt-0.5">
-                <MapPin size={12} className="text-[var(--app-primary-color)] dark:text-teal-400 mr-1 shrink-0" />
-                <span className="truncate max-w-[200px]">
-                  {exactLocation || t('home_delivery', 'Recherche de la position...')}
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <DarkModeToggle className="w-10 h-10 bg-white dark:bg-zinc-800 border border-gray-100 dark:border-zinc-700 shadow-sm" />
-            
-            <button 
-              onClick={() => navigate('/patient/messages')}
-              className="w-10 h-10 bg-white dark:bg-zinc-800 rounded-full flex items-center justify-center border border-gray-100 dark:border-zinc-700 shadow-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-zinc-700 transition-colors"
-              title={t('messages', 'Messagerie')}
-              aria-label={t('messages', 'Messagerie')}
-            >
-              <MessageSquare size={18} />
             </button>
-
-            <NotificationBell />
           </div>
         </div>
+
+        <button
+          type="button"
+          onClick={() => navigate('/patient/profile')}
+          className="flex items-center justify-between text-left bg-white/10 hover:bg-white/15 rounded-full px-3.5 py-2 transition"
+        >
+          <div className="flex items-center gap-2 min-w-0">
+            <MapPin size={14} className="text-[#38B794] shrink-0" />
+            <span className="text-xs font-bold text-white truncate">
+              {t('hello', 'Bonjour')}, {userData?.name || user?.displayName || t('user', 'Client')}
+            </span>
+            <span className="text-[#D7F1EA] text-xs">·</span>
+            <span className="text-xs text-[#D7F1EA] truncate">
+              {exactLocation || t('home_delivery', 'Position en cours...')}
+            </span>
+          </div>
+        </button>
       </div>
 
       {/* Main Scrollable Content */}
-      <div className="flex-1 overflow-y-auto hide-scrollbar p-6">
+      <div className="flex-1 overflow-y-auto hide-scrollbar p-5 sm:p-6">
         <SearchHeroBanner 
           categories={categories}
           products={products}

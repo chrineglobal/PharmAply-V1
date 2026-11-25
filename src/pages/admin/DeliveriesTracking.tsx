@@ -146,8 +146,8 @@ export function AdminDeliveriesTracking() {
       else zones["Autres secteurs"] += 1;
     });
 
-    // Couleurs plates selon la charte (#194B4B, jaune, pastel doux)
-    const colors = ["#194B4B", "#FACC15", "#38BDF8", "#34D399", "#A78BFA", "#94A3B8"];
+    // Couleurs plates Charte Graphique v1.0
+    const colors = ["#0E7673", "#38B794", "#FACC15", "#0A3D3B", "#5C807F", "#9FC8C7"];
     return Object.entries(zones).map(([name, count], index) => ({
       name,
       value: count || (index === 0 ? 5 : index === 1 ? 3 : index === 2 ? 2 : 1),
@@ -204,22 +204,22 @@ export function AdminDeliveriesTracking() {
     switch (status) {
       case 'delivered':
         return (
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 text-emerald-800 dark:bg-emerald-950/50 dark:text-emerald-300 rounded-full text-xs font-semibold">
-            <CheckCircle2 size={12} className="text-emerald-600" /> Livrée
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#D7F1EA] text-[#0E7673] dark:bg-[#0E4A47] dark:text-[#38B794] rounded-full text-xs font-semibold">
+            <CheckCircle2 size={12} className="text-[#0E7673] dark:text-[#38B794]" /> Livrée
           </span>
         );
       case 'out_for_delivery':
       case 'en_route':
       case 'delivering':
         return (
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[var(--app-primary-color)]/10 text-[var(--app-primary-color)] dark:bg-teal-950/60 dark:text-teal-300 rounded-full text-xs font-bold">
-            <Bike size={12} className="text-[var(--app-primary-color)]" /> En route
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#E7F1F1] text-[#0A3D3B] dark:bg-[#0E4A47] dark:text-[#D7F1EA] rounded-full text-xs font-bold">
+            <Bike size={12} className="text-[#0E7673] dark:text-[#38B794]" /> En route
           </span>
         );
       case 'driver_assigned':
         return (
           <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-sky-50 text-sky-800 dark:bg-sky-950/50 dark:text-sky-300 rounded-full text-xs font-semibold">
-            <User size={12} className="text-sky-600" /> Coursier assigné
+            <User size={12} className="text-sky-600 dark:text-sky-400" /> Coursier assigné
           </span>
         );
       case 'pending':
@@ -227,18 +227,18 @@ export function AdminDeliveriesTracking() {
       case 'ready':
         return (
           <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-50 text-amber-800 dark:bg-amber-950/50 dark:text-amber-300 rounded-full text-xs font-semibold">
-            <Clock size={12} className="text-amber-600" /> Préparation
+            <Clock size={12} className="text-amber-600 dark:text-amber-400" /> Préparation
           </span>
         );
       case 'cancelled':
         return (
           <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-rose-50 text-rose-800 dark:bg-rose-950/50 dark:text-rose-300 rounded-full text-xs font-semibold">
-            <AlertCircle size={12} className="text-rose-600" /> Annulée
+            <AlertCircle size={12} className="text-rose-600 dark:text-rose-400" /> Annulée
           </span>
         );
       default:
         return (
-          <span className="inline-flex items-center px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-xs font-semibold">
+          <span className="inline-flex items-center px-3 py-1 bg-[#E7F1F1] dark:bg-[#0E4A47] text-[#0A3D3B] dark:text-[#D7F1EA] rounded-full text-xs font-semibold">
             {status}
           </span>
         );
@@ -251,42 +251,42 @@ export function AdminDeliveriesTracking() {
       {/* Header Bar conforme à la charte */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100 flex items-center gap-3">
-            <span className="w-9 h-9 rounded-2xl bg-[var(--app-primary-color)] text-[#FACC15] flex items-center justify-center shadow-sm">
+          <h1 className="text-2xl font-bold text-[#0A3D3B] dark:text-white flex items-center gap-3">
+            <span className="w-9 h-9 rounded-2xl bg-[#0E7673] text-[#FACC15] flex items-center justify-center shadow-sm">
               <Truck size={20} />
             </span>
             Tableau Livraison
           </h1>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7] mt-1">
             Supervision opérationnelle de la flotte, suivi des courses et revenus logistiques
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 flex-wrap">
           <button 
             onClick={exportToCSV}
-            className="flex items-center gap-2 bg-white dark:bg-zinc-950 px-4 py-2.5 rounded-full shadow-sm text-xs font-semibold text-slate-700 dark:text-slate-200 border border-gray-100 dark:border-zinc-800 hover:bg-slate-50 transition"
+            className="flex items-center gap-2 bg-white dark:bg-[#0A3D3B] px-4 py-2.5 rounded-full shadow-sm text-xs font-semibold text-[#0A3D3B] dark:text-[#D7F1EA] border border-[#CFE4E3] dark:border-[#145250] hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47] transition"
           >
-            <FileSpreadsheet size={15} className="text-emerald-600" />
+            <FileSpreadsheet size={15} className="text-[#0E7673] dark:text-[#38B794]" />
             Exporter CSV
           </button>
           
-          <div className="flex items-center bg-white dark:bg-zinc-950 p-1 rounded-full shadow-sm border border-gray-100 dark:border-zinc-800">
+          <div className="flex items-center bg-white dark:bg-[#0A3D3B] p-1 rounded-full shadow-sm border border-[#CFE4E3] dark:border-[#145250]">
             <button 
               onClick={() => setTimeRange("7d")}
-              className={`px-3 py-1.5 rounded-full text-xs font-semibold transition ${timeRange === "7d" ? "bg-[var(--app-primary-color)] text-white" : "text-slate-500 hover:text-slate-800"}`}
+              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition ${timeRange === "7d" ? "bg-[#0E7673] text-white" : "text-[#5C807F] dark:text-[#9FC8C7] hover:text-[#0A3D3B] dark:hover:text-white"}`}
             >
               7 jours
             </button>
             <button 
               onClick={() => setTimeRange("30d")}
-              className={`px-3 py-1.5 rounded-full text-xs font-semibold transition ${timeRange === "30d" ? "bg-[var(--app-primary-color)] text-white" : "text-slate-500 hover:text-slate-800"}`}
+              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition ${timeRange === "30d" ? "bg-[#0E7673] text-white" : "text-[#5C807F] dark:text-[#9FC8C7] hover:text-[#0A3D3B] dark:hover:text-white"}`}
             >
               30 jours
             </button>
             <button 
               onClick={() => setTimeRange("all")}
-              className={`px-3 py-1.5 rounded-full text-xs font-semibold transition ${timeRange === "all" ? "bg-[var(--app-primary-color)] text-white" : "text-slate-500 hover:text-slate-800"}`}
+              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition ${timeRange === "all" ? "bg-[#0E7673] text-white" : "text-[#5C807F] dark:text-[#9FC8C7] hover:text-[#0A3D3B] dark:hover:text-white"}`}
             >
               Total
             </button>
@@ -294,102 +294,102 @@ export function AdminDeliveriesTracking() {
         </div>
       </div>
 
-      {/* 4 KPI Cards avec coins très arrondis et design plat (Palette #194B4B, jaune, pastels doux) */}
+      {/* 4 KPI Cards conformes à la Charte Graphique v1.0 */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
         
         {/* Card 1: Total Livraisons */}
-        <div className="bg-[#ccedc8] rounded-[2rem] p-6 relative overflow-hidden flex flex-col justify-between h-40 shadow-sm">
+        <div className="bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] rounded-[2rem] p-6 relative overflow-hidden flex flex-col justify-between h-40 shadow-sm">
           <div className="flex justify-between items-start">
-            <div className="w-8 h-8 bg-black/10 rounded-full flex items-center justify-center">
-              <Bike size={16} className="text-black" />
+            <div className="w-8 h-8 bg-[#D7F1EA] dark:bg-[#0E4A47] rounded-full flex items-center justify-center">
+              <Bike size={16} className="text-[#0E7673] dark:text-[#38B794]" />
             </div>
-            <span className="text-[10px] font-bold uppercase tracking-wider bg-black/10 text-black px-2.5 py-0.5 rounded-full">
+            <span className="text-[10px] font-bold uppercase tracking-wider bg-[#E7F1F1] dark:bg-[#0E4A47] text-[#0A3D3B] dark:text-[#D7F1EA] px-2.5 py-0.5 rounded-full tabular-nums">
               {metrics.inProgressCount} en cours
             </span>
           </div>
           <div>
-            <p className="text-black/70 text-xs font-semibold mb-0.5">Livraisons Récentes</p>
-            <h3 className="text-3xl font-bold text-black">{metrics.totalDeliveries}</h3>
-            <p className="text-[10px] text-green-900 font-bold mt-1">
+            <p className="text-[#5C807F] dark:text-[#9FC8C7] text-xs font-semibold mb-0.5">Livraisons Récentes</p>
+            <h3 className="text-3xl font-bold text-[#0A3D3B] dark:text-white tabular-nums">{metrics.totalDeliveries}</h3>
+            <p className="text-[10px] text-[#0E7673] dark:text-[#38B794] font-bold mt-1 tabular-nums">
               {metrics.completedCount} livrées avec succès (+14.2%)
             </p>
           </div>
-          <div className="absolute right-6 bottom-6 flex items-end gap-1 opacity-20 pointer-events-none">
-            <div className="w-2 h-6 bg-black rounded-full"></div>
-            <div className="w-2 h-12 bg-black rounded-full"></div>
-            <div className="w-2 h-8 bg-black rounded-full"></div>
+          <div className="absolute right-6 bottom-6 flex items-end gap-1 opacity-15 pointer-events-none">
+            <div className="w-2 h-6 bg-[#0E7673] dark:bg-[#38B794] rounded-full"></div>
+            <div className="w-2 h-12 bg-[#0E7673] dark:bg-[#38B794] rounded-full"></div>
+            <div className="w-2 h-8 bg-[#0E7673] dark:bg-[#38B794] rounded-full"></div>
           </div>
         </div>
 
         {/* Card 2: Revenu Total des Livraisons */}
-        <div className="bg-[#a5e0d8] rounded-[2rem] p-6 relative overflow-hidden flex flex-col justify-between h-40 shadow-sm">
+        <div className="bg-[#D7F1EA] dark:bg-[#0E4A47] border border-[#CFE4E3] dark:border-[#145250] rounded-[2rem] p-6 relative overflow-hidden flex flex-col justify-between h-40 shadow-sm">
           <div className="flex justify-between items-start">
-            <div className="w-8 h-8 bg-black/10 rounded-full flex items-center justify-center">
-              <DollarSign size={16} className="text-black" />
+            <div className="w-8 h-8 bg-[#0E7673]/15 dark:bg-white/10 rounded-full flex items-center justify-center">
+              <DollarSign size={16} className="text-[#0E7673] dark:text-[#38B794]" />
             </div>
-            <span className="text-[10px] font-bold uppercase tracking-wider bg-black/10 text-black px-2.5 py-0.5 rounded-full">
+            <span className="text-[10px] font-bold uppercase tracking-wider bg-white/80 dark:bg-[#0A3D3B] text-[#0A3D3B] dark:text-[#D7F1EA] px-2.5 py-0.5 rounded-full">
               Frais de course
             </span>
           </div>
           <div>
-            <p className="text-black/70 text-xs font-semibold mb-0.5">Revenus de Livraison</p>
-            <h3 className="text-2xl font-bold text-black">{formatCurrency(metrics.totalDeliveryRevenue)}</h3>
-            <p className="text-[10px] text-teal-950 font-bold mt-1">
+            <p className="text-[#0A3D3B]/75 dark:text-[#D7F1EA]/80 text-xs font-semibold mb-0.5">Revenus de Livraison</p>
+            <h3 className="text-2xl font-bold text-[#0A3D3B] dark:text-white tabular-nums">{formatCurrency(metrics.totalDeliveryRevenue)}</h3>
+            <p className="text-[10px] text-[#0E7673] dark:text-[#38B794] font-bold mt-1 tabular-nums">
               Part livreurs : {formatCurrency(metrics.driverPayout)}
             </p>
           </div>
-          <div className="absolute right-6 bottom-6 flex items-end gap-1 opacity-20 pointer-events-none">
-            <div className="w-2 h-4 bg-black rounded-full"></div>
-            <div className="w-2 h-10 bg-black rounded-full"></div>
-            <div className="w-2 h-16 bg-black rounded-full"></div>
+          <div className="absolute right-6 bottom-6 flex items-end gap-1 opacity-15 pointer-events-none">
+            <div className="w-2 h-4 bg-[#0A3D3B] dark:bg-white rounded-full"></div>
+            <div className="w-2 h-10 bg-[#0A3D3B] dark:bg-white rounded-full"></div>
+            <div className="w-2 h-16 bg-[#0A3D3B] dark:bg-white rounded-full"></div>
           </div>
         </div>
 
-        {/* Card 3: Commission Plateforme (Couleur principale #194B4B & Jaune) */}
-        <div className="bg-[var(--app-primary-color)] rounded-[2rem] p-6 relative overflow-hidden flex flex-col justify-between h-40 shadow-sm text-white">
+        {/* Card 3: Commission Plateforme (Teal Charte #0E7673 & Accent #FACC15) */}
+        <div className="bg-[#0E7673] dark:bg-[#0A3D3B] border border-[#0E7673] dark:border-[#145250] rounded-[2rem] p-6 relative overflow-hidden flex flex-col justify-between h-40 shadow-sm text-white">
           <div className="flex justify-between items-start">
-            <div className="w-8 h-8 bg-white dark:bg-zinc-950/10 rounded-full flex items-center justify-center">
+            <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center">
               <Sparkles size={16} className="text-[#FACC15]" />
             </div>
-            <span className="text-[10px] font-bold uppercase tracking-wider bg-[#FACC15] text-[var(--app-primary-color)] px-2.5 py-0.5 rounded-full">
+            <span className="text-[10px] font-bold uppercase tracking-wider bg-[#FACC15] text-[#0A3D3B] px-2.5 py-0.5 rounded-full">
               Marge 20%
             </span>
           </div>
           <div>
-            <p className="text-white/70 text-xs font-semibold mb-0.5">Commission Nette SaaS</p>
-            <h3 className="text-2xl font-bold text-white">{formatCurrency(metrics.platformMargin)}</h3>
+            <p className="text-white/80 text-xs font-semibold mb-0.5">Commission Nette SaaS</p>
+            <h3 className="text-2xl font-bold text-white tabular-nums">{formatCurrency(metrics.platformMargin)}</h3>
             <p className="text-[10px] text-[#FACC15] font-bold mt-1">
               Rentrée directe plateforme
             </p>
           </div>
           <div className="absolute right-6 bottom-6 flex items-end gap-1 opacity-20 pointer-events-none">
-            <div className="w-2 h-6 bg-white dark:bg-zinc-950 rounded-full"></div>
-            <div className="w-2 h-14 bg-white dark:bg-zinc-950 rounded-full"></div>
-            <div className="w-2 h-10 bg-white dark:bg-zinc-950 rounded-full"></div>
+            <div className="w-2 h-6 bg-white rounded-full"></div>
+            <div className="w-2 h-14 bg-white rounded-full"></div>
+            <div className="w-2 h-10 bg-white rounded-full"></div>
           </div>
         </div>
 
         {/* Card 4: Satisfaction & Coursiers */}
-        <div className="bg-[#fef08a] rounded-[2rem] p-6 relative overflow-hidden flex flex-col justify-between h-40 shadow-sm">
+        <div className="bg-[#FFFBEB] dark:bg-[#0A3D3B] border border-[#FDE68A] dark:border-[#145250] rounded-[2rem] p-6 relative overflow-hidden flex flex-col justify-between h-40 shadow-sm">
           <div className="flex justify-between items-start">
-            <div className="w-8 h-8 bg-black/10 rounded-full flex items-center justify-center">
-              <Star size={16} className="text-[var(--app-primary-color)] fill-[var(--app-primary-color)]" />
+            <div className="w-8 h-8 bg-[#FACC15]/25 rounded-full flex items-center justify-center">
+              <Star size={16} className="text-[#0E7673] dark:text-[#FACC15] fill-[#0E7673] dark:fill-[#FACC15]" />
             </div>
-            <span className="text-[10px] font-bold uppercase tracking-wider bg-black/10 text-black px-2.5 py-0.5 rounded-full">
+            <span className="text-[10px] font-bold uppercase tracking-wider bg-[#FACC15]/30 text-[#0A3D3B] dark:text-[#FACC15] px-2.5 py-0.5 rounded-full tabular-nums">
               ~{metrics.avgDeliveryTime}
             </span>
           </div>
           <div>
-            <p className="text-black/70 text-xs font-semibold mb-0.5">Satisfaction Client</p>
-            <h3 className="text-3xl font-bold text-black">{metrics.satisfactionScore}%</h3>
-            <p className="text-[10px] text-amber-950 font-bold mt-1">
+            <p className="text-[#5C807F] dark:text-[#9FC8C7] text-xs font-semibold mb-0.5">Satisfaction Client</p>
+            <h3 className="text-3xl font-bold text-[#0A3D3B] dark:text-white tabular-nums">{metrics.satisfactionScore}%</h3>
+            <p className="text-[10px] text-[#0E7673] dark:text-[#38B794] font-bold mt-1 tabular-nums">
               {drivers.length} livreurs actifs qualifiés
             </p>
           </div>
-          <div className="absolute right-6 bottom-6 flex items-end gap-1 opacity-20 pointer-events-none">
-            <div className="w-2 h-10 bg-black rounded-full"></div>
-            <div className="w-2 h-6 bg-black rounded-full"></div>
-            <div className="w-2 h-12 bg-black rounded-full"></div>
+          <div className="absolute right-6 bottom-6 flex items-end gap-1 opacity-15 pointer-events-none">
+            <div className="w-2 h-10 bg-[#0A3D3B] dark:bg-[#FACC15] rounded-full"></div>
+            <div className="w-2 h-6 bg-[#0A3D3B] dark:bg-[#FACC15] rounded-full"></div>
+            <div className="w-2 h-12 bg-[#0A3D3B] dark:bg-[#FACC15] rounded-full"></div>
           </div>
         </div>
 
@@ -399,20 +399,20 @@ export function AdminDeliveriesTracking() {
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
         
         {/* Graphique 1: Revenus des livraisons par jour (Flat Bar Chart) */}
-        <div className="lg:col-span-3 bg-white dark:bg-zinc-950 rounded-3xl p-6 shadow-sm border border-gray-100 dark:border-zinc-900">
-          <div className="flex justify-between items-center mb-6">
+        <div className="lg:col-span-3 bg-white dark:bg-[#0A3D3B] rounded-3xl p-6 shadow-sm border border-[#CFE4E3] dark:border-[#145250]">
+          <div className="flex justify-between items-center mb-6 flex-wrap gap-3">
             <div>
-              <h3 className="font-bold text-slate-800 dark:text-slate-100">Flux des Revenus de Livraison</h3>
-              <p className="text-xs text-slate-400">Total des frais de course et commissions encaissées</p>
+              <h3 className="font-bold text-[#0A3D3B] dark:text-white">Flux des Revenus de Livraison</h3>
+              <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7]">Total des frais de course et commissions encaissées</p>
             </div>
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-1.5">
-                <div className="w-3 h-3 rounded-full bg-[var(--app-primary-color)]"></div>
-                <span className="text-xs text-slate-500 font-medium">Revenu Global</span>
+                <div className="w-3 h-3 rounded-full bg-[#0E7673]"></div>
+                <span className="text-xs text-[#5C807F] dark:text-[#9FC8C7] font-medium">Revenu Global</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <div className="w-3 h-3 rounded-full bg-[#FACC15]"></div>
-                <span className="text-xs text-slate-500 font-medium">Commission SaaS</span>
+                <span className="text-xs text-[#5C807F] dark:text-[#9FC8C7] font-medium">Commission SaaS</span>
               </div>
             </div>
           </div>
@@ -420,15 +420,15 @@ export function AdminDeliveriesTracking() {
           <div className="h-[240px] w-full">
             <ResponsiveContainer width="100%" height={240}>
               <BarChart data={revenueChartData} margin={{ top: 10, right: 0, left: -20, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#94a3b8' }} dy={8} />
-                <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#94a3b8' }} tickFormatter={(val) => `${val / 1000}k`} />
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#CFE4E3" strokeOpacity={0.5} />
+                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#5C807F' }} dy={8} />
+                <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#5C807F' }} tickFormatter={(val) => `${val / 1000}k`} />
                 <Tooltip 
-                  cursor={{ fill: '#f8fafc' }}
-                  contentStyle={{ borderRadius: '16px', border: '1px solid #f1f5f9', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.05)', fontSize: '12px' }}
+                  cursor={{ fill: '#E7F1F1', opacity: 0.4 }}
+                  contentStyle={{ borderRadius: '16px', border: '1px solid #CFE4E3', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.05)', fontSize: '12px' }}
                   formatter={(val: any, name: any) => [formatCurrency(Number(val)), name === "revenue" ? "Frais de course" : "Commission SaaS"]}
                 />
-                <Bar dataKey="revenue" fill="#194B4B" radius={[6, 6, 0, 0]} barSize={20} />
+                <Bar dataKey="revenue" fill="#0E7673" radius={[6, 6, 0, 0]} barSize={20} />
                 <Bar dataKey="commission" fill="#FACC15" radius={[6, 6, 0, 0]} barSize={20} />
               </BarChart>
             </ResponsiveContainer>
@@ -436,10 +436,10 @@ export function AdminDeliveriesTracking() {
         </div>
 
         {/* Graphique 2: Répartition par Zone (Donut plat) */}
-        <div className="lg:col-span-2 bg-white dark:bg-zinc-950 rounded-3xl p-6 shadow-sm border border-gray-100 dark:border-zinc-900 flex flex-col justify-between">
+        <div className="lg:col-span-2 bg-white dark:bg-[#0A3D3B] rounded-3xl p-6 shadow-sm border border-[#CFE4E3] dark:border-[#145250] flex flex-col justify-between">
           <div className="flex justify-between items-center mb-2">
-            <h3 className="font-bold text-slate-800 dark:text-slate-100">Répartition Géographique</h3>
-            <span className="text-xs font-semibold text-slate-400">Secteurs urbains</span>
+            <h3 className="font-bold text-[#0A3D3B] dark:text-white">Répartition Géographique</h3>
+            <span className="text-xs font-semibold text-[#5C807F] dark:text-[#9FC8C7]">Secteurs urbains</span>
           </div>
 
           <div className="flex-1 flex flex-col items-center justify-center relative min-h-[200px]">
@@ -460,22 +460,22 @@ export function AdminDeliveriesTracking() {
                   ))}
                 </Pie>
                 <Tooltip 
-                  contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)', fontSize: '12px' }}
+                  contentStyle={{ borderRadius: '12px', border: '1px solid #CFE4E3', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)', fontSize: '12px' }}
                   formatter={(val: any) => [`${val} courses`, 'Volume']}
                 />
               </PieChart>
             </ResponsiveContainer>
             <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-              <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Courses</p>
-              <p className="text-xl font-bold text-slate-800 dark:text-slate-100">{metrics.totalDeliveries}</p>
+              <p className="text-[10px] text-[#5C807F] dark:text-[#9FC8C7] font-bold uppercase tracking-wider">Courses</p>
+              <p className="text-xl font-bold text-[#0A3D3B] dark:text-white tabular-nums">{metrics.totalDeliveries}</p>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-2 pt-3 border-t border-gray-100 dark:border-zinc-900">
+          <div className="grid grid-cols-2 gap-2 pt-3 border-t border-[#CFE4E3] dark:border-[#145250]">
             {zoneDistribution.slice(0, 4).map((zone, idx) => (
               <div key={idx} className="flex items-center gap-1.5">
                 <div className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: zone.color }}></div>
-                <span className="text-[11px] text-slate-600 dark:text-slate-400 truncate">{zone.name}</span>
+                <span className="text-[11px] text-[#5C807F] dark:text-[#9FC8C7] truncate">{zone.name}</span>
               </div>
             ))}
           </div>
@@ -484,14 +484,14 @@ export function AdminDeliveriesTracking() {
       </div>
 
       {/* Table de suivi des livraisons */}
-      <div className="bg-white dark:bg-zinc-950 rounded-3xl p-6 shadow-sm border border-gray-100 dark:border-zinc-900 space-y-6">
+      <div className="bg-white dark:bg-[#0A3D3B] rounded-3xl p-6 shadow-sm border border-[#CFE4E3] dark:border-[#145250] space-y-6">
         
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h3 className="font-bold text-slate-800 dark:text-slate-100 text-lg">
+            <h3 className="font-bold text-[#0A3D3B] dark:text-white text-lg">
               Suivi Opérationnel des Courses en Direct
             </h3>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7]">
               Affectation des coursiers, état d'acheminement et détails financiers
             </p>
           </div>
@@ -499,33 +499,33 @@ export function AdminDeliveriesTracking() {
           <div className="flex flex-wrap items-center gap-3">
             {/* Recherche stylée */}
             <div className="relative">
-              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#5C807F] dark:text-[#9FC8C7]" size={14} />
               <input 
                 type="text"
                 placeholder="Rechercher course, client, livreur..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="pl-9 pr-4 py-2 bg-slate-50 dark:bg-zinc-900 border border-slate-100 dark:border-zinc-800 rounded-full text-xs outline-none focus:ring-2 focus:ring-[#194B4B] w-64"
+                className="pl-9 pr-4 py-2 bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] text-[#0A3D3B] dark:text-white placeholder:text-[#5C807F] dark:placeholder:text-[#9FC8C7] rounded-full text-xs outline-none focus:ring-2 focus:ring-[#0E7673] w-64"
               />
             </div>
 
             {/* Filtres de statut arrondis */}
-            <div className="flex items-center bg-slate-50 dark:bg-zinc-900 p-1 rounded-full border border-slate-100 dark:border-zinc-800 text-xs">
+            <div className="flex items-center bg-[#E7F1F1] dark:bg-[#062625] p-1 rounded-full border border-[#CFE4E3] dark:border-[#145250] text-xs">
               <button
                 onClick={() => setStatusFilter("all")}
-                className={`px-3 py-1.5 rounded-full font-semibold transition ${statusFilter === "all" ? "bg-white dark:bg-zinc-950 text-[var(--app-primary-color)] shadow-sm font-bold" : "text-slate-500"}`}
+                className={`px-3.5 py-1.5 rounded-full font-semibold transition ${statusFilter === "all" ? "bg-[#0E7673] text-white shadow-sm font-bold" : "text-[#5C807F] dark:text-[#9FC8C7]"}`}
               >
                 Toutes ({deliveryOrders.length})
               </button>
               <button
                 onClick={() => setStatusFilter("active")}
-                className={`px-3 py-1.5 rounded-full font-semibold transition ${statusFilter === "active" ? "bg-white dark:bg-zinc-950 text-amber-700 shadow-sm font-bold" : "text-slate-500"}`}
+                className={`px-3.5 py-1.5 rounded-full font-semibold transition ${statusFilter === "active" ? "bg-[#0E7673] text-white shadow-sm font-bold" : "text-[#5C807F] dark:text-[#9FC8C7]"}`}
               >
                 En route ({metrics.inProgressCount})
               </button>
               <button
                 onClick={() => setStatusFilter("completed")}
-                className={`px-3 py-1.5 rounded-full font-semibold transition ${statusFilter === "completed" ? "bg-white dark:bg-zinc-950 text-emerald-700 shadow-sm font-bold" : "text-slate-500"}`}
+                className={`px-3.5 py-1.5 rounded-full font-semibold transition ${statusFilter === "completed" ? "bg-[#0E7673] text-white shadow-sm font-bold" : "text-[#5C807F] dark:text-[#9FC8C7]"}`}
               >
                 Livrées ({metrics.completedCount})
               </button>
@@ -536,7 +536,7 @@ export function AdminDeliveriesTracking() {
         {/* Table Content */}
         <div className="overflow-x-auto">
           <table className="w-full text-sm text-left">
-            <thead className="text-xs text-slate-400 border-b border-gray-100 dark:border-zinc-800 uppercase tracking-wider font-semibold">
+            <thead className="text-xs text-[#5C807F] dark:text-[#9FC8C7] border-b border-[#CFE4E3] dark:border-[#145250] uppercase tracking-wider font-semibold">
               <tr>
                 <th className="pb-3.5 px-4 font-semibold">Commande</th>
                 <th className="pb-3.5 px-4 font-semibold">Client & Destination</th>
@@ -547,16 +547,16 @@ export function AdminDeliveriesTracking() {
                 <th className="pb-3.5 px-4 font-semibold text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-50 dark:divide-zinc-900">
+            <tbody className="divide-y divide-[#CFE4E3]/60 dark:divide-[#145250]">
               {loading ? (
                 <tr>
-                  <td colSpan={7} className="py-10 text-center text-slate-400 text-sm">
+                  <td colSpan={7} className="py-10 text-center text-[#5C807F] dark:text-[#9FC8C7] text-sm">
                     Chargement des données de livraison...
                   </td>
                 </tr>
               ) : filteredDeliveries.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="py-10 text-center text-slate-400 text-sm">
+                  <td colSpan={7} className="py-10 text-center text-[#5C807F] dark:text-[#9FC8C7] text-sm">
                     Aucune livraison trouvée.
                   </td>
                 </tr>
@@ -568,12 +568,12 @@ export function AdminDeliveriesTracking() {
                   const vehiclePlate = driverObj.vehiclePlate || order.driverPlate || "LT-482-AB";
 
                   return (
-                    <tr key={order.id} className="hover:bg-slate-50/80 dark:hover:bg-zinc-900/50 transition">
+                    <tr key={order.id} className="hover:bg-[#F5FAFA] dark:hover:bg-[#0E4A47]/40 transition">
                       
                       {/* ID Commande */}
-                      <td className="py-4 px-4 font-bold text-slate-800 dark:text-slate-100">
+                      <td className="py-4 px-4 font-bold text-[#0A3D3B] dark:text-white tabular-nums">
                         #{order.id.slice(0, 8)}
-                        <div className="text-[11px] text-slate-400 font-normal flex items-center gap-1 mt-0.5">
+                        <div className="text-[11px] text-[#5C807F] dark:text-[#9FC8C7] font-normal flex items-center gap-1 mt-0.5">
                           <Clock size={11} />
                           {parseDate(order.createdAt)?.toLocaleTimeString("fr-FR", { hour: '2-digit', minute: '2-digit' }) || "12:30"}
                         </div>
@@ -581,11 +581,11 @@ export function AdminDeliveriesTracking() {
 
                       {/* Client & Destination */}
                       <td className="py-4 px-4">
-                        <div className="font-semibold text-slate-800 dark:text-slate-200">
+                        <div className="font-semibold text-[#0A3D3B] dark:text-white">
                           {order.patientName || order.customerName || "Patient"}
                         </div>
-                        <div className="text-[11px] text-slate-400 truncate max-w-[200px] flex items-center gap-1 mt-0.5">
-                          <MapPin size={11} className="text-[var(--app-primary-color)] shrink-0" />
+                        <div className="text-[11px] text-[#5C807F] dark:text-[#9FC8C7] truncate max-w-[200px] flex items-center gap-1 mt-0.5">
+                          <MapPin size={11} className="text-[#0E7673] dark:text-[#38B794] shrink-0" />
                           {order.deliveryAddress || order.address || "Douala, Cameroun"}
                         </div>
                       </td>
@@ -593,14 +593,14 @@ export function AdminDeliveriesTracking() {
                       {/* Livreur & Moto */}
                       <td className="py-4 px-4">
                         <div className="flex items-center gap-2">
-                          <div className="w-7 h-7 rounded-full bg-[var(--app-primary-color)]/10 text-[var(--app-primary-color)] flex items-center justify-center font-bold text-xs shrink-0">
+                          <div className="w-7 h-7 rounded-full bg-[#D7F1EA] dark:bg-[#0E4A47] text-[#0E7673] dark:text-[#38B794] flex items-center justify-center font-bold text-xs shrink-0">
                             <Bike size={14} />
                           </div>
                           <div>
-                            <div className="font-semibold text-slate-800 dark:text-slate-200">
+                            <div className="font-semibold text-[#0A3D3B] dark:text-white">
                               {driverName}
                             </div>
-                            <div className="text-[10px] text-slate-400 uppercase font-mono">
+                            <div className="text-[10px] text-[#5C807F] dark:text-[#9FC8C7] uppercase font-mono">
                               {vehiclePlate}
                             </div>
                           </div>
@@ -608,17 +608,17 @@ export function AdminDeliveriesTracking() {
                       </td>
 
                       {/* Frais & Commission */}
-                      <td className="py-4 px-4">
-                        <div className="font-bold text-[var(--app-primary-color)] dark:text-teal-400">
+                      <td className="py-4 px-4 tabular-nums">
+                        <div className="font-bold text-[#0E7673] dark:text-[#38B794]">
                           {formatCurrency(fee)}
                         </div>
-                        <div className="text-[10px] text-emerald-600 font-medium">
+                        <div className="text-[10px] text-[#38B794] font-medium">
                           Com: {formatCurrency(fee * 0.2)}
                         </div>
                       </td>
 
                       {/* Total */}
-                      <td className="py-4 px-4 font-bold text-slate-800 dark:text-slate-200">
+                      <td className="py-4 px-4 font-bold text-[#0A3D3B] dark:text-white tabular-nums">
                         {formatCurrency(order.total || 0)}
                       </td>
 
@@ -632,7 +632,7 @@ export function AdminDeliveriesTracking() {
                                 e.stopPropagation();
                                 setZoomedPhotoUrl(order.proofOfDeliveryUrl || order.proof_of_delivery_url || order.deliveryProofPhoto || order.deliveryProofUrl || order.proofUrl);
                               }}
-                              className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-700 bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800/50 cursor-pointer hover:bg-emerald-100 transition w-fit"
+                              className="inline-flex items-center gap-1 text-[10px] font-bold text-[#0E7673] dark:text-[#38B794] bg-[#D7F1EA] dark:bg-[#0E4A47] px-2.5 py-0.5 rounded-full border border-[#CFE4E3] dark:border-[#145250] cursor-pointer hover:bg-[#CFE4E3] transition w-fit"
                               title="Cliquer pour inspecter la photo de preuve"
                             >
                               📸 Photo Preuve
@@ -645,7 +645,7 @@ export function AdminDeliveriesTracking() {
                       <td className="py-4 px-4 text-right">
                         <button
                           onClick={() => setSelectedOrder(order)}
-                          className="px-3.5 py-1.5 bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 text-slate-700 dark:text-slate-200 rounded-full text-xs font-semibold transition inline-flex items-center gap-1"
+                          className="px-3.5 py-1.5 bg-[#E7F1F1] dark:bg-[#0E4A47] hover:bg-[#D7F1EA] dark:hover:bg-[#145250] text-[#0A3D3B] dark:text-[#D7F1EA] rounded-full text-xs font-semibold transition inline-flex items-center gap-1"
                         >
                           Détails
                           <ChevronRight size={13} />
@@ -664,87 +664,87 @@ export function AdminDeliveriesTracking() {
 
       {/* Modal Détails de la course */}
       {selectedOrder && (
-        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-zinc-950 rounded-3xl w-full max-w-lg p-6 shadow-xl border border-gray-100 dark:border-zinc-800 space-y-5">
-            <div className="flex items-center justify-between border-b border-gray-100 dark:border-zinc-800 pb-4">
+        <div className="fixed inset-0 z-50 bg-[#062625]/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-[#0A3D3B] rounded-3xl w-full max-w-lg p-6 shadow-xl border border-[#CFE4E3] dark:border-[#145250] space-y-5">
+            <div className="flex items-center justify-between border-b border-[#CFE4E3] dark:border-[#145250] pb-4">
               <div>
-                <h3 className="font-bold text-slate-800 dark:text-slate-100 text-base">
+                <h3 className="font-bold text-[#0A3D3B] dark:text-white text-base">
                   Fiche de Livraison #{selectedOrder.id}
                 </h3>
-                <p className="text-xs text-slate-400">Suivi et détails de la course</p>
+                <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7]">Suivi et détails de la course</p>
               </div>
               <button 
                 onClick={() => setSelectedOrder(null)}
-                className="w-8 h-8 rounded-full bg-slate-100 dark:bg-zinc-800 text-slate-500 hover:text-slate-800 flex items-center justify-center"
+                className="w-8 h-8 rounded-full bg-[#E7F1F1] dark:bg-[#0E4A47] text-[#5C807F] dark:text-[#9FC8C7] hover:text-[#0A3D3B] dark:hover:text-white flex items-center justify-center transition"
               >
                 ✕
               </button>
             </div>
 
             <div className="space-y-4 text-xs">
-              <div className="grid grid-cols-2 gap-4 bg-slate-50 dark:bg-zinc-900 p-4 rounded-2xl">
+              <div className="grid grid-cols-2 gap-4 bg-[#F5FAFA] dark:bg-[#062625] p-4 rounded-2xl border border-[#CFE4E3] dark:border-[#145250]">
                 <div>
-                  <span className="text-slate-400">Statut de la course</span>
+                  <span className="text-[#5C807F] dark:text-[#9FC8C7]">Statut de la course</span>
                   <div className="mt-1">{getStatusBadge(selectedOrder.status)}</div>
                 </div>
                 <div>
-                  <span className="text-slate-400">Frais de livraison</span>
-                  <div className="text-base font-bold text-[var(--app-primary-color)] dark:text-teal-400 mt-0.5">
+                  <span className="text-[#5C807F] dark:text-[#9FC8C7]">Frais de livraison</span>
+                  <div className="text-base font-bold text-[#0E7673] dark:text-[#38B794] mt-0.5 tabular-nums">
                     {formatCurrency(Number(selectedOrder.deliveryFee || 1500))}
                   </div>
                 </div>
               </div>
 
               <div className="space-y-2.5">
-                <div className="flex justify-between py-1.5 border-b border-gray-100 dark:border-zinc-800">
-                  <span className="text-slate-500">Adresse de livraison</span>
-                  <span className="font-semibold text-slate-800 dark:text-slate-200 text-right">{selectedOrder.deliveryAddress || selectedOrder.address || "Non spécifiée"}</span>
+                <div className="flex justify-between py-1.5 border-b border-[#CFE4E3]/60 dark:border-[#145250]">
+                  <span className="text-[#5C807F] dark:text-[#9FC8C7]">Adresse de livraison</span>
+                  <span className="font-semibold text-[#0A3D3B] dark:text-white text-right">{selectedOrder.deliveryAddress || selectedOrder.address || "Non spécifiée"}</span>
                 </div>
-                <div className="flex justify-between py-1.5 border-b border-gray-100 dark:border-zinc-800">
-                  <span className="text-slate-500">Code PIN de remise</span>
-                  <span className="font-mono font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md">{selectedOrder.deliveryOtp || "4892"}</span>
+                <div className="flex justify-between py-1.5 border-b border-[#CFE4E3]/60 dark:border-[#145250]">
+                  <span className="text-[#5C807F] dark:text-[#9FC8C7]">Code PIN de remise</span>
+                  <span className="font-mono font-bold text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/40 px-2 py-0.5 rounded-md tabular-nums">{selectedOrder.deliveryOtp || "4892"}</span>
                 </div>
-                <div className="flex justify-between py-1.5 border-b border-gray-100 dark:border-zinc-800">
-                  <span className="text-slate-500">Mode de transport</span>
-                  <span className="font-semibold text-slate-800 dark:text-slate-200">{selectedOrder.driverVehicleType === 'car' ? 'Voiture' : 'Moto Express'}</span>
+                <div className="flex justify-between py-1.5 border-b border-[#CFE4E3]/60 dark:border-[#145250]">
+                  <span className="text-[#5C807F] dark:text-[#9FC8C7]">Mode de transport</span>
+                  <span className="font-semibold text-[#0A3D3B] dark:text-white">{selectedOrder.driverVehicleType === 'car' ? 'Voiture' : 'Moto Express'}</span>
                 </div>
-                <div className="flex justify-between py-1.5 border-b border-gray-100 dark:border-zinc-800">
-                  <span className="text-slate-500">Part Plateforme (20%)</span>
-                  <span className="font-bold text-emerald-700">{formatCurrency(Number(selectedOrder.deliveryFee || 1500) * 0.2)}</span>
+                <div className="flex justify-between py-1.5 border-b border-[#CFE4E3]/60 dark:border-[#145250]">
+                  <span className="text-[#5C807F] dark:text-[#9FC8C7]">Part Plateforme (20%)</span>
+                  <span className="font-bold text-[#0E7673] dark:text-[#38B794] tabular-nums">{formatCurrency(Number(selectedOrder.deliveryFee || 1500) * 0.2)}</span>
                 </div>
-                <div className="flex justify-between py-1.5 border-b border-gray-100 dark:border-zinc-800">
-                  <span className="text-slate-500">Part Livreur (80%)</span>
-                  <span className="font-bold text-slate-800 dark:text-slate-200">{formatCurrency(Number(selectedOrder.deliveryFee || 1500) * 0.8)}</span>
+                <div className="flex justify-between py-1.5 border-b border-[#CFE4E3]/60 dark:border-[#145250]">
+                  <span className="text-[#5C807F] dark:text-[#9FC8C7]">Part Livreur (80%)</span>
+                  <span className="font-bold text-[#0A3D3B] dark:text-white tabular-nums">{formatCurrency(Number(selectedOrder.deliveryFee || 1500) * 0.8)}</span>
                 </div>
               </div>
 
               {/* Preuve Photo de Livraison */}
               {(selectedOrder.proofOfDeliveryUrl || selectedOrder.proof_of_delivery_url || selectedOrder.deliveryProofPhoto || selectedOrder.deliveryProofUrl || selectedOrder.proofUrl) ? (
-                <div className="p-4 bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/40 rounded-2xl space-y-2.5">
+                <div className="p-4 bg-[#D7F1EA]/60 dark:bg-[#0E4A47]/60 border border-[#CFE4E3] dark:border-[#145250] rounded-2xl space-y-2.5">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-emerald-800 dark:text-emerald-300 flex items-center gap-1.5">
-                      <ShieldCheck size={16} className="text-emerald-600" />
+                    <span className="text-xs font-bold text-[#0A3D3B] dark:text-[#D7F1EA] flex items-center gap-1.5">
+                      <ShieldCheck size={16} className="text-[#0E7673] dark:text-[#38B794]" />
                       Preuve de livraison photographique vérifiée
                     </span>
-                    <span className="text-[10px] text-emerald-600 font-mono">
+                    <span className="text-[10px] text-[#0E7673] dark:text-[#38B794] font-mono tabular-nums">
                       {parseDate(selectedOrder.deliveredAt)?.toLocaleString("fr-FR", { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) || 'Confirmée'}
                     </span>
                   </div>
 
                   <div 
                     onClick={() => setZoomedPhotoUrl(selectedOrder.proofOfDeliveryUrl || selectedOrder.proof_of_delivery_url || selectedOrder.deliveryProofPhoto || selectedOrder.deliveryProofUrl || selectedOrder.proofUrl)}
-                    className="relative w-full h-48 rounded-xl overflow-hidden bg-black/5 dark:bg-black/40 border border-emerald-200/60 dark:border-emerald-800/60 cursor-pointer group shadow-inner"
+                    className="relative w-full h-48 rounded-xl overflow-hidden bg-black/5 dark:bg-black/40 border border-[#CFE4E3] dark:border-[#145250] cursor-pointer group shadow-inner"
                   >
                     <img 
                       src={selectedOrder.proofOfDeliveryUrl || selectedOrder.proof_of_delivery_url || selectedOrder.deliveryProofPhoto || selectedOrder.deliveryProofUrl || selectedOrder.proofUrl} 
                       alt="Preuve de livraison" 
                       className="w-full h-full object-cover transition duration-200 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white font-bold text-xs gap-1.5">
+                    <div className="absolute inset-0 bg-[#062625]/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white font-bold text-xs gap-1.5">
                       🔍 Agrandir l'image
                     </div>
                   </div>
-                  <p className="text-[10px] text-emerald-700 dark:text-emerald-400 text-center">
+                  <p className="text-[10px] text-[#0E7673] dark:text-[#38B794] text-center">
                     Cliquez sur la photo pour l'examiner en plein écran
                   </p>
                 </div>
@@ -753,7 +753,7 @@ export function AdminDeliveriesTracking() {
                   Livraison validée par code PIN (pas de photo attachée)
                 </div>
               ) : (
-                <div className="p-3 bg-slate-50 dark:bg-zinc-900 border border-slate-100 dark:border-zinc-800 rounded-xl text-center text-slate-500 text-xs">
+                <div className="p-3 bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] rounded-xl text-center text-[#5C807F] dark:text-[#9FC8C7] text-xs">
                   Photo de preuve en attente de la remise par le coursier
                 </div>
               )}
@@ -762,7 +762,7 @@ export function AdminDeliveriesTracking() {
             <div className="pt-2">
               <button
                 onClick={() => setSelectedOrder(null)}
-                className="w-full py-3 bg-[var(--app-primary-color)] text-white rounded-full font-bold text-xs shadow-sm hover:bg-[#143d3d] transition"
+                className="w-full py-3 bg-[#0E7673] hover:bg-[#0A5A58] text-white rounded-full font-bold text-xs shadow-sm transition"
               >
                 Fermer
               </button>
@@ -774,15 +774,15 @@ export function AdminDeliveriesTracking() {
       {/* Full-Screen Zoom Photo Modal */}
       {zoomedPhotoUrl && (
         <div 
-          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex flex-col items-center justify-center p-4"
+          className="fixed inset-0 z-50 bg-[#062625]/90 backdrop-blur-md flex flex-col items-center justify-center p-4"
           onClick={() => setZoomedPhotoUrl(null)}
         >
-          <div className="relative max-w-4xl max-h-[90vh] bg-zinc-950 rounded-2xl overflow-hidden border border-zinc-800 shadow-2xl flex flex-col" onClick={e => e.stopPropagation()}>
-            <div className="flex items-center justify-between px-5 py-3 border-b border-zinc-800 bg-zinc-900/80 text-white text-xs font-bold">
+          <div className="relative max-w-4xl max-h-[90vh] bg-[#0A3D3B] rounded-2xl overflow-hidden border border-[#145250] shadow-2xl flex flex-col" onClick={e => e.stopPropagation()}>
+            <div className="flex items-center justify-between px-5 py-3 border-b border-[#145250] bg-[#062625]/80 text-white text-xs font-bold">
               <span>Preuve de Livraison Officielle</span>
               <button 
                 onClick={() => setZoomedPhotoUrl(null)}
-                className="w-7 h-7 rounded-full bg-zinc-800 text-zinc-300 hover:text-white flex items-center justify-center transition"
+                className="w-7 h-7 rounded-full bg-[#0E4A47] text-[#D7F1EA] hover:text-white flex items-center justify-center transition"
               >
                 ✕
               </button>

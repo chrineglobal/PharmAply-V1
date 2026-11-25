@@ -476,16 +476,18 @@ export function PharmacistInventory() {
       <div className="px-8 py-6 flex items-center justify-between shrink-0">
           <div className="flex-1 flex items-center">
              <div className="relative w-full max-w-sm">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#5C807F] dark:text-[#9FC8C7]" size={18} />
                 <input 
                    type="text" 
                    placeholder="Search Inventory" 
-                   className="w-full bg-[#FAFBFA] dark:bg-slate-800 border border-transparent focus:border-gray-200 py-3 pl-12 pr-4 rounded-full text-sm outline-none text-gray-900 dark:text-white transition-all shadow-sm"
+                   value={searchTerm}
+                   onChange={(e) => setSearchTerm(e.target.value)}
+                   className="w-full bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] focus:border-[#0E7673] dark:focus:border-[#38B794] py-3 pl-12 pr-4 rounded-full text-sm outline-none text-[#0A3D3B] dark:text-white placeholder-[#5C807F] dark:placeholder-[#9FC8C7] transition-all shadow-sm"
                 />
              </div>
           </div>
           
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
              <input 
                  type="file" 
                  accept=".csv" 
@@ -493,15 +495,15 @@ export function PharmacistInventory() {
                  ref={fileInputRef} 
                  onChange={handleFileUpload} 
              />
-             <button onClick={handleDownloadTemplate} className="bg-white dark:bg-zinc-950 hover:bg-gray-50 dark:bg-zinc-900 border border-gray-200 text-gray-700 px-4 py-2.5 rounded-full flex items-center gap-2 text-sm font-bold shadow-sm transition-colors">
+             <button onClick={handleDownloadTemplate} className="bg-white dark:bg-[#0A3D3B] hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47] border border-[#CFE4E3] dark:border-[#145250] text-[#0A3D3B] dark:text-[#D7F1EA] px-4 py-2.5 rounded-full flex items-center gap-2 text-sm font-bold shadow-sm transition-colors">
                <Download size={16} />
                <span className="hidden sm:inline">Template</span>
              </button>
-             <button onClick={() => fileInputRef.current?.click()} className="bg-white dark:bg-zinc-950 hover:bg-gray-50 dark:bg-zinc-900 border border-gray-200 text-gray-700 px-4 py-2.5 rounded-full flex items-center gap-2 text-sm font-bold shadow-sm transition-colors">
+             <button onClick={() => fileInputRef.current?.click()} className="bg-white dark:bg-[#0A3D3B] hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47] border border-[#CFE4E3] dark:border-[#145250] text-[#0A3D3B] dark:text-[#D7F1EA] px-4 py-2.5 rounded-full flex items-center gap-2 text-sm font-bold shadow-sm transition-colors">
                <Upload size={16} />
                <span className="hidden sm:inline">Import CSV</span>
              </button>
-             <button onClick={() => setShowAdd(!showAdd)} className="bg-[#0B3B3C] hover:bg-[#082a2b] text-white px-5 py-2.5 rounded-full flex items-center gap-2 text-sm font-bold shadow-md transition-colors">
+             <button onClick={() => setShowAdd(!showAdd)} className="bg-[#0E7673] hover:bg-[#0A5A58] text-white px-5 py-2.5 rounded-full flex items-center gap-2 text-sm font-bold shadow-md transition-colors">
                <Plus size={16} />
                <span>Add Stock</span>
              </button>
@@ -510,35 +512,35 @@ export function PharmacistInventory() {
 
       <div className="flex-1 overflow-y-auto px-8 pb-12 custom-scrollbar space-y-8">
          <div className="flex items-center justify-between">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">
+            <h1 className="text-3xl font-bold text-[#0A3D3B] dark:text-white tracking-tight">
                Inventory Management
             </h1>
          </div>
 
          {showAdd && (
-            <form onSubmit={handleAddProduct} className="bg-[#FAFBFC] dark:bg-slate-800 p-6 rounded-3xl border border-gray-100 dark:border-slate-700 shadow-sm space-y-4">
+            <form onSubmit={handleAddProduct} className="bg-white dark:bg-[#0A3D3B] p-6 rounded-3xl border border-[#CFE4E3] dark:border-[#145250] shadow-sm space-y-4">
                <div className="flex justify-between items-center mb-2">
-                 <h3 className="font-bold text-gray-900 dark:text-white text-lg">Add from Master Catalog</h3>
-                 <button type="button" onClick={() => setShowAdd(false)} className="text-gray-400 hover:text-gray-600">
+                 <h3 className="font-bold text-[#0A3D3B] dark:text-white text-lg">Add from Master Catalog</h3>
+                 <button type="button" onClick={() => setShowAdd(false)} className="text-[#5C807F] dark:text-[#9FC8C7] hover:text-[#0A3D3B] dark:hover:text-white">
                     <X size={20} />
                  </button>
                </div>
                
                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                  <div className="col-span-1 md:col-span-2 lg:col-span-3">
-                   <label className="text-xs font-bold text-gray-500 mb-2 block"> Search & Select Global Product </label>
+                   <label className="text-xs font-bold text-[#5C807F] dark:text-[#9FC8C7] mb-2 block"> Search & Select Global Product </label>
                    <div className="space-y-3">
                      <div className="relative">
-                       <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
+                       <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#5C807F] dark:text-[#9FC8C7]" size={16} />
                        <input
                          type="text"
                          placeholder="Search master catalog..."
                          value={globalSearch}
                          onChange={(e) => setGlobalSearch(e.target.value)}
-                         className="w-full bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 py-2.5 pl-9 pr-4 rounded-xl text-sm outline-none focus:border-emerald-500 transition shadow-sm"
+                         className="w-full bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] py-2.5 pl-10 pr-4 rounded-full text-sm text-[#0A3D3B] dark:text-white placeholder-[#5C807F] dark:placeholder-[#9FC8C7] outline-none focus:border-[#0E7673] dark:focus:border-[#38B794] transition shadow-sm"
                        />
                      </div>
-                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 max-h-[300px] overflow-y-auto p-2 bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-xl custom-scrollbar">
+                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 max-h-[300px] overflow-y-auto p-2 bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] rounded-2xl custom-scrollbar">
                        {filteredGlobalProducts.map((p, idx) => {
                          const pName = p.commercial_name || p.name;
                          const isAdded = products.some(
@@ -551,21 +553,21 @@ export function PharmacistInventory() {
                              onClick={() => {
                                if (!isAdded) setSelectedGlobalProduct(p.id);
                              }}
-                             className={`relative p-3 rounded-xl border flex flex-col justify-between transition-all ${
+                             className={`relative p-3 rounded-2xl border flex flex-col justify-between transition-all ${
                                isAdded
-                                 ? "opacity-60 cursor-not-allowed bg-gray-100 dark:bg-slate-800/50 border-gray-200 dark:border-slate-700"
+                                 ? "opacity-60 cursor-not-allowed bg-[#E7F1F1] dark:bg-[#0A3D3B]/50 border-[#CFE4E3] dark:border-[#145250]"
                                  : isSelected
-                                 ? "cursor-pointer bg-emerald-50 dark:bg-emerald-900/20 border-emerald-500 ring-1 ring-emerald-500"
-                                 : "cursor-pointer bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-700 hover:border-emerald-300 dark:hover:border-emerald-700"
+                                 ? "cursor-pointer bg-[#D7F1EA]/60 dark:bg-[#0E4A47] border-[#0E7673] dark:border-[#38B794] ring-1 ring-[#0E7673] dark:ring-[#38B794]"
+                                 : "cursor-pointer bg-white dark:bg-[#0A3D3B] border-[#CFE4E3] dark:border-[#145250] hover:border-[#0E7673] dark:hover:border-[#38B794]"
                              }`}
                            >
                              <div className="flex items-start justify-between gap-2 mb-2">
                                <div className="flex-1">
-                                 <h4 className="font-bold text-sm text-gray-900 dark:text-white line-clamp-2">
+                                 <h4 className="font-bold text-sm text-[#0A3D3B] dark:text-white line-clamp-2">
                                    {pName}
                                  </h4>
                                  {p.dci && (
-                                   <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-1 mt-0.5">
+                                   <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7] line-clamp-1 mt-0.5">
                                      {p.dci}
                                    </p>
                                  )}
@@ -573,7 +575,7 @@ export function PharmacistInventory() {
                                {(isAdded || isSelected) && (
                                  <div
                                    className={`shrink-0 rounded-full ${
-                                     isAdded ? "text-gray-400" : "text-emerald-500"
+                                     isAdded ? "text-[#5C807F] dark:text-[#9FC8C7]" : "text-[#0E7673] dark:text-[#38B794]"
                                    }`}
                                  >
                                    <CheckCircle size={18} />
@@ -582,12 +584,12 @@ export function PharmacistInventory() {
                              </div>
                              <div className="flex items-center gap-2 mt-auto">
                                {p.dosage && (
-                                 <span className="text-[10px] font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 px-2 py-0.5 rounded-full whitespace-nowrap">
+                                 <span className="text-[10px] font-bold bg-[#D7F1EA] text-[#0E7673] dark:bg-[#062625] dark:text-[#38B794] px-2.5 py-0.5 rounded-full whitespace-nowrap">
                                    {p.dosage}
                                  </span>
                                )}
                                {p.form && (
-                                 <span className="text-[10px] font-bold bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 px-2 py-0.5 rounded-full whitespace-nowrap overflow-hidden text-ellipsis">
+                                 <span className="text-[10px] font-bold bg-[#E7F1F1] text-[#0A3D3B] dark:bg-[#0E4A47] dark:text-[#D7F1EA] px-2.5 py-0.5 rounded-full whitespace-nowrap overflow-hidden text-ellipsis">
                                    {p.form}
                                  </span>
                                )}
@@ -596,7 +598,7 @@ export function PharmacistInventory() {
                          );
                        })}
                        {filteredGlobalProducts.length === 0 && (
-                         <div className="col-span-full py-8 text-center text-sm font-medium text-gray-500">
+                         <div className="col-span-full py-8 text-center text-sm font-medium text-[#5C807F] dark:text-[#9FC8C7]">
                            No products found in master catalog.
                          </div>
                        )}
@@ -605,21 +607,21 @@ export function PharmacistInventory() {
                  </div>
 
                  <div className="col-span-1">
-                   <label className="text-xs font-bold text-gray-500 mb-1 block"> Sell Price (XAF) </label>
-                   <input required type="number" placeholder="0.00" value={newProductPrice} onChange={e => setNewProductPrice(e.target.value)} className="w-full bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 p-3 rounded-xl text-sm outline-none shadow-sm transition" />
+                   <label className="text-xs font-bold text-[#5C807F] dark:text-[#9FC8C7] mb-1 block"> Sell Price (XAF) </label>
+                   <input required type="number" placeholder="0.00" value={newProductPrice} onChange={e => setNewProductPrice(e.target.value)} className="w-full bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] p-3 rounded-xl text-sm text-[#0A3D3B] dark:text-white outline-none focus:border-[#0E7673] shadow-sm transition" />
                  </div>
                  <div className="col-span-1">
-                   <label className="text-xs font-bold text-gray-500 mb-1 block"> Initial Stock </label>
-                   <input required type="number" placeholder="0" min="0" value={newProductStock} onChange={e => setNewProductStock(e.target.value)} className="w-full bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 p-3 rounded-xl text-sm outline-none shadow-sm transition" />
+                   <label className="text-xs font-bold text-[#5C807F] dark:text-[#9FC8C7] mb-1 block"> Initial Stock </label>
+                   <input required type="number" placeholder="0" min="0" value={newProductStock} onChange={e => setNewProductStock(e.target.value)} className="w-full bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] p-3 rounded-xl text-sm text-[#0A3D3B] dark:text-white outline-none focus:border-[#0E7673] shadow-sm transition" />
                  </div>
                  <div className="col-span-1">
-                   <label className="text-xs font-bold text-gray-500 mb-1 block"> Expiry Date </label>
-                   <input required type="date" value={newProductExpiry} onChange={e => setNewProductExpiry(e.target.value)} className="w-full bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 p-3 rounded-xl text-sm outline-none shadow-sm transition" />
+                   <label className="text-xs font-bold text-[#5C807F] dark:text-[#9FC8C7] mb-1 block"> Expiry Date </label>
+                   <input required type="date" value={newProductExpiry} onChange={e => setNewProductExpiry(e.target.value)} className="w-full bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] p-3 rounded-xl text-sm text-[#0A3D3B] dark:text-white outline-none focus:border-[#0E7673] shadow-sm transition" />
                  </div>
                </div>
                
                <div className="flex justify-end pt-2">
-                 <button disabled={uploading || !selectedGlobalProduct} type="submit" className="bg-[#0B3B3C] text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-md hover:bg-[#082a2b] transition disabled:opacity-50 flex items-center gap-2">
+                 <button disabled={uploading || !selectedGlobalProduct} type="submit" className="bg-[#0E7673] text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-md hover:bg-[#0A5A58] transition disabled:opacity-50 flex items-center gap-2">
                    {uploading ? <><Loader2 size={16} className="animate-spin" /> Saving...</> : 'Save to Inventory'}
                  </button>
                </div>
@@ -629,13 +631,13 @@ export function PharmacistInventory() {
          <div className="pb-24">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between mb-6 gap-4">
                <div className="flex items-center gap-3">
-                  <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100">Articles en stock ({sortedStockItems.length})</h2>
+                  <h2 className="text-xl font-bold text-[#0A3D3B] dark:text-white">Articles en stock (<span className="tabular-nums">{sortedStockItems.length}</span>)</h2>
                   {sortedStockItems.length > 0 && (
                      <button 
                         onClick={toggleSelectAll}
-                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-gray-200 dark:border-slate-700 text-xs font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-slate-800 transition"
+                        className="flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-[#CFE4E3] dark:border-[#145250] bg-white dark:bg-[#0A3D3B] text-xs font-bold text-[#0A3D3B] dark:text-[#D7F1EA] hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47] transition"
                      >
-                        {isAllSelected ? <CheckSquare size={15} className="text-emerald-600" /> : <Square size={15} />}
+                        {isAllSelected ? <CheckSquare size={15} className="text-[#0E7673] dark:text-[#38B794]" /> : <Square size={15} />}
                         <span>{isAllSelected ? "Tout désélectionner" : "Tout sélectionner"}</span>
                      </button>
                   )}
@@ -643,16 +645,16 @@ export function PharmacistInventory() {
 
                <div className="flex flex-wrap items-center gap-3">
                   <div className="relative">
-                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={14} />
+                     <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#5C807F] dark:text-[#9FC8C7]" size={14} />
                      <input 
                         type="text" 
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         placeholder="Rechercher nom, DCI..." 
-                        className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 py-2 pl-9 pr-3 rounded-xl text-xs font-medium w-44 md:w-56 outline-none shadow-sm text-gray-900 dark:text-white" 
+                        className="bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] py-2 pl-9 pr-7 rounded-full text-xs font-medium w-44 md:w-56 outline-none shadow-sm text-[#0A3D3B] dark:text-white placeholder-[#5C807F] dark:placeholder-[#9FC8C7]" 
                      />
                      {searchTerm && (
-                        <button onClick={() => setSearchTerm("")} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                        <button onClick={() => setSearchTerm("")} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#5C807F] dark:text-[#9FC8C7] hover:text-[#0A3D3B] dark:hover:text-white">
                            <X size={12} />
                         </button>
                      )}
@@ -661,7 +663,7 @@ export function PharmacistInventory() {
                   <select 
                      value={stockStatusFilter} 
                      onChange={(e) => setStockStatusFilter(e.target.value as any)}
-                     className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 px-3 py-2 rounded-xl text-xs font-bold text-gray-700 dark:text-gray-300 shadow-sm outline-none cursor-pointer"
+                     className="bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] px-4 py-2 rounded-full text-xs font-bold text-[#0A3D3B] dark:text-[#D7F1EA] shadow-sm outline-none cursor-pointer"
                   >
                      <option value="all">Tous les statuts</option>
                      <option value="in_stock">En stock (≥ 10)</option>
@@ -672,7 +674,7 @@ export function PharmacistInventory() {
                   <select 
                      value={sortBy} 
                      onChange={(e) => setSortBy(e.target.value as "recent" | "priceAsc" | "nameAsc")}
-                     className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 px-3 py-2 rounded-xl text-xs font-bold text-gray-700 dark:text-gray-300 shadow-sm outline-none cursor-pointer"
+                     className="bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] px-4 py-2 rounded-full text-xs font-bold text-[#0A3D3B] dark:text-[#D7F1EA] shadow-sm outline-none cursor-pointer"
                   >
                      <option value="recent">Plus récents</option>
                      <option value="priceAsc">Prix croissant</option>
@@ -682,12 +684,12 @@ export function PharmacistInventory() {
             </div>
 
             {loading ? (
-               <div className="py-12 text-center text-gray-500 text-sm animate-pulse">Chargement de l'inventaire...</div>
+               <div className="py-12 text-center text-[#5C807F] dark:text-[#9FC8C7] text-sm animate-pulse">Chargement de l'inventaire...</div>
             ) : sortedStockItems.length === 0 ? (
-               <div className="py-12 text-center text-gray-500 text-sm bg-white dark:bg-slate-800/40 rounded-2xl border border-dashed border-gray-200 dark:border-slate-700 p-8">
-                  <Package className="mx-auto mb-2 text-gray-400" size={32} />
-                  <p className="font-bold text-gray-700 dark:text-gray-300">Aucun produit trouvé</p>
-                  <p className="text-xs text-gray-400 mt-1">Ajoutez des produits depuis le catalogue ou modifiez vos filtres de recherche.</p>
+               <div className="py-12 text-center text-[#5C807F] dark:text-[#9FC8C7] text-sm bg-white dark:bg-[#0A3D3B] rounded-3xl border border-dashed border-[#CFE4E3] dark:border-[#145250] p-8">
+                  <Package className="mx-auto mb-2 text-[#5C807F] dark:text-[#9FC8C7]" size={32} />
+                  <p className="font-bold text-[#0A3D3B] dark:text-white">Aucun produit trouvé</p>
+                  <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7] mt-1">Ajoutez des produits depuis le catalogue ou modifiez vos filtres de recherche.</p>
                </div>
             ) : (
                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
@@ -696,10 +698,10 @@ export function PharmacistInventory() {
                      return (
                         <div 
                            key={item.id} 
-                           className={`bg-white dark:bg-slate-800 rounded-2xl border p-5 flex flex-col justify-between transition-all cursor-pointer relative group ${
+                           className={`bg-white dark:bg-[#0A3D3B] rounded-2xl border p-5 flex flex-col justify-between transition-all cursor-pointer relative group ${
                               isSelected 
-                                 ? 'border-emerald-500 ring-2 ring-emerald-500/20 bg-emerald-50/10 dark:bg-emerald-900/10 shadow-md' 
-                                 : 'border-gray-100 dark:border-slate-700 hover:shadow-md hover:border-emerald-200 dark:hover:border-emerald-800'
+                                 ? 'border-[#0E7673] dark:border-[#38B794] ring-2 ring-[#0E7673]/20 bg-[#D7F1EA]/20 dark:bg-[#0E4A47] shadow-md' 
+                                 : 'border-[#CFE4E3] dark:border-[#145250] hover:shadow-md hover:border-[#0E7673]/50 dark:hover:border-[#38B794]/50'
                            }`} 
                            onClick={() => navigate(`/pharmacist/inventory/${item.id}`)}
                         >
@@ -710,15 +712,15 @@ export function PharmacistInventory() {
                                     onClick={(e) => toggleSelect(item.id, e)}
                                     className={`w-7 h-7 rounded-lg border flex items-center justify-center transition shrink-0 ${
                                        isSelected 
-                                          ? 'bg-emerald-600 border-emerald-600 text-white' 
-                                          : 'border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-900 text-gray-400 hover:border-emerald-400'
+                                          ? 'bg-[#0E7673] border-[#0E7673] text-white' 
+                                          : 'border-[#CFE4E3] dark:border-[#145250] bg-[#F5FAFA] dark:bg-[#062625] text-[#5C807F] dark:text-[#9FC8C7] hover:border-[#0E7673]'
                                     }`}
                                     title={isSelected ? "Désélectionner" : "Sélectionner pour action groupée"}
                                  >
                                     {isSelected ? <CheckCircle size={15} /> : <Square size={15} />}
                                  </button>
 
-                                 <div className="w-12 h-12 rounded-xl bg-gray-50 dark:bg-slate-900 border border-gray-100 dark:border-slate-800 flex items-center justify-center overflow-hidden shrink-0 mx-2">
+                                 <div className="w-12 h-12 rounded-xl bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] flex items-center justify-center overflow-hidden shrink-0 mx-2">
                                     {item.imageUrl || item.image_url ? (
                                        <img 
                                          src={item.imageUrl || item.image_url} 
@@ -729,47 +731,47 @@ export function PharmacistInventory() {
                                          }}
                                        />
                                     ) : (
-                                       <Package className="text-gray-400" size={20} />
+                                       <Package className="text-[#5C807F] dark:text-[#9FC8C7]" size={20} />
                                     )}
                                  </div>
 
                                  <div className="flex flex-col items-end gap-1">
-                                    <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full ${
+                                    <span className={`text-[11px] font-bold px-2.5 py-0.5 rounded-full tabular-nums ${
                                        (item.stock || 0) <= 0 
-                                          ? 'bg-red-50 text-red-600 dark:bg-red-900/30' 
+                                          ? 'bg-red-50 text-red-600 dark:bg-red-900/30 dark:text-red-400' 
                                           : (item.stock || 0) < 10 
-                                          ? 'bg-yellow-50 text-yellow-700 dark:bg-yellow-900/30' 
-                                          : 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30'
+                                          ? 'bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300' 
+                                          : 'bg-[#D7F1EA] text-[#0E7673] dark:bg-[#062625] dark:text-[#38B794]'
                                     }`}>
                                        {item.stock || 0} en stock
                                     </span>
                                  </div>
                               </div>
 
-                              <h3 className="font-bold text-sm text-gray-900 dark:text-white line-clamp-1 mb-0.5">
+                              <h3 className="font-bold text-sm text-[#0A3D3B] dark:text-white line-clamp-1 mb-0.5">
                                  {item.name || item.commercial_name || 'Produit'}
                               </h3>
-                              <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-1 mb-4">
+                              <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7] line-clamp-1 mb-4">
                                  {item.dosage || item.form || item.dci || 'Détails non spécifiés'}
                               </p>
                            </div>
 
-                           <div className="flex items-center justify-between mt-auto pt-2 border-t border-gray-50 dark:border-slate-700/50">
+                           <div className="flex items-center justify-between mt-auto pt-2 border-t border-[#CFE4E3]/60 dark:border-[#145250]">
                               <div className="flex flex-col">
-                                 <span className="text-[10px] text-gray-400 uppercase tracking-wider font-bold">Prix de vente</span>
-                                 <span className="font-bold text-emerald-600 dark:text-emerald-400 text-sm">{formatCurrency(item.price || 0)}</span>
+                                 <span className="text-[10px] text-[#5C807F] dark:text-[#9FC8C7] uppercase tracking-wider font-bold">Prix de vente</span>
+                                 <span className="font-bold text-[#0E7673] dark:text-[#38B794] text-sm tabular-nums">{formatCurrency(item.price || 0)}</span>
                               </div>
 
                               <div className="flex items-center gap-1.5">
                                  <button 
                                     onClick={(e) => handleDeleteSingle(item.id, item.name || item.commercial_name || 'Produit', e)}
-                                    className="w-8 h-8 rounded-lg flex items-center justify-center bg-gray-50 dark:bg-slate-900 text-gray-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/30 transition"
+                                    className="w-8 h-8 rounded-full flex items-center justify-center bg-[#F5FAFA] dark:bg-[#062625] text-[#5C807F] dark:text-[#9FC8C7] hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/30 transition"
                                     title="Supprimer ce produit"
                                  >
                                     <Trash2 size={14} />
                                  </button>
                                  <button 
-                                    className="w-8 h-8 rounded-lg flex items-center justify-center bg-gray-50 dark:bg-slate-900 text-gray-500 dark:text-gray-400 hover:bg-emerald-50 hover:text-emerald-600 transition"
+                                    className="w-8 h-8 rounded-full flex items-center justify-center bg-[#E7F1F1] dark:bg-[#062625] text-[#0E7673] dark:text-[#38B794] hover:bg-[#D7F1EA] dark:hover:bg-[#0E4A47] transition"
                                     title="Voir la fiche détaillée"
                                  >
                                     <ArrowUpRight size={14} />
@@ -785,19 +787,19 @@ export function PharmacistInventory() {
 
          {/* Floating Bulk Actions Bar */}
          {selectedIds.length > 0 && (
-            <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-[#0B3B3C] text-white px-6 py-3.5 rounded-2xl shadow-2xl flex items-center gap-4 border border-emerald-700/50 animate-in slide-in-from-bottom-6">
+            <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-[#0A3D3B] text-white px-6 py-3.5 rounded-full shadow-2xl flex items-center gap-4 border border-[#38B794]/40 animate-in slide-in-from-bottom-6">
                <div className="flex items-center gap-2">
-                  <span className="bg-emerald-500/20 text-emerald-300 px-2.5 py-0.5 rounded-full text-xs font-bold border border-emerald-400/30">
+                  <span className="bg-[#38B794]/20 text-[#D7F1EA] px-3 py-0.5 rounded-full text-xs font-bold border border-[#38B794]/30 tabular-nums">
                      {selectedIds.length} sélectionné(s)
                   </span>
                </div>
 
-               <div className="h-5 w-px bg-white dark:bg-zinc-950/20"></div>
+               <div className="h-5 w-px bg-white/20"></div>
 
                <div className="flex items-center gap-2">
                   <button 
                      onClick={() => setShowBulkStockModal(true)}
-                     className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white dark:bg-zinc-950/10 hover:bg-white dark:bg-zinc-950/20 text-xs font-bold transition cursor-pointer"
+                     className="flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-white/15 hover:bg-white/25 text-xs font-bold transition cursor-pointer"
                   >
                      <Edit3 size={14} />
                      <span>Ajuster stock</span>
@@ -806,18 +808,18 @@ export function PharmacistInventory() {
                   <button 
                      onClick={handleBulkDelete}
                      disabled={isDeleting}
-                     className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-red-500/80 hover:bg-red-600 text-xs font-bold transition disabled:opacity-50 cursor-pointer shadow-sm"
+                     className="flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-red-500/80 hover:bg-red-600 text-xs font-bold transition disabled:opacity-50 cursor-pointer shadow-sm"
                   >
                      {isDeleting ? <Loader2 size={14} className="animate-spin" /> : <Trash2 size={14} />}
                      <span>Supprimer la sélection</span>
                   </button>
                </div>
 
-               <div className="h-5 w-px bg-white dark:bg-zinc-950/20"></div>
+               <div className="h-5 w-px bg-white/20"></div>
 
                <button 
                   onClick={() => setSelectedIds([])}
-                  className="p-1 rounded-lg text-gray-300 hover:text-white hover:bg-white dark:bg-zinc-950/10 transition"
+                  className="p-1.5 rounded-full text-[#D7F1EA] hover:text-white hover:bg-white/15 transition"
                   title="Annuler la sélection"
                >
                   <X size={16} />
@@ -827,28 +829,28 @@ export function PharmacistInventory() {
 
          {/* Bulk Stock Update Modal */}
          {showBulkStockModal && (
-            <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
-               <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 w-full max-w-sm shadow-2xl border border-gray-100 dark:border-slate-800">
+            <div className="fixed inset-0 bg-[#062625]/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+               <div className="bg-white dark:bg-[#0A3D3B] rounded-3xl p-6 w-full max-w-sm shadow-2xl border border-[#CFE4E3] dark:border-[#145250]">
                   <div className="flex items-center justify-between mb-4">
-                     <h3 className="font-bold text-gray-900 dark:text-white text-base">Ajuster le stock en masse</h3>
-                     <button onClick={() => setShowBulkStockModal(false)} className="text-gray-400 hover:text-gray-600">
+                     <h3 className="font-bold text-[#0A3D3B] dark:text-white text-base">Ajuster le stock en masse</h3>
+                     <button onClick={() => setShowBulkStockModal(false)} className="text-[#5C807F] dark:text-[#9FC8C7] hover:text-[#0A3D3B] dark:hover:text-white">
                         <X size={18} />
                      </button>
                   </div>
 
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">
-                     Définissez la nouvelle quantité en stock pour les <strong className="text-gray-900 dark:text-white">{selectedIds.length} produits sélectionnés</strong> :
+                  <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7] mb-4">
+                     Définissez la nouvelle quantité en stock pour les <strong className="text-[#0A3D3B] dark:text-white">{selectedIds.length} produits sélectionnés</strong> :
                   </p>
 
                   <div className="mb-5">
-                     <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1.5">Nouvelle quantité (unités)</label>
+                     <label className="block text-xs font-bold text-[#0A3D3B] dark:text-[#D7F1EA] mb-1.5">Nouvelle quantité (unités)</label>
                      <input 
                         type="number"
                         min="0"
                         placeholder="Ex: 50"
                         value={bulkStockValue}
                         onChange={(e) => setBulkStockValue(e.target.value)}
-                        className="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 p-3 rounded-xl text-sm outline-none text-gray-900 dark:text-white focus:ring-2 focus:ring-emerald-500"
+                        className="w-full bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] p-3 rounded-xl text-sm outline-none text-[#0A3D3B] dark:text-white focus:ring-2 focus:ring-[#0E7673]"
                         autoFocus
                      />
                   </div>
@@ -856,14 +858,14 @@ export function PharmacistInventory() {
                   <div className="flex gap-2">
                      <button 
                         onClick={() => setShowBulkStockModal(false)}
-                        className="flex-1 py-2.5 rounded-xl border border-gray-200 dark:border-slate-700 text-xs font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:bg-zinc-900 transition"
+                        className="flex-1 py-2.5 rounded-full border border-[#CFE4E3] dark:border-[#145250] text-xs font-bold text-[#0A3D3B] dark:text-[#D7F1EA] hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47] transition"
                      >
                         Annuler
                      </button>
                      <button 
                         onClick={handleBulkUpdateStock}
                         disabled={isUpdatingStock || !bulkStockValue}
-                        className="flex-1 py-2.5 rounded-xl bg-[#0B3B3C] text-white text-xs font-bold hover:bg-[#082a2b] transition disabled:opacity-50 flex items-center justify-center gap-1.5"
+                        className="flex-1 py-2.5 rounded-full bg-[#0E7673] text-white text-xs font-bold hover:bg-[#0A5A58] transition disabled:opacity-50 flex items-center justify-center gap-1.5"
                      >
                         {isUpdatingStock ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />}
                         Appliquer

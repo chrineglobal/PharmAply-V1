@@ -9,6 +9,8 @@ import { cn } from "../../lib/utils";
 import { useTranslation } from "react-i18next";
 import { auth, signOut, db, collection, query, where, getDocs } from "../../lib/firebase";
 import { useAuth } from "../AuthProvider";
+import { PharmAplyLogo } from "../common/PharmAplyLogo";
+import { useDarkMode } from "../DarkModeProvider";
 
 interface RoleSidebarProps {
   role: "patient" | "pharmacist" | "delivery" | "admin";
@@ -18,6 +20,7 @@ export function RoleSidebar({ role }: RoleSidebarProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { isDark } = useDarkMode();
   const [completionPercentage, setCompletionPercentage] = useState(0);
 
   useEffect(() => {
@@ -83,18 +86,15 @@ export function RoleSidebar({ role }: RoleSidebarProps) {
   }
 
   return (
-    <aside className="w-full h-full flex flex-col py-8 overflow-y-auto custom-scrollbar border-r border-transparent">
-      <div className="px-8 mb-10 flex items-center gap-3 text-slate-900 dark:text-white">
-        <div className="w-10 h-10 rounded-full bg-white dark:bg-zinc-950 border-2 border-gray-100 shadow-sm flex items-center justify-center">
-           <HeartPulse size={20} className="text-[#0B3B3C] dark:text-teal-400" />
-        </div>
-        <h1 className="font-bold text-2xl tracking-tight text-[#0B3B3C] dark:text-white"> {t('pharmacy', 'Pharmacy')} </h1>
+    <aside className="w-full h-full flex flex-col py-7 overflow-y-auto custom-scrollbar">
+      <div className="px-7 mb-9 flex items-center justify-between">
+        <PharmAplyLogo variant="horizontal" tone={isDark ? "white" : "color"} size="sm" />
       </div>
 
-      <div className="flex-1 space-y-8">
+      <div className="flex-1 space-y-7">
         {menuSections.map((section, idx) => (
           <div key={idx} className="px-4">
-            <h3 className="px-4 text-[10px] font-bold text-gray-400 tracking-wider mb-3">
+            <h3 className="px-4 text-[11px] font-bold text-[#6EADAB] tracking-wider mb-2.5">
               {section.title}
             </h3>
             <div className="space-y-1">
@@ -107,10 +107,10 @@ export function RoleSidebar({ role }: RoleSidebarProps) {
                     end={link.exact}
                     className={({ isActive }) =>
                       cn(
-                        "flex items-center gap-4 px-4 py-3 rounded-2xl text-sm font-medium transition-all duration-200",
+                        "flex items-center gap-3.5 px-4 py-3 rounded-2xl text-sm font-medium transition-all duration-200",
                         isActive
-                          ? "bg-[#0B3B3C] text-white shadow-md dark:bg-teal-500/20 dark:text-teal-400"
-                          : "text-gray-500 hover:bg-gray-50 dark:bg-zinc-900 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-slate-800 dark:hover:text-white"
+                          ? "bg-[#0E7673] text-white font-bold shadow-sm"
+                          : "text-[#0A3D3B]/80 dark:text-[#CFE4E3] hover:bg-[#E7F1F1] dark:hover:bg-[#062625] hover:text-[#0E7673] dark:hover:text-white"
                       )
                     }
                   >
@@ -128,31 +128,30 @@ export function RoleSidebar({ role }: RoleSidebarProps) {
         ))}
       </div>
 
-      <div className="px-6 mt-10 shrink-0">
+      <div className="px-6 mt-8 shrink-0">
          {completionPercentage < 100 && (
-         <div className="bg-[#B9E9E0] dark:bg-teal-900/30 p-5 rounded-3xl mb-4 relative overflow-hidden">
-            <div className="flex items-start gap-4 z-10 relative">
-               <div className="w-12 h-12 rounded-full border-4 border-[#0B3B3C] flex items-center justify-center font-bold text-[#0B3B3C] text-sm shrink-0">
+         <div className="bg-[#D7F1EA] dark:bg-[#062625] border border-[#AFE2D4] dark:border-[#145250] p-5 rounded-3xl mb-4 relative overflow-hidden">
+            <div className="flex items-start gap-3.5 z-10 relative">
+               <div className="w-12 h-12 rounded-full border-4 border-[#0E7673] flex items-center justify-center font-bold text-[#0A3D3B] dark:text-[#E7F1F1] text-sm shrink-0 bg-white dark:bg-[#0A3D3B]">
                   {Math.min(completionPercentage, 100)}%
                </div>
                <div>
-                  <h4 className="font-bold text-[#0B3B3C] dark:text-teal-100 text-sm mb-1 leading-tight">{t('complete_profile', 'Complete Profile')}</h4>
-                  <p className="text-xs text-[#0B3B3C]/70 dark:text-teal-200/70 mb-3">{t('complete_profile_desc', 'Complete Your Profile to Unlock all Features')}</p>
+                  <h4 className="font-bold text-[#0A3D3B] dark:text-white text-sm mb-1 leading-tight">{t('complete_profile', 'Complete Profile')}</h4>
+                  <p className="text-xs text-[#0A3D3B]/80 dark:text-[#CFE4E3] mb-3 leading-snug">{t('complete_profile_desc', 'Complete Your Profile to Unlock all Features')}</p>
                </div>
             </div>
             <button 
                onClick={() => navigate('/pharmacist/profile')}
-               className="w-full py-2.5 bg-[#0B3B3C] text-white rounded-xl text-xs font-bold hover:bg-[#082a2b] transition-colors relative z-10"
+               className="w-full py-2.5 bg-[#0E7673] hover:bg-[#0A5A58] text-white rounded-full text-xs font-bold transition-colors relative z-10 shadow-sm"
             >
                {t('update_profile', 'Update Profile')}
             </button>
-            <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-white dark:bg-zinc-950/20 rounded-full blur-2xl"></div>
          </div>
          )}
 
          <button 
            onClick={handleLogout}
-           className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-2xl text-sm font-bold text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors"
+           className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-full text-sm font-bold text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors"
          >
             <LogOut size={18} />
             {t('logout', 'Sign Out')}

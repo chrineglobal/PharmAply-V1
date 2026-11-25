@@ -20,8 +20,8 @@ import toast from 'react-hot-toast';
 // Google Maps Custom Marker Components
 const DriverMotoMarkerUI = () => (
   <div style={{
-    width: 44, height: 44, background: '#194B4B', border: '3px solid #ffffff', borderRadius: '50%',
-    boxShadow: '0 8px 20px rgba(25, 75, 75, 0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#FACC15'
+    width: 44, height: 44, background: '#0E7673', border: '3px solid #ffffff', borderRadius: '50%',
+    boxShadow: '0 8px 20px rgba(14, 118, 115, 0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#D7F1EA'
   }}>
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="15" cy="5" r="1"/><path d="M12 17.5V14l-3-3 4-3 2 3h2"/>
@@ -31,17 +31,17 @@ const DriverMotoMarkerUI = () => (
 
 const DestPinMarkerUI = () => (
   <div style={{
-    width: 38, height: 38, background: '#ea580c', border: '3px solid #ffffff', borderRadius: '50%',
-    boxShadow: '0 6px 18px rgba(234, 88, 12, 0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center'
+    width: 38, height: 38, background: '#38B794', border: '3px solid #ffffff', borderRadius: '50%',
+    boxShadow: '0 6px 18px rgba(56, 183, 148, 0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center'
   }}>
-    <div style={{ width: 12, height: 12, background: '#ffffff', borderRadius: '50%' }}></div>
+    <div style={{ width: 12, height: 12, background: '#0A3D3B', borderRadius: '50%' }}></div>
   </div>
 );
 
 const PharmacyMarkerUI = () => (
   <div style={{
-    width: 38, height: 38, background: '#194B4B', border: '3px solid #ffffff', borderRadius: '50%',
-    boxShadow: '0 6px 18px rgba(25, 75, 75, 0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ffffff'
+    width: 38, height: 38, background: '#0E7673', border: '3px solid #ffffff', borderRadius: '50%',
+    boxShadow: '0 6px 18px rgba(14, 118, 115, 0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ffffff'
   }}>
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
       <path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/>
@@ -359,52 +359,47 @@ export function PatientTracking() {
 
   if (loading) {
     return (
-      <div className="flex-1 bg-white dark:bg-zinc-950 flex flex-col items-center justify-center p-6 text-center">
-        <RefreshCw className="w-8 h-8 text-[var(--app-primary-color)] animate-spin mb-3" />
-        <p className="text-sm font-bold text-gray-700 dark:text-gray-300">Chargement des informations de suivi...</p>
+      <div className="flex-1 bg-[#F5FAFA] dark:bg-[#062625] flex flex-col items-center justify-center p-6 text-center">
+        <RefreshCw className="w-8 h-8 text-[#0E7673] dark:text-[#38B794] animate-spin mb-3" />
+        <p className="text-sm font-bold text-[#0A3D3B] dark:text-[#D7F1EA]">Chargement des informations de suivi...</p>
       </div>
     );
   }
 
   if (!order) {
     return (
-      <div className="flex-1 bg-white dark:bg-zinc-950 flex flex-col items-center justify-center p-6 text-center space-y-4">
+      <div className="flex-1 bg-[#F5FAFA] dark:bg-[#062625] flex flex-col items-center justify-center p-6 text-center space-y-4">
         <AlertCircle className="w-12 h-12 text-amber-500" />
-        <h2 className="text-lg font-bold text-gray-900 dark:text-white">Commande introuvable</h2>
-        <p className="text-xs text-gray-500 max-w-xs">Cette commande n'existe pas ou vous n'avez pas l'autorisation d'y accéder.</p>
-        <button onClick={() => navigate('/patient/orders')} className="px-5 py-2.5 bg-[var(--app-primary-color)] text-white text-xs font-bold rounded-full">
+        <h2 className="text-lg font-bold text-[#0A3D3B] dark:text-white">Commande introuvable</h2>
+        <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7] max-w-xs">Cette commande n'existe pas ou vous n'avez pas l'autorisation d'y accéder.</p>
+        <button onClick={() => navigate('/patient/orders')} className="px-6 py-2.5 bg-[#0E7673] hover:bg-[#0A5A58] text-white text-xs font-bold rounded-full transition">
           Retour aux commandes
         </button>
       </div>
     );
   }
 
-  /* =========================================================================
-     CAS 1 : COMMANDE EN ATTENTE D'APPROBATION PHARMACIE OU SANS LIVREUR
-     (Chantier 1 : Masquer la carte tant que la commande n'est pas approuvée
-     avec chauffeur assigné)
-     ========================================================================= */
   const shouldShowWaitingScreen = !isPickup && (!isApproved || !hasAssignedDriver);
 
   return (
-    <div className="flex-1 bg-white dark:bg-black flex flex-col h-full overflow-hidden relative font-sans">
+    <div className="flex-1 bg-[#F5FAFA] dark:bg-[#062625] flex flex-col h-full overflow-hidden relative font-sans">
       
       {/* Top Header Bar */}
-      <div className="absolute top-0 left-0 right-0 z-30 pt-10 pb-3 px-4 flex items-center justify-between pointer-events-auto bg-gradient-to-b from-black/50 via-black/20 to-transparent">
+      <div className="absolute top-0 left-0 right-0 z-30 pt-10 pb-3 px-4 flex items-center justify-between pointer-events-auto bg-gradient-to-b from-[#062625]/55 via-[#062625]/20 to-transparent">
         <button 
           id="btn-back-patient"
           onClick={() => navigate('/patient/orders')} 
-          className="w-11 h-11 flex items-center justify-center bg-white dark:bg-zinc-950/95 dark:bg-zinc-900/95 backdrop-blur-md rounded-full shadow-md text-gray-800 dark:text-white hover:bg-white dark:bg-zinc-950 transition active:scale-95"
+          className="w-11 h-11 flex items-center justify-center bg-white/95 dark:bg-[#0A3D3B]/95 backdrop-blur-md rounded-full border border-[#CFE4E3] dark:border-[#145250] shadow-md text-[#0A3D3B] dark:text-white hover:bg-[#D7F1EA] dark:hover:bg-[#0E4A47] transition active:scale-95"
         >
           <ArrowLeft size={20} />
         </button>
         
-        <div className="bg-white dark:bg-zinc-950/95 dark:bg-zinc-900/95 backdrop-blur-md px-4 py-1.5 rounded-full shadow-md border border-gray-100 dark:border-zinc-800 flex items-center gap-2">
+        <div className="bg-white/95 dark:bg-[#0A3D3B]/95 backdrop-blur-md px-4 py-1.5 rounded-full shadow-md border border-[#CFE4E3] dark:border-[#145250] flex items-center gap-2">
           <span className={`w-2.5 h-2.5 rounded-full ${
-            order?.status === 'delivered' ? 'bg-emerald-500' :
-            shouldShowWaitingScreen ? 'bg-amber-400 animate-pulse' : 'bg-emerald-500 animate-pulse'
+            order?.status === 'delivered' ? 'bg-[#38B794]' :
+            shouldShowWaitingScreen ? 'bg-amber-400 animate-pulse' : 'bg-[#38B794] animate-pulse'
           }`}></span>
-          <span className="text-xs font-black tracking-wide text-[var(--app-primary-color)] dark:text-teal-300 uppercase">
+          <span className="text-xs font-black tracking-wide text-[#0E7673] dark:text-[#D7F1EA] uppercase">
             {order?.status === 'delivered' ? 'Livraison effectuée' : 
              isPickup ? 'Retrait Officine' : 
              shouldShowWaitingScreen ? 'En attente pharmacie' : 'Livraison en direct'}
@@ -414,7 +409,7 @@ export function PatientTracking() {
         <button 
           id="btn-open-details-top"
           onClick={() => setShowDetailsDrawer(true)}
-          className="w-11 h-11 flex items-center justify-center bg-white dark:bg-zinc-950/95 dark:bg-zinc-900/95 backdrop-blur-md rounded-full shadow-md text-gray-800 dark:text-white hover:bg-white dark:bg-zinc-950 transition active:scale-95"
+          className="w-11 h-11 flex items-center justify-center bg-white/95 dark:bg-[#0A3D3B]/95 backdrop-blur-md rounded-full border border-[#CFE4E3] dark:border-[#145250] shadow-md text-[#0A3D3B] dark:text-white hover:bg-[#D7F1EA] dark:hover:bg-[#0E4A47] transition active:scale-95"
           title="Détails de la commande"
         >
           <FileText size={18} />
@@ -424,24 +419,22 @@ export function PatientTracking() {
       {/* Main Area */}
       <div className="flex-1 w-full h-full relative z-0">
         
-        {/* VUE 1 : ÉCRAN D'ATTENTE DE VALIDATION PHARMACIE / ASSIGNATION DU COURSIER */}
         {shouldShowWaitingScreen ? (
-          <div className="w-full h-full bg-slate-50 dark:bg-zinc-950 p-6 pt-24 overflow-y-auto space-y-6">
+          <div className="w-full h-full bg-[#F5FAFA] dark:bg-[#062625] p-6 pt-24 overflow-y-auto space-y-6">
             
-            {/* Header d'attente */}
-            <div className="bg-white dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800 p-6 rounded-3xl text-center space-y-4 shadow-sm">
-              <div className="w-16 h-16 bg-[var(--app-primary-color)]/10 text-[var(--app-primary-color)] dark:text-teal-300 rounded-full flex items-center justify-center mx-auto relative">
+            <div className="bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] p-6 rounded-3xl text-center space-y-4 shadow-sm">
+              <div className="w-16 h-16 bg-[#D7F1EA] dark:bg-[#0E4A47] text-[#0E7673] dark:text-[#38B794] rounded-full flex items-center justify-center mx-auto relative">
                 <Clock size={32} className="animate-spin" style={{ animationDuration: '6s' }} />
-                <span className="absolute -top-1 -right-1 w-4 h-4 bg-amber-400 rounded-full border-2 border-white dark:border-zinc-900"></span>
+                <span className="absolute -top-1 -right-1 w-4 h-4 bg-amber-400 rounded-full border-2 border-white dark:border-[#0A3D3B]"></span>
               </div>
               
               <div>
-                <h2 className="text-xl font-extrabold text-gray-900 dark:text-white tracking-tight">
+                <h2 className="text-xl font-extrabold text-[#0A3D3B] dark:text-white tracking-tight">
                   {!isApproved 
                     ? "En attente de l'approbation de la pharmacie" 
                     : "Recherche d'un livreur en cours..."}
                 </h2>
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 max-w-sm mx-auto leading-relaxed">
+                <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7] mt-1 max-w-sm mx-auto leading-relaxed">
                   {!isApproved
                     ? "L'officine certifiée vérifie la conformité de vos ordonnances et prépare votre colis sécurisé."
                     : "Votre commande est approuvée et prête ! Un coursier certifié va être assigné d'un instant à l'autre."}
@@ -449,49 +442,48 @@ export function PatientTracking() {
               </div>
 
               {pharmacy && (
-                <div className="bg-gray-50 dark:bg-zinc-800/60 p-3.5 rounded-2xl border border-gray-100 dark:border-zinc-800 flex items-center justify-between text-left">
+                <div className="bg-[#F5FAFA] dark:bg-[#062625] p-3.5 rounded-2xl border border-[#CFE4E3] dark:border-[#145250] flex items-center justify-between text-left">
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-xl bg-[var(--app-primary-color)] text-white flex items-center justify-center font-bold">
+                    <div className="w-9 h-9 rounded-xl bg-[#0E7673] text-white flex items-center justify-center font-bold">
                       <Store size={18} />
                     </div>
                     <div>
-                      <p className="text-xs font-bold text-gray-900 dark:text-white">{pharmacy.name || 'Pharmacie Partenaire'}</p>
-                      <p className="text-[11px] text-gray-500">{pharmacy.address || 'Officine locale certifiée'}</p>
+                      <p className="text-xs font-bold text-[#0A3D3B] dark:text-white">{pharmacy.name || 'Pharmacie Partenaire'}</p>
+                      <p className="text-[11px] text-[#5C807F] dark:text-[#9FC8C7]">{pharmacy.address || 'Officine locale certifiée'}</p>
                     </div>
                   </div>
-                  <span className="px-2.5 py-1 bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-300 text-[10px] font-bold rounded-lg border border-amber-200 dark:border-amber-800">
+                  <span className="px-2.5 py-1 bg-[#D7F1EA] text-[#0A3D3B] dark:bg-[#0E4A47] dark:text-[#D7F1EA] text-[10px] font-bold rounded-full border border-[#CFE4E3] dark:border-[#145250]">
                     {!isApproved ? "En cours" : "Prête"}
                   </span>
                 </div>
               )}
             </div>
 
-            {/* Étapes du processus */}
-            <div className="bg-white dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800 p-6 rounded-3xl shadow-sm space-y-4">
-              <h3 className="text-xs font-black uppercase tracking-wider text-gray-400">
+            <div className="bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] p-6 rounded-3xl shadow-sm space-y-4">
+              <h3 className="text-xs font-black uppercase tracking-wider text-[#5C807F] dark:text-[#9FC8C7]">
                 Progression de votre commande
               </h3>
 
               <div className="space-y-4">
                 <div className="flex items-start gap-3.5">
-                  <div className="w-7 h-7 rounded-full bg-emerald-500 text-white flex items-center justify-center shrink-0 shadow-sm">
-                    <Check size={14} />
+                  <div className="w-7 h-7 rounded-full bg-[#38B794] text-[#0A3D3B] flex items-center justify-center shrink-0 shadow-sm">
+                    <Check size={14} strokeWidth={3} />
                   </div>
                   <div>
-                    <p className="text-xs font-bold text-gray-900 dark:text-white">Commande transmise & enregistrée</p>
-                    <p className="text-[11px] text-gray-500">Paiement validé avec succès</p>
+                    <p className="text-xs font-bold text-[#0A3D3B] dark:text-white">Commande transmise & enregistrée</p>
+                    <p className="text-[11px] text-[#5C807F] dark:text-[#9FC8C7]">Paiement validé avec succès</p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3.5">
                   <div className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 shadow-sm ${
-                    isApproved ? 'bg-emerald-500 text-white' : 'bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300 animate-pulse'
+                    isApproved ? 'bg-[#38B794] text-[#0A3D3B]' : 'bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300 animate-pulse'
                   }`}>
-                    {isApproved ? <Check size={14} /> : <Clock size={14} />}
+                    {isApproved ? <Check size={14} strokeWidth={3} /> : <Clock size={14} />}
                   </div>
                   <div>
-                    <p className="text-xs font-bold text-gray-900 dark:text-white">Validation officinale par le pharmacien</p>
-                    <p className="text-[11px] text-gray-500">
+                    <p className="text-xs font-bold text-[#0A3D3B] dark:text-white">Validation officinale par le pharmacien</p>
+                    <p className="text-[11px] text-[#5C807F] dark:text-[#9FC8C7]">
                       {isApproved ? "Ordonnance & médicaments validés" : "Vérification du stock et scellage en cours"}
                     </p>
                   </div>
@@ -499,15 +491,15 @@ export function PatientTracking() {
 
                 <div className="flex items-start gap-3.5">
                   <div className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 ${
-                    hasAssignedDriver ? 'bg-emerald-500 text-white' : 'bg-gray-100 dark:bg-zinc-800 text-gray-400'
+                    hasAssignedDriver ? 'bg-[#38B794] text-[#0A3D3B]' : 'bg-[#E7F1F1] dark:bg-[#062625] text-[#5C807F]'
                   }`}>
                     <Bike size={14} />
                   </div>
                   <div>
-                    <p className={`text-xs font-bold ${hasAssignedDriver ? 'text-gray-900 dark:text-white' : 'text-gray-400'}`}>
+                    <p className={`text-xs font-bold ${hasAssignedDriver ? 'text-[#0A3D3B] dark:text-white' : 'text-[#5C807F] dark:text-[#9FC8C7]'}`}>
                       Attribution du livreur certifié
                     </p>
-                    <p className="text-[11px] text-gray-400">
+                    <p className="text-[11px] text-[#5C807F] dark:text-[#9FC8C7]">
                       {hasAssignedDriver ? "Chauffeur en route vers l'officine" : "La carte GPS s'activera automatiquement dès l'assignation"}
                     </p>
                   </div>
@@ -515,18 +507,17 @@ export function PatientTracking() {
               </div>
             </div>
 
-            {/* Actions rapides */}
             <div className="flex gap-3">
               <button
                 onClick={() => setShowDetailsDrawer(true)}
-                className="flex-1 py-3.5 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 text-gray-800 dark:text-gray-200 rounded-2xl text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition active:scale-95"
+                className="flex-1 py-3.5 bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] text-[#0A3D3B] dark:text-[#D7F1EA] rounded-full text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition active:scale-95"
               >
-                <ShoppingBag size={16} className="text-[var(--app-primary-color)]" /> Détails commande
+                <ShoppingBag size={16} className="text-[#0E7673] dark:text-[#38B794]" /> Détails commande
               </button>
 
               <button
                 onClick={() => navigate(`/patient/messages/${order.id}`)}
-                className="flex-1 py-3.5 bg-[var(--app-primary-color)] text-white rounded-2xl text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition active:scale-95"
+                className="flex-1 py-3.5 bg-[#0E7673] hover:bg-[#0A5A58] text-white rounded-full text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition active:scale-95"
               >
                 <MessageSquare size={16} /> Contacter pharmacie
               </button>
@@ -534,10 +525,7 @@ export function PatientTracking() {
 
           </div>
         ) : !isPickup ? (
-          /* =========================================================================
-             VUE 2 : SUIVI GPS EN DIRECT AVEC LE VRAI LIVREUR ASSIGNÉ
-             ========================================================================= */
-          <div className="w-full h-full bg-slate-900">
+          <div className="w-full h-full bg-[#062625]">
             {mapsAvailable && mapsApiKey ? (
               <APIProvider 
                 apiKey={mapsApiKey}
@@ -559,54 +547,51 @@ export function PatientTracking() {
               >
                 <MapAutoCenter center={driverPos || destPos} />
                 
-                {/* Driver Marker */}
                 {driverPos && (
                   <AdvancedMarker position={{ lat: driverPos[0], lng: driverPos[1] }}>
                     <DriverMotoMarkerUI />
                   </AdvancedMarker>
                 )}
 
-                {/* Destination Marker */}
                 <AdvancedMarker position={{ lat: destPos[0], lng: destPos[1] }}>
                   <DestPinMarkerUI />
                 </AdvancedMarker>
 
-                {/* Polyline Route */}
                 {driverPos && (
                   <Polyline 
                     path={(roadCoordinates.length > 0 ? roadCoordinates : [driverPos, destPos]).map((c: any) => ({lat: c[0], lng: c[1]}))} 
-                    strokeColor="#194B4B" 
+                    strokeColor="#0E7673" 
                     strokeWeight={5} 
-                    strokeOpacity={0.9} 
+                    strokeOpacity={0.95} 
                   />
                 )}
               </Map>
               </APIProvider>
             ) : (
-              <div className="w-full h-full flex flex-col items-center justify-center p-8 text-center relative overflow-hidden bg-slate-900">
-                <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#2dd4bf_1px,transparent_1px)] [background-size:20px_20px]"></div>
+              <div className="w-full h-full flex flex-col items-center justify-center p-8 text-center relative overflow-hidden bg-[#062625]">
+                <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#38B794_1px,transparent_1px)] [background-size:20px_20px]"></div>
                 <div className="relative z-10 max-w-sm space-y-4">
                   <div className="flex items-center justify-center gap-6">
                     <div className="flex flex-col items-center gap-1.5">
-                      <div className="w-14 h-14 rounded-2xl bg-amber-400/10 border border-amber-400/30 flex items-center justify-center text-amber-400 shadow-lg">
+                      <div className="w-14 h-14 rounded-2xl bg-[#38B794]/15 border border-[#38B794]/40 flex items-center justify-center text-[#38B794] shadow-lg">
                         <Bike size={28} className="animate-pulse" />
                       </div>
-                      <span className="text-xs font-bold text-slate-200">{driver?.name || 'Coursier'}</span>
+                      <span className="text-xs font-bold text-[#D7F1EA]">{driver?.name || 'Coursier'}</span>
                     </div>
                     <div className="flex flex-col items-center">
-                      <div className="w-20 border-t-2 border-dashed border-teal-500/50 my-auto"></div>
-                      <span className="text-[10px] font-mono text-teal-400 mt-1 font-bold">{eta ? `${eta} min` : 'En route'}</span>
+                      <div className="w-20 border-t-2 border-dashed border-[#38B794]/60 my-auto"></div>
+                      <span className="text-[10px] font-mono text-[#38B794] mt-1 font-bold">{eta ? `${eta} min` : 'En route'}</span>
                     </div>
                     <div className="flex flex-col items-center gap-1.5">
-                      <div className="w-14 h-14 rounded-2xl bg-[var(--app-primary-color)]/20 border border-[var(--app-primary-color)]/50 flex items-center justify-center text-teal-400 shadow-lg">
+                      <div className="w-14 h-14 rounded-2xl bg-[#0E7673]/40 border border-[#38B794]/50 flex items-center justify-center text-[#D7F1EA] shadow-lg">
                         <Home size={28} />
                       </div>
-                      <span className="text-xs font-bold text-slate-200">Votre Adresse</span>
+                      <span className="text-xs font-bold text-[#D7F1EA]">Votre Adresse</span>
                     </div>
                   </div>
                   <div className="pt-2">
-                    <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-teal-500/10 text-teal-300 border border-teal-500/20">
-                      <span className="w-2 h-2 rounded-full bg-teal-400 animate-ping"></span>
+                    <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-[#0A3D3B] text-[#D7F1EA] border border-[#145250]">
+                      <span className="w-2 h-2 rounded-full bg-[#38B794] animate-ping"></span>
                       Suivi GPS en temps réel actif
                     </span>
                   </div>
@@ -615,46 +600,43 @@ export function PatientTracking() {
             )}
           </div>
         ) : (
-          /* =========================================================================
-             VUE 3 : MODE RETRAIT EN OFFICINE
-             ========================================================================= */
-          <div className="w-full h-full bg-slate-50 dark:bg-zinc-950 p-6 pt-24 overflow-y-auto space-y-4">
-            <div className="bg-[var(--app-primary-color)]/10 border border-[var(--app-primary-color)]/20 p-6 rounded-3xl text-center space-y-3">
-              <div className="w-14 h-14 bg-[var(--app-primary-color)] text-white rounded-2xl flex items-center justify-center mx-auto shadow-sm">
+          <div className="w-full h-full bg-[#F5FAFA] dark:bg-[#062625] p-6 pt-24 overflow-y-auto space-y-4">
+            <div className="bg-[#D7F1EA] dark:bg-[#0E4A47] border border-[#CFE4E3] dark:border-[#145250] p-6 rounded-3xl text-center space-y-3">
+              <div className="w-14 h-14 bg-[#0E7673] text-white rounded-2xl flex items-center justify-center mx-auto shadow-sm">
                 <Store size={28} />
               </div>
-              <h2 className="text-xl font-black text-[var(--app-primary-color)] dark:text-teal-300">Retrait en Pharmacie</h2>
-              <p className="text-xs text-gray-600 dark:text-gray-300 max-w-xs mx-auto">
+              <h2 className="text-xl font-black text-[#0A3D3B] dark:text-white">Retrait en Pharmacie</h2>
+              <p className="text-xs text-[#0A3D3B]/80 dark:text-[#D7F1EA] max-w-xs mx-auto">
                 Vos médicaments sont préparés et scellés par l'officine partenaire certifiée.
               </p>
             </div>
 
             {pharmacy && (
-              <div className="bg-white dark:bg-zinc-900 p-5 rounded-2xl border border-gray-100 dark:border-zinc-800 shadow-sm space-y-3">
+              <div className="bg-white dark:bg-[#0A3D3B] p-5 rounded-2xl border border-[#CFE4E3] dark:border-[#145250] shadow-sm space-y-3">
                 <div className="flex justify-between items-start">
                   <div>
-                    <h3 className="font-bold text-gray-900 dark:text-white text-base">{pharmacy.name || 'Pharmacie Partenaire'}</h3>
-                    <p className="text-xs text-gray-500 mt-1 flex items-center gap-1">
-                      <MapPin size={13} className="text-[var(--app-primary-color)]" />
+                    <h3 className="font-bold text-[#0A3D3B] dark:text-white text-base">{pharmacy.name || 'Pharmacie Partenaire'}</h3>
+                    <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7] mt-1 flex items-center gap-1">
+                      <MapPin size={13} className="text-[#0E7673] dark:text-[#38B794]" />
                       {pharmacy.address || 'Adresse de retrait'}
                     </p>
                   </div>
-                  <span className="px-2 py-1 bg-emerald-50 text-emerald-700 text-[10px] font-bold rounded-lg border border-emerald-200">
+                  <span className="px-2.5 py-1 bg-[#D7F1EA] text-[#0A3D3B] dark:bg-[#0E4A47] dark:text-[#38B794] text-[10px] font-bold rounded-full border border-[#CFE4E3] dark:border-[#145250]">
                     Prête au comptoir
                   </span>
                 </div>
 
                 <div className="flex gap-2 pt-2">
                   {pharmacy.phone && (
-                    <a href={`tel:${pharmacy.phone}`} className="flex-1 py-2.5 bg-gray-50 dark:bg-zinc-800 text-gray-800 dark:text-gray-200 rounded-xl text-xs font-bold flex items-center justify-center gap-2">
-                      <Phone size={14} className="text-emerald-600" /> Appeler
+                    <a href={`tel:${pharmacy.phone}`} className="flex-1 py-2.5 bg-[#E7F1F1] dark:bg-[#062625] text-[#0A3D3B] dark:text-[#D7F1EA] rounded-full text-xs font-bold flex items-center justify-center gap-2 border border-[#CFE4E3] dark:border-[#145250]">
+                      <Phone size={14} className="text-[#0E7673] dark:text-[#38B794]" /> Appeler
                     </a>
                   )}
                   <a
                     href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(pharmacy.address || '')}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 py-2.5 bg-[var(--app-primary-color)] text-white rounded-xl text-xs font-bold flex items-center justify-center gap-2"
+                    className="flex-1 py-2.5 bg-[#0E7673] hover:bg-[#0A5A58] text-white rounded-full text-xs font-bold flex items-center justify-center gap-2"
                   >
                     <Navigation size={14} /> Itinéraire
                   </a>
@@ -668,7 +650,7 @@ export function PatientTracking() {
       {/* FLOATING BOTTOM CARD (Affiché uniquement quand un vrai livreur est assigné) */}
       {!isPickup && hasAssignedDriver && isApproved && (
         <div className="absolute bottom-4 left-4 right-4 z-20 pointer-events-auto">
-          <div className="bg-white dark:bg-zinc-900 rounded-[28px] p-5 shadow-2xl border border-gray-100 dark:border-zinc-800 space-y-4 max-w-lg mx-auto">
+          <div className="bg-white dark:bg-[#0A3D3B] rounded-[28px] p-5 shadow-2xl border border-[#CFE4E3] dark:border-[#145250] space-y-4 max-w-lg mx-auto">
             
             {/* Ligne 1: ETA, Véhicule & Plaque d'immatriculation */}
             <div 
@@ -678,31 +660,31 @@ export function PatientTracking() {
             >
               <div>
                 <div className="flex items-center gap-1">
-                  <h3 className="font-extrabold text-gray-900 dark:text-white text-lg tracking-tight">
+                  <h3 className="font-extrabold text-[#0A3D3B] dark:text-white text-lg tracking-tight">
                     {(eta !== null && eta > 0) ? `Arrive dans ~${eta} min` : 'Arrivé à destination !'}
                   </h3>
-                  <ChevronRight size={18} className="text-gray-400" />
+                  <ChevronRight size={18} className="text-[#5C807F] dark:text-[#9FC8C7]" />
                 </div>
-                <p className="text-xs text-gray-500 dark:text-gray-400 font-medium capitalize mt-0.5">
+                <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7] font-medium capitalize mt-0.5">
                   {vehicleModel}
                 </p>
               </div>
 
               <div className="flex flex-col items-end">
                 {/* Badge Immatriculation */}
-                <div className="bg-gray-100 dark:bg-zinc-800 px-3 py-1 rounded-lg border border-gray-200 dark:border-zinc-700 text-xs font-black text-gray-800 dark:text-gray-200 tracking-wider shadow-sm">
+                <div className="bg-[#F5FAFA] dark:bg-[#062625] px-3 py-1 rounded-lg border border-[#CFE4E3] dark:border-[#145250] text-xs font-black text-[#0A3D3B] dark:text-[#D7F1EA] tracking-wider shadow-sm">
                   {vehiclePlate}
                 </div>
                 {/* Type de véhicule */}
-                <div className="flex items-center gap-1 text-[11px] font-bold text-gray-400 mt-1">
-                  <Bike size={14} className="text-[var(--app-primary-color)] dark:text-teal-400" />
+                <div className="flex items-center gap-1 text-[11px] font-bold text-[#5C807F] dark:text-[#9FC8C7] mt-1">
+                  <Bike size={14} className="text-[#0E7673] dark:text-[#38B794]" />
                   <span className="text-[10px] uppercase">{vehicleTypeLabel}</span>
                 </div>
               </div>
             </div>
 
             {/* Séparateur */}
-            <div className="h-px bg-gray-100 dark:bg-zinc-800 w-full" />
+            <div className="h-px bg-[#CFE4E3] dark:bg-[#145250] w-full" />
 
             {/* Ligne 2: Livreur (Photo + Note + Nom), Bouton Contact & Bouton Détails */}
             <div className="flex items-center justify-between pt-1">
@@ -710,24 +692,24 @@ export function PatientTracking() {
               {/* Profil Livreur */}
               <div className="flex flex-col items-center">
                 <div className="relative">
-                  <div className="w-14 h-14 rounded-full overflow-hidden bg-gray-100 dark:bg-zinc-800 border-2 border-white dark:border-zinc-700 shadow-md flex items-center justify-center">
+                  <div className="w-14 h-14 rounded-full overflow-hidden bg-[#E7F1F1] dark:bg-[#062625] border-2 border-white dark:border-[#145250] shadow-md flex items-center justify-center">
                     {driverPhoto ? (
                       <img src={driverPhoto} alt={driverName} className="w-full h-full object-cover" />
                     ) : (
-                      <div className="w-full h-full bg-[var(--app-primary-color)]/15 text-[var(--app-primary-color)] dark:text-teal-400 flex items-center justify-center font-black text-lg">
+                      <div className="w-full h-full bg-[#D7F1EA] dark:bg-[#0E4A47] text-[#0E7673] dark:text-[#38B794] flex items-center justify-center font-black text-lg">
                         {driverFirstName.charAt(0)}
                       </div>
                     )}
                   </div>
                   
                   {/* Badge de Note */}
-                  <div className="absolute -top-1.5 -right-2 bg-white dark:bg-zinc-800 px-1.5 py-0.5 rounded-full shadow-sm border border-gray-100 dark:border-zinc-700 flex items-center gap-0.5 text-[10px] font-black text-gray-800 dark:text-gray-200">
+                  <div className="absolute -top-1.5 -right-2 bg-white dark:bg-[#062625] px-1.5 py-0.5 rounded-full shadow-sm border border-[#CFE4E3] dark:border-[#145250] flex items-center gap-0.5 text-[10px] font-black text-[#0A3D3B] dark:text-[#D7F1EA]">
                     <Star size={10} className="fill-[#FACC15] text-[#FACC15]" />
                     <span>{driverRating}</span>
                   </div>
                 </div>
 
-                <span className="text-xs font-bold text-gray-800 dark:text-gray-200 mt-1.5 max-w-[80px] truncate text-center">
+                <span className="text-xs font-bold text-[#0A3D3B] dark:text-[#D7F1EA] mt-1.5 max-w-[80px] truncate text-center">
                   {driverFirstName}
                 </span>
               </div>
@@ -737,10 +719,10 @@ export function PatientTracking() {
                 <div className="flex-1 px-3">
                   <button
                     onClick={() => setShowRatingModal(true)}
-                    className="w-full py-3 px-3 bg-[#FACC15] hover:bg-yellow-400 text-slate-900 rounded-2xl font-black text-xs flex items-center justify-center gap-1.5 shadow-md active:scale-95 transition"
+                    className="w-full py-3 px-4 bg-[#FACC15] hover:bg-yellow-400 text-[#0A3D3B] rounded-full font-black text-xs flex items-center justify-center gap-1.5 shadow-md active:scale-95 transition"
                   >
-                    <Star size={15} className="fill-slate-900" />
-                    {order?.driverRating ? `Note: ${order.driverRating}/5 ⭐` : 'Noter le livreur'}
+                    <Star size={15} className="fill-[#0A3D3B]" />
+                    {order?.driverRating ? `Note: ${order.driverRating}/5` : 'Noter le livreur'}
                   </button>
                 </div>
               ) : (
@@ -749,12 +731,12 @@ export function PatientTracking() {
                   <button
                     id="btn-contact-driver"
                     onClick={() => setShowContactModal(true)}
-                    className="w-14 h-14 rounded-full bg-gray-100 dark:bg-zinc-800 hover:bg-gray-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-gray-800 dark:text-white flex items-center justify-center shadow-sm transition active:scale-95"
+                    className="w-14 h-14 rounded-full bg-[#E7F1F1] dark:bg-[#062625] hover:bg-[#D7F1EA] dark:hover:bg-[#0E4A47] text-[#0A3D3B] dark:text-white border border-[#CFE4E3] dark:border-[#145250] flex items-center justify-center shadow-sm transition active:scale-95"
                     title="Contacter le livreur"
                   >
-                    <Phone size={22} className="text-[var(--app-primary-color)] dark:text-teal-300" />
+                    <Phone size={22} className="text-[#0E7673] dark:text-[#38B794]" />
                   </button>
-                  <span className="text-[11px] font-bold text-gray-600 dark:text-gray-300 mt-1.5">
+                  <span className="text-[11px] font-bold text-[#5C807F] dark:text-[#9FC8C7] mt-1.5">
                     Contact
                   </span>
                 </div>
@@ -765,16 +747,16 @@ export function PatientTracking() {
                 <button
                   id="btn-details-drawer"
                   onClick={() => setShowDetailsDrawer(true)}
-                  className="w-14 h-14 rounded-full bg-gray-100 dark:bg-zinc-800 hover:bg-gray-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-gray-800 dark:text-white flex items-center justify-center shadow-sm transition active:scale-95"
+                  className="w-14 h-14 rounded-full bg-[#E7F1F1] dark:bg-[#062625] hover:bg-[#D7F1EA] dark:hover:bg-[#0E4A47] text-[#0A3D3B] dark:text-white border border-[#CFE4E3] dark:border-[#145250] flex items-center justify-center shadow-sm transition active:scale-95"
                   title="Afficher les détails de la commande"
                 >
                   <div className="flex flex-col gap-1 items-center justify-center">
-                    <span className="w-5 h-0.5 bg-gray-800 dark:bg-gray-200 rounded-full"></span>
-                    <span className="w-5 h-0.5 bg-gray-800 dark:bg-gray-200 rounded-full"></span>
-                    <span className="w-5 h-0.5 bg-gray-800 dark:bg-gray-200 rounded-full"></span>
+                    <span className="w-5 h-0.5 bg-[#0A3D3B] dark:bg-[#D7F1EA] rounded-full"></span>
+                    <span className="w-5 h-0.5 bg-[#0A3D3B] dark:bg-[#D7F1EA] rounded-full"></span>
+                    <span className="w-5 h-0.5 bg-[#0A3D3B] dark:bg-[#D7F1EA] rounded-full"></span>
                   </div>
                 </button>
-                <span className="text-[11px] font-bold text-gray-600 dark:text-gray-300 mt-1.5">
+                <span className="text-[11px] font-bold text-[#5C807F] dark:text-[#9FC8C7] mt-1.5">
                   Détails
                 </span>
               </div>
@@ -788,19 +770,19 @@ export function PatientTracking() {
       {/* MODAL DE CONTACT DU LIVREUR */}
       {showContactModal && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-4 animate-in fade-in duration-150">
-          <div className="bg-white dark:bg-zinc-900 w-full max-w-sm rounded-[24px] p-6 shadow-2xl space-y-4 border border-gray-100 dark:border-zinc-800">
-            <div className="flex items-center justify-between border-b border-gray-100 dark:border-zinc-800 pb-3">
+          <div className="bg-white dark:bg-[#0A3D3B] w-full max-w-sm rounded-3xl p-6 shadow-2xl space-y-4 border border-[#CFE4E3] dark:border-[#145250]">
+            <div className="flex items-center justify-between border-b border-[#CFE4E3] dark:border-[#145250] pb-3">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-gray-100 dark:bg-zinc-800 overflow-hidden flex items-center justify-center font-bold text-[var(--app-primary-color)]">
+                <div className="w-10 h-10 rounded-full bg-[#D7F1EA] dark:bg-[#0E4A47] overflow-hidden flex items-center justify-center font-bold text-[#0E7673] dark:text-[#38B794]">
                   {driverPhoto ? <img src={driverPhoto} alt={driverName} className="w-full h-full object-cover" /> : driverFirstName.charAt(0)}
                 </div>
                 <div>
-                  <h4 className="font-bold text-sm text-gray-900 dark:text-white">{driverName}</h4>
-                  <p className="text-[11px] text-gray-500">Livreur certifié PharmAply</p>
+                  <h4 className="font-bold text-sm text-[#0A3D3B] dark:text-white">{driverName}</h4>
+                  <p className="text-[11px] text-[#5C807F] dark:text-[#9FC8C7]">Livreur certifié PharmAply</p>
                 </div>
               </div>
-              <button onClick={() => setShowContactModal(false)} className="p-2 text-gray-400 hover:text-gray-600">
-                <X size={18} />
+              <button onClick={() => setShowContactModal(false)} className="w-8 h-8 rounded-full bg-[#F5FAFA] dark:bg-[#062625] text-[#5C807F] hover:text-[#0A3D3B] dark:text-[#9FC8C7] dark:hover:text-white flex items-center justify-center transition">
+                <X size={16} />
               </button>
             </div>
 
@@ -808,7 +790,7 @@ export function PatientTracking() {
               {driverPhone && (
                 <a
                   href={`tel:${driverPhone}`}
-                  className="w-full py-3.5 px-4 bg-[var(--app-primary-color)] hover:bg-[#143d3d] text-white rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-sm transition"
+                  className="w-full py-3.5 px-4 bg-[#0E7673] hover:bg-[#0A5A58] text-white rounded-full font-bold text-sm flex items-center justify-center gap-2 shadow-sm transition"
                 >
                   <PhoneCall size={18} />
                   Appeler ({driverPhone})
@@ -820,9 +802,9 @@ export function PatientTracking() {
                   setShowContactModal(false);
                   navigate(`/patient/messages/${order?.id}`);
                 }}
-                className="w-full py-3.5 px-4 bg-gray-100 dark:bg-zinc-800 hover:bg-gray-200 dark:bg-zinc-800 text-gray-800 dark:text-gray-200 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition"
+                className="w-full py-3.5 px-4 bg-[#E7F1F1] dark:bg-[#062625] hover:bg-[#D7F1EA] dark:hover:bg-[#0E4A47] text-[#0A3D3B] dark:text-[#D7F1EA] border border-[#CFE4E3] dark:border-[#145250] rounded-full font-bold text-sm flex items-center justify-center gap-2 transition"
               >
-                <MessageSquare size={18} className="text-[var(--app-primary-color)] dark:text-teal-300" />
+                <MessageSquare size={18} className="text-[#0E7673] dark:text-[#38B794]" />
                 Message dans l'application
               </button>
             </div>
@@ -833,19 +815,19 @@ export function PatientTracking() {
       {/* DRAWER / BOTTOM SHEET COMPLET DES DÉTAILS DE LIVRAISON */}
       {showDetailsDrawer && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-end justify-center animate-in fade-in duration-200">
-          <div className="bg-white dark:bg-zinc-900 w-full max-w-lg rounded-t-[32px] max-h-[85vh] flex flex-col shadow-2xl border-t border-gray-100 dark:border-zinc-800">
+          <div className="bg-white dark:bg-[#0A3D3B] w-full max-w-lg rounded-t-[32px] max-h-[85vh] flex flex-col shadow-2xl border-t border-[#CFE4E3] dark:border-[#145250]">
             
             {/* Drawer Header */}
-            <div className="p-5 pb-3 border-b border-gray-100 dark:border-zinc-800 flex items-center justify-between">
+            <div className="p-5 pb-3 border-b border-[#CFE4E3] dark:border-[#145250] flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-[var(--app-primary-color)] dark:bg-teal-400"></div>
-                <h3 className="font-extrabold text-gray-900 dark:text-white text-base">
+                <div className="w-2.5 h-2.5 rounded-full bg-[#38B794]"></div>
+                <h3 className="font-extrabold text-[#0A3D3B] dark:text-white text-base">
                   Suivi de Commande #{order?.id?.slice(0, 8) || id?.slice(0, 8)}
                 </h3>
               </div>
               <button 
                 onClick={() => setShowDetailsDrawer(false)}
-                className="w-8 h-8 rounded-full bg-gray-100 dark:bg-zinc-800 flex items-center justify-center text-gray-500 hover:text-gray-800 dark:text-gray-100"
+                className="w-8 h-8 rounded-full bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] flex items-center justify-center text-[#5C807F] hover:text-[#0A3D3B] dark:text-[#9FC8C7] dark:hover:text-white transition"
               >
                 <X size={18} />
               </button>
@@ -872,33 +854,33 @@ export function PatientTracking() {
 
                 <button
                   onClick={copyDeliveryCode}
-                  className="px-3 py-2 bg-white dark:bg-zinc-800 border border-amber-200 dark:border-zinc-700 rounded-xl text-xs font-bold text-gray-800 dark:text-gray-200 flex items-center gap-1.5 shadow-sm active:scale-95"
+                  className="px-3.5 py-2 bg-white dark:bg-[#0A3D3B] border border-amber-200 dark:border-[#145250] rounded-full text-xs font-bold text-[#0A3D3B] dark:text-[#D7F1EA] flex items-center gap-1.5 shadow-sm active:scale-95"
                 >
-                  {copiedOtp ? <Check size={14} className="text-emerald-600" /> : <Copy size={14} />}
+                  {copiedOtp ? <Check size={14} className="text-[#0E7673] dark:text-[#38B794]" /> : <Copy size={14} />}
                   {copiedOtp ? 'Copié' : 'Copier'}
                 </button>
               </div>
 
               {/* Timeline de livraison */}
               <div className="space-y-4">
-                <h4 className="font-bold text-gray-900 dark:text-white text-sm">Progression de la livraison</h4>
+                <h4 className="font-bold text-[#0A3D3B] dark:text-white text-sm">Progression de la livraison</h4>
                 <div className="space-y-5 relative pl-2">
-                  <div className="absolute left-[17px] top-[14px] bottom-[14px] w-0.5 bg-gray-100 dark:bg-zinc-800"></div>
+                  <div className="absolute left-[17px] top-[14px] bottom-[14px] w-0.5 bg-[#CFE4E3] dark:bg-[#145250]"></div>
                   {statuses.map((status, index) => {
                     const Icon = status.icon;
                     return (
                       <div key={index} className="flex items-start gap-4 relative z-10">
-                        <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 border-2 border-white dark:border-zinc-900 shadow-sm ${
-                          status.completed ? 'bg-[var(--app-primary-color)] text-white' : 
-                          status.active ? 'bg-amber-100 text-amber-700 border-amber-300 animate-pulse' : 'bg-gray-100 dark:bg-zinc-800 text-gray-400'
+                        <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 border-2 border-white dark:border-[#0A3D3B] shadow-sm ${
+                          status.completed ? 'bg-[#0E7673] text-white' : 
+                          status.active ? 'bg-[#D7F1EA] text-[#0E7673] border-[#38B794] animate-pulse' : 'bg-[#F5FAFA] dark:bg-[#062625] text-[#5C807F] dark:text-[#9FC8C7]'
                         }`}>
                           <Icon size={14} />
                         </div>
                         <div className="pt-0.5 flex-1">
-                          <p className={`font-bold text-xs ${status.active || status.completed ? 'text-gray-900 dark:text-white' : 'text-gray-400'}`}>
+                          <p className={`font-bold text-xs ${status.active || status.completed ? 'text-[#0A3D3B] dark:text-white' : 'text-[#5C807F] dark:text-[#9FC8C7]'}`}>
                             {status.label}
                           </p>
-                          <p className="text-[11px] text-gray-500 mt-0.5">{status.date}</p>
+                          <p className="text-[11px] text-[#5C807F] dark:text-[#9FC8C7] mt-0.5">{status.date}</p>
                         </div>
                       </div>
                     );
@@ -908,26 +890,26 @@ export function PatientTracking() {
 
               {/* Liste des Médicaments & Produits */}
               {order?.items && order.items.length > 0 && (
-                <div className="space-y-3 pt-2 border-t border-gray-100 dark:border-zinc-800">
+                <div className="space-y-3 pt-2 border-t border-[#CFE4E3] dark:border-[#145250]">
                   <div className="flex justify-between items-center">
-                    <h4 className="font-bold text-gray-900 dark:text-white text-sm">Contenu de la commande</h4>
-                    <span className="text-xs font-bold text-gray-500">{order.items.length} article(s)</span>
+                    <h4 className="font-bold text-[#0A3D3B] dark:text-white text-sm">Contenu de la commande</h4>
+                    <span className="text-xs font-bold text-[#5C807F] dark:text-[#9FC8C7]">{order.items.length} article(s)</span>
                   </div>
 
-                  <div className="space-y-2 bg-gray-50 dark:bg-zinc-800/40 p-4 rounded-2xl border border-gray-100 dark:border-zinc-800">
+                  <div className="space-y-2 bg-[#F5FAFA] dark:bg-[#062625] p-4 rounded-2xl border border-[#CFE4E3] dark:border-[#145250]">
                     {order.items.map((item: any, idx: number) => (
                       <div key={idx} className="flex justify-between items-center text-xs">
-                        <span className="font-medium text-gray-700 dark:text-gray-300">
+                        <span className="font-medium text-[#0A3D3B] dark:text-[#D7F1EA]">
                           {item.quantity}x {item.name || item.productId}
                         </span>
-                        <span className="font-bold text-gray-900 dark:text-white">
+                        <span className="font-bold text-[#0A3D3B] dark:text-white">
                           {formatCurrency(Number(item.price || 0) * Number(item.quantity || 1))}
                         </span>
                       </div>
                     ))}
-                    <div className="pt-2 mt-2 border-t border-gray-200 dark:border-zinc-700 flex justify-between items-center text-sm">
-                      <span className="font-black text-gray-900 dark:text-white">Total réglé</span>
-                      <span className="font-black text-[var(--app-primary-color)] dark:text-teal-300 text-base">
+                    <div className="pt-2 mt-2 border-t border-[#CFE4E3] dark:border-[#145250] flex justify-between items-center text-sm">
+                      <span className="font-black text-[#0A3D3B] dark:text-white">Total réglé</span>
+                      <span className="font-black text-[#0E7673] dark:text-[#38B794] text-base">
                         {formatCurrency(Number(order.total || 0))}
                       </span>
                     </div>
@@ -942,9 +924,9 @@ export function PatientTracking() {
                     setShowDetailsDrawer(false);
                     setShowInvoiceModal(true);
                   }}
-                  className="w-full py-3.5 bg-gray-100 dark:bg-zinc-800 hover:bg-gray-200 dark:bg-zinc-800 text-gray-900 dark:text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition"
+                  className="w-full py-3.5 bg-[#E7F1F1] dark:bg-[#062625] hover:bg-[#D7F1EA] dark:hover:bg-[#0E4A47] text-[#0A3D3B] dark:text-white border border-[#CFE4E3] dark:border-[#145250] rounded-full font-bold text-xs flex items-center justify-center gap-2 transition"
                 >
-                  <FileText size={16} className="text-[var(--app-primary-color)]" />
+                  <FileText size={16} className="text-[#0E7673] dark:text-[#38B794]" />
                   Afficher / Télécharger la Facture Officielle
                 </button>
               </div>
@@ -967,13 +949,13 @@ export function PatientTracking() {
       {/* MODAL DE NOTATION DES PRODUITS */}
       {showProductRatingModal && (
         <div className="fixed inset-0 z-[60] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-150">
-          <div className="bg-white dark:bg-zinc-900 w-full max-w-md rounded-3xl p-6 shadow-2xl space-y-5 border border-gray-100 dark:border-zinc-800 max-h-[92vh] overflow-y-auto">
-            <div className="flex items-center justify-between border-b border-gray-100 dark:border-zinc-800 pb-3.5">
+          <div className="bg-white dark:bg-[#0A3D3B] w-full max-w-md rounded-3xl p-6 shadow-2xl space-y-5 border border-[#CFE4E3] dark:border-[#145250] max-h-[92vh] overflow-y-auto">
+            <div className="flex items-center justify-between border-b border-[#CFE4E3] dark:border-[#145250] pb-3.5">
               <div>
-                <h3 className="font-extrabold text-gray-900 dark:text-white text-base">
+                <h3 className="font-extrabold text-[#0A3D3B] dark:text-white text-base">
                   Notez vos produits
                 </h3>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7]">
                   Votre avis est précieux pour les autres patients
                 </p>
               </div>
@@ -982,14 +964,16 @@ export function PatientTracking() {
                   setShowProductRatingModal(false);
                   if (driver) setTimeout(() => setShowRatingModal(true), 500);
                 }}
-                className="w-8 h-8 rounded-full bg-gray-100 dark:bg-zinc-800 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 flex items-center justify-center"
-              >✕</button>
+                className="w-8 h-8 rounded-full bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] text-[#5C807F] hover:text-[#0A3D3B] dark:text-[#9FC8C7] dark:hover:text-white flex items-center justify-center transition"
+              >
+                <X size={16} />
+              </button>
             </div>
 
             <div className="space-y-4">
               {order?.items?.map((item: any) => (
-                <div key={item.id} className="border border-gray-100 dark:border-zinc-800 p-3 rounded-2xl">
-                  <p className="font-bold text-sm text-gray-800 dark:text-white mb-2">{item.name || item.commercial_name}</p>
+                <div key={item.id} className="border border-[#CFE4E3] dark:border-[#145250] bg-[#F5FAFA]/50 dark:bg-[#062625]/50 p-3.5 rounded-2xl">
+                  <p className="font-bold text-sm text-[#0A3D3B] dark:text-white mb-2">{item.name || item.commercial_name}</p>
                   
                   <div className="flex justify-center gap-1 mb-3">
                     {[1, 2, 3, 4, 5].map((star) => {
@@ -1001,7 +985,7 @@ export function PatientTracking() {
                            onClick={() => setProductRatings(prev => ({...prev, [item.id]: { ...prev[item.id], rating: star }}))}
                            className="p-1 focus:outline-none"
                          >
-                           <Star size={24} className={currentRating >= star ? "fill-[#FACC15] text-[#FACC15]" : "text-gray-300 dark:text-zinc-700"} />
+                           <Star size={24} className={currentRating >= star ? "fill-[#FACC15] text-[#FACC15]" : "text-[#CFE4E3] dark:text-[#145250]"} />
                          </button>
                        );
                     })}
@@ -1009,7 +993,7 @@ export function PatientTracking() {
                   
                   <textarea
                     placeholder="Qu'avez-vous pensé de ce produit ?"
-                    className="w-full bg-gray-50 dark:bg-zinc-800/50 border border-gray-200 dark:border-zinc-700 rounded-xl p-3 text-sm focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none resize-none placeholder-gray-400 text-gray-800 dark:text-white"
+                    className="w-full bg-white dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] rounded-xl p-3 text-sm focus:ring-2 focus:ring-[#0E7673] outline-none resize-none placeholder-[#5C807F] dark:placeholder-[#9FC8C7] text-[#0A3D3B] dark:text-white"
                     rows={2}
                     value={productRatings[item.id]?.comment || ''}
                     onChange={(e) => setProductRatings(prev => ({...prev, [item.id]: { ...prev[item.id], comment: e.target.value }}))}
@@ -1021,7 +1005,7 @@ export function PatientTracking() {
             <button
               disabled={loadingRatings}
               onClick={submitProductRatings}
-              className="w-full py-3.5 bg-[var(--app-primary-color)] hover:opacity-90 text-white rounded-2xl font-black text-sm flex items-center justify-center gap-2 shadow-lg transition disabled:opacity-50"
+              className="w-full py-3.5 bg-[#0E7673] hover:bg-[#0A5A58] text-white rounded-full font-black text-sm flex items-center justify-center gap-2 shadow-lg transition disabled:opacity-50"
             >
               {loadingRatings ? <Loader2 size={18} className="animate-spin" /> : <ThumbsUp size={18} />}
               {loadingRatings ? "Envoi en cours..." : "Soumettre les avis"}
@@ -1034,12 +1018,12 @@ export function PatientTracking() {
       {/* MODAL DE NOTATION & CONFIRMATION DE LIVRAISON */}
       {showRatingModal && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-150">
-          <div className="bg-white dark:bg-zinc-900 w-full max-w-md rounded-3xl p-6 shadow-2xl space-y-5 border border-gray-100 dark:border-zinc-800 max-h-[92vh] overflow-y-auto">
+          <div className="bg-white dark:bg-[#0A3D3B] w-full max-w-md rounded-3xl p-6 shadow-2xl space-y-5 border border-[#CFE4E3] dark:border-[#145250] max-h-[92vh] overflow-y-auto">
             
             {/* Header */}
-            <div className="flex items-center justify-between border-b border-gray-100 dark:border-zinc-800 pb-3.5">
+            <div className="flex items-center justify-between border-b border-[#CFE4E3] dark:border-[#145250] pb-3.5">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-100 dark:bg-zinc-800 border-2 border-[var(--app-primary-color)]/20 flex items-center justify-center font-black text-lg text-[var(--app-primary-color)]">
+                <div className="w-12 h-12 rounded-full overflow-hidden bg-[#D7F1EA] dark:bg-[#0E4A47] border-2 border-[#38B794]/40 flex items-center justify-center font-black text-lg text-[#0E7673] dark:text-[#38B794]">
                   {driverPhoto ? (
                     <img src={driverPhoto} alt={driverName} className="w-full h-full object-cover" />
                   ) : (
@@ -1047,19 +1031,19 @@ export function PatientTracking() {
                   )}
                 </div>
                 <div>
-                  <h3 className="font-extrabold text-gray-900 dark:text-white text-base">
+                  <h3 className="font-extrabold text-[#0A3D3B] dark:text-white text-base">
                     Noter {driverFirstName}
                   </h3>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7]">
                     Votre avis aide à récompenser nos meilleurs livreurs
                   </p>
                 </div>
               </div>
               <button 
                 onClick={() => setShowRatingModal(false)}
-                className="w-8 h-8 rounded-full bg-gray-100 dark:bg-zinc-800 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 flex items-center justify-center"
+                className="w-8 h-8 rounded-full bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] text-[#5C807F] hover:text-[#0A3D3B] dark:text-[#9FC8C7] dark:hover:text-white flex items-center justify-center transition"
               >
-                ✕
+                <X size={16} />
               </button>
             </div>
 
@@ -1079,34 +1063,34 @@ export function PatientTracking() {
                     >
                       <Star 
                         size={36} 
-                        className={active ? "fill-[#FACC15] text-[#FACC15]" : "text-gray-300 dark:text-zinc-700"} 
+                        className={active ? "fill-[#FACC15] text-[#FACC15]" : "text-[#CFE4E3] dark:text-[#145250]"} 
                       />
                     </button>
                   );
                 })}
               </div>
-              <div className="text-xs font-black text-[var(--app-primary-color)] dark:text-teal-400 tracking-wide uppercase">
-                {ratingScore === 5 && "⭐ Service Exceptionnel & Parfait"}
-                {ratingScore === 4 && "⭐ Très bonne livraison"}
-                {ratingScore === 3 && "⭐ Service Correct"}
-                {ratingScore === 2 && "⭐ Décevant"}
-                {ratingScore === 1 && "⭐ Insatisfaisant"}
+              <div className="text-xs font-black text-[#0E7673] dark:text-[#38B794] tracking-wide uppercase">
+                {ratingScore === 5 && "Service Exceptionnel & Parfait"}
+                {ratingScore === 4 && "Très bonne livraison"}
+                {ratingScore === 3 && "Service Correct"}
+                {ratingScore === 2 && "Décevant"}
+                {ratingScore === 1 && "Insatisfaisant"}
               </div>
             </div>
 
             {/* Critères / Tags rapides */}
             <div className="space-y-2">
-              <label className="text-xs font-bold text-gray-700 dark:text-gray-300 block">
+              <label className="text-xs font-bold text-[#0A3D3B] dark:text-[#D7F1EA] block">
                 Qu'avez-vous particulièrement apprécié ?
               </label>
               <div className="flex flex-wrap gap-2">
                 {[
-                  "Ponctuel ⏰",
-                  "Courtois & Souriant 😊",
-                  "Médicaments intacts 📦",
-                  "Communication fluide 💬",
-                  "Livraison ultra-rapide ⚡",
-                  "Respect des consignes 🛡️"
+                  "Ponctuel",
+                  "Courtois & Souriant",
+                  "Médicaments intacts",
+                  "Communication fluide",
+                  "Livraison ultra-rapide",
+                  "Respect des consignes"
                 ].map((tag) => {
                   const isSelected = selectedRatingTags.includes(tag);
                   return (
@@ -1116,8 +1100,8 @@ export function PatientTracking() {
                       onClick={() => toggleRatingTag(tag)}
                       className={`px-3 py-1.5 rounded-full text-xs font-bold transition border ${
                         isSelected 
-                          ? "bg-[var(--app-primary-color)] text-white border-[var(--app-primary-color)]" 
-                          : "bg-gray-50 dark:bg-zinc-800 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-zinc-700 hover:bg-gray-100 dark:bg-zinc-800"
+                          ? "bg-[#0E7673] text-white border-[#0E7673]" 
+                          : "bg-[#F5FAFA] dark:bg-[#062625] text-[#0A3D3B] dark:text-[#D7F1EA] border-[#CFE4E3] dark:border-[#145250] hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47]"
                       }`}
                     >
                       {tag}
@@ -1129,7 +1113,7 @@ export function PatientTracking() {
 
             {/* Commentaire optionnel */}
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-gray-700 dark:text-gray-300 block">
+              <label className="text-xs font-bold text-[#0A3D3B] dark:text-[#D7F1EA] block">
                 Laisser un commentaire (facultatif)
               </label>
               <textarea
@@ -1137,7 +1121,7 @@ export function PatientTracking() {
                 value={ratingComment}
                 onChange={(e) => setRatingComment(e.target.value)}
                 placeholder="Ex: Livreur très professionnel et attentif..."
-                className="w-full bg-gray-50 dark:bg-zinc-800/80 border border-gray-200 dark:border-zinc-700 rounded-2xl p-3 text-xs text-gray-800 dark:text-gray-100 outline-none focus:ring-2 focus:ring-[#194B4B] transition resize-none"
+                className="w-full bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] rounded-2xl p-3 text-xs text-[#0A3D3B] dark:text-white placeholder-[#5C807F] dark:placeholder-[#9FC8C7] outline-none focus:ring-2 focus:ring-[#0E7673] transition resize-none"
               />
             </div>
 
@@ -1158,10 +1142,10 @@ export function PatientTracking() {
                     key={tip}
                     type="button"
                     onClick={() => setSelectedTip(tip)}
-                    className={`py-2 rounded-xl text-xs font-extrabold transition border ${
+                    className={`py-2 rounded-full text-xs font-extrabold transition border ${
                       selectedTip === tip
                         ? "bg-amber-500 text-white border-amber-600 shadow-sm"
-                        : "bg-white dark:bg-zinc-900 text-gray-700 dark:text-gray-300 border-amber-200/80 dark:border-zinc-700 hover:bg-amber-50"
+                        : "bg-white dark:bg-[#0A3D3B] text-[#0A3D3B] dark:text-[#D7F1EA] border-amber-200/80 dark:border-[#145250] hover:bg-amber-50"
                     }`}
                   >
                     {tip === 0 ? "Aucun" : `+${tip}`}
@@ -1176,7 +1160,7 @@ export function PatientTracking() {
                 type="button"
                 onClick={handleSubmitDriverRating}
                 disabled={isSubmittingRating}
-                className="w-full py-3.5 bg-[var(--app-primary-color)] hover:bg-[#143d3d] text-white rounded-2xl font-bold text-sm shadow-md transition active:scale-98 flex items-center justify-center gap-2 disabled:opacity-50"
+                className="w-full py-3.5 bg-[#0E7673] hover:bg-[#0A5A58] text-white rounded-full font-bold text-sm shadow-md transition active:scale-98 flex items-center justify-center gap-2 disabled:opacity-50"
               >
                 {isSubmittingRating ? (
                   <RefreshCw size={18} className="animate-spin" />

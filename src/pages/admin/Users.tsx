@@ -340,32 +340,32 @@ export function AdminUsers({ type = 'all' }: { type?: 'vendors' | 'clients' | 'd
   const getStatusBadge = (status?: string) => {
     switch (status) {
       case 'pending_verification':
-        return <span className="px-2 py-1 bg-amber-50 text-amber-600 rounded-lg text-xs font-bold uppercase tracking-wider"> {t('pending_kyc', 'Pending KYC')} </span>;
+        return <span className="px-2.5 py-1 bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800 rounded-full text-xs font-bold uppercase tracking-wider"> {t('pending_kyc', 'Pending KYC')} </span>;
       case 'suspended':
-        return <span className="px-2 py-1 bg-red-50 text-red-600 rounded-lg text-xs font-bold uppercase tracking-wider"> {t('suspended', 'Suspended')} </span>;
+        return <span className="px-2.5 py-1 bg-red-50 dark:bg-red-950/40 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900 rounded-full text-xs font-bold uppercase tracking-wider"> {t('suspended', 'Suspended')} </span>;
       default:
-        return <span className="px-2 py-1 bg-emerald-50 text-emerald-600 rounded-lg text-xs font-bold uppercase tracking-wider"> {t('active', 'Active')} </span>;
+        return <span className="px-2.5 py-1 bg-[#D7F1EA] dark:bg-[#0E4A47] text-[#0E7673] dark:text-[#38B794] border border-[#CFE4E3] dark:border-[#145250] rounded-full text-xs font-bold uppercase tracking-wider"> {t('active', 'Active')} </span>;
     }
   };
 
   return (
-    <div className="flex-1 bg-slate-50 flex flex-col h-full overflow-hidden">
-      <div className="bg-white dark:bg-zinc-950 px-8 pt-6 pb-0 shadow-sm z-10 border-b border-gray-200 shrink-0">
-         <h1 className="font-bold text-gray-900 dark:text-white text-2xl mb-6">{getTitle()}</h1>
-         <div className="flex gap-6 border-b-0 border-gray-100">
+    <div className="flex-1 bg-[#F5FAFA] dark:bg-[#062625] flex flex-col h-full overflow-hidden">
+      <div className="bg-white dark:bg-[#0A3D3B] px-8 pt-6 pb-0 shadow-xs z-10 border-b border-[#CFE4E3] dark:border-[#145250] shrink-0">
+         <h1 className="font-bold text-[#0A3D3B] dark:text-white text-2xl mb-6">{getTitle()}</h1>
+         <div className="flex gap-6">
             <button 
                onClick={() => setActiveTab('users')} 
-               className={`pb-3 text-sm font-bold border-b-2 ${activeTab === 'users' ? 'text-[var(--app-primary-color)] border-[var(--app-primary-color)]' : 'text-gray-400 border-transparent hover:text-gray-600'}`}
+               className={`pb-3 text-sm font-bold border-b-2 transition-colors ${activeTab === 'users' ? 'text-[#0E7673] dark:text-[#38B794] border-[#0E7673] dark:border-[#38B794]' : 'text-[#5C807F] dark:text-[#9FC8C7] border-transparent hover:text-[#0A3D3B] dark:hover:text-white'}`}
             >
                 {t('profiles', 'Profiles')} </button>
             {type !== 'clients' && type !== 'cashiers' && (
               <button 
                  onClick={() => setActiveTab('approvals')} 
-                 className={`pb-3 text-sm font-bold flex items-center gap-2 border-b-2 ${activeTab === 'approvals' ? 'text-[var(--app-primary-color)] border-[var(--app-primary-color)]' : 'text-gray-400 border-transparent hover:text-gray-600'}`}
+                 className={`pb-3 text-sm font-bold flex items-center gap-2 border-b-2 transition-colors ${activeTab === 'approvals' ? 'text-[#0E7673] dark:text-[#38B794] border-[#0E7673] dark:border-[#38B794]' : 'text-[#5C807F] dark:text-[#9FC8C7] border-transparent hover:text-[#0A3D3B] dark:hover:text-white'}`}
               >
-                  {t('kyc_approvals', 'KYC Approvals')} {(type === 'vendors' && pharmacies.length > 0) && <span className="bg-red-500 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full">{pharmacies.length}</span>}
-                 {(type === 'drivers' && drivers.length > 0) && <span className="bg-red-500 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full">{drivers.length}</span>}
-                 {(type === 'all' && (pharmacies.length + drivers.length) > 0) && <span className="bg-red-500 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full">{pharmacies.length + drivers.length}</span>}
+                  {t('kyc_approvals', 'KYC Approvals')} {(type === 'vendors' && pharmacies.length > 0) && <span className="bg-red-500 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full tabular-nums">{pharmacies.length}</span>}
+                 {(type === 'drivers' && drivers.length > 0) && <span className="bg-red-500 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full tabular-nums">{drivers.length}</span>}
+                 {(type === 'all' && (pharmacies.length + drivers.length) > 0) && <span className="bg-red-500 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full tabular-nums">{pharmacies.length + drivers.length}</span>}
               </button>
             )}
          </div>
@@ -377,23 +377,23 @@ export function AdminUsers({ type = 'all' }: { type?: 'vendors' | 'clients' | 'd
              <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
                <div className="flex flex-col md:flex-row gap-4 w-full md:w-auto">
                  <div className="relative max-w-md w-full md:w-80">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
+                    <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#5C807F] dark:text-[#9FC8C7]" size={16} />
                     <input 
                       type="text" 
                       placeholder={t('search_users', 'Search users...')} 
                       value={search}
                       onChange={(e) => setSearch(e.target.value)}
-                      className="w-full bg-white dark:bg-zinc-950 border border-gray-200 py-2.5 pl-10 pr-4 rounded-xl text-sm focus:outline-none focus:border-slate-400" 
+                      className="w-full bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] py-2.5 pl-10 pr-4 rounded-full text-sm text-[#0A3D3B] dark:text-white placeholder:text-[#5C807F] dark:placeholder:text-[#9FC8C7] focus:outline-none focus:border-[#0E7673] dark:focus:border-[#38B794] shadow-xs" 
                     />
                  </div>
                  
                  <div className="flex gap-2">
                    <div className="relative">
-                      <Filter className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={14} />
+                      <Filter className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#5C807F] dark:text-[#9FC8C7]" size={14} />
                       <select 
                         value={statusFilter} 
                         onChange={(e) => setStatusFilter(e.target.value)}
-                        className="bg-white dark:bg-zinc-950 border border-gray-200 py-2.5 pl-9 pr-8 rounded-xl text-sm appearance-none outline-none focus:border-slate-400"
+                        className="bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] py-2.5 pl-9 pr-8 rounded-full text-sm text-[#0A3D3B] dark:text-white appearance-none outline-none focus:border-[#0E7673] dark:focus:border-[#38B794] shadow-xs"
                       >
                          <option value="all">{t('all_status', 'All Status')}</option>
                          <option value="approved"> {t('active', 'Active')} </option>
@@ -405,15 +405,15 @@ export function AdminUsers({ type = 'all' }: { type?: 'vendors' | 'clients' | 'd
                      <select 
                         value={roleFilter} 
                         onChange={(e) => setRoleFilter(e.target.value)}
-                        className="bg-white dark:bg-zinc-950 border border-gray-200 py-2.5 px-4 rounded-xl text-sm outline-none focus:border-slate-400"
-                      >
-                         <option value="all">{t('all_roles', 'All Roles')}</option>
-                         <option value="patient">{t('role_patient', 'Patient')}</option>
-                         <option value="pharmacy">{t('role_pharmacy', 'Pharmacy')}</option>
-                         <option value="driver">{t('role_driver', 'Driver')}</option>
-                         <option value="admin">{t('role_admin', 'Admin')}</option>
-                         <option value="cashier">{t('role_cashier', 'Cashier')}</option>
-                      </select>
+                        className="bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] py-2.5 px-4 rounded-full text-sm text-[#0A3D3B] dark:text-white outline-none focus:border-[#0E7673] dark:focus:border-[#38B794] shadow-xs"
+                     >
+                        <option value="all">{t('all_roles', 'All Roles')}</option>
+                        <option value="patient">{t('role_patient', 'Patient')}</option>
+                        <option value="pharmacy">{t('role_pharmacy', 'Pharmacy')}</option>
+                        <option value="driver">{t('role_driver', 'Driver')}</option>
+                        <option value="admin">{t('role_admin', 'Admin')}</option>
+                        <option value="cashier">{t('role_cashier', 'Cashier')}</option>
+                     </select>
                    )}
                  </div>
                </div>
@@ -422,7 +422,7 @@ export function AdminUsers({ type = 'all' }: { type?: 'vendors' | 'clients' | 'd
                  {(type === 'vendors' || type === 'drivers' || type === 'all') && (
                    <button
                      onClick={handleSendReminders}
-                     className="flex items-center gap-2 bg-amber-100 text-amber-700 font-medium px-4 py-2.5 rounded-xl hover:bg-amber-200 transition text-sm whitespace-nowrap"
+                     className="flex items-center gap-2 bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800 font-bold px-4 py-2.5 rounded-full hover:bg-amber-100 transition text-sm whitespace-nowrap shadow-xs"
                      disabled={isReminding}
                    >
                      {isReminding ? <Loader2 size={16} className="animate-spin" /> : <Mail size={16} />}
@@ -430,25 +430,25 @@ export function AdminUsers({ type = 'all' }: { type?: 'vendors' | 'clients' | 'd
                    </button>
                  )}
                  {selectedUsers.length > 0 && (
-                   <div className="flex items-center gap-2 bg-indigo-50 px-4 py-2 rounded-xl text-sm border border-indigo-100">
-                      <span className="font-bold text-[var(--app-primary-color)] border-r border-indigo-200 pr-3 mr-1">{selectedUsers.length}  {t('selected', 'selected')} </span>
-                      <button onClick={() => handleBulkAction('approve')} className="p-1.5 text-emerald-600 hover:bg-emerald-100 rounded-lg transition" title={t('approve', 'Approve')}><CheckCircle size={18} /></button>
-                      <button onClick={() => handleBulkAction('suspend')} className="p-1.5 text-amber-600 hover:bg-amber-100 rounded-lg transition" title={t('suspend', 'Suspend')}><Ban size={18} /></button>
-                      <button onClick={() => handleBulkAction('make_cashier')} className="p-1.5 text-[var(--app-primary-color)] hover:bg-indigo-100 rounded-lg transition" title={t('make_cashier', 'Make Cashier')}><CircleDollarSign size={18} /></button>
-                      <button onClick={() => handleBulkAction('delete')} className="p-1.5 text-red-600 hover:bg-red-100 rounded-lg transition" title={t('delete', 'Delete')}><Trash2 size={18} /></button>
+                   <div className="flex items-center gap-2 bg-[#D7F1EA] dark:bg-[#0E4A47] px-4 py-2 rounded-full text-sm border border-[#CFE4E3] dark:border-[#145250]">
+                      <span className="font-bold text-[#0E7673] dark:text-[#38B794] border-r border-[#CFE4E3] dark:border-[#145250] pr-3 mr-1 tabular-nums">{selectedUsers.length}  {t('selected', 'selected')} </span>
+                      <button onClick={() => handleBulkAction('approve')} className="p-1.5 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-100 dark:hover:bg-emerald-950/40 rounded-full transition" title={t('approve', 'Approve')}><CheckCircle size={18} /></button>
+                      <button onClick={() => handleBulkAction('suspend')} className="p-1.5 text-amber-600 dark:text-amber-400 hover:bg-amber-100 dark:hover:bg-amber-950/40 rounded-full transition" title={t('suspend', 'Suspend')}><Ban size={18} /></button>
+                      <button onClick={() => handleBulkAction('make_cashier')} className="p-1.5 text-[#0E7673] dark:text-[#38B794] hover:bg-white/60 dark:hover:bg-[#0A3D3B] rounded-full transition" title={t('make_cashier', 'Make Cashier')}><CircleDollarSign size={18} /></button>
+                      <button onClick={() => handleBulkAction('delete')} className="p-1.5 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-950/40 rounded-full transition" title={t('delete', 'Delete')}><Trash2 size={18} /></button>
                    </div>
                  )}
                </div>
              </div>
 
-             <div className="bg-white dark:bg-zinc-950 rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+             <div className="bg-white dark:bg-[#0A3D3B] rounded-3xl shadow-xs border border-[#CFE4E3] dark:border-[#145250] overflow-hidden">
                 <div className="overflow-x-auto">
                    <table className="w-full text-sm text-left">
-                      <thead className="text-xs text-gray-500 bg-gray-50 dark:bg-zinc-900/50 border-b border-gray-100">
+                      <thead className="text-xs text-[#5C807F] dark:text-[#9FC8C7] bg-[#F5FAFA] dark:bg-[#062625]/70 border-b border-[#CFE4E3] dark:border-[#145250]">
                          <tr>
                             <th className="py-4 px-6 font-semibold w-12">
-                              <button onClick={toggleSelectAll} className="block text-gray-400 hover:text-[var(--app-primary-color)]">
-                                {allSelected ? <CheckSquare size={18} className="text-[var(--app-primary-color)]" /> : <div className="w-[18px] h-[18px] border-2 border-gray-300 rounded-[4px]"></div>}
+                              <button onClick={toggleSelectAll} className="block text-[#5C807F] hover:text-[#0E7673] dark:hover:text-[#38B794]">
+                                {allSelected ? <CheckSquare size={18} className="text-[#0E7673] dark:text-[#38B794]" /> : <div className="w-[18px] h-[18px] border-2 border-[#CFE4E3] dark:border-[#145250] rounded-[4px]"></div>}
                               </button>
                             </th>
                             <th className="py-4 px-6 font-semibold">{t('user_label', 'User')}</th>
@@ -458,26 +458,26 @@ export function AdminUsers({ type = 'all' }: { type?: 'vendors' | 'clients' | 'd
                             <th className="py-4 px-6 font-semibold text-right">{t('actions_label', 'Actions')}</th>
                          </tr>
                       </thead>
-                      <tbody className="divide-y divide-gray-50">
-                        {loading ? <tr><td colSpan={6} className="py-8 text-center text-gray-400">{t('loading_users', 'Loading users...')}</td></tr> : 
-                         filteredUsers.length === 0 ? <tr><td colSpan={6} className="py-8 text-center text-gray-400">{t('no_users_found', 'No users found.')}</td></tr> :
+                      <tbody className="divide-y divide-[#E7F1F1] dark:divide-[#145250]">
+                        {loading ? <tr><td colSpan={6} className="py-8 text-center text-[#5C807F] dark:text-[#9FC8C7]">{t('loading_users', 'Loading users...')}</td></tr> : 
+                         filteredUsers.length === 0 ? <tr><td colSpan={6} className="py-8 text-center text-[#5C807F] dark:text-[#9FC8C7]">{t('no_users_found', 'No users found.')}</td></tr> :
                          filteredUsers.map((u) => {
                            const isSelected = selectedUsers.includes(u.id);
                            return (
-                             <tr key={u.id} onClick={() => toggleSelectUser(u.id)} className={`cursor-pointer hover:bg-gray-100 dark:bg-zinc-800/80 transition-colors even:bg-gray-50 dark:bg-zinc-900/30 ${isSelected ? 'bg-indigo-50/40 even:bg-indigo-50/40' : ''}`}>
+                             <tr key={u.id} onClick={() => toggleSelectUser(u.id)} className={`cursor-pointer hover:bg-[#F5FAFA] dark:hover:bg-[#0E4A47]/60 transition-colors ${isSelected ? 'bg-[#D7F1EA]/50 dark:bg-[#0E4A47]/80' : ''}`}>
                                 <td className="py-4 px-6">
-                                  <button onClick={(e) => { e.stopPropagation(); toggleSelectUser(u.id); }} className="block text-gray-400 hover:text-[var(--app-primary-color)]">
-                                    {isSelected ? <CheckSquare size={18} className="text-[var(--app-primary-color)]" /> : <div className="w-[18px] h-[18px] border-2 border-gray-300 rounded-[4px]"></div>}
+                                  <button onClick={(e) => { e.stopPropagation(); toggleSelectUser(u.id); }} className="block text-[#5C807F] hover:text-[#0E7673] dark:hover:text-[#38B794]">
+                                    {isSelected ? <CheckSquare size={18} className="text-[#0E7673] dark:text-[#38B794]" /> : <div className="w-[18px] h-[18px] border-2 border-[#CFE4E3] dark:border-[#145250] rounded-[4px]"></div>}
                                   </button>
                                 </td>
                                 <td className="py-4 px-6">
                                    <div className="flex items-center gap-3">
-                                      <div className="w-10 h-10 rounded-full flex items-center justify-center bg-gradient-to-br from-indigo-100 to-purple-100 text-[var(--app-primary-color)] font-bold shrink-0">
+                                      <div className="w-10 h-10 rounded-full flex items-center justify-center bg-[#D7F1EA] dark:bg-[#0E4A47] text-[#0E7673] dark:text-[#38B794] font-bold shrink-0">
                                          {u.name ? u.name.charAt(0).toUpperCase() : <User size={18} />}
                                       </div>
                                       <div>
-                                         <h3 className="font-bold text-gray-900 dark:text-white text-sm">{u.name || 'Unknown User'}</h3>
-                                         <p className="text-xs text-gray-500">{u.email}</p>
+                                         <h3 className="font-bold text-[#0A3D3B] dark:text-white text-sm">{u.name || 'Unknown User'}</h3>
+                                         <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7]">{u.email}</p>
                                       </div>
                                    </div>
                                 </td>
@@ -486,7 +486,7 @@ export function AdminUsers({ type = 'all' }: { type?: 'vendors' | 'clients' | 'd
                                      value={u.role || 'patient'} 
                                      onChange={(e) => handleRoleChange(u.id, e.target.value)}
                                      onClick={(e) => e.stopPropagation()}
-                                     className="text-xs bg-white dark:bg-zinc-950 border border-gray-200 rounded-lg py-1.5 px-2 outline-none focus:ring-2 focus:ring-indigo-100"
+                                     className="text-xs bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] text-[#0A3D3B] dark:text-white rounded-full py-1.5 px-3 outline-none focus:border-[#0E7673] dark:focus:border-[#38B794]"
                                    >
                                      <option value="patient">{t('role_patient', 'Patient')}</option>
                                      <option value="pharmacy">{t('role_pharmacy', 'Pharmacy')}</option>
@@ -498,7 +498,7 @@ export function AdminUsers({ type = 'all' }: { type?: 'vendors' | 'clients' | 'd
                                 <td className="py-4 px-6">
                                    {getStatusBadge(u.status || 'approved')}
                                 </td>
-                                <td className="py-4 px-6 text-gray-500 whitespace-nowrap">
+                                <td className="py-4 px-6 text-[#5C807F] dark:text-[#9FC8C7] whitespace-nowrap">
                                    {parseDate(u.createdAt) ? format(parseDate(u.createdAt)!, 'MMM d, yyyy') : 'Unknown'}
                                 </td>
                                 <td className="py-4 px-6 text-right">
@@ -508,7 +508,7 @@ export function AdminUsers({ type = 'all' }: { type?: 'vendors' | 'clients' | 'd
                                          e.stopPropagation();
                                          handleImpersonate(u);
                                        }}
-                                       className="p-1.5 rounded-lg border transition-colors text-[var(--app-primary-color)] bg-indigo-50 border-indigo-100 hover:bg-indigo-100"
+                                       className="p-2 rounded-full border transition-colors text-[#0E7673] dark:text-[#38B794] bg-[#D7F1EA] dark:bg-[#0E4A47] border-[#CFE4E3] dark:border-[#145250] hover:brightness-95"
                                        title={t('impersonate', 'Impersonate')}
                                      >
                                        <VenetianMask size={16} />
@@ -518,10 +518,10 @@ export function AdminUsers({ type = 'all' }: { type?: 'vendors' | 'clients' | 'd
                                          e.stopPropagation();
                                          handleStatusChange(u.id, u.status === 'suspended' ? 'approved' : 'suspended');
                                        }}
-                                       className={`p-1.5 rounded-lg border transition-colors ${
+                                       className={`p-2 rounded-full border transition-colors ${
                                          u.status === 'suspended' 
-                                           ? 'text-emerald-600 bg-emerald-50 border-emerald-100 hover:bg-emerald-100' 
-                                           : 'text-amber-600 bg-amber-50 border-amber-100 hover:bg-amber-100'
+                                           ? 'text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-900 hover:bg-emerald-100' 
+                                           : 'text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/40 border-amber-200 dark:border-amber-900 hover:bg-amber-100'
                                        }`}
                                        title={u.status === 'suspended' ? "Unsuspend" : "Suspend"}
                                      >
@@ -532,7 +532,7 @@ export function AdminUsers({ type = 'all' }: { type?: 'vendors' | 'clients' | 'd
                                          e.stopPropagation();
                                          handleDeleteUser(u.id);
                                        }}
-                                       className="p-1.5 rounded-lg border transition-colors text-red-600 bg-red-50 border-red-100 hover:bg-red-100"
+                                       className="p-2 rounded-full border transition-colors text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/40 border-red-200 dark:border-red-900 hover:bg-red-100"
                                        title={t('delete', 'Delete')}
                                      >
                                        <Trash2 size={16} />
@@ -549,156 +549,156 @@ export function AdminUsers({ type = 'all' }: { type?: 'vendors' | 'clients' | 'd
            </>
          ) : (
            <div className="space-y-4">
-              <h3 className="font-bold text-gray-900 dark:text-white">{t('pending_bg_checks', 'Pending Background Checks')}</h3>
-              {loading ? <p className="text-sm text-gray-500">{t('loading', 'Loading...')}</p> :
+              <h3 className="font-bold text-[#0A3D3B] dark:text-white">{t('pending_bg_checks', 'Pending Background Checks')}</h3>
+              {loading ? <p className="text-sm text-[#5C807F] dark:text-[#9FC8C7]">{t('loading', 'Loading...')}</p> :
                (pharmacies.length === 0 && drivers.length === 0) ? (
-                 <div className="text-center py-12 px-6 bg-white dark:bg-zinc-950 rounded-2xl border border-gray-dashed">
-                    <ShieldCheck size={48} className="text-gray-300 mx-auto mb-4" />
-                    <p className="text-gray-500 text-sm">{t('all_operations_reviewed', 'All operations have been reviewed.')}</p>
+                 <div className="text-center py-12 px-6 bg-white dark:bg-[#0A3D3B] rounded-3xl border border-[#CFE4E3] dark:border-[#145250]">
+                    <ShieldCheck size={48} className="text-[#38B794] mx-auto mb-4 opacity-70" />
+                    <p className="text-[#5C807F] dark:text-[#9FC8C7] text-sm">{t('all_operations_reviewed', 'All operations have been reviewed.')}</p>
                  </div>
                ) : (
                  <>
                    {(type === 'all' || type === 'vendors') && pharmacies.map((pharmacy) => (
-                     <div key={pharmacy.id} className="bg-white dark:bg-zinc-950 rounded-2xl p-5 shadow-sm border border-orange-200 relative overflow-hidden">
-                        <div className="absolute top-0 right-0 bg-orange-100 text-orange-600 font-bold text-[10px] px-3 py-1 rounded-bl-xl uppercase"> {t('pharmacy_review', 'Pharmacy Review')} </div>
+                     <div key={pharmacy.id} className="bg-white dark:bg-[#0A3D3B] rounded-3xl p-6 shadow-xs border border-amber-300 dark:border-amber-700 relative overflow-hidden">
+                        <div className="absolute top-0 right-0 bg-amber-100 dark:bg-amber-950/70 text-amber-700 dark:text-amber-300 font-bold text-[10px] px-3 py-1 rounded-bl-2xl uppercase"> {t('pharmacy_review', 'Pharmacy Review')} </div>
                         
                         <div className="flex items-center gap-3 mb-4">
-                           <div className="w-12 h-12 bg-indigo-50 text-[var(--app-primary-color)] flex items-center justify-center rounded-xl">
+                           <div className="w-12 h-12 bg-[#D7F1EA] dark:bg-[#0E4A47] text-[#0E7673] dark:text-[#38B794] flex items-center justify-center rounded-2xl">
                               <Store size={24} />
                            </div>
                            <div>
-                              <h4 className="font-bold text-gray-900 dark:text-white text-lg">{pharmacy.name}</h4>
-                              <p className="text-xs text-gray-500">{pharmacy.address}</p>
+                              <h4 className="font-bold text-[#0A3D3B] dark:text-white text-lg">{pharmacy.name}</h4>
+                              <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7]">{pharmacy.address}</p>
                            </div>
                         </div>
                         
                         <div className="space-y-2 mb-6">
                            <div className="flex justify-between text-sm">
-                              <span className="text-gray-500"> {t('rccm_registration', 'RCCM / Registration:')} </span>
-                              <span className="font-bold text-gray-900 dark:text-white">{pharmacy.registrationNumber}</span>
+                              <span className="text-[#5C807F] dark:text-[#9FC8C7]"> {t('rccm_registration', 'RCCM / Registration:')} </span>
+                              <span className="font-bold text-[#0A3D3B] dark:text-white">{pharmacy.registrationNumber}</span>
                            </div>
                            <div className="flex justify-between text-sm">
-                              <span className="text-gray-500"> {t('phone', 'Phone:')} </span>
-                              <span className="font-bold text-gray-900 dark:text-white">{pharmacy.phoneNumber}</span>
+                              <span className="text-[#5C807F] dark:text-[#9FC8C7]"> {t('phone', 'Phone:')} </span>
+                              <span className="font-bold text-[#0A3D3B] dark:text-white">{pharmacy.phoneNumber}</span>
                            </div>
                            <div className="flex justify-between items-start text-sm">
-                              <span className="text-gray-500 mt-1"> {t('license', 'License:')} </span>
+                              <span className="text-[#5C807F] dark:text-[#9FC8C7] mt-1"> {t('license', 'License:')} </span>
                               {pharmacy.operatingLicenseUrl ? (
                                 <button onClick={() => setViewDocumentUrl(pharmacy.operatingLicenseUrl)} className="flex flex-col items-end gap-1 group">
-                                  <div className="w-24 h-16 rounded bg-gray-50 dark:bg-zinc-900 overflow-hidden border border-gray-200 group-hover:border-indigo-400 transition relative flex items-center justify-center">
+                                  <div className="w-24 h-16 rounded-xl bg-[#F5FAFA] dark:bg-[#062625] overflow-hidden border border-[#CFE4E3] dark:border-[#145250] group-hover:border-[#0E7673] transition relative flex items-center justify-center">
                                     {pharmacy.operatingLicenseUrl.toLowerCase().includes('.pdf') ? (
-                                      <FileText size={24} className="text-gray-400" />
+                                      <FileText size={24} className="text-[#5C807F] dark:text-[#9FC8C7]" />
                                     ) : (
                                       <img src={pharmacy.operatingLicenseUrl} alt="License" className="w-full h-full object-cover" />
                                     )}
-                                    <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
+                                    <div className="absolute inset-0 bg-[#062625]/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
                                       <Search size={16} className="text-white" />
                                     </div>
                                   </div>
-                                  <span className="font-bold text-xs text-[var(--app-primary-color)]"> {t('view_document', 'View Document')} </span>
+                                  <span className="font-bold text-xs text-[#0E7673] dark:text-[#38B794]"> {t('view_document', 'View Document')} </span>
                                 </button>
                               ) : (
-                                <span className="text-gray-400 mt-1"> {t('not_uploaded', 'Not uploaded')} </span>
+                                <span className="text-[#5C807F] dark:text-[#9FC8C7] mt-1"> {t('not_uploaded', 'Not uploaded')} </span>
                               )}
                            </div>
                            <div className="flex justify-between items-start text-sm">
-                              <span className="text-gray-500 mt-1"> {t('taxpayer_card', 'Taxpayer Card:')} </span>
+                              <span className="text-[#5C807F] dark:text-[#9FC8C7] mt-1"> {t('taxpayer_card', 'Taxpayer Card:')} </span>
                               {pharmacy.taxpayerCardUrl ? (
                                 <button onClick={() => setViewDocumentUrl(pharmacy.taxpayerCardUrl)} className="flex flex-col items-end gap-1 group">
-                                  <div className="w-24 h-16 rounded bg-gray-50 dark:bg-zinc-900 overflow-hidden border border-gray-200 group-hover:border-indigo-400 transition relative flex items-center justify-center">
+                                  <div className="w-24 h-16 rounded-xl bg-[#F5FAFA] dark:bg-[#062625] overflow-hidden border border-[#CFE4E3] dark:border-[#145250] group-hover:border-[#0E7673] transition relative flex items-center justify-center">
                                     {pharmacy.taxpayerCardUrl.toLowerCase().includes('.pdf') ? (
-                                      <FileText size={24} className="text-gray-400" />
+                                      <FileText size={24} className="text-[#5C807F] dark:text-[#9FC8C7]" />
                                     ) : (
                                       <img src={pharmacy.taxpayerCardUrl} alt="Taxpayer Card" className="w-full h-full object-cover" />
                                     )}
-                                    <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
+                                    <div className="absolute inset-0 bg-[#062625]/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
                                       <Search size={16} className="text-white" />
                                     </div>
                                   </div>
-                                  <span className="font-bold text-xs text-[var(--app-primary-color)]"> {t('view_document', 'View Document')} </span>
+                                  <span className="font-bold text-xs text-[#0E7673] dark:text-[#38B794]"> {t('view_document', 'View Document')} </span>
                                 </button>
                               ) : (
-                                <span className="text-gray-400 mt-1"> {t('not_uploaded', 'Not uploaded')} </span>
+                                <span className="text-[#5C807F] dark:text-[#9FC8C7] mt-1"> {t('not_uploaded', 'Not uploaded')} </span>
                               )}
                            </div>
-                           <div className="bg-gray-50 dark:bg-zinc-900 p-3 rounded-xl mt-2 flex items-start gap-2">
-                              <ShieldAlert size={16} className="text-[var(--app-primary-color)] shrink-0 mt-0.5" />
-                              <p className="text-xs text-gray-600"> {t('ensure_the_rccm_number_matches', 'Ensure the RCCM number matches official Cameroon business registries before approval.')} </p>
+                           <div className="bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] p-3.5 rounded-2xl mt-2 flex items-start gap-2">
+                              <ShieldAlert size={16} className="text-[#0E7673] dark:text-[#38B794] shrink-0 mt-0.5" />
+                              <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7]"> {t('ensure_the_rccm_number_matches', 'Ensure the RCCM number matches official Cameroon business registries before approval.')} </p>
                            </div>
                         </div>
                         
                         <div className="flex gap-3">
-                           <button className="flex-1 py-3 text-red-600 bg-red-50 hover:bg-red-100 font-bold rounded-xl transition text-sm"> {t('reject', 'Reject')} </button>
-                           <button onClick={() => handleApprovePharmacy(pharmacy.id, pharmacy.ownerId)} className="flex-1 py-3 bg-[var(--app-primary-color)] text-white hover:bg-[var(--app-primary-color)] font-bold rounded-xl transition text-sm flex items-center justify-center gap-2">
+                           <button className="flex-1 py-3 text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/30 hover:bg-red-100 border border-red-200 dark:border-red-900 font-bold rounded-full transition text-sm"> {t('reject', 'Reject')} </button>
+                           <button onClick={() => handleApprovePharmacy(pharmacy.id, pharmacy.ownerId)} className="flex-1 py-3 bg-[#0E7673] hover:bg-[#0A5A58] text-white font-bold rounded-full transition text-sm flex items-center justify-center gap-2 shadow-xs">
                              <CheckCircle size={16} />  {t('approve', 'Approve')} </button>
                         </div>
                      </div>
                    ))}
 
                    {(type === 'all' || type === 'drivers') && drivers.map((driver) => (
-                     <div key={driver.id} className="bg-white dark:bg-zinc-950 rounded-2xl p-5 shadow-sm border border-blue-200 relative overflow-hidden">
-                        <div className="absolute top-0 right-0 bg-blue-100 text-blue-600 font-bold text-[10px] px-3 py-1 rounded-bl-xl uppercase"> {t('driver_check', 'Driver Check')} </div>
+                     <div key={driver.id} className="bg-white dark:bg-[#0A3D3B] rounded-3xl p-6 shadow-xs border border-[#CFE4E3] dark:border-[#145250] relative overflow-hidden">
+                        <div className="absolute top-0 right-0 bg-[#D7F1EA] dark:bg-[#0E4A47] text-[#0E7673] dark:text-[#38B794] font-bold text-[10px] px-3 py-1 rounded-bl-2xl uppercase"> {t('driver_check', 'Driver Check')} </div>
                         
                         <div className="flex items-center gap-3 mb-4">
-                           <div className="w-12 h-12 bg-blue-50 text-blue-600 flex items-center justify-center rounded-xl">
+                           <div className="w-12 h-12 bg-[#D7F1EA] dark:bg-[#0E4A47] text-[#0E7673] dark:text-[#38B794] flex items-center justify-center rounded-2xl">
                               <Truck size={24} />
                            </div>
                            <div>
-                              <h4 className="font-bold text-gray-900 dark:text-white text-lg">{driver.name}</h4>
-                              <p className="text-xs text-gray-500">{driver.email}</p>
+                              <h4 className="font-bold text-[#0A3D3B] dark:text-white text-lg">{driver.name}</h4>
+                              <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7]">{driver.email}</p>
                            </div>
                         </div>
                         
                         <div className="space-y-2 mb-6">
                            <div className="flex justify-between items-start text-sm">
-                              <span className="text-gray-500 mt-1"> {t('national_id', 'National ID:')} </span>
+                              <span className="text-[#5C807F] dark:text-[#9FC8C7] mt-1"> {t('national_id', 'National ID:')} </span>
                               {driver.idCardUrl ? (
                                 <button onClick={() => setViewDocumentUrl(driver.idCardUrl)} className="flex flex-col items-end gap-1 group">
-                                  <div className="w-24 h-16 rounded bg-gray-50 dark:bg-zinc-900 overflow-hidden border border-gray-200 group-hover:border-blue-400 transition relative flex items-center justify-center">
+                                  <div className="w-24 h-16 rounded-xl bg-[#F5FAFA] dark:bg-[#062625] overflow-hidden border border-[#CFE4E3] dark:border-[#145250] group-hover:border-[#0E7673] transition relative flex items-center justify-center">
                                     {driver.idCardUrl.toLowerCase().includes('.pdf') ? (
-                                      <FileText size={24} className="text-gray-400" />
+                                      <FileText size={24} className="text-[#5C807F] dark:text-[#9FC8C7]" />
                                     ) : (
                                       <img src={driver.idCardUrl} alt="National ID" className="w-full h-full object-cover" />
                                     )}
-                                    <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
+                                    <div className="absolute inset-0 bg-[#062625]/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
                                       <Search size={16} className="text-white" />
                                     </div>
                                   </div>
-                                  <span className="font-bold text-xs text-blue-600"> {t('view_document', 'View Document')} </span>
+                                  <span className="font-bold text-xs text-[#0E7673] dark:text-[#38B794]"> {t('view_document', 'View Document')} </span>
                                 </button>
                               ) : (
-                                <span className="text-gray-400 mt-1"> {t('not_uploaded', 'Not uploaded')} </span>
+                                <span className="text-[#5C807F] dark:text-[#9FC8C7] mt-1"> {t('not_uploaded', 'Not uploaded')} </span>
                               )}
                            </div>
                            <div className="flex justify-between items-start text-sm">
-                              <span className="text-gray-500 mt-1"> {t('driver_license', 'Driver License:')} </span>
+                              <span className="text-[#5C807F] dark:text-[#9FC8C7] mt-1"> {t('driver_license', 'Driver License:')} </span>
                               {driver.drivingLicenseUrl ? (
                                 <button onClick={() => setViewDocumentUrl(driver.drivingLicenseUrl)} className="flex flex-col items-end gap-1 group">
-                                  <div className="w-24 h-16 rounded bg-gray-50 dark:bg-zinc-900 overflow-hidden border border-gray-200 group-hover:border-blue-400 transition relative flex items-center justify-center">
+                                  <div className="w-24 h-16 rounded-xl bg-[#F5FAFA] dark:bg-[#062625] overflow-hidden border border-[#CFE4E3] dark:border-[#145250] group-hover:border-[#0E7673] transition relative flex items-center justify-center">
                                     {driver.drivingLicenseUrl.toLowerCase().includes('.pdf') ? (
-                                      <FileText size={24} className="text-gray-400" />
+                                      <FileText size={24} className="text-[#5C807F] dark:text-[#9FC8C7]" />
                                     ) : (
                                       <img src={driver.drivingLicenseUrl} alt="Driver License" className="w-full h-full object-cover" />
                                     )}
-                                    <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
+                                    <div className="absolute inset-0 bg-[#062625]/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
                                       <Search size={16} className="text-white" />
                                     </div>
                                   </div>
-                                  <span className="font-bold text-xs text-blue-600"> {t('view_document', 'View Document')} </span>
+                                  <span className="font-bold text-xs text-[#0E7673] dark:text-[#38B794]"> {t('view_document', 'View Document')} </span>
                                 </button>
                               ) : (
-                                <span className="text-gray-400 mt-1"> {t('not_uploaded', 'Not uploaded')} </span>
+                                <span className="text-[#5C807F] dark:text-[#9FC8C7] mt-1"> {t('not_uploaded', 'Not uploaded')} </span>
                               )}
                            </div>
-                           <div className="bg-gray-50 dark:bg-zinc-900 p-3 rounded-xl mt-2 flex items-start gap-2">
-                              <ShieldAlert size={16} className="text-blue-400 shrink-0 mt-0.5" />
-                              <p className="text-xs text-gray-600"> {t('please_verify_both_ids_are_cle', 'Please verify both IDs are clear, match the applicant\'s name, and are currently valid.')} </p>
+                           <div className="bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] p-3.5 rounded-2xl mt-2 flex items-start gap-2">
+                              <ShieldAlert size={16} className="text-[#0E7673] dark:text-[#38B794] shrink-0 mt-0.5" />
+                              <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7]"> {t('please_verify_both_ids_are_cle', 'Please verify both IDs are clear, match the applicant\'s name, and are currently valid.')} </p>
                            </div>
                         </div>
                         
                         <div className="flex gap-3">
-                           <button className="flex-1 py-3 text-red-600 bg-red-50 hover:bg-red-100 font-bold rounded-xl transition text-sm"> {t('reject', 'Reject')} </button>
-                           <button disabled={processingId === driver.id} onClick={() => handleApproveDriver(driver.id, driver.name)} className="flex-1 py-3 bg-blue-600 text-white hover:bg-blue-700 font-bold rounded-xl transition text-sm flex items-center justify-center gap-2 disabled:bg-blue-300 disabled:cursor-not-allowed">
+                           <button className="flex-1 py-3 text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/30 hover:bg-red-100 border border-red-200 dark:border-red-900 font-bold rounded-full transition text-sm"> {t('reject', 'Reject')} </button>
+                           <button disabled={processingId === driver.id} onClick={() => handleApproveDriver(driver.id, driver.name)} className="flex-1 py-3 bg-[#0E7673] hover:bg-[#0A5A58] text-white font-bold rounded-full transition text-sm flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-xs">
                              {processingId === driver.id ? <Loader2 size={16} className="animate-spin" /> : <CheckCircle size={16} />}
                              {processingId === driver.id ? t('approving', 'Approving...') : t('approve_driver', 'Approve Driver')}
                            </button>

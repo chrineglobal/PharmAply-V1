@@ -31,6 +31,7 @@ const ONBOARDING_SLIDES = [
 
 import { sendEmail } from '../../lib/email';
 import { DarkModeToggle } from "../../components/DarkModeToggle";
+import { PharmAplyLogo } from "../../components/common/PharmAplyLogo";
 
 export function Onboarding() {
   const navigate = useNavigate();
@@ -115,8 +116,8 @@ export function Onboarding() {
         // Send Welcome email
         await sendEmail({
           to: result.user.email,
-          subject: "Welcome to Pharmap!",
-          html: `<h1>Welcome ${name || 'User'} to Pharmap!</h1><p>We are glad to have you on board. Explore pharmacies around you and order medications with ease.</p>`
+          subject: "Bienvenue sur PharmAply !",
+          html: `<h1>Bienvenue ${name || 'Client'} sur PharmAply !</h1><p>Trouvez, commandez et recevez vos médicaments en toute simplicité auprès des pharmacies partenaires.</p>`
         });
         
         // Create in-app Welcome notification
@@ -125,8 +126,8 @@ export function Onboarding() {
           await addDoc(collection(db, 'notifications'), {
              userId: result.user.uid,
              type: 'welcome',
-             title: 'Welcome to Pharmap!',
-             message: 'We are glad to have you on board. Start exploring!',
+             title: 'Bienvenue sur PharmAply !',
+             message: 'Trouvez Commandez Recevez vos médicaments en quelques clics.',
              isRead: false,
              createdAt: serverTimestamp()
           });
@@ -180,36 +181,29 @@ export function Onboarding() {
   const activeSlide = step > 1 && step < 5 ? step - 2 : 0;
 
   return (
-    <div className="flex-1 relative bg-[#6a7bc0] overflow-hidden flex flex-col h-full"> 
+    <div className="flex-1 relative bg-[#0E7673] dark:bg-[#062625] overflow-hidden flex flex-col h-full"> 
        {/* Dark Mode Toggle in Onboarding */}
        <div className="absolute top-4 right-4 z-50">
-          <DarkModeToggle className="bg-white dark:bg-zinc-950/85 dark:bg-zinc-900/90 backdrop-blur-md shadow-lg border border-white/20 dark:border-zinc-700/50" />
+          <DarkModeToggle className="shadow-sm border border-[#CFE4E3]/40 dark:border-[#0E7673]/50" />
        </div>
 
        <AnimatePresence>
-         {/* Splash Screen */}
+         {/* Splash Screen (Blanc sur teal officiel #0E7673 - Charte p.1 & p.4) */}
          {step === 0 && (
             <motion.div 
                key="splash"
                initial={{ opacity: 0 }}
                animate={{ opacity: 1 }}
                exit={{ opacity: 0 }}
-               className="absolute inset-0 flex flex-col items-center justify-center bg-[#344fb1] z-50 text-white"
+               className="absolute inset-0 flex flex-col items-center justify-center bg-[#0E7673] z-50 text-white px-6"
             >
-               <div className="flex flex-col items-center">
-                  <div className="mb-6 text-white scale-150">
-                     <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M10 6a2 2 0 1 0 4 0v12a2 2 0 1 0-4 0z" />
-                        <path d="M12 2v2" />
-                        <path d="M12 20v2" />
-                        <path d="M19.5 7.5c-3-3-7.5-3-7.5 4.5" />
-                        <path d="M4.5 16.5c3 3 7.5 3 7.5-4.5" />
-                        <path d="M4.5 7.5c3-3 7.5-3 7.5 4.5" />
-                        <path d="M19.5 16.5c-3 3-7.5 3-7.5-4.5" />
-                     </svg>
-                  </div>
-                  <h1 className="text-3xl font-bold tracking-tight">{t('app_name')}</h1>
-               </div>
+               <motion.div
+                  initial={{ scale: 0.92, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.45 }}
+               >
+                  <PharmAplyLogo variant="vertical" tone="white" showTagline size={175} />
+               </motion.div>
             </motion.div>
          )}
 
@@ -220,55 +214,47 @@ export function Onboarding() {
                initial={{ opacity: 0 }}
                animate={{ opacity: 1 }}
                exit={{ opacity: 0 }}
-               className="absolute inset-0 flex flex-col items-center justify-center bg-[#f8f9fc] z-40 p-6"
+               className="absolute inset-0 flex flex-col items-center justify-center bg-white dark:bg-[#062625] z-40 p-6"
             >
-               <div className="mb-10 text-[#344fb1] scale-150">
-                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                     <path d="M10 6a2 2 0 1 0 4 0v12a2 2 0 1 0-4 0z" />
-                     <path d="M12 2v2" />
-                     <path d="M12 20v2" />
-                     <path d="M19.5 7.5c-3-3-7.5-3-7.5 4.5" />
-                     <path d="M4.5 16.5c3 3 7.5 3 7.5-4.5" />
-                     <path d="M4.5 7.5c3-3 7.5-3 7.5 4.5" />
-                     <path d="M19.5 16.5c-3 3-7.5 3-7.5-4.5" />
-                  </svg>
+               <div className="mb-8">
+                  <PharmAplyLogo variant="vertical" tone="color" showTagline size={150} />
                </div>
                
-               <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{t('choose_language')}</h2>
-               <p className="text-gray-500 mb-10 text-center"> {t('select_your_preferred_language', 'Select your preferred language to get started.')} </p>
+               <h2 className="text-2xl font-bold text-[#0E7673] dark:text-[#E7F1F1] mb-2 text-center">{t('choose_language')}</h2>
+               <p className="text-[#0A3D3B]/75 dark:text-[#CFE4E3] text-sm mb-8 text-center max-w-xs leading-relaxed"> {t('select_your_preferred_language', 'Choisissez votre langue pour commencer.')} </p>
                
-               <div className="w-full max-w-sm space-y-4">
+               <div className="w-full max-w-sm space-y-3.5">
                   <button
                      onClick={() => { i18n.changeLanguage('en'); setStep(2); }}
-                     className="w-full flex items-center justify-between p-5 rounded-2xl border-2 transition-all duration-200 border-gray-100 bg-white dark:bg-zinc-950 hover:border-[#344fb1] hover:bg-indigo-50/30"
+                     className="w-full flex items-center justify-between px-5 py-4 rounded-2xl border border-[#CFE4E3] dark:border-[#0E7673]/60 transition-all duration-200 bg-white dark:bg-[#0A3D3B] hover:border-[#0E7673] hover:bg-[#E7F1F1] dark:hover:bg-[#0E7673]/30"
                   >
                      <div className="flex items-center gap-4">
                         <span className="text-2xl">🇺🇸</span>
-                        <span className="font-bold text-gray-900 dark:text-white text-base"> {t('english', 'English')} </span>
+                        <span className="font-bold text-[#0A3D3B] dark:text-white text-base"> {t('english', 'English')} </span>
                      </div>
-                     <div className="w-6 h-6 rounded-full border-2 border-gray-200 flex items-center justify-center"></div>
+                     <div className="w-5 h-5 rounded-full border-2 border-[#9FC8C7]"></div>
                   </button>
                   
                   <button
                      onClick={() => { i18n.changeLanguage('fr'); setStep(2); }}
-                     className="w-full flex items-center justify-between p-5 rounded-2xl border-2 transition-all duration-200 border-gray-100 bg-white dark:bg-zinc-950 hover:border-[#344fb1] hover:bg-indigo-50/30"
+                     className="w-full flex items-center justify-between px-5 py-4 rounded-2xl border border-[#CFE4E3] dark:border-[#0E7673]/60 transition-all duration-200 bg-white dark:bg-[#0A3D3B] hover:border-[#0E7673] hover:bg-[#E7F1F1] dark:hover:bg-[#0E7673]/30"
                   >
                      <div className="flex items-center gap-4">
                         <span className="text-2xl">🇫🇷</span>
-                        <span className="font-bold text-gray-900 dark:text-white text-base"> {t('fran_ais', 'Français')} </span>
+                        <span className="font-bold text-[#0A3D3B] dark:text-white text-base"> {t('fran_ais', 'Français')} </span>
                      </div>
-                     <div className="w-6 h-6 rounded-full border-2 border-gray-200 flex items-center justify-center"></div>
+                     <div className="w-5 h-5 rounded-full border-2 border-[#9FC8C7]"></div>
                   </button>
 
                   <button
                      onClick={() => { i18n.changeLanguage('ar'); setStep(2); }}
-                     className="w-full flex items-center justify-between p-5 rounded-2xl border-2 transition-all duration-200 border-gray-100 bg-white dark:bg-zinc-950 hover:border-[#344fb1] hover:bg-indigo-50/30"
+                     className="w-full flex items-center justify-between px-5 py-4 rounded-2xl border border-[#CFE4E3] dark:border-[#0E7673]/60 transition-all duration-200 bg-white dark:bg-[#0A3D3B] hover:border-[#0E7673] hover:bg-[#E7F1F1] dark:hover:bg-[#0E7673]/30"
                   >
                      <div className="flex items-center gap-4">
                         <span className="text-2xl">🇦🇪</span>
-                        <span className="font-bold text-gray-900 dark:text-white text-base">العربية</span>
+                        <span className="font-bold text-[#0A3D3B] dark:text-white text-base">العربية</span>
                      </div>
-                     <div className="w-6 h-6 rounded-full border-2 border-gray-200 flex items-center justify-center"></div>
+                     <div className="w-5 h-5 rounded-full border-2 border-[#9FC8C7]"></div>
                   </button>
                </div>
             </motion.div>
@@ -281,16 +267,16 @@ export function Onboarding() {
                initial={{ opacity: 0 }}
                animate={{ opacity: 1 }}
                transition={{ duration: 0.5 }}
-               className="absolute inset-0 bg-[#344fb1] z-0"
+               className="absolute inset-0 bg-[#0E7673] z-0"
             >
                {step < 5 && (
                  <>
                    <img 
                      src={ONBOARDING_SLIDES[activeSlide].image} 
                      alt="Onboarding Background" 
-                     className="w-full h-full object-cover opacity-60"
+                     className="w-full h-full object-cover opacity-50"
                    />
-                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/20"></div>
+                   <div className="absolute inset-0 bg-gradient-to-t from-[#062625] via-[#0A3D3B]/60 to-[#0E7673]/30"></div>
                  </>
                )}
             </motion.div>
@@ -317,8 +303,8 @@ export function Onboarding() {
                      {t('skip')}
                   </button>
                   
-                  <div className="flex bg-white dark:bg-zinc-950/20 rounded-full p-1 backdrop-blur-md">
-                     <button onClick={handleNext} className="w-14 h-14 bg-white dark:bg-zinc-950 text-gray-900 dark:text-white rounded-full flex items-center justify-center hover:bg-gray-100 dark:bg-zinc-800 transition shadow-lg">
+                  <div className="flex bg-white/20 rounded-full p-1 backdrop-blur-md">
+                     <button onClick={handleNext} className="w-14 h-14 bg-white text-[#0A3D3B] rounded-full flex items-center justify-center hover:bg-[#D7F1EA] transition shadow-lg">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                            <path d="m9 18 6-6-6-6"/>
                         </svg>
@@ -327,7 +313,7 @@ export function Onboarding() {
                   
                   <div className="flex gap-2 items-center px-4">
                      {ONBOARDING_SLIDES.map((_, idx) => (
-                        <div key={idx} className={`h-1.5 rounded-full transition-all duration-300 ${idx === activeSlide ? 'w-6 bg-white dark:bg-zinc-950' : 'w-2 bg-white dark:bg-zinc-950/40'}`}></div>
+                        <div key={idx} className={`h-1.5 rounded-full transition-all duration-300 ${idx === activeSlide ? 'w-6 bg-[#38B794]' : 'w-2 bg-white/40'}`}></div>
                      ))}
                   </div>
                </div>
@@ -338,62 +324,53 @@ export function Onboarding() {
          {step === 5 && (
             <>
                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
+                  initial={{ opacity: 0, scale: 0.92 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.1 }}
-                  className="absolute top-[18%] left-0 right-0 flex flex-col items-center justify-center z-10 text-white"
+                  className="absolute top-[10%] left-0 right-0 flex flex-col items-center justify-center z-10 text-white px-6"
                >
-                  <div className="mb-4 text-white p-4 bg-white dark:bg-zinc-950/20 backdrop-blur-md rounded-[2rem] border border-white/20 shadow-xl">
-                     <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M10 6a2 2 0 1 0 4 0v12a2 2 0 1 0-4 0z" />
-                        <path d="M12 2v2" />
-                        <path d="M12 20v2" />
-                        <path d="M19.5 7.5c-3-3-7.5-3-7.5 4.5" />
-                        <path d="M4.5 16.5c3 3 7.5 3 7.5-4.5" />
-                        <path d="M4.5 7.5c3-3 7.5-3 7.5 4.5" />
-                        <path d="M19.5 16.5c-3 3-7.5 3-7.5-4.5" />
-                     </svg>
-                  </div>
-                  <h1 className="text-3xl font-bold tracking-tight">PharmAply</h1>
+                  <PharmAplyLogo variant="vertical" tone="white" showTagline size={150} />
                </motion.div>
 
                <motion.div 
                   initial={{ y: "100%" }}
                   animate={{ y: 0 }}
                   transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                  className="absolute bottom-0 left-0 right-0 bg-[#f5f7fa] dark:bg-zinc-950 rounded-t-[2.5rem] p-8 pt-10 pb-16 z-20 shadow-[0_-20px_50px_rgba(0,0,0,0.15)]"
+                  className="absolute bottom-0 left-0 right-0 bg-white dark:bg-[#0A3D3B] rounded-t-[2.5rem] p-8 pt-9 pb-14 z-20 shadow-[0_-20px_50px_rgba(10,61,59,0.22)]"
                >
                   {errorText && (
-                    <div className="mb-4 p-3 bg-red-100 border border-red-200 text-red-700 text-sm rounded-xl text-center">
+                    <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 text-sm rounded-2xl text-center">
                       {errorText}
                     </div>
                   )}
 
-                  <h3 className="text-center font-bold text-gray-800 dark:text-gray-200 mb-8 tracking-wide uppercase text-sm">Select User Type:</h3>
+                  <h3 className="text-center font-bold text-[#0E7673] dark:text-[#88D4BF] mb-6 tracking-wide text-sm">
+                    Choisissez votre profil :
+                  </h3>
                   
-                  <div className="space-y-4 px-2">
+                  <div className="space-y-3.5 px-1">
                      <button
                         onClick={() => handleRoleSelection('patient')}
                         disabled={loading}
-                        className="w-full flex items-center justify-center py-4 bg-white dark:bg-zinc-950 text-gray-900 dark:text-white shadow-md shadow-gray-200/50 rounded-[1.5rem] font-bold hover:scale-[1.02] transition-all disabled:opacity-70 text-lg border border-gray-100"
+                        className="w-full flex items-center justify-center py-4 bg-[#0E7673] text-white rounded-full font-bold hover:bg-[#0A3D3B] transition-all disabled:opacity-70 text-base shadow-sm active:scale-[0.98]"
                      >
-                        Patient
+                        Patient / Client
                      </button>
                      
                      <button
                         onClick={() => handleRoleSelection('pharmacy')}
                         disabled={loading}
-                        className="w-full flex items-center justify-center py-4 bg-white dark:bg-zinc-950 text-gray-900 dark:text-white shadow-md shadow-gray-200/50 rounded-[1.5rem] font-bold hover:scale-[1.02] transition-all disabled:opacity-70 text-lg border border-gray-100"
+                        className="w-full flex items-center justify-center py-4 bg-[#38B794] text-[#0A3D3B] rounded-full font-bold hover:bg-[#60C5A9] transition-all disabled:opacity-70 text-base shadow-sm active:scale-[0.98]"
                      >
-                        Pharmacist
+                        Pharmacien
                      </button>
 
                      <button
                         onClick={() => handleRoleSelection('driver')}
                         disabled={loading}
-                        className="w-full flex items-center justify-center py-4 bg-white dark:bg-zinc-950 text-gray-900 dark:text-white shadow-md shadow-gray-200/50 rounded-[1.5rem] font-bold hover:scale-[1.02] transition-all disabled:opacity-70 text-lg border border-gray-100"
+                        className="w-full flex items-center justify-center py-4 bg-white dark:bg-transparent text-[#0E7673] dark:text-[#E7F1F1] border-2 border-[#0E7673] dark:border-[#38B794] rounded-full font-bold hover:bg-[#E7F1F1] dark:hover:bg-[#0E7673]/30 transition-all disabled:opacity-70 text-base active:scale-[0.98]"
                      >
-                        Delivery
+                        Livreur
                      </button>
                   </div>
                </motion.div>
@@ -402,68 +379,59 @@ export function Onboarding() {
 
          {/* Email Auth Screen */}
          {step === 6 && (
-            <div className="fixed inset-0 bg-white dark:bg-zinc-950 z-30 flex flex-col pt-12 overflow-y-auto">
-               <div className="flex flex-col items-center justify-center pt-8 pb-4">
-                  <div className="mb-4 text-gray-900 dark:text-white p-3 rounded-full border-2 border-gray-100 dark:border-zinc-800">
-                     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M10 6a2 2 0 1 0 4 0v12a2 2 0 1 0-4 0z" />
-                        <path d="M12 2v2" />
-                        <path d="M12 20v2" />
-                        <path d="M19.5 7.5c-3-3-7.5-3-7.5 4.5" />
-                        <path d="M4.5 16.5c3 3 7.5 3 7.5-4.5" />
-                        <path d="M4.5 7.5c3-3 7.5-3 7.5 4.5" />
-                        <path d="M19.5 16.5c-3 3-7.5 3-7.5-4.5" />
-                     </svg>
+            <div className="fixed inset-0 bg-white dark:bg-[#062625] z-30 flex flex-col pt-12 overflow-y-auto">
+               <div className="flex flex-col items-center justify-center pt-6 pb-6 px-6">
+                  <div className="mb-3">
+                     <PharmAplyLogo variant="horizontal" tone="color" showTagline size={46} />
                   </div>
-                  <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white uppercase mb-1">WELCOME TO PHARMAPLY</h1>
-                  <p className="text-gray-500 text-sm font-medium">Your trusted way to better health</p>
+                  <h1 className="text-xl font-bold text-[#0E7673] dark:text-[#E7F1F1] mt-2 text-center">
+                    {authMode === 'login' ? 'Connexion à votre espace' : 'Créer un compte PharmAply'}
+                  </h1>
+                  <p className="text-[#0A3D3B]/75 dark:text-[#9FC8C7] text-sm font-medium text-center mt-1">
+                    Votre pharmacie, en quelques clics
+                  </p>
                </div>
 
-               <div className="px-6 pb-8 flex-1 flex flex-col">
+               <div className="px-6 pb-8 flex-1 flex flex-col max-w-md w-full mx-auto">
                   {errorText && (
-                    <div className="mb-4 p-3 bg-red-100 border border-red-200 text-red-700 text-sm rounded-xl text-center">
+                    <div className="mb-4 p-3.5 bg-red-50 border border-red-200 text-red-700 text-sm rounded-2xl text-center">
                       {errorText}
                     </div>
-                  )}
-
-                  {selectedRole !== 'pharmacy' && selectedRole !== 'driver' && (
-                     <>
-                     </>
                   )}
 
                   <form onSubmit={handleEmailAuth} className="space-y-4 flex-1">
                      {authMode === 'signup' && (
                         <div>
-                           <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="w-full border-b-2 border-gray-200 dark:border-zinc-800 p-3 bg-transparent text-gray-900 dark:text-white outline-none focus:border-gray-500 transition placeholder-gray-400" placeholder="Full Name" required />
+                           <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="w-full border border-[#CFE4E3] dark:border-[#0E7673] rounded-2xl px-4 py-3.5 bg-[#E7F1F1]/40 dark:bg-[#0A3D3B] text-[#0A3D3B] dark:text-white text-sm outline-none focus:border-[#0E7673] focus:ring-2 focus:ring-[#0E7673]/20 transition placeholder-[#6EADAB]" placeholder="Nom complet" required />
                         </div>
                      )}
                      <div>
-                        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full border-b-2 border-gray-200 dark:border-zinc-800 p-3 bg-transparent text-gray-900 dark:text-white outline-none focus:border-gray-500 transition placeholder-gray-400" placeholder="Email" required />
+                        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full border border-[#CFE4E3] dark:border-[#0E7673] rounded-2xl px-4 py-3.5 bg-[#E7F1F1]/40 dark:bg-[#0A3D3B] text-[#0A3D3B] dark:text-white text-sm outline-none focus:border-[#0E7673] focus:ring-2 focus:ring-[#0E7673]/20 transition placeholder-[#6EADAB]" placeholder="Adresse e-mail" required />
                      </div>
                      <div>
-                        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full border-b-2 border-gray-200 dark:border-zinc-800 p-3 bg-transparent text-gray-900 dark:text-white outline-none focus:border-gray-500 transition placeholder-gray-400" placeholder="Password" required minLength={6} />
+                        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full border border-[#CFE4E3] dark:border-[#0E7673] rounded-2xl px-4 py-3.5 bg-[#E7F1F1]/40 dark:bg-[#0A3D3B] text-[#0A3D3B] dark:text-white text-sm outline-none focus:border-[#0E7673] focus:ring-2 focus:ring-[#0E7673]/20 transition placeholder-[#6EADAB]" placeholder="Mot de passe" required minLength={6} />
                      </div>
                      {authMode === 'signup' && (
                         <div>
-                           <input type="password" className="w-full border-b-2 border-gray-200 dark:border-zinc-800 p-3 bg-transparent text-gray-900 dark:text-white outline-none focus:border-gray-500 transition placeholder-gray-400" placeholder="Confirm Password" required minLength={6} />
+                           <input type="password" className="w-full border border-[#CFE4E3] dark:border-[#0E7673] rounded-2xl px-4 py-3.5 bg-[#E7F1F1]/40 dark:bg-[#0A3D3B] text-[#0A3D3B] dark:text-white text-sm outline-none focus:border-[#0E7673] focus:ring-2 focus:ring-[#0E7673]/20 transition placeholder-[#6EADAB]" placeholder="Confirmer le mot de passe" required minLength={6} />
                         </div>
                      )}
                      
                      {authMode === 'signup' && (
-                        <div className="flex items-center gap-2 mt-4 text-xs text-gray-500">
-                           <input type="checkbox" required className="rounded border-gray-300 w-4 h-4" />
-                           <label>I agree to the processing of <strong>Personal data</strong></label>
+                        <div className="flex items-center gap-2.5 mt-4 text-sm text-[#0A3D3B]/80 dark:text-[#CFE4E3]">
+                           <input type="checkbox" required className="rounded border-[#9FC8C7] text-[#0E7673] focus:ring-[#0E7673] w-4 h-4" />
+                           <label>J'accepte le traitement de mes <strong>données personnelles</strong></label>
                         </div>
                      )}
 
                      {authMode === 'login' && (
-                       <div className="flex justify-end pt-2">
+                       <div className="flex justify-end pt-1">
                          <button 
                            type="button" 
                            onClick={() => navigate('/forget-password')} 
-                           className="text-xs font-bold text-gray-500 hover:text-gray-900 dark:text-white dark:hover:text-white transition"
+                           className="text-sm font-bold text-[#0E7673] dark:text-[#38B794] hover:underline transition"
                          >
-                            Forget Password?
+                            {t('forget_password', 'Mot de passe oublié ?')}
                          </button>
                        </div>
                      )}
@@ -471,15 +439,15 @@ export function Onboarding() {
                      <button
                         type="submit"
                         disabled={loading}
-                        className="w-full flex items-center justify-center py-4 mt-6 bg-[#0a1128] dark:bg-white dark:bg-zinc-950 text-white dark:text-gray-900 dark:text-white rounded-full font-bold hover:bg-black dark:hover:bg-gray-200 transition shadow-lg shadow-gray-200 dark:shadow-none disabled:opacity-70 text-lg uppercase tracking-wide"
+                        className="w-full flex items-center justify-center py-4 mt-6 bg-[#0E7673] text-white rounded-full font-bold hover:bg-[#0A3D3B] transition shadow-sm disabled:opacity-60 text-base active:scale-[0.98]"
                      >
-                        {loading ? 'Processing...' : (authMode === 'login' ? 'Log In' : 'Sign Up')}
+                        {loading ? 'Chargement...' : (authMode === 'login' ? 'Se connecter' : "S'inscrire")}
                      </button>
                   </form>
 
                   <div className="mt-8 text-center pb-6">
-                     <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                        {authMode === 'login' ? "Don't have an account?" : "Do you have an account?"}
+                     <p className="text-sm font-medium text-[#0A3D3B]/80 dark:text-[#CFE4E3]">
+                        {authMode === 'login' ? "Vous n'avez pas de compte ?" : "Vous avez déjà un compte ?"}
                         <button 
                            type="button" 
                            onClick={() => {
@@ -491,16 +459,16 @@ export function Onboarding() {
                                setAuthMode('login');
                              }
                            }}
-                           className="ml-2 font-bold text-gray-900 dark:text-white hover:underline focus:outline-none"
+                           className="ml-2 font-bold text-[#0E7673] dark:text-[#38B794] hover:underline focus:outline-none"
                         >
-                           {authMode === 'login' ? 'Sign Up' : 'Login'}
+                           {authMode === 'login' ? "S'inscrire" : 'Se connecter'}
                         </button>
                      </p>
                   </div>
                </div>
                
-               <button onClick={() => { setStep(5); setAuthMode('login'); }} className="absolute top-10 left-4 p-2 text-gray-500 hover:bg-gray-100 dark:bg-zinc-800 dark:hover:bg-zinc-800 rounded-full transition">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+               <button onClick={() => { setStep(5); setAuthMode('login'); }} className="absolute top-10 left-4 p-2.5 text-[#0E7673] dark:text-[#E7F1F1] hover:bg-[#E7F1F1] dark:hover:bg-[#0A3D3B] rounded-full transition">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                      <path d="M19 12H5M12 19l-7-7 7-7"/>
                   </svg>
                </button>

@@ -85,8 +85,8 @@ import { PatientProfileDetails } from './pages/patient/ProfileDetails';
 
 function Placeholder({ title }: { title: string }) {
   return (
-    <div className="flex-1 flex flex-col items-center justify-center p-8 bg-slate-50 text-center text-gray-500 overflow-y-auto">
-      <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{title}</h2>
+    <div className="flex-1 flex flex-col items-center justify-center p-8 bg-[#F5FAFA] dark:bg-[#062625] text-center text-[#5C807F] dark:text-[#9FC8C7] overflow-y-auto">
+      <h2 className="text-xl font-bold text-[#0A3D3B] dark:text-white mb-2">{title}</h2>
       <p>This screen is mapped out for future implementation.</p>
     </div>
   );
@@ -120,6 +120,8 @@ export default function App() {
             <Route index element={<PatientHome />} />
             <Route path="orders" element={<PatientOrders />} />
             <Route path="calendar" element={<PatientReminders />} />
+            <Route path="reminders" element={<PatientReminders />} />
+            <Route path="tracking" element={<PatientTracking />} />
             <Route path="cart" element={<PatientCart />} />
             <Route path="profile" element={<PatientProfile />} />
             <Route path="search" element={<PatientSearch />} />

@@ -156,18 +156,18 @@ export function PatientPrescriptionUpload() {
   };
 
   return (
-    <div className="flex-1 bg-slate-50 dark:bg-black flex flex-col h-full overflow-hidden">
-      <div className="px-6 pt-12 pb-4 flex items-center gap-4 bg-white dark:bg-black shadow-sm z-10">
-         <button onClick={() => navigate(-1)} className="w-10 h-10 flex items-center justify-center bg-gray-50 dark:bg-black rounded-full">
-            <ArrowLeft size={20} className="text-gray-900 dark:text-white" />
+    <div className="flex-1 bg-[#F5FAFA] dark:bg-[#062625] flex flex-col h-full overflow-hidden">
+      <div className="px-6 pt-12 pb-4 flex items-center gap-4 bg-white dark:bg-[#0A3D3B] border-b border-[#CFE4E3] dark:border-[#145250] shadow-sm z-10">
+         <button onClick={() => navigate(-1)} className="w-10 h-10 flex items-center justify-center bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] rounded-full hover:bg-[#D7F1EA] dark:hover:bg-[#0E4A47] transition">
+            <ArrowLeft size={20} className="text-[#0A3D3B] dark:text-white" />
          </button>
-         <h1 className="font-bold text-gray-900 dark:text-white text-lg">{t('send_prescription', 'Send Prescription')}</h1>
+         <h1 className="font-bold text-[#0A3D3B] dark:text-white text-lg">{t('send_prescription', 'Send Prescription')}</h1>
       </div>
 
       <div className="flex-1 overflow-y-auto p-6 flex flex-col">
           {step === 'upload' ? (
              <div className="flex-1 flex flex-col">
-                <p className="text-sm text-gray-600 mb-6">
+                <p className="text-sm text-[#5C807F] dark:text-[#9FC8C7] mb-6">
                    {t('upload_prescription_desc', 'Upload a clear picture or PDF of your prescription. A pharmacist will review it and provide a quote.')}
                 </p>
 
@@ -182,20 +182,20 @@ export function PatientPrescriptionUpload() {
                    <button 
                      disabled={uploading || scanning}
                      onClick={() => fileInputRef.current?.click()} 
-                     className="bg-white dark:bg-black border-2 border-dashed border-indigo-200 rounded-3xl p-6 flex flex-col items-center justify-center gap-3 hover:bg-indigo-50 transition text-[var(--app-primary-color)] disabled:opacity-50 overflow-hidden relative"
+                     className="bg-white dark:bg-[#0A3D3B] border-2 border-dashed border-[#CFE4E3] dark:border-[#145250] rounded-3xl p-6 flex flex-col items-center justify-center gap-3 hover:bg-[#D7F1EA]/40 dark:hover:bg-[#0E4A47] hover:border-[#0E7673] transition text-[#0E7673] dark:text-[#38B794] disabled:opacity-50 overflow-hidden relative"
                    >
                       {uploading ? (
                          <div className="flex flex-col items-center w-full px-4">
                             <Loader2 size={32} className="animate-spin mb-3" />
                             <span className="font-bold mb-2">{t('uploading', 'Uploading...')} {Math.round(progress)}%</span>
-                            <div className="w-full bg-indigo-100 rounded-full h-2.5">
-                              <div className="bg-[var(--app-primary-color)] h-2.5 rounded-full transition-all duration-300" style={{ width: `${progress}%` }}></div>
+                            <div className="w-full bg-[#E7F1F1] dark:bg-[#062625] rounded-full h-2.5">
+                              <div className="bg-[#0E7673] dark:bg-[#38B794] h-2.5 rounded-full transition-all duration-300" style={{ width: `${progress}%` }}></div>
                             </div>
                          </div>
                       ) : (
                          <>
                             <Upload size={32} />
-                            <span className="font-bold">{t('upload_file_btn', 'Upload File (PDF/JPG)')}</span>
+                            <span className="font-bold text-[#0A3D3B] dark:text-white">{t('upload_file_btn', 'Upload File (PDF/JPG)')}</span>
                          </>
                       )}
                    </button>
@@ -203,7 +203,7 @@ export function PatientPrescriptionUpload() {
                    {!uploading && (
                      <button
                        onClick={() => setScanning(!scanning)}
-                       className={`border-2 border-dashed rounded-3xl p-6 flex flex-col items-center justify-center gap-3 transition ${scanning ? 'bg-red-50 border-red-200 text-red-600' : 'bg-white dark:bg-black border-indigo-200 text-[var(--app-primary-color)] hover:bg-indigo-50'}`}
+                       className={`border-2 border-dashed rounded-3xl p-6 flex flex-col items-center justify-center gap-3 transition ${scanning ? 'bg-red-50 dark:bg-red-950/30 border-red-300 dark:border-red-800 text-red-600 dark:text-red-400' : 'bg-white dark:bg-[#0A3D3B] border-[#CFE4E3] dark:border-[#145250] text-[#0E7673] dark:text-[#38B794] hover:bg-[#D7F1EA]/40 dark:hover:bg-[#0E4A47] hover:border-[#0E7673]'}`}
                      >
                        {scanning ? (
                          <>
@@ -212,7 +212,7 @@ export function PatientPrescriptionUpload() {
                        ) : (
                          <>
                            <QrCode size={32} />
-                           <span className="font-bold">{t('scan_code', 'Scan QR / Barcode')}</span>
+                           <span className="font-bold text-[#0A3D3B] dark:text-white">{t('scan_code', 'Scan QR / Barcode')}</span>
                          </>
                        )}
                      </button>
@@ -220,30 +220,30 @@ export function PatientPrescriptionUpload() {
                 </div>
 
                 {scanning && (
-                  <div className="w-full bg-white dark:bg-slate-800 rounded-3xl p-4 shadow-sm border border-gray-100 dark:border-slate-700">
+                  <div className="w-full bg-white dark:bg-[#0A3D3B] rounded-3xl p-4 shadow-sm border border-[#CFE4E3] dark:border-[#145250]">
                     <div id="qr-reader" className="w-full h-full rounded-2xl overflow-hidden [&>div]:!border-none" />
                   </div>
                 )}
              </div>
           ) : (
              <div className="flex-1 flex flex-col items-center justify-center text-center">
-                <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-6">
+                <div className="w-20 h-20 bg-[#D7F1EA] dark:bg-[#0E4A47] text-[#0E7673] dark:text-[#38B794] rounded-full flex items-center justify-center mb-6 border border-[#CFE4E3] dark:border-[#145250]">
                    <CheckCircle size={40} />
                 </div>
-                <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{t('prescription_sent', 'Prescription Sent!')}</h2>
-                <p className="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500 mb-8 max-w-[250px]">
+                <h2 className="text-xl font-bold text-[#0A3D3B] dark:text-white mb-2">{t('prescription_sent', 'Prescription Sent!')}</h2>
+                <p className="text-sm text-[#5C807F] dark:text-[#9FC8C7] mb-8 max-w-[260px]">
                    {t('prescription_sent_desc', 'The pharmacy is reviewing your prescription. You will receive a quote shortly.')}
                 </p>
-                <div className="w-full space-y-3">
+                <div className="w-full max-w-sm space-y-3">
                    <button 
                      onClick={() => navigate('/patient')} 
-                     className="w-full bg-[var(--app-primary-color)] text-white font-bold py-4 rounded-xl shadow-lg shadow-indigo-200"
+                     className="w-full bg-[#0E7673] hover:bg-[#0A5A58] text-white font-bold py-4 rounded-full shadow-md transition"
                    >
                       {t('return_to_home', 'Return to Home')}
                    </button>
                    <button 
                      onClick={() => navigate('/patient/orders')} 
-                     className="w-full bg-slate-200 text-slate-800 dark:text-slate-100 font-bold py-4 rounded-xl"
+                     className="w-full bg-[#E7F1F1] dark:bg-[#0A3D3B] text-[#0A3D3B] dark:text-[#D7F1EA] border border-[#CFE4E3] dark:border-[#145250] font-bold py-4 rounded-full hover:bg-[#D7F1EA] dark:hover:bg-[#0E4A47] transition"
                    >
                       {t('view_orders', 'View Orders')}
                    </button>

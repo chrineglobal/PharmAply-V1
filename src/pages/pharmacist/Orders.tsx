@@ -81,13 +81,13 @@ export function PharmacistOrders() {
       <div className="px-8 py-6 flex items-center justify-between shrink-0">
           <div className="flex-1 flex items-center">
              <div className="relative w-full max-w-sm">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#5C807F] dark:text-[#9FC8C7]" size={18} />
                 <input 
                    type="text" 
                    placeholder={t('search_orders', 'Rechercher des commandes...')} 
                    value={searchTerm}
                    onChange={(e) => setSearchTerm(e.target.value)}
-                   className="w-full bg-[#FAFBFA] dark:bg-slate-800 border border-transparent focus:border-gray-200 py-3 pl-12 pr-4 rounded-full text-sm outline-none text-gray-900 dark:text-white transition-all shadow-sm"
+                   className="w-full bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] focus:border-[#0E7673] dark:focus:border-[#38B794] py-3 pl-12 pr-4 rounded-full text-sm outline-none text-[#0A3D3B] dark:text-white placeholder-[#5C807F] dark:placeholder-[#9FC8C7] transition-all shadow-sm"
                 />
              </div>
           </div>
@@ -95,64 +95,61 @@ export function PharmacistOrders() {
 
       <div className="flex-1 overflow-y-auto px-8 pb-12 custom-scrollbar space-y-8">
          <div className="flex items-center justify-between">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">
+            <h1 className="text-3xl font-bold text-[#0A3D3B] dark:text-white tracking-tight">
                {t('orders', 'Commandes')}
             </h1>
          </div>
 
          {/* Filtering Tabs & Actions */}
          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-            <div className="flex gap-6 pb-2 text-sm font-bold overflow-x-auto hide-scrollbar">
+            <div className="flex gap-2 pb-2 text-sm font-bold overflow-x-auto hide-scrollbar">
                 {(['All', 'pending', 'preparing', 'ready', 'cancelled', 'rejected'] as const).map(tab => (
                  <button 
                     key={tab}
                     onClick={() => setActiveTab(tab)}
-                    className={`pb-2 capitalize whitespace-nowrap transition-colors relative ${activeTab === tab ? 'text-[#0B3B3C] dark:text-gray-200' : 'text-gray-400 dark:text-gray-500 hover:text-gray-600'}`}
+                    className={`px-4 py-2 rounded-full capitalize whitespace-nowrap transition-colors ${activeTab === tab ? 'bg-[#0E7673] text-white shadow-sm' : 'bg-white dark:bg-[#0A3D3B] text-[#5C807F] dark:text-[#9FC8C7] border border-[#CFE4E3] dark:border-[#145250] hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47]'}`}
                  >
                     {tab === 'All' ? t('all', 'Tous') : tab}
-                    {activeTab === tab && (
-                       <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#0B3B3C] rounded-t-full"></span>
-                    )}
                  </button>
                 ))}
             </div>
 
             <div className="flex items-center gap-3">
-               <button className="flex items-center gap-1.5 bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 px-3 py-2.5 rounded-xl text-xs font-bold text-gray-700 dark:text-gray-300 shadow-sm">
+               <button className="flex items-center gap-1.5 bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] px-4 py-2.5 rounded-full text-xs font-bold text-[#0A3D3B] dark:text-[#D7F1EA] hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47] transition-colors shadow-sm">
                   <Settings size={14} /> {t('filter', 'Filtrer')} <ChevronDown size={12} />
                </button>
-               <button className="flex items-center gap-1.5 bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 px-3 py-2.5 rounded-xl text-xs font-bold text-gray-700 dark:text-gray-300 shadow-sm">
+               <button className="flex items-center gap-1.5 bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] px-4 py-2.5 rounded-full text-xs font-bold text-[#0A3D3B] dark:text-[#D7F1EA] hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47] transition-colors shadow-sm">
                   <ArrowUpRight size={14} /> {t('sort_by', 'Trier par')} <ChevronDown size={12} />
                </button>
             </div>
          </div>
 
-         <div className="bg-white dark:bg-slate-800 rounded-3xl border border-gray-100 dark:border-slate-700 overflow-hidden shadow-sm">
+         <div className="bg-white dark:bg-[#0A3D3B] rounded-3xl border border-[#CFE4E3] dark:border-[#145250] overflow-hidden shadow-sm">
             <div className="overflow-x-auto">
                <table className="w-full text-left border-collapse">
                   <thead>
-                     <tr className="border-b border-gray-100 dark:border-slate-700">
-                        <th className="py-4 px-6 text-xs font-bold tracking-wider text-gray-500 uppercase">{t('name', 'Nom')}</th>
-                        <th className="py-4 px-6 text-xs font-bold tracking-wider text-gray-500 uppercase">{t('medicine', 'Médicament')}</th>
-                        <th className="py-4 px-6 text-xs font-bold tracking-wider text-gray-500 uppercase">{t('status', 'Statut')}</th>
-                        <th className="py-4 px-6 text-xs font-bold tracking-wider text-gray-500 uppercase">{t('quantity', 'Quantité')}</th>
-                        <th className="py-4 px-6 text-xs font-bold tracking-wider text-gray-500 uppercase">{t('total_price', 'Prix Total')}</th>
-                        <th className="py-4 px-6 text-xs font-bold tracking-wider text-gray-500 uppercase flex items-center gap-1">{t('date', 'Date')} <ChevronDown size={12}/></th>
-                        <th className="py-4 px-6 text-xs font-bold tracking-wider text-gray-500 uppercase text-right">{t('actions', 'Action')}</th>
+                     <tr className="border-b border-[#CFE4E3] dark:border-[#145250]">
+                        <th className="py-4 px-6 text-xs font-bold tracking-wider text-[#5C807F] dark:text-[#9FC8C7] uppercase">{t('name', 'Nom')}</th>
+                        <th className="py-4 px-6 text-xs font-bold tracking-wider text-[#5C807F] dark:text-[#9FC8C7] uppercase">{t('medicine', 'Médicament')}</th>
+                        <th className="py-4 px-6 text-xs font-bold tracking-wider text-[#5C807F] dark:text-[#9FC8C7] uppercase">{t('status', 'Statut')}</th>
+                        <th className="py-4 px-6 text-xs font-bold tracking-wider text-[#5C807F] dark:text-[#9FC8C7] uppercase">{t('quantity', 'Quantité')}</th>
+                        <th className="py-4 px-6 text-xs font-bold tracking-wider text-[#5C807F] dark:text-[#9FC8C7] uppercase">{t('total_price', 'Prix Total')}</th>
+                        <th className="py-4 px-6 text-xs font-bold tracking-wider text-[#5C807F] dark:text-[#9FC8C7] uppercase flex items-center gap-1">{t('date', 'Date')} <ChevronDown size={12}/></th>
+                        <th className="py-4 px-6 text-xs font-bold tracking-wider text-[#5C807F] dark:text-[#9FC8C7] uppercase text-right">{t('actions', 'Action')}</th>
                      </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-50 dark:divide-slate-700/50">
+                  <tbody className="divide-y divide-[#CFE4E3]/60 dark:divide-[#145250]">
                      {loading ? (
-                        <tr><td colSpan={7} className="py-8 text-center text-gray-500 text-sm animate-pulse">{t('loading_orders', 'Chargement des commandes...')}</td></tr>
+                        <tr><td colSpan={7} className="py-8 text-center text-[#5C807F] dark:text-[#9FC8C7] text-sm animate-pulse">{t('loading_orders', 'Chargement des commandes...')}</td></tr>
                      ) : filteredOrders.length === 0 ? (
-                        <tr><td colSpan={7} className="py-8 text-center text-gray-500 text-sm">{t('no_active_orders', 'Aucune commande.')}</td></tr>
+                        <tr><td colSpan={7} className="py-8 text-center text-[#5C807F] dark:text-[#9FC8C7] text-sm">{t('no_active_orders', 'Aucune commande.')}</td></tr>
                      ) : (
                         filteredOrders.map((order) => {
                            const pId = order.patientId || order.userId;
                            const liveName = userProfiles[pId]?.name || order.patientName || 'Client';
                            const livePhoto = userProfiles[pId]?.photoUrl || order.patientPhoto || order.patientPhotoUrl || '';
                            return (
-                           <tr key={order.id} className="hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-slate-700/30 transition-colors cursor-pointer" onClick={() => navigate(`/pharmacist/order/${order.id}`)}>
+                           <tr key={order.id} className="hover:bg-[#F5FAFA] dark:hover:bg-[#0E4A47]/50 transition-colors cursor-pointer" onClick={() => navigate(`/pharmacist/order/${order.id}`)}>
                               <td className="py-4 px-6">
                                  <div className="flex items-center gap-3">
                                     <UserAvatar
@@ -161,33 +158,33 @@ export function PharmacistOrders() {
                                        photoUrl={livePhoto}
                                        sizeClassName="w-8 h-8"
                                     />
-                                    <span className="font-bold text-gray-800 dark:text-white text-sm">{liveName}</span>
+                                    <span className="font-bold text-[#0A3D3B] dark:text-white text-sm">{liveName}</span>
                                  </div>
                               </td>
-                              <td className="py-4 px-6 text-sm font-medium text-gray-600 dark:text-gray-300">
+                              <td className="py-4 px-6 text-sm font-medium text-[#5C807F] dark:text-[#D7F1EA]">
                                  {order.items && order.items[0] ? order.items[0].name : 'Item'}
                                  {order.items && order.items.length > 1 && ` (+${order.items.length - 1})`}
                               </td>
                               <td className="py-4 px-6 text-sm">
                                  <span className={`capitalize font-bold text-xs ${
-                                     order.status === 'pending' ? 'text-green-600' :
-                                     order.status === 'preparing' ? 'text-blue-600' :
-                                     order.status === 'ready' ? 'text-purple-600' :
-                                     order.status === 'delivered' ? 'text-[var(--app-primary-color)]' :
+                                     order.status === 'pending' ? 'text-amber-600 dark:text-amber-400' :
+                                     order.status === 'preparing' ? 'text-[#0E7673] dark:text-[#38B794]' :
+                                     order.status === 'ready' ? 'text-[#0A3D3B] dark:text-[#D7F1EA]' :
+                                     order.status === 'delivered' ? 'text-emerald-600 dark:text-emerald-400' :
                                      'text-red-500'
                                  }`}>
                                     {order.status}
                                  </span>
                               </td>
                               <td className="py-4 px-6">
-                                 <div className="flex items-center gap-2 bg-[#FAFBFC] dark:bg-slate-900 px-3 py-1.5 rounded-full w-max border border-gray-100 dark:border-slate-700">
-                                    <span className="text-xs font-bold text-[#0B3B3C] dark:text-gray-300">{order.items ? order.items.reduce((acc: any, curr: any) => acc + curr.quantity, 0) : 0}</span>
+                                 <div className="flex items-center gap-2 bg-[#E7F1F1] dark:bg-[#062625] px-3 py-1.5 rounded-full w-max border border-[#CFE4E3] dark:border-[#145250]">
+                                    <span className="text-xs font-bold text-[#0A3D3B] dark:text-[#D7F1EA] tabular-nums">{order.items ? order.items.reduce((acc: any, curr: any) => acc + curr.quantity, 0) : 0}</span>
                                  </div>
                               </td>
-                              <td className="py-4 px-6 font-bold text-gray-900 dark:text-white text-sm">
+                              <td className="py-4 px-6 font-bold text-[#0E7673] dark:text-[#38B794] text-sm tabular-nums">
                                  {formatCurrency(order.total || 0)}
                               </td>
-                              <td className="py-4 px-6 text-xs font-medium text-gray-500 dark:text-gray-400">
+                              <td className="py-4 px-6 text-xs font-medium text-[#5C807F] dark:text-[#9FC8C7]">
                                  {order.createdAt ? dayjs(parseDate(order.createdAt)).format('MMM DD, YYYY hh:mm A') : 'N/A'}
                               </td>
                               <td className="py-4 px-6 text-right">
@@ -196,7 +193,7 @@ export function PharmacistOrders() {
                                        e.stopPropagation();
                                        navigate(`/pharmacist/messages/${order.id}`, { state: { patientId: order.patientId } });
                                     }}
-                                    className="bg-indigo-50 text-[var(--app-primary-color)] hover:bg-indigo-100 dark:bg-[var(--app-primary-color)]/80/10 dark:text-[var(--app-primary-color)] dark:hover:bg-[var(--app-primary-color)]/80/20 px-3 py-1.5 rounded-xl text-xs font-bold transition-colors"
+                                    className="bg-[#D7F1EA] text-[#0E7673] hover:bg-[#38B794] hover:text-[#0A3D3B] dark:bg-[#0E4A47] dark:text-[#38B794] dark:hover:bg-[#38B794] dark:hover:text-[#0A3D3B] px-4 py-1.5 rounded-full text-xs font-bold transition-colors"
                                  >
                                     {t('messages', 'Messagerie')}
                                  </button>

@@ -124,7 +124,7 @@ export function PharmacistHome() {
   const rawPieData = Array.from(categorySalesMap.entries()).map(([name, value]) => ({ name, value }));
   const pieData = rawPieData.length > 0 ? rawPieData.sort((a,b) => b.value - a.value).slice(0, 4) : [{name: 'No Sales', value: 1}];
   
-  const COLORS = ['#A2E2D5', '#FFB8BA', '#C1BDEB', '#D3F5A8'];
+  const COLORS = ['#0E7673', '#38B794', '#5C807F', '#9FC8C7'];
 
   return (
     <div className="flex-1 bg-transparent flex flex-col relative h-full overflow-hidden">
@@ -133,11 +133,11 @@ export function PharmacistHome() {
       <div className="px-8 py-6 flex items-center justify-between shrink-0">
           <div className="flex-1 flex items-center">
              <div className="relative w-full max-w-sm">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#5C807F] dark:text-[#9FC8C7]" size={18} />
                 <input 
                    type="text" 
                    placeholder={t('search', 'Rechercher...')} 
-                   className="w-full bg-[#FAFBFA] dark:bg-slate-800 border border-transparent focus:border-gray-200 py-3 pl-12 pr-4 rounded-full text-sm outline-none text-gray-900 dark:text-white transition-all shadow-sm"
+                   className="w-full bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] focus:border-[#0E7673] dark:focus:border-[#38B794] py-3 pl-12 pr-4 rounded-full text-sm outline-none text-[#0A3D3B] dark:text-white placeholder-[#5C807F] dark:placeholder-[#9FC8C7] transition-all shadow-sm"
                 />
              </div>
           </div>
@@ -147,7 +147,7 @@ export function PharmacistHome() {
              
              <button 
                 onClick={toggleDarkMode}
-                className="w-10 h-10 flex items-center justify-center bg-[#FAFBFA] dark:bg-slate-800 hover:bg-gray-100 dark:bg-zinc-800 dark:hover:bg-slate-700 transition-colors rounded-full text-gray-600 dark:text-gray-300 shadow-sm border border-gray-100 dark:border-zinc-700"
+                className="w-10 h-10 flex items-center justify-center bg-white dark:bg-[#0A3D3B] hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47] transition-colors rounded-full text-[#0A3D3B] dark:text-[#D7F1EA] shadow-sm border border-[#CFE4E3] dark:border-[#145250]"
                 title={isDarkMode ? t('light_mode', 'Mode clair') : t('dark_mode', 'Mode sombre')}
              >
                 {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
@@ -155,7 +155,7 @@ export function PharmacistHome() {
 
              <button 
                 onClick={() => navigate('/pharmacist/messages')}
-                className="w-10 h-10 flex items-center justify-center bg-[#FAFBFA] dark:bg-slate-800 hover:bg-gray-100 dark:bg-zinc-800 dark:hover:bg-slate-700 transition-colors rounded-full text-gray-600 dark:text-gray-300 shadow-sm border border-gray-100 dark:border-zinc-700"
+                className="w-10 h-10 flex items-center justify-center bg-white dark:bg-[#0A3D3B] hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47] transition-colors rounded-full text-[#0A3D3B] dark:text-[#D7F1EA] shadow-sm border border-[#CFE4E3] dark:border-[#145250]"
                 title={t('messages', 'Messagerie')}
              >
                 <MessageSquare size={18} />
@@ -167,13 +167,13 @@ export function PharmacistHome() {
                 <img 
                   src={user?.photoURL || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"} 
                   alt="Profile" 
-                  className="w-10 h-10 rounded-full object-cover shadow-sm"
+                  className="w-10 h-10 rounded-full object-cover shadow-sm border border-[#CFE4E3] dark:border-[#145250]"
                 />
                 <div className="hidden sm:block">
-                   <p className="font-bold text-gray-900 dark:text-white text-sm">{userData?.name || user?.displayName || pharmacy?.name || t('pharmacist', 'Pharmacien')}</p>
-                   <p className="text-xs text-gray-500">{user?.email}</p>
+                   <p className="font-bold text-[#0A3D3B] dark:text-white text-sm">{userData?.name || user?.displayName || pharmacy?.name || t('pharmacist', 'Pharmacien')}</p>
+                   <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7]">{user?.email}</p>
                 </div>
-                <ChevronDown size={14} className="text-gray-400 hidden sm:block" />
+                <ChevronDown size={14} className="text-[#5C807F] dark:text-[#9FC8C7] hidden sm:block" />
              </div>
           </div>
       </div>
@@ -182,10 +182,10 @@ export function PharmacistHome() {
          
          {/* Welcome Section */}
          <div className="flex items-center justify-between">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">
+            <h1 className="text-3xl font-bold text-[#0A3D3B] dark:text-white tracking-tight">
                {t('welcome', 'Bienvenue')} {userData?.name?.split(' ')[0] || ''} !
             </h1>
-            <div className="bg-[#0B3B3C] text-white px-5 py-2.5 rounded-full flex items-center gap-2 text-sm font-bold shadow-md cursor-pointer hover:bg-[#082a2b] transition-colors">
+            <div className="bg-[#0E7673] text-white px-5 py-2.5 rounded-full flex items-center gap-2 text-sm font-bold shadow-sm cursor-pointer hover:bg-[#0A5A58] transition-colors">
                <span>{t('team_member', 'Membre de l\'équipe')}</span>
                <ChevronDown size={14} />
             </div>
@@ -194,107 +194,107 @@ export function PharmacistHome() {
          {/* Stats Row */}
          <div>
             <div className="flex items-center justify-between mb-4">
-               <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100">{t('pharmacy_sales_results', 'Résultats des Ventes de la Pharmacie')}</h2>
+               <h2 className="text-xl font-bold text-[#0A3D3B] dark:text-white">{t('pharmacy_sales_results', 'Résultats des Ventes de la Pharmacie')}</h2>
                <div className="flex items-center gap-3">
-                  <div className="bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 px-4 py-2 rounded-full flex items-center gap-2 text-sm font-bold shadow-sm cursor-pointer">
-                     <Clock size={14} />
+                  <div className="bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] px-4 py-2 rounded-full flex items-center gap-2 text-sm font-bold text-[#0A3D3B] dark:text-[#D7F1EA] shadow-sm cursor-pointer">
+                     <Clock size={14} className="text-[#0E7673] dark:text-[#38B794]" />
                      <span>{t('this_month', 'Ce mois')}</span>
-                     <ChevronDown size={14} className="text-gray-400" />
+                     <ChevronDown size={14} className="text-[#5C807F] dark:text-[#9FC8C7]" />
                   </div>
-                  <button className="w-9 h-9 rounded-full bg-white dark:bg-zinc-950 border border-gray-100 flex items-center justify-center text-gray-600 shadow-sm hover:bg-gray-50 dark:bg-zinc-900">
+                  <button className="w-9 h-9 rounded-full bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] flex items-center justify-center text-[#0E7673] dark:text-[#38B794] shadow-sm hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47] transition-colors">
                      <Activity size={16} />
                   </button>
                </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-               <div className="bg-[#D3F5A8] rounded-3xl p-6 relative overflow-hidden shadow-sm">
+               <div className="bg-[#D7F1EA] dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] rounded-3xl p-6 relative overflow-hidden shadow-sm">
                    <div className="flex justify-between items-start mb-6 z-10 relative">
-                      <div className="w-8 h-8 rounded-full bg-black/5 flex items-center justify-center text-[#0B3B3C]">
-                         <Lock size={14} />
+                      <div className="w-9 h-9 rounded-full bg-white/80 dark:bg-[#062625] flex items-center justify-center text-[#0E7673] dark:text-[#38B794]">
+                         <Lock size={15} />
                       </div>
-                      <MoreHorizontal size={16} className="text-[#0B3B3C]/50" />
+                      <MoreHorizontal size={16} className="text-[#0A3D3B]/50 dark:text-[#9FC8C7]" />
                    </div>
                    <div className="z-10 relative">
-                      <p className="text-[#0B3B3C]/70 text-sm font-bold mb-1">{t('todays_sales', 'Ventes du jour')}</p>
-                      <h3 className="text-3xl font-black text-[#0B3B3C] mb-2">{formatCurrency(todayRevenue)}</h3>
-                      <p className="text-xs font-bold text-[#0B3B3C]/60 flex items-center gap-1">
-                         <span className="text-[#0B3B3C]">+2.5%</span> {t('this_month', 'Ce mois')}
+                      <p className="text-[#0A3D3B]/80 dark:text-[#9FC8C7] text-sm font-bold mb-1">{t('todays_sales', 'Ventes du jour')}</p>
+                      <h3 className="text-3xl font-black text-[#0A3D3B] dark:text-white mb-2 tabular-nums">{formatCurrency(todayRevenue)}</h3>
+                      <p className="text-xs font-bold text-[#0E7673] dark:text-[#38B794] flex items-center gap-1">
+                         <span>+2.5%</span> {t('this_month', 'Ce mois')}
                       </p>
                    </div>
                    <div className="absolute bottom-0 right-4 flex items-end gap-1.5 opacity-20 h-16">
-                      <div className="w-3 bg-[#0B3B3C] rounded-t-sm h-full"></div>
-                      <div className="w-3 bg-[#0B3B3C] rounded-t-sm h-3/4"></div>
-                      <div className="w-3 bg-[#0B3B3C] rounded-t-sm h-1/2"></div>
-                      <div className="w-3 bg-[#0B3B3C] rounded-t-sm h-full"></div>
+                      <div className="w-3 bg-[#0E7673] dark:bg-[#38B794] rounded-t-sm h-full"></div>
+                      <div className="w-3 bg-[#0E7673] dark:bg-[#38B794] rounded-t-sm h-3/4"></div>
+                      <div className="w-3 bg-[#0E7673] dark:bg-[#38B794] rounded-t-sm h-1/2"></div>
+                      <div className="w-3 bg-[#0E7673] dark:bg-[#38B794] rounded-t-sm h-full"></div>
                    </div>
                </div>
 
-               <div className="bg-[#A2E2D5] rounded-3xl p-6 relative overflow-hidden shadow-sm">
+               <div className="bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] rounded-3xl p-6 relative overflow-hidden shadow-sm">
                    <div className="flex justify-between items-start mb-6 z-10 relative">
-                      <div className="w-8 h-8 rounded-full bg-black/5 flex items-center justify-center text-[#0B3B3C]">
-                         <Grid size={14} />
+                      <div className="w-9 h-9 rounded-full bg-[#E7F1F1] dark:bg-[#062625] flex items-center justify-center text-[#0E7673] dark:text-[#38B794]">
+                         <Grid size={15} />
                       </div>
-                      <MoreHorizontal size={16} className="text-[#0B3B3C]/50" />
+                      <MoreHorizontal size={16} className="text-[#5C807F] dark:text-[#9FC8C7]" />
                    </div>
                    <div className="z-10 relative">
-                      <p className="text-[#0B3B3C]/70 text-sm font-bold mb-1">{t('available_categories', 'Catégories disponibles')}</p>
-                      <h3 className="text-3xl font-black text-[#0B3B3C] mb-2">
+                      <p className="text-[#5C807F] dark:text-[#9FC8C7] text-sm font-bold mb-1">{t('available_categories', 'Catégories disponibles')}</p>
+                      <h3 className="text-3xl font-black text-[#0A3D3B] dark:text-white mb-2 tabular-nums">
                         {Array.from(new Set(products.map(p => p.category || p.ux_category_id))).filter(Boolean).length}
                       </h3>
-                      <p className="text-xs font-bold text-[#0B3B3C]/60 flex items-center gap-1">
-                         <span className="text-[#0B3B3C]">+2.5%</span> {t('this_month', 'Ce mois')}
+                      <p className="text-xs font-bold text-[#38B794] flex items-center gap-1">
+                         <span>+2.5%</span> {t('this_month', 'Ce mois')}
                       </p>
                    </div>
-                   <div className="absolute bottom-0 right-4 flex items-end gap-1.5 opacity-20 h-16">
-                      <div className="w-3 bg-[#0B3B3C] rounded-t-sm h-1/2"></div>
-                      <div className="w-3 bg-[#0B3B3C] rounded-t-sm h-full"></div>
-                      <div className="w-3 bg-[#0B3B3C] rounded-t-sm h-3/4"></div>
-                      <div className="w-3 bg-[#0B3B3C] rounded-t-sm h-full"></div>
+                   <div className="absolute bottom-0 right-4 flex items-end gap-1.5 opacity-15 h-16">
+                      <div className="w-3 bg-[#38B794] rounded-t-sm h-1/2"></div>
+                      <div className="w-3 bg-[#38B794] rounded-t-sm h-full"></div>
+                      <div className="w-3 bg-[#38B794] rounded-t-sm h-3/4"></div>
+                      <div className="w-3 bg-[#38B794] rounded-t-sm h-full"></div>
                    </div>
                </div>
 
-               <div className="bg-[#FFB8BA] rounded-3xl p-6 relative overflow-hidden shadow-sm">
+               <div className="bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] rounded-3xl p-6 relative overflow-hidden shadow-sm">
                    <div className="flex justify-between items-start mb-6 z-10 relative">
-                      <div className="w-8 h-8 rounded-full bg-black/5 flex items-center justify-center text-[#0B3B3C]">
-                         <Activity size={14} />
+                      <div className="w-9 h-9 rounded-full bg-red-50 dark:bg-red-950/40 flex items-center justify-center text-red-600 dark:text-red-400">
+                         <Activity size={15} />
                       </div>
-                      <MoreHorizontal size={16} className="text-[#0B3B3C]/50" />
+                      <MoreHorizontal size={16} className="text-[#5C807F] dark:text-[#9FC8C7]" />
                    </div>
                    <div className="z-10 relative">
-                      <p className="text-[#0B3B3C]/70 text-sm font-bold mb-1">{t('expired_medicines', 'Médicaments expirés')}</p>
-                      <h3 className="text-3xl font-black text-[#0B3B3C] mb-2">{expiredPercentage.toFixed(2)}%</h3>
-                      <p className="text-xs font-bold text-[#0B3B3C]/60 flex items-center gap-1">
-                         <span className="text-[#0B3B3C]">+2.5%</span> {t('this_month', 'Ce mois')}
+                      <p className="text-[#5C807F] dark:text-[#9FC8C7] text-sm font-bold mb-1">{t('expired_medicines', 'Médicaments expirés')}</p>
+                      <h3 className="text-3xl font-black text-[#0A3D3B] dark:text-white mb-2 tabular-nums">{expiredPercentage.toFixed(2)}%</h3>
+                      <p className="text-xs font-bold text-[#5C807F] dark:text-[#9FC8C7] flex items-center gap-1">
+                         <span className="text-red-500 dark:text-red-400">{expiredCount}</span> {t('this_month', 'Ce mois')}
                       </p>
                    </div>
-                   <div className="absolute bottom-0 right-4 flex items-end gap-1.5 opacity-20 h-16">
-                      <div className="w-3 bg-[#0B3B3C] rounded-t-sm h-full"></div>
-                      <div className="w-3 bg-[#0B3B3C] rounded-t-sm h-1/2"></div>
-                      <div className="w-3 bg-[#0B3B3C] rounded-t-sm h-3/4"></div>
-                      <div className="w-3 bg-[#0B3B3C] rounded-t-sm h-1/4"></div>
+                   <div className="absolute bottom-0 right-4 flex items-end gap-1.5 opacity-15 h-16">
+                      <div className="w-3 bg-red-500 rounded-t-sm h-full"></div>
+                      <div className="w-3 bg-red-500 rounded-t-sm h-1/2"></div>
+                      <div className="w-3 bg-red-500 rounded-t-sm h-3/4"></div>
+                      <div className="w-3 bg-red-500 rounded-t-sm h-1/4"></div>
                    </div>
                </div>
 
-               <div className="bg-[#C1BDEB] rounded-3xl p-6 relative overflow-hidden shadow-sm">
+               <div className="bg-[#0E7673] dark:bg-[#0E4A47] border border-[#0E7673] dark:border-[#145250] rounded-3xl p-6 relative overflow-hidden shadow-sm text-white">
                    <div className="flex justify-between items-start mb-6 z-10 relative">
-                      <div className="w-8 h-8 rounded-full bg-black/5 flex items-center justify-center text-[#0B3B3C]">
-                         <Users size={14} />
+                      <div className="w-9 h-9 rounded-full bg-white/15 flex items-center justify-center text-[#D7F1EA]">
+                         <Users size={15} />
                       </div>
-                      <MoreHorizontal size={16} className="text-[#0B3B3C]/50" />
+                      <MoreHorizontal size={16} className="text-white/60" />
                    </div>
                    <div className="z-10 relative">
-                      <p className="text-[#0B3B3C]/70 text-sm font-bold mb-1">{t('system_users', 'Utilisateurs du système')}</p>
-                      <h3 className="text-3xl font-black text-[#0B3B3C] mb-2">{customers.size}</h3>
-                      <p className="text-xs font-bold text-[#0B3B3C]/60 flex items-center gap-1">
-                         <span className="text-[#0B3B3C]">+{customers.size > 0 ? '1' : '0'}</span> {t('this_month', 'Ce mois')}
+                      <p className="text-[#D7F1EA] text-sm font-bold mb-1">{t('system_users', 'Utilisateurs du système')}</p>
+                      <h3 className="text-3xl font-black text-white mb-2 tabular-nums">{customers.size}</h3>
+                      <p className="text-xs font-bold text-[#D7F1EA] flex items-center gap-1">
+                         <span className="text-[#38B794]">+{customers.size > 0 ? '1' : '0'}</span> {t('this_month', 'Ce mois')}
                       </p>
                    </div>
                    <div className="absolute bottom-0 right-4 flex items-end gap-1.5 opacity-20 h-16">
-                      <div className="w-3 bg-[#0B3B3C] rounded-t-sm h-3/4"></div>
-                      <div className="w-3 bg-[#0B3B3C] rounded-t-sm h-full"></div>
-                      <div className="w-3 bg-[#0B3B3C] rounded-t-sm h-1/2"></div>
-                      <div className="w-3 bg-[#0B3B3C] rounded-t-sm h-full"></div>
+                      <div className="w-3 bg-[#D7F1EA] rounded-t-sm h-3/4"></div>
+                      <div className="w-3 bg-[#D7F1EA] rounded-t-sm h-full"></div>
+                      <div className="w-3 bg-[#D7F1EA] rounded-t-sm h-1/2"></div>
+                      <div className="w-3 bg-[#D7F1EA] rounded-t-sm h-full"></div>
                    </div>
                </div>
             </div>
@@ -302,10 +302,10 @@ export function PharmacistHome() {
 
          {/* Charts Section */}
          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="bg-[#FAFBFC] dark:bg-slate-800 rounded-3xl p-6 relative overflow-hidden border border-gray-100 dark:border-slate-700 shadow-sm flex flex-col">
+            <div className="bg-white dark:bg-[#0A3D3B] rounded-3xl p-6 relative overflow-hidden border border-[#CFE4E3] dark:border-[#145250] shadow-sm flex flex-col">
                <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-lg font-bold text-gray-900 dark:text-white">{t('graph_report', 'Rapport Graphique')}</h3>
-                  <button className="w-8 h-8 flex items-center justify-center rounded-full bg-white dark:bg-slate-700 border border-gray-100 text-gray-500 hover:bg-gray-50 dark:bg-zinc-900">
+                  <h3 className="text-lg font-bold text-[#0A3D3B] dark:text-white">{t('graph_report', 'Rapport Graphique')}</h3>
+                  <button className="w-8 h-8 flex items-center justify-center rounded-full bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] text-[#5C807F] dark:text-[#9FC8C7] hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47] transition-colors">
                      <MoreHorizontal size={14} />
                   </button>
                </div>
@@ -318,7 +318,7 @@ export function PharmacistHome() {
                            cy="50%"
                            innerRadius={70}
                            outerRadius={100}
-                           fill="#8884d8"
+                           fill="#0E7673"
                            paddingAngle={5}
                            dataKey="value"
                         >
@@ -330,56 +330,56 @@ export function PharmacistHome() {
                      </PieChart>
                   </ResponsiveContainer>
                   <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                     <p className="text-gray-500 text-xs font-bold uppercase tracking-wider mb-1">{t('total', 'Total')}</p>
-                     <p className="text-2xl font-black text-gray-900 dark:text-white">{formatCurrency(totalRevenue)}</p>
+                     <p className="text-[#5C807F] dark:text-[#9FC8C7] text-xs font-bold uppercase tracking-wider mb-1">{t('total', 'Total')}</p>
+                     <p className="text-2xl font-black text-[#0A3D3B] dark:text-white tabular-nums">{formatCurrency(totalRevenue)}</p>
                   </div>
                </div>
-               <div className="flex justify-center gap-6 mt-4">
+               <div className="flex justify-center flex-wrap gap-6 mt-4">
                   {pieData.map((entry, idx) => (
                       <div key={entry.name} className="flex items-center gap-2">
                          <div className="w-3 h-3 rounded-full" style={{backgroundColor: COLORS[idx % COLORS.length]}}></div>
-                         <span className="text-xs font-medium text-gray-500">{entry.name}</span>
+                         <span className="text-xs font-medium text-[#5C807F] dark:text-[#9FC8C7]">{entry.name}</span>
                       </div>
                   ))}
                </div>
             </div>
 
-            <div className="bg-[#FAFBFC] dark:bg-slate-800 rounded-3xl p-6 relative overflow-hidden border border-gray-100 dark:border-slate-700 shadow-sm flex flex-col">
+            <div className="bg-white dark:bg-[#0A3D3B] rounded-3xl p-6 relative overflow-hidden border border-[#CFE4E3] dark:border-[#145250] shadow-sm flex flex-col">
                <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-lg font-bold text-gray-900 dark:text-white">{t('total_sales_overview', 'Aperçu Total des Ventes')}</h3>
-                  <button className="w-8 h-8 flex items-center justify-center rounded-full bg-white dark:bg-slate-700 border border-gray-100 text-gray-500 hover:bg-gray-50 dark:bg-zinc-900">
+                  <h3 className="text-lg font-bold text-[#0A3D3B] dark:text-white">{t('total_sales_overview', 'Aperçu Total des Ventes')}</h3>
+                  <button className="w-8 h-8 flex items-center justify-center rounded-full bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] text-[#5C807F] dark:text-[#9FC8C7] hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47] transition-colors">
                      <MoreHorizontal size={14} />
                   </button>
                </div>
                <div className="flex-1 min-h-[250px]">
                   <ResponsiveContainer width="100%" height={250}>
                      <BarChart data={salesData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB" />
+                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={isDarkMode ? "#145250" : "#CFE4E3"} />
                         <XAxis 
                            dataKey="name" 
                            axisLine={false} 
                            tickLine={false} 
-                           tick={{fill: '#9CA3AF', fontSize: 12, fontWeight: 600}} 
+                           tick={{fill: isDarkMode ? '#9FC8C7' : '#5C807F', fontSize: 12, fontWeight: 600}} 
                            dy={10}
                         />
                         <YAxis 
                            axisLine={false} 
                            tickLine={false} 
-                           tick={{fill: '#9CA3AF', fontSize: 12}}
+                           tick={{fill: isDarkMode ? '#9FC8C7' : '#5C807F', fontSize: 12}}
                            tickFormatter={(value) => `${value >= 1000 ? (value/1000).toFixed(1) + 'k' : value} XAF`}
                         />
                         <Tooltip 
-                           cursor={{fill: 'rgba(0,0,0,0.02)'}}
-                           contentStyle={{borderRadius: '16px', border: 'none', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'}}
+                           cursor={{fill: 'rgba(14, 118, 115, 0.06)'}}
+                           contentStyle={{borderRadius: '16px', border: '1px solid #CFE4E3', boxShadow: '0 4px 12px rgba(10, 61, 59, 0.08)'}}
                            formatter={(value: number) => [formatCurrency(value), 'Sales']}
-                           labelStyle={{fontWeight: 'bold', color: '#374151', marginBottom: '4px'}}
+                           labelStyle={{fontWeight: 'bold', color: '#0A3D3B', marginBottom: '4px'}}
                         />
                         <Bar dataKey="total" radius={[8, 8, 8, 8]} barSize={32}>
                            {
                               salesData.map((entry, index) => (
                                  <Cell key={`cell-${index}`} fill={
-                                    index === 3 ? '#D3F5A8' : // Highlight today or a specific column
-                                    index % 2 === 0 ? '#FFB8BA' : '#C1BDEB'
+                                    index === salesData.length - 1 ? '#0E7673' :
+                                    index % 2 === 0 ? '#38B794' : '#9FC8C7'
                                  } />
                               ))
                            }
@@ -393,49 +393,49 @@ export function PharmacistHome() {
          {/* Recent Sales List */}
          <div>
             <div className="flex flex-col lg:flex-row lg:items-center justify-between mb-6 gap-4 mt-8">
-               <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100">{t('recent_sales_list', 'Liste des Ventes Récentes')}</h2>
+               <h2 className="text-xl font-bold text-[#0A3D3B] dark:text-white">{t('recent_sales_list', 'Liste des Ventes Récentes')}</h2>
                <div className="flex items-center gap-3">
                   <div className="relative">
-                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={14} />
-                     <input type="text" placeholder={t('search', 'Rechercher...')} className="bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 py-2.5 pl-9 pr-4 rounded-xl text-xs font-medium w-48 outline-none shadow-sm" />
+                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[#5C807F] dark:text-[#9FC8C7]" size={14} />
+                     <input type="text" placeholder={t('search', 'Rechercher...')} className="bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] py-2.5 pl-9 pr-4 rounded-full text-xs font-medium text-[#0A3D3B] dark:text-white placeholder-[#5C807F] dark:placeholder-[#9FC8C7] w-48 outline-none shadow-sm" />
                   </div>
-                  <button className="flex items-center gap-1.5 bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 px-3 py-2.5 rounded-xl text-xs font-bold text-gray-700 dark:text-gray-300 shadow-sm">
+                  <button className="flex items-center gap-1.5 bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] px-4 py-2.5 rounded-full text-xs font-bold text-[#0A3D3B] dark:text-[#D7F1EA] hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47] transition-colors shadow-sm">
                      <Settings size={14} /> {t('filter', 'Filtrer')} <ChevronDown size={12} />
                   </button>
-                  <button className="flex items-center gap-1.5 bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 px-3 py-2.5 rounded-xl text-xs font-bold text-gray-700 dark:text-gray-300 shadow-sm">
+                  <button className="flex items-center gap-1.5 bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] px-4 py-2.5 rounded-full text-xs font-bold text-[#0A3D3B] dark:text-[#D7F1EA] hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47] transition-colors shadow-sm">
                      <ArrowUpRight size={14} /> {t('sort_by', 'Trier par')} <ChevronDown size={12} />
                   </button>
-                  <button className="w-9 h-9 flex items-center justify-center bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 rounded-xl text-gray-600 dark:text-gray-300 shadow-sm">
+                  <button className="w-9 h-9 flex items-center justify-center bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] rounded-full text-[#5C807F] dark:text-[#9FC8C7] hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47] transition-colors shadow-sm">
                      <MoreHorizontal size={14} />
                   </button>
                </div>
             </div>
 
-            <div className="bg-white dark:bg-slate-800 rounded-3xl border border-gray-100 dark:border-slate-700 overflow-hidden shadow-sm">
+            <div className="bg-white dark:bg-[#0A3D3B] rounded-3xl border border-[#CFE4E3] dark:border-[#145250] overflow-hidden shadow-sm">
                <div className="overflow-x-auto">
                   <table className="w-full text-left border-collapse">
                      <thead>
-                        <tr className="border-b border-gray-100 dark:border-slate-700">
-                           <th className="py-4 px-6 text-xs font-bold tracking-wider text-gray-500 uppercase">{t('name', 'Nom')}</th>
-                           <th className="py-4 px-6 text-xs font-bold tracking-wider text-gray-500 uppercase">{t('medicine', 'Médicament')}</th>
-                           <th className="py-4 px-6 text-xs font-bold tracking-wider text-gray-500 uppercase">{t('status', 'Statut')}</th>
-                           <th className="py-4 px-6 text-xs font-bold tracking-wider text-gray-500 uppercase">{t('quantity', 'Quantité')}</th>
-                           <th className="py-4 px-6 text-xs font-bold tracking-wider text-gray-500 uppercase">{t('total_price', 'Prix Total')}</th>
-                           <th className="py-4 px-6 text-xs font-bold tracking-wider text-gray-500 uppercase flex items-center gap-1">{t('date', 'Date')} <ChevronDown size={12}/></th>
+                        <tr className="border-b border-[#CFE4E3] dark:border-[#145250]">
+                           <th className="py-4 px-6 text-xs font-bold tracking-wider text-[#5C807F] dark:text-[#9FC8C7] uppercase">{t('name', 'Nom')}</th>
+                           <th className="py-4 px-6 text-xs font-bold tracking-wider text-[#5C807F] dark:text-[#9FC8C7] uppercase">{t('medicine', 'Médicament')}</th>
+                           <th className="py-4 px-6 text-xs font-bold tracking-wider text-[#5C807F] dark:text-[#9FC8C7] uppercase">{t('status', 'Statut')}</th>
+                           <th className="py-4 px-6 text-xs font-bold tracking-wider text-[#5C807F] dark:text-[#9FC8C7] uppercase">{t('quantity', 'Quantité')}</th>
+                           <th className="py-4 px-6 text-xs font-bold tracking-wider text-[#5C807F] dark:text-[#9FC8C7] uppercase">{t('total_price', 'Prix Total')}</th>
+                           <th className="py-4 px-6 text-xs font-bold tracking-wider text-[#5C807F] dark:text-[#9FC8C7] uppercase flex items-center gap-1">{t('date', 'Date')} <ChevronDown size={12}/></th>
                         </tr>
                      </thead>
-                      <tbody className="divide-y divide-gray-50 dark:divide-slate-700/50">
+                      <tbody className="divide-y divide-[#CFE4E3]/60 dark:divide-[#145250]">
                         {loading ? (
-                           <tr><td colSpan={6} className="py-8 text-center text-gray-500 text-sm">{t('loading_sales', 'Chargement des commandes...')}</td></tr>
+                           <tr><td colSpan={6} className="py-8 text-center text-[#5C807F] dark:text-[#9FC8C7] text-sm">{t('loading_sales', 'Chargement des commandes...')}</td></tr>
                         ) : orders.length === 0 ? (
-                           <tr><td colSpan={6} className="py-8 text-center text-gray-500 text-sm">{t('no_recent_sales', 'Aucune vente récente.')}</td></tr>
+                           <tr><td colSpan={6} className="py-8 text-center text-[#5C807F] dark:text-[#9FC8C7] text-sm">{t('no_recent_sales', 'Aucune vente récente.')}</td></tr>
                         ) : (
                            orders.slice(0, 5).map((order) => {
                               const pId = order.patientId || order.userId;
                               const liveName = userProfiles[pId]?.name || order.patientName || 'Client';
                               const livePhoto = userProfiles[pId]?.photoUrl || order.patientPhoto || order.patientPhotoUrl || '';
                               return (
-                              <tr key={order.id} className="hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-slate-700/30 transition-colors group">
+                              <tr key={order.id} className="hover:bg-[#F5FAFA] dark:hover:bg-[#0E4A47]/50 transition-colors group">
                                  <td className="py-4 px-6">
                                     <div className="flex items-center gap-3">
                                        <UserAvatar
@@ -444,25 +444,25 @@ export function PharmacistHome() {
                                           photoUrl={livePhoto}
                                           sizeClassName="w-8 h-8"
                                        />
-                                       <span className="font-bold text-gray-800 dark:text-white text-sm">{liveName}</span>
+                                       <span className="font-bold text-[#0A3D3B] dark:text-white text-sm">{liveName}</span>
                                     </div>
                                  </td>
-                                 <td className="py-4 px-6 text-sm font-medium text-gray-600 dark:text-gray-300">
+                                 <td className="py-4 px-6 text-sm font-medium text-[#5C807F] dark:text-[#D7F1EA]">
                                     {order.items && order.items[0] ? order.items[0].name : 'Item'}
                                     {order.items && order.items.length > 1 && ` (+${order.items.length - 1})`}
                                  </td>
-                                 <td className="py-4 px-6 text-sm text-gray-500 dark:text-gray-400 capitalize">
+                                 <td className="py-4 px-6 text-sm text-[#5C807F] dark:text-[#9FC8C7] capitalize">
                                     {order.status}
                                  </td>
                                  <td className="py-4 px-6">
-                                    <div className="flex items-center gap-2 bg-[#FAFBFC] dark:bg-slate-900 px-3 py-1.5 rounded-full w-max border border-gray-100 dark:border-slate-700">
-                                       <span className="text-xs font-bold text-[#0B3B3C] dark:text-gray-300">{order.items ? order.items.reduce((acc: any, curr: any) => acc + curr.quantity, 0) : 0}</span>
+                                    <div className="flex items-center gap-2 bg-[#E7F1F1] dark:bg-[#062625] px-3 py-1.5 rounded-full w-max border border-[#CFE4E3] dark:border-[#145250]">
+                                       <span className="text-xs font-bold text-[#0A3D3B] dark:text-[#D7F1EA] tabular-nums">{order.items ? order.items.reduce((acc: any, curr: any) => acc + curr.quantity, 0) : 0}</span>
                                     </div>
                                  </td>
-                                 <td className="py-4 px-6 font-bold text-gray-900 dark:text-white text-sm">
+                                 <td className="py-4 px-6 font-bold text-[#0E7673] dark:text-[#38B794] text-sm tabular-nums">
                                     {formatCurrency(order.total || 0)}
                                  </td>
-                                 <td className="py-4 px-6 text-xs font-medium text-gray-500 dark:text-gray-400">
+                                 <td className="py-4 px-6 text-xs font-medium text-[#5C807F] dark:text-[#9FC8C7]">
                                     {order.createdAt ? dayjs(parseDate(order.createdAt)).format('MMM DD, YYYY hh:mm A') : 'N/A'}
                                  </td>
                               </tr>

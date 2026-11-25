@@ -48,25 +48,25 @@ export function PatientWishlist() {
   };
 
   return (
-    <div className="flex-1 bg-slate-50 dark:bg-zinc-950 flex flex-col h-full overflow-hidden">
-      <div className="bg-white dark:bg-black px-6 pt-12 pb-4 shadow-sm z-10 flex items-center gap-4">
-         <button onClick={() => navigate(-1)} className="p-2 -ml-2 text-[var(--app-primary-color)] border border-gray-100 dark:border-zinc-800 rounded-full bg-white dark:bg-zinc-900 shadow-sm hover:bg-gray-50 transition">
+    <div className="flex-1 bg-[#F5FAFA] dark:bg-[#062625] flex flex-col h-full overflow-hidden">
+      <div className="bg-white dark:bg-[#0A3D3B] px-6 pt-12 pb-4 shadow-sm z-10 flex items-center gap-4 border-b border-[#CFE4E3] dark:border-[#145250]">
+         <button onClick={() => navigate(-1)} className="p-2 -ml-2 text-[#0E7673] dark:text-[#38B794] border border-[#CFE4E3] dark:border-[#145250] rounded-full bg-[#F5FAFA] dark:bg-[#062625] shadow-sm hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47] transition">
             <ArrowLeft size={20} />
          </button>
-         <h1 className="font-bold text-gray-900 dark:text-white text-xl">{t('wishlist', 'Wishlist & Saved')}</h1>
+         <h1 className="font-bold text-[#0A3D3B] dark:text-white text-xl">{t('wishlist', 'Wishlist & Saved')}</h1>
       </div>
 
       <div className="flex-1 overflow-y-auto p-6 space-y-6">
          {loading ? (
-           <div className="flex justify-center py-12"><Loader2 className="animate-spin text-[var(--app-primary-color)]" size={32} /></div>
+           <div className="flex justify-center py-12"><Loader2 className="animate-spin text-[#0E7673] dark:text-[#38B794]" size={32} /></div>
          ) : favorites.length === 0 ? (
            <div className="flex flex-col items-center justify-center text-center py-12">
-              <div className="w-16 h-16 bg-pink-50 rounded-full flex items-center justify-center mb-4 text-pink-300">
+              <div className="w-16 h-16 bg-[#D7F1EA] dark:bg-[#0E4A47] rounded-full flex items-center justify-center mb-4 text-[#0E7673] dark:text-[#38B794]">
                  <Heart size={32} />
               </div>
-              <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-2">{t('wishlist_empty', 'Your wishlist is empty')}</h2>
-              <p className="text-sm text-gray-500 dark:text-gray-400 max-w-[200px] mb-6">{t('save_favorite_desc', 'Save your favorite pharmacy products here.')}</p>
-              <button onClick={() => navigate('/patient/search')} className="bg-[var(--app-primary-color)] text-white font-bold py-3 px-6 rounded-full flex items-center gap-2">
+              <h2 className="text-lg font-bold text-[#0A3D3B] dark:text-white mb-2">{t('wishlist_empty', 'Your wishlist is empty')}</h2>
+              <p className="text-sm text-[#5C807F] dark:text-[#9FC8C7] max-w-[220px] mb-6">{t('save_favorite_desc', 'Save your favorite pharmacy products here.')}</p>
+              <button onClick={() => navigate('/patient/search')} className="bg-[#0E7673] hover:bg-[#0A5A58] text-white font-bold py-3 px-6 rounded-full flex items-center gap-2 transition">
                  <ShoppingBag size={20} /> {t('browse_products', 'Browse Products')}
               </button>
            </div>

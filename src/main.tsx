@@ -6,6 +6,18 @@ import { AuthProvider } from './components/AuthProvider';
 import { CartProvider } from './components/CartProvider';
 import './index.css';
 import './lib/i18n';
+import { registerSW } from 'virtual:pwa-register';
+
+// Register PWA service worker for Android WebAPK & offline caching
+registerSW({
+  immediate: true,
+  onNeedRefresh() {
+    console.log('PharmAply: Nouvelle version disponible');
+  },
+  onOfflineReady() {
+    console.log('PharmAply: Mode hors-ligne opérationnel');
+  },
+});
 
 (window as any).gm_authFailure = function() {
   console.warn("Google Maps JS API Authentication or Billing Error detected. Switching map components to fallback view.");

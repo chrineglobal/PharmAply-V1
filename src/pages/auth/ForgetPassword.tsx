@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { sendPasswordResetEmail, updatePassword, auth, supabase } from '../../lib/firebase';
 import toast from 'react-hot-toast';
 import { useTranslation } from "react-i18next";
+import { PharmAplyLogo } from '../../components/common/PharmAplyLogo';
 
 export function ForgetPassword() {
     const { t } = useTranslation();
@@ -65,20 +66,21 @@ export function ForgetPassword() {
   };
 
   return (
-    <div className="flex-1 bg-slate-50 flex flex-col h-full scrollbar-hide">
-      <div className="bg-white dark:bg-zinc-950 px-6 pt-12 pb-4 shadow-sm z-10 flex items-center justify-between">
-         <button onClick={() => navigate(-1)} className="p-2 -ml-2 text-[var(--app-primary-color)] hover:bg-gray-50 dark:bg-zinc-900 rounded-full transition">
+    <div className="flex-1 bg-[#E7F1F1] dark:bg-[#062625] flex flex-col h-full scrollbar-hide">
+      <div className="bg-[#0E7673] px-6 pt-12 pb-5 shadow-sm z-10 flex items-center justify-between text-white">
+         <button onClick={() => navigate(-1)} className="p-2 -ml-2 text-white hover:bg-white/15 rounded-full transition">
             <ArrowLeft size={24} />
          </button>
+         <PharmAplyLogo variant="horizontal" tone="white" size="sm" />
          <div className="w-8"></div>
       </div>
       
-      <div className="p-6 flex-1 flex flex-col items-center pt-8">
-         <div className="w-full max-w-sm">
-            <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100 text-center mb-2">
+      <div className="p-6 flex-1 flex flex-col items-center justify-center">
+         <div className="w-full max-w-sm bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] rounded-3xl p-6 sm:p-8 shadow-sm">
+            <h1 className="text-2xl font-bold text-[#0A3D3B] dark:text-white text-center mb-2">
                {isRecovery ? 'Set New Password' : t('forget_your_password', 'Forget Your Password')}
             </h1>
-            <p className="text-slate-500 text-center text-sm mb-8 px-4">
+            <p className="text-[#0E7673] dark:text-[#CFE4E3] text-center text-sm mb-8 leading-relaxed">
               {isRecovery 
                 ? "Enter your new password below."
                 : isSent 
@@ -95,13 +97,13 @@ export function ForgetPassword() {
                     placeholder="New password (min 6 characters)"
                     required
                     minLength={6}
-                    className="w-full p-4 border border-slate-200 rounded-xl mb-6 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-[var(--app-primary-color)] focus:border-[var(--app-primary-color)]"
+                    className="w-full p-4 border border-[#CFE4E3] dark:border-[#145250] rounded-2xl mb-6 bg-[#F5FAFA] dark:bg-[#062625] text-[#0A3D3B] dark:text-white placeholder:text-[#6EADAB] focus:outline-none focus:ring-2 focus:ring-[#0E7673]"
                   />
                   
                   <button 
                     type="submit" 
                     disabled={loading || !newPassword}
-                    className="w-full bg-[var(--app-primary-color)] text-white rounded-full py-4 font-bold text-lg hover:bg-[var(--app-primary-color)] transition disabled:opacity-50"
+                    className="w-full bg-[#0E7673] hover:bg-[#0A5A58] text-white rounded-full py-4 font-bold text-base transition disabled:opacity-50 shadow-sm"
                   >
                     {loading ? 'Updating...' : 'Update Password'}
                   </button>
@@ -114,23 +116,23 @@ export function ForgetPassword() {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder={t('enter_your_email', 'Enter your email')}
                     required
-                    className="w-full p-4 border border-slate-200 rounded-xl mb-6 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-[var(--app-primary-color)] focus:border-[var(--app-primary-color)]"
+                    className="w-full p-4 border border-[#CFE4E3] dark:border-[#145250] rounded-2xl mb-6 bg-[#F5FAFA] dark:bg-[#062625] text-[#0A3D3B] dark:text-white placeholder:text-[#6EADAB] focus:outline-none focus:ring-2 focus:ring-[#0E7673]"
                   />
                   
                   <button 
                     type="submit" 
                     disabled={loading || !email}
-                    className="w-full bg-[var(--app-primary-color)] text-white rounded-full py-4 font-bold text-lg hover:bg-[var(--app-primary-color)] transition disabled:opacity-50"
+                    className="w-full bg-[#0E7673] hover:bg-[#0A5A58] text-white rounded-full py-4 font-bold text-base transition disabled:opacity-50 shadow-sm"
                   >
                     {loading ? 'Sending...' : 'Send Link'}
                   </button>
                </form>
             ) : (
                <div className="flex flex-col items-center gap-4">
-                  <button onClick={() => navigate('/')} className="w-full bg-[var(--app-primary-color)] text-white rounded-full py-4 font-bold text-lg hover:bg-[var(--app-primary-color)] transition">
+                  <button onClick={() => navigate('/')} className="w-full bg-[#0E7673] hover:bg-[#0A5A58] text-white rounded-full py-4 font-bold text-base transition shadow-sm">
                      {t('return_to_login', 'Return to Login')} </button>
-                  <p className="text-sm text-slate-500">
-                      {t('didn_t_get_the_email', 'Didn\'t get the email?')} <button onClick={handleReset} className="text-[var(--app-primary-color)] font-bold hover:underline"> {t('resend_it', 'Resend it.')} </button>
+                  <p className="text-sm text-[#0A3D3B] dark:text-[#CFE4E3]">
+                      {t('didn_t_get_the_email', 'Didn\'t get the email?')} <button onClick={handleReset} className="text-[#0E7673] dark:text-[#38B794] font-bold hover:underline"> {t('resend_it', 'Resend it.')} </button>
                   </p>
                </div>
             )}

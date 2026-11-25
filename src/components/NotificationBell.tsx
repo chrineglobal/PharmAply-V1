@@ -88,22 +88,22 @@ export function NotificationBell({ className = '' }: { className?: string }) {
     switch (type) {
       case 'transaction':
       case 'payment':
-        return <CreditCard size={16} className="text-emerald-500" />;
+        return <CreditCard size={16} className="text-[#0E7673] dark:text-[#38B794]" />;
       case 'delivery':
       case 'driver':
-        return <Truck size={16} className="text-blue-500" />;
+        return <Truck size={16} className="text-[#0E7673] dark:text-[#38B794]" />;
       case 'kyc':
       case 'verification':
         return <ShieldCheck size={16} className="text-amber-500" />;
       case 'registration':
       case 'user_signup':
-        return <UserPlus size={16} className="text-purple-500" />;
+        return <UserPlus size={16} className="text-[#38B794]" />;
       case 'message':
-        return <MessageSquare size={16} className="text-teal-500" />;
+        return <MessageSquare size={16} className="text-[#0E7673] dark:text-[#38B794]" />;
       case 'order':
       case 'order_status':
       default:
-        return <Package size={16} className="text-[var(--app-primary-color)]" />;
+        return <Package size={16} className="text-[#0E7673] dark:text-[#38B794]" />;
     }
   };
 
@@ -228,23 +228,23 @@ export function NotificationBell({ className = '' }: { className?: string }) {
     <div className={`relative ${className}`} ref={dropdownRef}>
       <button 
         onClick={() => setShowDropdown(!showDropdown)}
-        className="w-10 h-10 bg-white dark:bg-zinc-800 rounded-full flex items-center justify-center border border-gray-100 dark:border-zinc-700 shadow-sm relative text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-zinc-700 transition-colors"
+        className="w-10 h-10 bg-white dark:bg-[#0A3D3B] rounded-full flex items-center justify-center border border-[#CFE4E3] dark:border-[#145250] shadow-sm relative text-[#0E7673] dark:text-[#E7F1F1] hover:bg-[#E7F1F1] dark:hover:bg-[#062625] transition-colors"
         title="Notifications"
         aria-label="Notifications"
       >
         <Bell size={18} />
         {unreadCount > 0 && (
-          <span className="absolute top-1 right-1 w-3 h-3 bg-red-500 rounded-full border-2 border-white dark:border-zinc-800 animate-pulse"></span>
+          <span className="absolute top-1 right-1 w-3 h-3 bg-[#38B794] rounded-full border-2 border-white dark:border-[#0A3D3B]"></span>
         )}
       </button>
 
       {showDropdown && (
-        <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl border border-gray-100 dark:border-zinc-800 z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-150">
-          <div className="p-4 border-b border-gray-100 dark:border-zinc-800 flex items-center justify-between bg-slate-50/50 dark:bg-zinc-800/50">
+        <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-white dark:bg-[#0A3D3B] rounded-3xl shadow-2xl border border-[#CFE4E3] dark:border-[#145250] z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+          <div className="p-4 border-b border-[#E7F1F1] dark:border-[#145250] flex items-center justify-between bg-[#F5FAFA] dark:bg-[#062625]">
             <div className="flex items-center gap-2">
-              <h3 className="font-bold text-gray-900 dark:text-white text-sm">Notifications</h3>
+              <h3 className="font-bold text-[#0A3D3B] dark:text-white text-sm">Notifications</h3>
               {unreadCount > 0 && (
-                <span className="bg-red-100 dark:bg-red-900/40 text-red-600 dark:text-red-400 text-[10px] font-bold px-2 py-0.5 rounded-full">
+                <span className="bg-[#D7F1EA] text-[#0A3D3B] text-[10px] font-bold px-2 py-0.5 rounded-full">
                   {unreadCount} {t('new', 'nouvelles')}
                 </span>
               )}
@@ -252,17 +252,17 @@ export function NotificationBell({ className = '' }: { className?: string }) {
             {unreadCount > 0 && (
               <button 
                 onClick={markAllAsRead} 
-                className="text-xs text-[var(--app-primary-color)] dark:text-teal-400 font-bold hover:underline"
+                className="text-xs text-[#0E7673] dark:text-[#38B794] font-bold hover:underline"
               >
                 {t('mark_all_read', 'Tout marquer lu')}
               </button>
             )}
           </div>
           
-          <div className="max-h-80 overflow-y-auto divide-y divide-gray-50 dark:divide-zinc-800/50">
+          <div className="max-h-80 overflow-y-auto divide-y divide-[#E7F1F1] dark:divide-[#145250]">
             {notifications.length === 0 ? (
-              <div className="p-8 text-center text-gray-400 dark:text-gray-500 text-sm">
-                <Bell size={24} className="mx-auto mb-2 opacity-40" />
+              <div className="p-8 text-center text-[#6EADAB] text-sm">
+                <Bell size={24} className="mx-auto mb-2 opacity-50" />
                 <p className="font-medium">Aucune notification pour le moment</p>
               </div>
             ) : (
@@ -270,25 +270,25 @@ export function NotificationBell({ className = '' }: { className?: string }) {
                 <div 
                   key={notif.id}
                   onClick={() => handleNotificationClick(notif)}
-                  className={`p-3.5 flex items-start gap-3 cursor-pointer hover:bg-slate-50 dark:hover:bg-zinc-800/80 transition-colors ${!notif.isRead ? 'bg-teal-50/40 dark:bg-teal-950/20' : ''}`}
+                  className={`p-3.5 flex items-start gap-3 cursor-pointer hover:bg-[#F5FAFA] dark:hover:bg-[#062625] transition-colors ${!notif.isRead ? 'bg-[#E7F1F1]/60 dark:bg-[#0E7673]/20' : ''}`}
                 >
-                  <div className="w-8 h-8 rounded-full bg-gray-100 dark:bg-zinc-800 flex items-center justify-center shrink-0 mt-0.5 border border-gray-100 dark:border-zinc-700">
+                  <div className="w-8 h-8 rounded-full bg-[#E7F1F1] dark:bg-[#062625] flex items-center justify-center shrink-0 mt-0.5 border border-[#CFE4E3] dark:border-[#145250]">
                     {getNotificationIcon(notif.type)}
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between gap-1 mb-0.5">
-                      <p className={`text-xs font-bold truncate ${!notif.isRead ? 'text-[var(--app-primary-color)] dark:text-teal-300' : 'text-gray-900 dark:text-white'}`}>
+                      <p className={`text-xs font-bold truncate ${!notif.isRead ? 'text-[#0E7673] dark:text-[#38B794]' : 'text-[#0A3D3B] dark:text-white'}`}>
                         {notif.title}
                       </p>
                       {!notif.isRead && (
-                        <span className="w-2 h-2 rounded-full bg-red-500 shrink-0"></span>
+                        <span className="w-2 h-2 rounded-full bg-[#38B794] shrink-0"></span>
                       )}
                     </div>
-                    <p className="text-[11px] text-gray-600 dark:text-gray-400 line-clamp-2 leading-relaxed">
+                    <p className="text-[11px] text-[#0A3D3B]/80 dark:text-[#CFE4E3] line-clamp-2 leading-relaxed">
                       {notif.message}
                     </p>
                     {notif.createdAt && (
-                      <span className="text-[9px] text-gray-400 dark:text-gray-500 mt-1 block">
+                      <span className="text-[9px] text-[#6EADAB] mt-1 block">
                         {parseDate(notif.createdAt)?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) || 'Récent'}
                       </span>
                     )}

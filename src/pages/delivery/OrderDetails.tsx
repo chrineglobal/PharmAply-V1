@@ -55,44 +55,44 @@ export function DeliveryOrderDetails() {
   if (!order) return <div className="p-8 text-center text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500"> {t('order_not_found', 'Order not found')} </div>;
 
   return (
-    <div className="flex-1 bg-slate-50 dark:bg-black flex flex-col h-full overflow-hidden">
-      <div className="px-6 pt-12 pb-4 flex items-center justify-between bg-white dark:bg-black shadow-sm z-10">
-         <button onClick={() => navigate(-1)} className="w-10 h-10 flex items-center justify-center bg-gray-50 dark:bg-black rounded-full hover:bg-gray-100 dark:bg-zinc-900">
-            <ArrowLeft size={20} className="text-gray-900 dark:text-white" />
+    <div className="flex-1 bg-[#F5FAFA] dark:bg-[#062625] flex flex-col h-full overflow-hidden">
+      <div className="px-6 pt-12 pb-4 flex items-center justify-between bg-[#0E7673] text-white shadow-sm z-10">
+         <button onClick={() => navigate(-1)} className="w-10 h-10 flex items-center justify-center bg-white/15 rounded-full hover:bg-white/25 transition">
+            <ArrowLeft size={20} className="text-white" />
          </button>
-         <h1 className="font-bold text-gray-900 dark:text-white text-sm"> {t('delivery', 'Delivery #')} {order.id.slice(0,8)}</h1>
+         <h1 className="font-bold text-white text-sm"> {t('delivery', 'Delivery #')} {order.id.slice(0,8)}</h1>
          <div className="w-10"></div>
       </div>
 
       <div className="flex-1 overflow-y-auto p-6 space-y-6">
          {/* Delivery Stats mini */}
-         <div className="bg-white dark:bg-black rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-zinc-800 flex divide-x divide-gray-100 text-center">
+         <div className="bg-white dark:bg-[#0A3D3B] rounded-2xl p-4 shadow-sm border border-[#CFE4E3] dark:border-[#145250] flex divide-x divide-[#CFE4E3] dark:divide-[#145250] text-center">
             <div className="flex-1 px-2">
-               <p className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500 mb-1"> {t('earning', 'Earning')} </p>
-               <p className="font-bold text-gray-900 dark:text-white text-lg">{formatCurrency((order.total || 0) * 0.1)}</p>
+               <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7] mb-1"> {t('earning', 'Earning')} </p>
+               <p className="font-bold text-[#0E7673] dark:text-[#38B794] text-lg">{formatCurrency((order.total || 0) * 0.1)}</p>
             </div>
             <div className="flex-1 px-2">
-               <p className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500 mb-1"> {t('items', 'Items')} </p>
-               <p className="font-bold text-gray-900 dark:text-white text-lg">{order.items?.length || 1}</p>
+               <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7] mb-1"> {t('items', 'Items')} </p>
+               <p className="font-bold text-[#0A3D3B] dark:text-white text-lg">{order.items?.length || 1}</p>
             </div>
             <div className="flex-1 px-2">
-               <p className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500 mb-1"> {t('time', 'Time')} </p>
-               <p className="font-bold text-gray-900 dark:text-white text-lg"> {t('asap', 'ASAP')} </p>
+               <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7] mb-1"> {t('time', 'Time')} </p>
+               <p className="font-bold text-[#0A3D3B] dark:text-white text-lg"> {t('asap', 'ASAP')} </p>
             </div>
          </div>
 
          {/* Locations */}
-         <div className="bg-white dark:bg-black rounded-2xl p-5 shadow-sm border border-gray-100 dark:border-zinc-800 relative">
-            <div className="absolute left-[33px] top-[40px] bottom-[40px] w-0.5 bg-gray-200 border-l border-dashed border-gray-300"></div>
+         <div className="bg-white dark:bg-[#0A3D3B] rounded-2xl p-5 shadow-sm border border-[#CFE4E3] dark:border-[#145250] relative">
+            <div className="absolute left-[33px] top-[40px] bottom-[40px] w-0.5 bg-[#CFE4E3] dark:bg-[#145250] border-l border-dashed border-[#6EADAB]"></div>
             
             <div className="flex items-start gap-4 mb-6 relative z-10">
-               <div className="w-8 h-8 bg-teal-100 text-teal-700 rounded-full flex items-center justify-center shrink-0 mt-0.5">
+               <div className="w-8 h-8 bg-[#E7F1F1] dark:bg-[#0E4A47] text-[#0E7673] dark:text-[#38B794] rounded-full flex items-center justify-center shrink-0 mt-0.5">
                   <MapPin size={14} className="fill-current" />
                </div>
                <div className="flex-1 min-w-0">
-                  <p className="text-xs text-gray-500 dark:text-gray-400 font-medium"> {t('pickup_pharmacy', 'Pickup Pharmacy')} </p>
-                  <p className="font-bold text-gray-900 dark:text-white mt-0.5 truncate">{order.pharmacyName || t('pharmacy', 'Pharmacy')}</p>
-                  {order.pharmacyAddress && <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{order.pharmacyAddress}</p>}
+                  <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7] font-medium"> {t('pickup_pharmacy', 'Pickup Pharmacy')} </p>
+                  <p className="font-bold text-[#0A3D3B] dark:text-white mt-0.5 truncate">{order.pharmacyName || t('pharmacy', 'Pharmacy')}</p>
+                  {order.pharmacyAddress && <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7] truncate">{order.pharmacyAddress}</p>}
                </div>
                <QuickNavButton
                   target={{
@@ -107,13 +107,13 @@ export function DeliveryOrderDetails() {
             </div>
 
             <div className="flex items-start gap-4 relative z-10">
-               <div className="w-8 h-8 bg-green-100 text-green-600 rounded-full flex items-center justify-center shrink-0 mt-0.5">
+               <div className="w-8 h-8 bg-[#D7F1EA] dark:bg-[#0E4A47] text-[#0A3D3B] dark:text-[#38B794] rounded-full flex items-center justify-center shrink-0 mt-0.5">
                   <Navigation size={14} className="fill-current" />
                </div>
                <div className="flex-1 min-w-0">
-                  <p className="text-xs text-gray-500 dark:text-gray-400 font-medium"> {t('drop_off_customer', 'Drop-off Customer')} </p>
-                  <p className="font-bold text-gray-900 dark:text-white mt-0.5 truncate">{order.patientName || t('customer', 'Customer')}</p>
-                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 truncate">{order.deliveryAddress}</p>
+                  <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7] font-medium"> {t('drop_off_customer', 'Drop-off Customer')} </p>
+                  <p className="font-bold text-[#0A3D3B] dark:text-white mt-0.5 truncate">{order.patientName || t('customer', 'Customer')}</p>
+                  <p className="text-sm text-[#5C807F] dark:text-[#9FC8C7] mt-1 truncate">{order.deliveryAddress}</p>
                </div>
                <QuickNavButton
                   target={{
@@ -131,18 +131,18 @@ export function DeliveryOrderDetails() {
          {/* Contact & Actions */}
          <div className="flex gap-3">
              {order.patientPhone ? (
-               <a href={`tel:${order.patientPhone}`} className="flex-1 bg-white dark:bg-slate-950 border border-gray-200 dark:border-zinc-800 rounded-2xl py-4 flex flex-col items-center justify-center gap-2 text-gray-700 hover:bg-gray-50 dark:bg-black transition">
-                  <Phone size={20} className="text-green-600" />
+               <a href={`tel:${order.patientPhone}`} className="flex-1 bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] rounded-2xl py-4 flex flex-col items-center justify-center gap-2 text-[#0A3D3B] dark:text-white hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47] transition">
+                  <Phone size={20} className="text-[#0E7673] dark:text-[#38B794]" />
                   <span className="text-xs font-bold"> {t('call', 'Call')} </span>
                </a>
              ) : (
-               <button onClick={() => alert("Phone number not available")} className="flex-1 bg-white dark:bg-slate-950 border border-gray-200 dark:border-zinc-800 rounded-2xl py-4 flex flex-col items-center justify-center gap-2 text-gray-700 hover:bg-gray-50 dark:bg-black transition">
-                  <Phone size={20} className="text-green-600" />
+               <button onClick={() => alert("Phone number not available")} className="flex-1 bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] rounded-2xl py-4 flex flex-col items-center justify-center gap-2 text-[#0A3D3B] dark:text-white hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47] transition">
+                  <Phone size={20} className="text-[#0E7673] dark:text-[#38B794]" />
                   <span className="text-xs font-bold"> {t('call', 'Call')} </span>
                </button>
              )}
-             <button onClick={() => navigate(`/delivery/messages/${order.id}`)} className="flex-1 bg-white dark:bg-slate-950 border border-gray-200 dark:border-zinc-800 rounded-2xl py-4 flex flex-col items-center justify-center gap-2 text-gray-700 hover:bg-gray-50 dark:bg-black transition">
-                <MessageCircle size={20} className="text-blue-600" />
+             <button onClick={() => navigate(`/delivery/messages/${order.id}`)} className="flex-1 bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] rounded-2xl py-4 flex flex-col items-center justify-center gap-2 text-[#0A3D3B] dark:text-white hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47] transition">
+                <MessageCircle size={20} className="text-[#0E7673] dark:text-[#38B794]" />
                 <span className="text-xs font-bold"> {t('message', 'Message')} </span>
              </button>
              <div className="flex-1">
@@ -162,8 +162,8 @@ export function DeliveryOrderDetails() {
       </div>
 
       {/* Accept Button */}
-      <div className="absolute bottom-0 left-0 right-0 bg-white dark:bg-black border-t border-gray-100 dark:border-zinc-800 p-4 px-6 pb-8 z-50">
-         <button disabled={processing} onClick={handleAcceptOrder} className="w-full bg-[var(--app-primary-color)] disabled:bg-indigo-400 text-white rounded-2xl font-bold py-4 shadow-lg shadow-indigo-200 hover:bg-[var(--app-primary-color)] transition flex items-center justify-center gap-2">
+      <div className="absolute bottom-0 left-0 right-0 bg-white dark:bg-[#0A3D3B] border-t border-[#CFE4E3] dark:border-[#145250] p-4 px-6 pb-8 z-50">
+         <button disabled={processing} onClick={handleAcceptOrder} className="w-full bg-[#0E7673] hover:bg-[#0A5A58] disabled:bg-[#CFE4E3] disabled:text-[#5C807F] text-white rounded-full font-bold py-4 shadow-lg transition flex items-center justify-center gap-2">
             {processing ? (
               <>
                 <Loader2 size={20} className="animate-spin" />

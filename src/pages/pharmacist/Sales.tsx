@@ -213,55 +213,55 @@ export function PharmacistSales() {
       {/* Top Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2.5">
-            <div className="p-2.5 bg-teal-50 dark:bg-teal-950/40 rounded-xl text-[var(--app-primary-color)] dark:text-teal-400">
+          <h1 className="text-2xl font-bold text-[#0A3D3B] dark:text-white flex items-center gap-2.5">
+            <div className="p-2.5 bg-[#D7F1EA] dark:bg-[#0E4A47] rounded-xl text-[#0E7673] dark:text-[#38B794]">
               <BarChart2 size={24} />
             </div>
             {t('sales', 'Ventes & Performance Financière')}
           </h1>
-          <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
+          <p className="text-[#5C807F] dark:text-[#9FC8C7] text-sm mt-1">
             {t('monitor_sales_desc', 'Suivi en direct du chiffre d\'affaires, volumes et transactions')}
           </p>
         </div>
 
         {/* Time range selector */}
-        <div className="flex items-center gap-1.5 p-1 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl shadow-xs">
+        <div className="flex items-center gap-1.5 p-1 bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] rounded-full shadow-sm">
           <button
             onClick={() => setTimeRange('today')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition ${
+            className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${
               timeRange === 'today' 
-                ? 'bg-[var(--app-primary-color)] text-white shadow-xs' 
-                : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-slate-700'
+                ? 'bg-[#0E7673] text-white shadow-xs' 
+                : 'text-[#5C807F] dark:text-[#9FC8C7] hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47]'
             }`}
           >
             Aujourd'hui
           </button>
           <button
             onClick={() => setTimeRange('week')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition ${
+            className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${
               timeRange === 'week' 
-                ? 'bg-[var(--app-primary-color)] text-white shadow-xs' 
-                : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-slate-700'
+                ? 'bg-[#0E7673] text-white shadow-xs' 
+                : 'text-[#5C807F] dark:text-[#9FC8C7] hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47]'
             }`}
           >
             7 jours
           </button>
           <button
             onClick={() => setTimeRange('month')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition ${
+            className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${
               timeRange === 'month' 
-                ? 'bg-[var(--app-primary-color)] text-white shadow-xs' 
-                : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-slate-700'
+                ? 'bg-[#0E7673] text-white shadow-xs' 
+                : 'text-[#5C807F] dark:text-[#9FC8C7] hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47]'
             }`}
           >
             Ce mois
           </button>
           <button
             onClick={() => setTimeRange('all')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition ${
+            className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${
               timeRange === 'all' 
-                ? 'bg-[var(--app-primary-color)] text-white shadow-xs' 
-                : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-slate-700'
+                ? 'bg-[#0E7673] text-white shadow-xs' 
+                : 'text-[#5C807F] dark:text-[#9FC8C7] hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47]'
             }`}
           >
             Historique complet
@@ -269,85 +269,85 @@ export function PharmacistSales() {
         </div>
       </div>
 
-      {/* 3 Metric Cards */}
+      {/* Metric Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-xs border border-gray-100 dark:border-slate-700">
+        <div className="bg-white dark:bg-[#0A3D3B] rounded-3xl p-6 shadow-sm border border-[#CFE4E3] dark:border-[#145250]">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-12 h-12 bg-emerald-50 dark:bg-emerald-950/40 rounded-2xl flex items-center justify-center text-emerald-600 dark:text-emerald-400">
+            <div className="w-12 h-12 bg-[#D7F1EA] dark:bg-[#062625] rounded-2xl flex items-center justify-center text-[#0E7673] dark:text-[#38B794]">
               <DollarSign size={24} />
             </div>
             <div>
-              <p className="text-xs text-gray-500 font-medium">{t('total_revenue', 'Chiffre d\'Affaires')}</p>
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+              <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7] font-medium">{t('total_revenue', 'Chiffre d\'Affaires')}</p>
+              <h3 className="text-xl font-bold text-[#0A3D3B] dark:text-white tabular-nums">
                 {formatCurrency(metrics.totalRevenue)}
               </h3>
             </div>
           </div>
-          <div className="flex items-center gap-1 text-xs text-emerald-600 font-bold">
-            <TrendingUp size={14} /> {metrics.successfulCount} {t('successful_orders', 'commandes validées')}
+          <div className="flex items-center gap-1 text-xs text-[#0E7673] dark:text-[#38B794] font-bold">
+            <TrendingUp size={14} /> <span className="tabular-nums">{metrics.successfulCount}</span> {t('successful_orders', 'commandes validées')}
           </div>
         </div>
 
-        <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-xs border border-gray-100 dark:border-slate-700">
+        <div className="bg-white dark:bg-[#0A3D3B] rounded-3xl p-6 shadow-sm border border-[#CFE4E3] dark:border-[#145250]">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-12 h-12 bg-blue-50 dark:bg-blue-950/40 rounded-2xl flex items-center justify-center text-blue-600 dark:text-blue-400">
+            <div className="w-12 h-12 bg-[#E7F1F1] dark:bg-[#062625] rounded-2xl flex items-center justify-center text-[#0E7673] dark:text-[#38B794]">
               <ShoppingBag size={24} />
             </div>
             <div>
-              <p className="text-xs text-gray-500 font-medium">{t('items_sold', 'Articles Vendus')}</p>
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+              <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7] font-medium">{t('items_sold', 'Articles Vendus')}</p>
+              <h3 className="text-xl font-bold text-[#0A3D3B] dark:text-white tabular-nums">
                 {metrics.totalItemsSold}
               </h3>
             </div>
           </div>
-          <div className="flex items-center gap-1 text-xs text-blue-600 font-bold">
+          <div className="flex items-center gap-1 text-xs text-[#38B794] font-bold">
             <CheckCircle size={14} /> Unités délivrées
           </div>
         </div>
 
-        <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-xs border border-gray-100 dark:border-slate-700">
+        <div className="bg-white dark:bg-[#0A3D3B] rounded-3xl p-6 shadow-sm border border-[#CFE4E3] dark:border-[#145250]">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-12 h-12 bg-amber-50 dark:bg-amber-950/40 rounded-2xl flex items-center justify-center text-amber-600 dark:text-amber-400">
               <BarChart2 size={24} />
             </div>
             <div>
-              <p className="text-xs text-gray-500 font-medium">{t('average_order', 'Panier Moyen')}</p>
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+              <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7] font-medium">{t('average_order', 'Panier Moyen')}</p>
+              <h3 className="text-xl font-bold text-[#0A3D3B] dark:text-white tabular-nums">
                 {formatCurrency(metrics.avgOrderValue)}
               </h3>
             </div>
           </div>
-          <div className="flex items-center gap-1 text-xs text-amber-600 font-bold">
+          <div className="flex items-center gap-1 text-xs text-amber-600 dark:text-amber-400 font-bold">
             <ArrowUpRight size={14} /> Moyenne par client
           </div>
         </div>
 
-        <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-xs border border-gray-100 dark:border-slate-700">
+        <div className="bg-white dark:bg-[#0A3D3B] rounded-3xl p-6 shadow-sm border border-[#CFE4E3] dark:border-[#145250]">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-12 h-12 bg-rose-50 dark:bg-rose-950/40 rounded-2xl flex items-center justify-center text-rose-600 dark:text-rose-400">
+            <div className="w-12 h-12 bg-red-50 dark:bg-red-950/40 rounded-2xl flex items-center justify-center text-red-600 dark:text-red-400">
               <TrendingDown size={24} />
             </div>
             <div>
-              <p className="text-xs text-gray-500 font-medium">{t('refunds_cancelled', 'Annulations / Rejets')}</p>
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+              <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7] font-medium">{t('refunds_cancelled', 'Annulations / Rejets')}</p>
+              <h3 className="text-xl font-bold text-[#0A3D3B] dark:text-white tabular-nums">
                 {formatCurrency(metrics.totalRefunds)}
               </h3>
             </div>
           </div>
-          <div className="flex items-center gap-1 text-xs text-rose-600 font-bold">
-            <XCircle size={14} /> {metrics.cancelledCount} commandes refusées
+          <div className="flex items-center gap-1 text-xs text-red-600 dark:text-red-400 font-bold">
+            <XCircle size={14} /> <span className="tabular-nums">{metrics.cancelledCount}</span> commandes refusées
           </div>
         </div>
       </div>
 
       {/* Revenue Graph */}
-      <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-xs border border-gray-100 dark:border-slate-700 space-y-4">
+      <div className="bg-white dark:bg-[#0A3D3B] rounded-3xl p-6 shadow-sm border border-[#CFE4E3] dark:border-[#145250] space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="font-bold text-gray-900 dark:text-white text-base">
+            <h3 className="font-bold text-[#0A3D3B] dark:text-white text-base">
               Évolution des Ventes
             </h3>
-            <p className="text-xs text-gray-400">
+            <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7]">
               Chiffre d'affaires réalisé sur la période
             </p>
           </div>
@@ -358,21 +358,21 @@ export function PharmacistSales() {
             <AreaChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
               <defs>
                 <linearGradient id="salesGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#194B4B" stopOpacity={0.4}/>
-                  <stop offset="95%" stopColor="#194B4B" stopOpacity={0.0}/>
+                  <stop offset="5%" stopColor="#0E7673" stopOpacity={0.35}/>
+                  <stop offset="95%" stopColor="#38B794" stopOpacity={0.0}/>
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-              <XAxis dataKey="label" stroke="#94a3b8" fontSize={12} tickLine={false} />
-              <YAxis stroke="#94a3b8" fontSize={12} tickLine={false} tickFormatter={(val) => `${val / 1000}k`} />
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#CFE4E3" />
+              <XAxis dataKey="label" stroke="#5C807F" fontSize={12} tickLine={false} />
+              <YAxis stroke="#5C807F" fontSize={12} tickLine={false} tickFormatter={(val) => `${val / 1000}k`} />
               <Tooltip 
                 formatter={(value: any) => [formatCurrency(Number(value)), "Chiffre d'Affaires"]}
-                contentStyle={{ borderRadius: 16, border: 'none', boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}
+                contentStyle={{ borderRadius: 16, border: '1px solid #CFE4E3', boxShadow: '0 4px 20px rgba(10, 61, 59, 0.08)' }}
               />
               <Area 
                 type="monotone" 
                 dataKey="revenue" 
-                stroke="#194B4B" 
+                stroke="#0E7673" 
                 strokeWidth={3} 
                 fillOpacity={1} 
                 fill="url(#salesGrad)" 
@@ -383,33 +383,33 @@ export function PharmacistSales() {
       </div>
 
       {/* Transactions Table */}
-      <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-xs border border-gray-100 dark:border-slate-700 overflow-hidden space-y-4 p-6">
+      <div className="bg-white dark:bg-[#0A3D3B] rounded-3xl shadow-sm border border-[#CFE4E3] dark:border-[#145250] overflow-hidden space-y-4 p-6">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
-            <h3 className="font-bold text-gray-900 dark:text-white text-base">
+            <h3 className="font-bold text-[#0A3D3B] dark:text-white text-base">
               Historique des Transactions Récentes
             </h3>
-            <p className="text-xs text-gray-400">
+            <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7]">
               Détail des commandes passées auprès de votre officine
             </p>
           </div>
 
           <div className="flex items-center gap-3 w-full sm:w-auto">
             <div className="relative flex-1 sm:w-64">
-              <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
+              <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#5C807F] dark:text-[#9FC8C7]" />
               <input 
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Rechercher par client ou ID..."
-                className="w-full pl-9 pr-4 py-2 bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-xl text-xs text-gray-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-[#194B4B]"
+                className="w-full pl-9 pr-4 py-2 bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] rounded-full text-xs text-[#0A3D3B] dark:text-white placeholder-[#5C807F] dark:placeholder-[#9FC8C7] focus:outline-none focus:ring-1 focus:ring-[#0E7673]"
               />
             </div>
 
             <select
               value={statusFilter}
               onChange={(e: any) => setStatusFilter(e.target.value)}
-              className="px-3 py-2 bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-xl text-xs font-bold text-gray-700 dark:text-gray-200"
+              className="px-4 py-2 bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] rounded-full text-xs font-bold text-[#0A3D3B] dark:text-[#D7F1EA]"
             >
               <option value="all">Tous les statuts</option>
               <option value="delivered">Livrées uniquement</option>
@@ -421,7 +421,7 @@ export function PharmacistSales() {
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-gray-100 dark:border-slate-700 text-xs font-bold text-gray-400 uppercase tracking-wider">
+              <tr className="border-b border-[#CFE4E3] dark:border-[#145250] text-xs font-bold text-[#5C807F] dark:text-[#9FC8C7] uppercase tracking-wider">
                 <th className="py-3 px-4">Commande</th>
                 <th className="py-3 px-4">Client</th>
                 <th className="py-3 px-4">Articles</th>
@@ -430,10 +430,10 @@ export function PharmacistSales() {
                 <th className="py-3 px-4 text-right">Montant</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-50 dark:divide-slate-700/50 text-sm">
+            <tbody className="divide-y divide-[#CFE4E3]/60 dark:divide-[#145250] text-sm">
               {transactions.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="py-8 text-center text-gray-400 text-xs">
+                  <td colSpan={6} className="py-8 text-center text-[#5C807F] dark:text-[#9FC8C7] text-xs">
                     Aucune transaction trouvée pour cette période.
                   </td>
                 </tr>
@@ -455,12 +455,12 @@ export function PharmacistSales() {
                     <tr 
                       key={t.id} 
                       onClick={() => navigate(`/pharmacist/order/${t.id}`)}
-                      className="hover:bg-gray-50 dark:bg-zinc-900/70 dark:hover:bg-slate-700/40 cursor-pointer transition"
+                      className="hover:bg-[#F5FAFA] dark:hover:bg-[#0E4A47]/50 cursor-pointer transition"
                     >
-                      <td className="py-3.5 px-4 font-mono font-bold text-xs text-[var(--app-primary-color)] dark:text-teal-400">
+                      <td className="py-3.5 px-4 font-mono font-bold text-xs text-[#0E7673] dark:text-[#38B794]">
                         #{shortId}
                       </td>
-                      <td className="py-3.5 px-4 font-medium text-gray-900 dark:text-white">
+                      <td className="py-3.5 px-4 font-medium text-[#0A3D3B] dark:text-white">
                         <div className="flex items-center gap-2.5">
                           <UserAvatar
                             userId={pId}
@@ -471,24 +471,24 @@ export function PharmacistSales() {
                           <span>{liveName}</span>
                         </div>
                       </td>
-                      <td className="py-3.5 px-4 text-gray-500 text-xs">
+                      <td className="py-3.5 px-4 text-[#5C807F] dark:text-[#9FC8C7] text-xs">
                         {Array.isArray(t.items) ? `${t.items.length} produit(s)` : '1 ordonnance'}
                       </td>
-                      <td className="py-3.5 px-4 text-gray-500 text-xs">
+                      <td className="py-3.5 px-4 text-[#5C807F] dark:text-[#9FC8C7] text-xs">
                         {dateStr}
                       </td>
                       <td className="py-3.5 px-4">
                         <span className={`px-2.5 py-1 rounded-full text-[11px] font-bold ${
                           isDelivered 
-                            ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300' 
+                            ? 'bg-[#D7F1EA] text-[#0E7673] dark:bg-[#0E4A47] dark:text-[#38B794]' 
                             : isCancelled 
-                            ? 'bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300' 
-                            : 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300'
+                            ? 'bg-red-100 text-red-700 dark:bg-red-950/60 dark:text-red-300' 
+                            : 'bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300'
                         }`}>
                           {t.status === 'delivered' ? 'Livré' : isCancelled ? 'Annulé' : 'En cours'}
                         </span>
                       </td>
-                      <td className="py-3.5 px-4 text-right font-bold text-gray-900 dark:text-white">
+                      <td className="py-3.5 px-4 text-right font-bold text-[#0E7673] dark:text-[#38B794] tabular-nums">
                         {formatCurrency(Number(t.totalAmount || t.totalPrice || 0))}
                       </td>
                     </tr>

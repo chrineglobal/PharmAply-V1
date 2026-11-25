@@ -254,12 +254,12 @@ export function PatientSearch() {
   );
 
   return (
-    <div className="flex-1 bg-slate-50 dark:bg-black flex flex-col h-full overflow-hidden">
+    <div className="flex-1 bg-[#F5FAFA] dark:bg-[#062625] flex flex-col h-full overflow-hidden">
       {/* Header */}
-      <div className="bg-white dark:bg-black px-6 pt-12 pb-4 shadow-sm z-10 border-b border-gray-100 dark:border-zinc-800">
+      <div className="bg-white dark:bg-[#0A3D3B] px-6 pt-12 pb-4 shadow-sm z-10 border-b border-[#CFE4E3] dark:border-[#145250]">
         <div className="flex items-center gap-4 mb-3">
-          <button onClick={() => navigate(-1)} className="p-2 hover:bg-gray-100 dark:bg-zinc-900 rounded-full transition-colors">
-            <ArrowLeft size={24} className="text-gray-900 dark:text-white" />
+          <button onClick={() => navigate(-1)} className="p-2 hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47] rounded-full transition-colors">
+            <ArrowLeft size={24} className="text-[#0A3D3B] dark:text-white" />
           </button>
           <form className="flex-1 relative" onSubmit={handleSearchSubmit}>
             <input
@@ -271,7 +271,7 @@ export function PatientSearch() {
               spellCheck="false"
               autoFocus
               placeholder={t('search_products_desc', 'Rechercher un médicament, DCI, catégorie...')}
-              className="w-full min-h-[54px] sm:min-h-[58px] bg-gray-100 dark:bg-zinc-900 py-4 px-4.5 rounded-2xl text-[15px] sm:text-base focus:outline-none focus:ring-2 focus:ring-[#194B4B]/20 text-gray-900 dark:text-white"
+              className="w-full min-h-[54px] sm:min-h-[58px] bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] py-4 px-5 rounded-full text-[15px] sm:text-base focus:outline-none focus:ring-2 focus:ring-[#0E7673]/30 dark:focus:ring-[#38B794]/30 text-[#0A3D3B] dark:text-white placeholder-[#5C807F] dark:placeholder-[#9FC8C7]"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onKeyDown={(e) => {
@@ -290,15 +290,15 @@ export function PatientSearch() {
               }));
             }}
             title="Assistant Pharmacien IA"
-            className="p-3 bg-gradient-to-tr from-emerald-600 to-teal-600 text-white rounded-2xl shadow-sm hover:opacity-90 active:scale-95 transition"
+            className="p-3.5 bg-[#0E7673] hover:bg-[#0A5A58] text-white rounded-full shadow-sm active:scale-95 transition"
           >
             <Sparkles size={20} className="animate-pulse" />
           </button>
         </div>
 
         {/* Indicateur de localisation discrète */}
-        <div className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400 pl-1">
-          <MapPin size={13} className="text-[var(--app-primary-color)] dark:text-teal-400" />
+        <div className="flex items-center gap-1.5 text-xs text-[#5C807F] dark:text-[#9FC8C7] pl-1">
+          <MapPin size={13} className="text-[#0E7673] dark:text-[#38B794]" />
           <span>Tri par proximité automatique • Place de marché sécurisée</span>
         </div>
       </div>
@@ -307,24 +307,24 @@ export function PatientSearch() {
         {/* Step-by-Step Medication Search & Map Banner */}
         <div 
           onClick={() => setIsStepModalOpen(true)}
-          className="bg-gradient-to-r from-teal-900 to-emerald-900 text-white p-4 rounded-3xl cursor-pointer hover:shadow-lg transition-all flex items-center justify-between gap-4 border border-teal-700/40"
+          className="bg-[#0E7673] text-white p-4 rounded-3xl cursor-pointer hover:bg-[#0A5A58] hover:shadow-lg transition-all flex items-center justify-between gap-4 border border-[#145250]"
         >
           <div className="flex items-center gap-3 min-w-0">
-            <div className="w-10 h-10 rounded-2xl bg-white/10 flex items-center justify-center shrink-0 text-amber-300">
+            <div className="w-10 h-10 rounded-2xl bg-white/15 flex items-center justify-center shrink-0 text-[#D7F1EA]">
               <Sparkles size={20} />
             </div>
             <div className="min-w-0">
               <h4 className="font-extrabold text-sm text-white truncate">
                 Recherche groupée par étapes & Carte des pharmacies
               </h4>
-              <p className="text-xs text-teal-100 truncate">
+              <p className="text-xs text-[#D7F1EA] truncate">
                 Sélectionnez vos médicaments et trouvez les pharmacies avec 100% de stock disponible
               </p>
             </div>
           </div>
           <button 
             type="button"
-            className="px-3.5 py-2 bg-white text-gray-900 hover:bg-gray-100 text-xs font-black rounded-xl shrink-0 shadow-xs active:scale-95 transition"
+            className="px-4 py-2 bg-[#D7F1EA] text-[#0A3D3B] hover:bg-[#38B794] text-xs font-extrabold rounded-full shrink-0 shadow-xs active:scale-95 transition"
           >
             Lancer
           </button>
@@ -337,13 +337,13 @@ export function PatientSearch() {
               <button 
                 key={cat.id} 
                 onClick={() => setSearchQuery(cat.name)}
-                className={`whitespace-nowrap border px-3 py-2 rounded-full text-xs font-medium flex items-center gap-1.5 transition-colors ${
+                className={`whitespace-nowrap border px-3.5 py-2 rounded-full text-xs font-semibold flex items-center gap-1.5 transition-colors ${
                   searchQuery.toLowerCase() === cat.name.toLowerCase() 
-                    ? 'bg-[var(--app-primary-color)] text-white border-[var(--app-primary-color)]' 
-                    : 'bg-white dark:bg-zinc-900 border-gray-200 dark:border-zinc-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-zinc-800'
+                    ? 'bg-[#0E7673] text-white border-[#0E7673]' 
+                    : 'bg-white dark:bg-[#0A3D3B] border-[#CFE4E3] dark:border-[#145250] text-[#0A3D3B] dark:text-[#D7F1EA] hover:bg-[#D7F1EA]/50 dark:hover:bg-[#0E4A47]'
                 }`}
               >
-                <div className={searchQuery.toLowerCase() === cat.name.toLowerCase() ? 'opacity-100' : 'opacity-70'}>
+                <div className={searchQuery.toLowerCase() === cat.name.toLowerCase() ? 'opacity-100' : 'opacity-80'}>
                   {getCategoryIcon(cat.name, 14, "")}
                 </div>
                 {cat.name}
@@ -355,14 +355,14 @@ export function PatientSearch() {
         {!searchQuery && recentSearches.length > 0 && (
           <div>
             <div className="flex items-center gap-2 mb-3">
-              <Clock size={18} className="text-gray-400" />
-              <h3 className="font-bold text-gray-900 dark:text-white text-sm">{t('recent_searches', 'Recherches récentes')}</h3>
+              <Clock size={18} className="text-[#5C807F] dark:text-[#9FC8C7]" />
+              <h3 className="font-bold text-[#0A3D3B] dark:text-white text-sm">{t('recent_searches', 'Recherches récentes')}</h3>
             </div>
             <div className="flex flex-col gap-2">
               {recentSearches.map((sqStr, idx) => (
-                <div key={idx} onClick={() => setSearchQuery(sqStr)} className="flex items-center justify-between py-2 px-3 hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-zinc-900 rounded-lg cursor-pointer group transition-colors">
-                  <span className="text-gray-700 dark:text-gray-300 text-sm font-medium">{sqStr}</span>
-                  <button onClick={(e) => removeRecentSearch(e, sqStr)} className="text-gray-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity">
+                <div key={idx} onClick={() => setSearchQuery(sqStr)} className="flex items-center justify-between py-2 px-3 hover:bg-white dark:hover:bg-[#0A3D3B] rounded-xl cursor-pointer group transition-colors border border-transparent hover:border-[#CFE4E3] dark:hover:border-[#145250]">
+                  <span className="text-[#0A3D3B] dark:text-[#D7F1EA] text-sm font-medium">{sqStr}</span>
+                  <button onClick={(e) => removeRecentSearch(e, sqStr)} className="text-[#5C807F] hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity">
                     <X size={16} />
                   </button>
                 </div>
@@ -373,27 +373,27 @@ export function PatientSearch() {
 
         {/* Liste des produits uniques classés par proximité */}
         {loading ? (
-          <p className="text-sm text-gray-500 dark:text-gray-400 text-center py-8">{t('loading_data', 'Chargement du catalogue...')}</p>
+          <p className="text-sm text-[#5C807F] dark:text-[#9FC8C7] text-center py-8">{t('loading_data', 'Chargement du catalogue...')}</p>
         ) : (
           <div>
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
-                <Pill size={18} className="text-[var(--app-primary-color)] dark:text-teal-400" />
-                <h3 className="font-bold text-gray-900 dark:text-white">
+                <Pill size={18} className="text-[#0E7673] dark:text-[#38B794]" />
+                <h3 className="font-bold text-[#0A3D3B] dark:text-white">
                   {searchQuery ? t('relevant_products', 'Médicaments disponibles') : t('suggested_products', 'Médicaments à proximité')}
                 </h3>
               </div>
-              <span className="text-xs text-gray-400">
+              <span className="text-xs text-[#5C807F] dark:text-[#9FC8C7]">
                 {filteredProducts.length} référence{filteredProducts.length > 1 ? 's' : ''}
               </span>
             </div>
 
             {filteredProducts.length === 0 ? (
-              <div className="text-center py-12">
-                <p className="text-gray-500 dark:text-gray-400 font-medium mb-1">
+              <div className="text-center py-12 bg-white dark:bg-[#0A3D3B] rounded-3xl border border-[#CFE4E3] dark:border-[#145250]">
+                <p className="text-[#0A3D3B] dark:text-white font-semibold mb-1">
                   {t('no_results', 'Aucun médicament trouvé')}
                 </p>
-                <p className="text-sm text-gray-400 dark:text-gray-500">
+                <p className="text-sm text-[#5C807F] dark:text-[#9FC8C7]">
                   {t('no_results_desc', 'Essayez un autre mot-clé ou filtrez par catégorie.')}
                 </p>
               </div>

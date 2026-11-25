@@ -156,39 +156,39 @@ export function FapshiSandboxCheckout() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-[#F5FAFA] dark:bg-[#062625] text-[#0A3D3B] dark:text-white flex flex-col items-center justify-center p-4">
       {/* Header bar */}
-      <div className="w-full max-w-md bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl">
+      <div className="w-full max-w-md bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] rounded-3xl overflow-hidden shadow-xl">
         {/* Top branded bar */}
-        <div className="bg-[var(--app-primary-color)] p-6 text-white text-center relative">
+        <div className="bg-[#0E7673] p-6 text-white text-center relative">
           <button
             onClick={() => navigate(-1)}
-            className="absolute left-4 top-5 w-8 h-8 rounded-full bg-black/20 flex items-center justify-center hover:bg-black/40 text-white"
+            className="absolute left-4 top-5 w-9 h-9 rounded-full bg-white/15 flex items-center justify-center hover:bg-white/25 text-white transition"
           >
             <ArrowLeft size={16} />
           </button>
           
-          <div className="inline-flex items-center gap-2 bg-yellow-400 text-zinc-950 px-3 py-1 rounded-full text-xs font-black mb-2 shadow-sm">
+          <div className="inline-flex items-center gap-2 bg-[#D7F1EA] text-[#0A3D3B] px-3 py-1 rounded-full text-xs font-extrabold mb-2 shadow-sm">
             <Lock size={12} /> Paiement Sécurisé (Mobile Money / Orange Money)
           </div>
           <h1 className="text-2xl font-bold tracking-tight">Paiement en Ligne</h1>
-          <p className="text-teal-200 text-xs mt-1">Réf. Commande : #{externalId.slice(0, 8).toUpperCase()}</p>
+          <p className="text-[#D7F1EA] text-xs mt-1">Réf. Commande : #{externalId.slice(0, 8).toUpperCase()}</p>
         </div>
 
         {/* Payment Summary */}
         <div className="p-6 space-y-6">
-          <div className="bg-slate-950 border border-slate-800 rounded-2xl p-4 flex items-center justify-between">
+          <div className="bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] rounded-2xl p-4 flex items-center justify-between">
             <div>
-              <span className="text-xs text-slate-400 font-medium block">Montant total</span>
+              <span className="text-xs text-[#5C807F] dark:text-[#9FC8C7] font-medium block">Montant total</span>
               {orderDetails?.pharmacyName && (
-                <span className="text-[11px] text-teal-400 font-medium">{orderDetails.pharmacyName}</span>
+                <span className="text-[11px] text-[#0E7673] dark:text-[#38B794] font-semibold">{orderDetails.pharmacyName}</span>
               )}
             </div>
-            <span className="text-2xl font-extrabold text-white">{formatCurrency(amount)}</span>
+            <span className="text-2xl font-extrabold text-[#0A3D3B] dark:text-white">{formatCurrency(amount)}</span>
           </div>
 
           {errorMsg && (
-            <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400 text-xs flex items-center gap-2">
+            <div className="p-3 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/30 rounded-xl text-red-700 dark:text-red-400 text-xs flex items-center gap-2">
               <AlertCircle size={16} />
               <span>{errorMsg}</span>
             </div>
@@ -196,17 +196,17 @@ export function FapshiSandboxCheckout() {
 
           {success ? (
             <div className="py-8 text-center space-y-3">
-              <div className="w-16 h-16 bg-emerald-500/20 border border-emerald-500 text-emerald-400 rounded-full flex items-center justify-center mx-auto animate-bounce">
+              <div className="w-16 h-16 bg-[#D7F1EA] dark:bg-[#0E4A47] border border-[#38B794] text-[#0E7673] dark:text-[#38B794] rounded-full flex items-center justify-center mx-auto animate-bounce">
                 <CheckCircle2 size={36} />
               </div>
-              <h3 className="text-lg font-bold text-emerald-400">Paiement validé avec succès !</h3>
-              <p className="text-xs text-slate-400">Votre commande est transmise en préparation...</p>
+              <h3 className="text-lg font-bold text-[#0E7673] dark:text-[#38B794]">Paiement validé avec succès !</h3>
+              <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7]">Votre commande est transmise en préparation...</p>
             </div>
           ) : (
             <form onSubmit={handlePay} className="space-y-4">
               {/* Payment selector */}
               <div>
-                <label className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-2">
+                <label className="text-xs font-bold text-[#5C807F] dark:text-[#9FC8C7] uppercase tracking-wider block mb-2">
                   Sélectionnez le mode de paiement
                 </label>
                 <div className="grid grid-cols-2 gap-3">
@@ -215,11 +215,11 @@ export function FapshiSandboxCheckout() {
                     onClick={() => setPaymentType("momo")}
                     className={`py-3.5 px-3 rounded-2xl border flex flex-col items-center gap-1.5 transition text-xs font-bold ${
                       paymentType === "momo"
-                        ? "bg-amber-500/20 border-yellow-400 text-yellow-400 shadow-sm"
-                        : "bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700"
+                        ? "bg-amber-50 dark:bg-amber-500/20 border-amber-500 text-amber-800 dark:text-yellow-400 shadow-sm"
+                        : "bg-[#F5FAFA] dark:bg-[#062625] border-[#CFE4E3] dark:border-[#145250] text-[#5C807F] dark:text-[#9FC8C7] hover:border-[#38B794]"
                     }`}
                   >
-                    <Smartphone size={20} className="text-yellow-400" />
+                    <Smartphone size={20} className="text-amber-500" />
                     <span>MTN MoMo</span>
                   </button>
                   
@@ -228,11 +228,11 @@ export function FapshiSandboxCheckout() {
                     onClick={() => setPaymentType("om")}
                     className={`py-3.5 px-3 rounded-2xl border flex flex-col items-center gap-1.5 transition text-xs font-bold ${
                       paymentType === "om"
-                        ? "bg-orange-500/20 border-orange-400 text-orange-400 shadow-sm"
-                        : "bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700"
+                        ? "bg-orange-50 dark:bg-orange-500/20 border-orange-500 text-orange-800 dark:text-orange-400 shadow-sm"
+                        : "bg-[#F5FAFA] dark:bg-[#062625] border-[#CFE4E3] dark:border-[#145250] text-[#5C807F] dark:text-[#9FC8C7] hover:border-[#38B794]"
                     }`}
                   >
-                    <Smartphone size={20} className="text-orange-400" />
+                    <Smartphone size={20} className="text-orange-500" />
                     <span>Orange Money</span>
                   </button>
                 </div>
@@ -240,7 +240,7 @@ export function FapshiSandboxCheckout() {
 
               {/* Numéro de Téléphone */}
               <div>
-                <label className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-2">
+                <label className="text-xs font-bold text-[#5C807F] dark:text-[#9FC8C7] uppercase tracking-wider block mb-2">
                   Numéro de débit Mobile Money
                 </label>
                 <div className="relative">
@@ -249,12 +249,12 @@ export function FapshiSandboxCheckout() {
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="Ex: 670 00 00 00"
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white font-mono placeholder-slate-600 focus:outline-none focus:border-teal-500 transition"
+                    className="w-full bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] rounded-xl px-4 py-3 text-sm text-[#0A3D3B] dark:text-white font-mono placeholder-[#5C807F]/60 focus:outline-none focus:border-[#0E7673] dark:focus:border-[#38B794] transition"
                     required
                   />
                 </div>
-                <p className="text-[11px] text-slate-500 mt-1.5 flex items-center gap-1">
-                  <ShieldCheck size={12} className="text-emerald-400" />
+                <p className="text-[11px] text-[#5C807F] dark:text-[#9FC8C7] mt-1.5 flex items-center gap-1">
+                  <ShieldCheck size={12} className="text-[#0E7673] dark:text-[#38B794]" />
                   Transaction sécurisée — Validation instantanée.
                 </p>
               </div>
@@ -263,7 +263,7 @@ export function FapshiSandboxCheckout() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-4 bg-gradient-to-r from-[#194B4B] to-teal-600 hover:from-teal-700 hover:to-teal-500 text-white rounded-2xl font-bold text-sm shadow-xl flex items-center justify-center gap-2 transition disabled:opacity-50 active:scale-[0.98]"
+                className="w-full py-4 bg-[#0E7673] hover:bg-[#0A5A58] text-white rounded-full font-bold text-sm shadow-lg flex items-center justify-center gap-2 transition disabled:opacity-50 active:scale-[0.98]"
               >
                 {loading ? (
                   <>
@@ -272,7 +272,7 @@ export function FapshiSandboxCheckout() {
                   </>
                 ) : (
                   <>
-                    <ShieldCheck size={18} className="text-yellow-400" />
+                    <ShieldCheck size={18} className="text-[#D7F1EA]" />
                     <span>Confirmer le Paiement ({formatCurrency(amount)})</span>
                   </>
                 )}
@@ -280,9 +280,9 @@ export function FapshiSandboxCheckout() {
             </form>
           )}
 
-          <div className="border-t border-slate-800 pt-4 flex items-center justify-between text-[11px] text-slate-500">
+          <div className="border-t border-[#CFE4E3] dark:border-[#145250] pt-4 flex items-center justify-between text-[11px] text-[#5C807F] dark:text-[#9FC8C7]">
             <span>Paiement Sécurisé Mobile Money</span>
-            <span className="text-teal-400 font-semibold flex items-center gap-1">
+            <span className="text-[#0E7673] dark:text-[#38B794] font-semibold flex items-center gap-1">
               <ShieldCheck size={13} /> 100% Chiffré SSL
             </span>
           </div>

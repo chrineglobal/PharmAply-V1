@@ -3,6 +3,7 @@ import { BottomNav } from "./BottomNav";
 import { RoleSidebar } from "./RoleSidebar";
 import { motion, AnimatePresence } from "motion/react";
 import { DPMLAlertBanner } from "../DPMLAlerts";
+import { OfflineIndicator } from "../pwa/OfflineIndicator";
 import { cn } from "../../lib/utils";
 
 interface RoleLayoutProps {
@@ -15,11 +16,11 @@ export function RoleLayout({ role }: RoleLayoutProps) {
   return (
     <div className={cn(
        "flex-1 flex flex-col md:flex-row relative h-full overflow-hidden w-full",
-       role === 'pharmacist' ? "bg-white dark:bg-slate-900" : ""
+       role === 'pharmacist' ? "bg-white dark:bg-[#0A3D3B]" : "bg-white dark:bg-[#062625]"
     )}>
       {/* Desktop Sidebar */}
       {role === 'pharmacist' && (
-        <div className="hidden md:block w-64 lg:w-72 bg-white dark:bg-slate-900 shrink-0">
+        <div className="hidden md:block w-64 lg:w-72 bg-white dark:bg-[#0A3D3B] border-r border-[#CFE4E3] dark:border-[#145250] shrink-0">
           <RoleSidebar role={role} />
         </div>
       )}
@@ -27,9 +28,10 @@ export function RoleLayout({ role }: RoleLayoutProps) {
       {/* Main Content Area */}
       <div className={cn(
          "flex-1 flex flex-col relative h-full overflow-hidden w-full mx-auto",
-         role === 'pharmacist' ? "bg-[#FAFBFA] dark:bg-slate-950/50 rounded-tl-3xl rounded-bl-3xl" : "md:max-w-7xl"
+         role === 'pharmacist' ? "bg-[#F5FAFA] dark:bg-[#062625] md:rounded-tl-3xl md:rounded-bl-3xl" : "md:max-w-7xl"
       )}>
-        <div className="z-50 px-4 pt-4 pb-0 w-full">
+        <OfflineIndicator />
+        <div className="z-50 px-4 pt-2 pb-0 w-full">
            <DPMLAlertBanner />
         </div>
         <div className="flex-1 overflow-x-hidden overflow-y-auto relative">
@@ -48,7 +50,7 @@ export function RoleLayout({ role }: RoleLayoutProps) {
         </div>
         
         {/* Bottom Navigation always visible */}
-        <div className={role === 'pharmacist' ? "block md:hidden pb-[env(safe-area-inset-bottom)] shrink-0 bg-white dark:bg-slate-900 z-30" : "block pb-[env(safe-area-inset-bottom)] shrink-0 z-30"}>
+        <div className={role === 'pharmacist' ? "block md:hidden pb-[env(safe-area-inset-bottom)] shrink-0 bg-white dark:bg-[#0A3D3B] z-30" : "block pb-[env(safe-area-inset-bottom)] shrink-0 z-30"}>
           <BottomNav role={role} />
         </div>
       </div>

@@ -23,10 +23,10 @@ export function PharmacyHeatmap({ pharmacies }: { pharmacies: any[] }) {
   
   if (!isAvailable || !apiKey) {
     return (
-      <div className="w-full h-[300px] bg-slate-100 dark:bg-zinc-800/80 rounded-xl flex items-center justify-center p-6 text-center border border-slate-200 dark:border-zinc-700">
+      <div className="w-full h-[300px] bg-[#E7F1F1] dark:bg-[#062625] rounded-2xl flex items-center justify-center p-6 text-center border border-[#CFE4E3] dark:border-[#145250]">
         <div>
-          <h2 className="font-bold text-slate-800 dark:text-white mb-1.5 text-sm uppercase tracking-wide">Carte de chaleur de la demande</h2>
-          <p className="text-xs text-slate-600 dark:text-zinc-400 max-w-sm">
+          <h2 className="font-bold text-[#0A3D3B] dark:text-white mb-1.5 text-sm uppercase tracking-wide">Carte de chaleur de la demande</h2>
+          <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7] max-w-sm">
             {pharmacies.length} officines enregistrées dans la zone de couverture. Analyse de densité en temps réel.
           </p>
         </div>
@@ -64,7 +64,7 @@ export function PharmacyHeatmap({ pharmacies }: { pharmacies: any[] }) {
   ];
 
   return (
-    <div className="w-full h-[300px] rounded-xl overflow-hidden shadow-sm border border-gray-100 dark:border-zinc-800">
+    <div className="w-full h-[300px] rounded-2xl overflow-hidden shadow-sm border border-[#CFE4E3] dark:border-[#145250]">
       <APIProvider 
         apiKey={apiKey} 
         version="weekly"

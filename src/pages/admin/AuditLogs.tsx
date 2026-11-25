@@ -107,41 +107,41 @@ export function AdminAuditLogs() {
   });
 
   return (
-    <div className="flex-1 bg-slate-50 flex flex-col h-full overflow-hidden">
-      <div className="bg-white dark:bg-zinc-950 px-8 pt-6 pb-6 shadow-sm z-10 border-b border-gray-200 shrink-0">
-         <h1 className="font-bold text-gray-900 dark:text-white text-2xl mb-1"> {t('audit_security_logs', 'Audit & Security Logs')} </h1>
-         <p className="text-gray-500 text-sm mb-6"> {t('trace_application_activity_rol', 'Trace application activity, role changes, and alerts')} </p>
+    <div className="flex-1 bg-[#F5FAFA] dark:bg-[#062625] flex flex-col h-full overflow-hidden">
+      <div className="bg-white dark:bg-[#0A3D3B] px-8 pt-6 pb-6 shadow-sm z-10 border-b border-[#CFE4E3] dark:border-[#145250] shrink-0">
+         <h1 className="font-bold text-[#0A3D3B] dark:text-white text-2xl mb-1"> {t('audit_security_logs', 'Audit & Security Logs')} </h1>
+         <p className="text-[#5C807F] dark:text-[#9FC8C7] text-sm mb-6"> {t('trace_application_activity_rol', 'Trace application activity, role changes, and alerts')} </p>
          
          <div className="flex flex-col lg:flex-row gap-4 lg:items-center w-full">
            <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#5C807F] dark:text-[#9FC8C7]" size={16} />
               <input 
                  type="text" 
                  value={inputValue}
                  onChange={handleSearchChange}
                  placeholder={t('search_by_id_user_action', 'Search by ID, User, Action...')} 
-                 className="w-full bg-gray-50 dark:bg-zinc-900 border border-gray-200 py-2.5 pl-10 pr-4 rounded-xl text-sm focus:outline-none focus:border-slate-400" 
+                 className="w-full bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] text-[#0A3D3B] dark:text-white placeholder:text-[#5C807F] dark:placeholder:text-[#9FC8C7] py-2.5 pl-11 pr-4 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-[#0E7673]" 
               />
            </div>
            
            <div className="flex items-center gap-2">
-             <div className="flex items-center border border-gray-200 rounded-xl bg-gray-50 dark:bg-zinc-900 overflow-hidden">
+             <div className="flex items-center border border-[#CFE4E3] dark:border-[#145250] rounded-full bg-[#F5FAFA] dark:bg-[#062625] overflow-hidden px-2">
                 <input 
                   type="date" 
                   value={startDate}
                   onChange={(e) => setStartDate(e.target.value)}
-                  className="bg-transparent py-2.5 pl-3 pr-2 text-sm text-gray-600 focus:outline-none" 
+                  className="bg-transparent py-2.5 pl-3 pr-2 text-sm text-[#0A3D3B] dark:text-[#D7F1EA] focus:outline-none" 
                 />
-                <span className="text-gray-400">-</span>
+                <span className="text-[#5C807F] dark:text-[#9FC8C7]">-</span>
                 <input 
                   type="date" 
                   value={endDate}
                   onChange={(e) => setEndDate(e.target.value)}
-                  className="bg-transparent py-2.5 pl-2 pr-3 text-sm text-gray-600 focus:outline-none" 
+                  className="bg-transparent py-2.5 pl-2 pr-3 text-sm text-[#0A3D3B] dark:text-[#D7F1EA] focus:outline-none" 
                 />
              </div>
              
-             <button className="w-10 h-10 flex items-center justify-center bg-gray-100 dark:bg-zinc-800 border border-gray-200 hover:bg-gray-200 rounded-xl text-gray-600 transition">
+             <button className="w-10 h-10 flex items-center justify-center bg-[#E7F1F1] dark:bg-[#0E4A47] border border-[#CFE4E3] dark:border-[#145250] hover:bg-[#D7F1EA] dark:hover:bg-[#145250] rounded-full text-[#0E7673] dark:text-[#38B794] transition">
                 <Filter size={18} />
              </button>
            </div>
@@ -150,36 +150,36 @@ export function AdminAuditLogs() {
 
       <div className="flex-1 overflow-y-auto p-8 space-y-4">
          {loading ? (
-             <div className="text-center p-8 text-gray-500"> {t('loading_audit_logs', 'Loading audit logs...')} </div>
+             <div className="text-center p-8 text-[#5C807F] dark:text-[#9FC8C7]"> {t('loading_audit_logs', 'Loading audit logs...')} </div>
          ) : errorMsg ? (
-             <div className="bg-red-50 text-red-600 p-6 rounded-2xl flex flex-col items-center justify-center border border-red-100 shadow-sm text-center">
+             <div className="bg-red-50 dark:bg-red-950/30 text-red-600 dark:text-red-400 p-6 rounded-2xl flex flex-col items-center justify-center border border-red-200 dark:border-red-900/40 shadow-sm text-center">
                  <AlertTriangle size={32} className="mb-2" />
                  <p className="font-bold">{errorMsg}</p>
              </div>
          ) : filteredLogs.length === 0 ? (
-             <div className="text-center p-8 text-gray-500 border border-dashed border-gray-200 rounded-2xl">
+             <div className="text-center p-8 text-[#5C807F] dark:text-[#9FC8C7] border border-dashed border-[#CFE4E3] dark:border-[#145250] rounded-2xl">
                   {t('no_logs_found_matching_your_fi', 'No logs found matching your filters.')} </div>
          ) : (
              filteredLogs.map((log, i) => (
-                <div key={log.id || i} className="bg-white dark:bg-zinc-950 rounded-2xl p-4 shadow-sm border border-gray-100 flex items-start gap-4 hover:shadow-md transition">
+                <div key={log.id || i} className="bg-white dark:bg-[#0A3D3B] rounded-2xl p-5 shadow-sm border border-[#CFE4E3] dark:border-[#145250] flex items-start gap-4 hover:shadow-md transition">
                    <div className="flex-1">
                        <div className="flex justify-between items-start mb-2">
                           <div className="flex items-center gap-2">
-                             <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider
-                                ${log.level === 'critical' ? 'bg-red-100 text-red-700' : 
-                                  log.level === 'warning' ? 'bg-orange-100 text-orange-700' : 
-                                  'bg-blue-100 text-blue-700'}`}>
+                             <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider
+                                ${log.level === 'critical' ? 'bg-red-100 dark:bg-red-950/40 text-red-700 dark:text-red-400' : 
+                                  log.level === 'warning' ? 'bg-amber-100 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300' : 
+                                  'bg-[#D7F1EA] dark:bg-[#0E4A47] text-[#0E7673] dark:text-[#38B794]'}`}>
                                 {log.level}
                              </span>
-                             <span className="text-xs font-bold text-gray-900 dark:text-white">{log.action}</span>
+                             <span className="text-xs font-bold text-[#0A3D3B] dark:text-white">{log.action}</span>
                           </div>
-                          <span className="text-[10px] text-gray-500 font-medium">{log.time}</span>
+                          <span className="text-[10px] text-[#5C807F] dark:text-[#9FC8C7] font-medium tabular-nums">{log.time}</span>
                        </div>
                        
-                       <p className="text-sm text-gray-600 mb-3">{log.details}</p>
+                       <p className="text-sm text-[#5C807F] dark:text-[#D7F1EA] mb-3">{log.details}</p>
                        
-                       <div className="flex items-center justify-between border-t border-gray-50 pt-3 text-xs text-gray-500">
-                          <div className="flex items-center gap-1.5 font-medium bg-gray-50 dark:bg-zinc-900 px-2 py-1 rounded-md">
+                       <div className="flex items-center justify-between border-t border-[#CFE4E3]/60 dark:border-[#145250] pt-3 text-xs text-[#5C807F] dark:text-[#9FC8C7]">
+                          <div className="flex items-center gap-1.5 font-medium bg-[#E7F1F1] dark:bg-[#0E4A47] text-[#0A3D3B] dark:text-[#D7F1EA] px-2.5 py-1 rounded-full">
                              <User size={12} /> {log.user}
                           </div>
                           <span className="font-mono text-[10px]">{log.id}</span>
@@ -187,7 +187,7 @@ export function AdminAuditLogs() {
                    </div>
                    <button 
                      onClick={() => handleDelete(log.id)}
-                     className="w-10 h-10 shrink-0 flex items-center justify-center text-red-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition"
+                     className="w-10 h-10 shrink-0 flex items-center justify-center text-red-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-full transition"
                      title={t('delete_log', 'Delete Log')}
                    >
                      <Trash2 size={18} />

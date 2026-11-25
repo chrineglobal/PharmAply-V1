@@ -20,10 +20,10 @@ export function AdminHome() {
     totalRevenue: 0,
     todaySales: 0,
     pieData: [
-      { name: 'Delivered', value: 1, color: '#c4f0b2' },
-      { name: 'Active', value: 1, color: '#81ded9' },
-      { name: 'Pending', value: 1, color: '#fba5bd' },
-      { name: 'Cancelled', value: 1, color: '#e2e8f0' }
+      { name: 'Delivered', value: 1, color: '#38B794' },
+      { name: 'Active', value: 1, color: '#0E7673' },
+      { name: 'Pending', value: 1, color: '#F59E0B' },
+      { name: 'Cancelled', value: 1, color: '#9FC8C7' }
     ]
   });
   const [recentOrders, setRecentOrders] = useState<any[]>([]);
@@ -74,12 +74,12 @@ export function AdminHome() {
           ...prev,
           activeOrders: activeOrdersCount,
           totalRevenue: totalRev,
-          todaySales: Math.min(totalRev, 120), // Mock today's sales logic based on totalRev
+          todaySales: Math.min(totalRev, 120),
           pieData: [
-            { name: 'Delivered', value: orders.filter(o => o.status === 'delivered').length || 1, color: '#c4f0b2' },
-            { name: 'Active', value: activeOrdersCount || 1, color: '#81ded9' },
-            { name: 'Pending', value: orders.filter(o => o.status === 'pending').length || 1, color: '#fba5bd' },
-            { name: 'Cancelled', value: orders.filter(o => o.status === 'cancelled').length || 1, color: '#e2e8f0' }
+            { name: 'Delivered', value: orders.filter(o => o.status === 'delivered').length || 1, color: '#38B794' },
+            { name: 'Active', value: activeOrdersCount || 1, color: '#0E7673' },
+            { name: 'Pending', value: orders.filter(o => o.status === 'pending').length || 1, color: '#F59E0B' },
+            { name: 'Cancelled', value: orders.filter(o => o.status === 'cancelled').length || 1, color: '#9FC8C7' }
           ]
         }));
       });
@@ -95,24 +95,24 @@ export function AdminHome() {
   }, []);
 
   const barData = [
-    { name: 'Mon', uv: 4000, color: '#f3c78b' },
-    { name: 'Tue', uv: 3000, color: '#f5b5f5' },
-    { name: 'Wed', uv: 2000, color: '#b5e5b5' },
-    { name: 'Thu', uv: 2780, color: '#8bd3d3' },
-    { name: 'Fri', uv: 1890, color: '#fba5bd' },
-    { name: 'Sat', uv: 2390, color: '#b2aaf2' },
+    { name: 'Mon', uv: 4000, color: '#0E7673' },
+    { name: 'Tue', uv: 3000, color: '#38B794' },
+    { name: 'Wed', uv: 2000, color: '#5C807F' },
+    { name: 'Thu', uv: 2780, color: '#0E7673' },
+    { name: 'Fri', uv: 1890, color: '#38B794' },
+    { name: 'Sat', uv: 2390, color: '#9FC8C7' },
   ];
 
   return (
     <div className="flex flex-col space-y-6">
       
-      <div className="flex items-center justify-between">
-         <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100">{userData?.name || user?.displayName || t('admin_welcome_text', 'Admin')}</h1>
+      <div className="flex flex-wrap items-center justify-between gap-4">
+         <h1 className="text-2xl font-bold text-[#0A3D3B] dark:text-white">{userData?.name || user?.displayName || t('admin_welcome_text', 'Admin')}</h1>
          
          <div className="flex items-center gap-2">
-            <button className="flex items-center gap-2 bg-white dark:bg-zinc-950 px-4 py-2 rounded-full shadow-sm text-sm font-medium text-slate-700 hover:bg-slate-50 transition">
-              <Calendar size={16} />  {t('this_month', 'This Month')} </button>
-            <button className="w-10 h-10 bg-white dark:bg-zinc-950 rounded-full shadow-sm flex items-center justify-center text-slate-500 hover:text-slate-900 dark:text-white transition">
+            <button className="flex items-center gap-2 bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] px-4 py-2 rounded-full shadow-xs text-sm font-semibold text-[#0A3D3B] dark:text-white hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47] transition">
+              <Calendar size={16} className="text-[#0E7673] dark:text-[#38B794]" />  {t('this_month', 'This Month')} </button>
+            <button className="w-10 h-10 bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] rounded-full shadow-xs flex items-center justify-center text-[#5C807F] dark:text-[#9FC8C7] hover:text-[#0E7673] dark:hover:text-[#38B794] transition">
               <RotateCcw size={16} />
             </button>
          </div>
@@ -120,90 +120,89 @@ export function AdminHome() {
 
       {/* KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
-         <div className="bg-[#ccedc8] rounded-[2rem] p-6 relative overflow-hidden flex flex-col justify-between h-40">
+         <div className="bg-gradient-to-br from-[#0A3D3B] to-[#0E7673] text-white rounded-3xl p-6 relative overflow-hidden flex flex-col justify-between h-40 shadow-xs border border-[#145250]">
            <div className="flex justify-between items-start">
-             <div className="w-8 h-8 bg-black/10 rounded-full flex items-center justify-center">
-               <TrendingUp size={16} className="text-black dark:text-white/60" />
+             <div className="w-9 h-9 bg-white/15 rounded-2xl flex items-center justify-center">
+               <TrendingUp size={16} className="text-[#38B794]" />
              </div>
-             <button className="text-black dark:text-white/40 hover:text-black dark:text-white/60"><MoreHorizontal size={20} /></button>
+             <button className="text-white/60 hover:text-white"><MoreHorizontal size={20} /></button>
            </div>
            <div>
-             <p className="text-black dark:text-white/60 text-sm font-medium mb-1">{t('admin_today_revenue', "Today's Revenue")}</p>
-             <h3 className="text-3xl font-bold text-black dark:text-white/80">{formatCurrency(stats.todaySales)}</h3>
-             <p className="text-[10px] text-green-700 font-bold mt-1"> {t('2_5_this_month', '+2.5% This Month')} </p>
+             <p className="text-[#D7F1EA] text-sm font-medium mb-1">{t('admin_today_revenue', "Today's Revenue")}</p>
+             <h3 className="text-3xl font-extrabold text-white tabular-nums">{formatCurrency(stats.todaySales)}</h3>
+             <p className="text-[11px] text-[#38B794] font-bold mt-1"> {t('2_5_this_month', '+2.5% This Month')} </p>
            </div>
-           {/* Decorative bars */}
            <div className="absolute right-6 bottom-6 flex items-end gap-1 opacity-20">
-             <div className="w-2 h-8 bg-black rounded-full"></div>
-             <div className="w-2 h-12 bg-black rounded-full"></div>
-             <div className="w-2 h-6 bg-black rounded-full"></div>
+             <div className="w-2 h-8 bg-[#38B794] rounded-full"></div>
+             <div className="w-2 h-12 bg-[#38B794] rounded-full"></div>
+             <div className="w-2 h-6 bg-[#38B794] rounded-full"></div>
            </div>
          </div>
 
-         <div className="bg-[#a5e0d8] rounded-[2rem] p-6 relative overflow-hidden flex flex-col justify-between h-40">
+         <div className="bg-[#D7F1EA] dark:bg-[#0A3D3B] rounded-3xl p-6 relative overflow-hidden flex flex-col justify-between h-40 shadow-xs border border-[#CFE4E3] dark:border-[#145250]">
            <div className="flex justify-between items-start">
-             <div className="w-8 h-8 bg-black/10 rounded-full flex items-center justify-center">
-               <Store size={16} className="text-black dark:text-white/60" />
+             <div className="w-9 h-9 bg-white/80 dark:bg-[#0E4A47] rounded-2xl flex items-center justify-center">
+               <Store size={16} className="text-[#0E7673] dark:text-[#38B794]" />
              </div>
-             <button className="text-black dark:text-white/40 hover:text-black dark:text-white/60"><MoreHorizontal size={20} /></button>
+             <button className="text-[#5C807F] dark:text-[#9FC8C7] hover:text-[#0A3D3B] dark:hover:text-white"><MoreHorizontal size={20} /></button>
            </div>
            <div>
-             <p className="text-black dark:text-white/60 text-sm font-medium mb-1">{t('admin_pharmacies_count', "Pharmacies")}</p>
-             <h3 className="text-3xl font-bold text-black dark:text-white/80">{stats.pharmaciesCount}</h3>
-             <p className="text-[10px] text-teal-800 font-bold mt-1"> {t('2_5_this_month', '+2.5% This Month')} </p>
+             <p className="text-[#5C807F] dark:text-[#9FC8C7] text-sm font-medium mb-1">{t('admin_pharmacies_count', "Pharmacies")}</p>
+             <h3 className="text-3xl font-extrabold text-[#0A3D3B] dark:text-white tabular-nums">{stats.pharmaciesCount}</h3>
+             <p className="text-[11px] text-[#0E7673] dark:text-[#38B794] font-bold mt-1"> {t('2_5_this_month', '+2.5% This Month')} </p>
            </div>
            <div className="absolute right-6 bottom-6 flex items-end gap-1 opacity-20">
-             <div className="w-2 h-4 bg-black rounded-full"></div>
-             <div className="w-2 h-10 bg-black rounded-full"></div>
-             <div className="w-2 h-16 bg-black rounded-full"></div>
+             <div className="w-2 h-4 bg-[#0E7673] dark:bg-[#38B794] rounded-full"></div>
+             <div className="w-2 h-10 bg-[#0E7673] dark:bg-[#38B794] rounded-full"></div>
+             <div className="w-2 h-16 bg-[#0E7673] dark:bg-[#38B794] rounded-full"></div>
            </div>
          </div>
 
-         <div className="bg-[#fbabbd] rounded-[2rem] p-6 relative overflow-hidden flex flex-col justify-between h-40">
+         <div className="bg-white dark:bg-[#0A3D3B] rounded-3xl p-6 relative overflow-hidden flex flex-col justify-between h-40 shadow-xs border border-[#CFE4E3] dark:border-[#145250]">
            <div className="flex justify-between items-start">
-             <div className="w-8 h-8 bg-black/10 rounded-full flex items-center justify-center">
-               <Package size={16} className="text-black dark:text-white/60" />
+             <div className="w-9 h-9 bg-[#D7F1EA] dark:bg-[#0E4A47] rounded-2xl flex items-center justify-center">
+               <Package size={16} className="text-[#0E7673] dark:text-[#38B794]" />
              </div>
-             <button className="text-black dark:text-white/40 hover:text-black dark:text-white/60"><MoreHorizontal size={20} /></button>
+             <button className="text-[#5C807F] dark:text-[#9FC8C7] hover:text-[#0A3D3B] dark:hover:text-white"><MoreHorizontal size={20} /></button>
            </div>
            <div>
-             <p className="text-black dark:text-white/60 text-sm font-medium mb-1">{t('admin_active_deliveries', "Active Deliveries")}</p>
-             <h3 className="text-3xl font-bold text-black dark:text-white/80">{stats.activeOrders}</h3>
-             <p className="text-[10px] text-red-800 font-bold mt-1"> {t('in_progress_right_now', 'In progress right now')} </p>
+             <p className="text-[#5C807F] dark:text-[#9FC8C7] text-sm font-medium mb-1">{t('admin_active_deliveries', "Active Deliveries")}</p>
+             <h3 className="text-3xl font-extrabold text-[#0A3D3B] dark:text-white tabular-nums">{stats.activeOrders}</h3>
+             <p className="text-[11px] text-amber-600 dark:text-amber-400 font-bold mt-1"> {t('in_progress_right_now', 'In progress right now')} </p>
            </div>
            <div className="absolute right-6 bottom-6 flex items-end gap-1 opacity-20">
-             <div className="w-2 h-6 bg-black rounded-full"></div>
-             <div className="w-2 h-16 bg-black rounded-full"></div>
-             <div className="w-2 h-4 bg-black rounded-full"></div>
+             <div className="w-2 h-6 bg-[#0E7673] dark:bg-[#38B794] rounded-full"></div>
+             <div className="w-2 h-16 bg-[#0E7673] dark:bg-[#38B794] rounded-full"></div>
+             <div className="w-2 h-4 bg-[#0E7673] dark:bg-[#38B794] rounded-full"></div>
            </div>
          </div>
 
-         <div className="bg-[#b3abf2] rounded-[2rem] p-6 relative overflow-hidden flex flex-col justify-between h-40">
+         <div className="bg-white dark:bg-[#0A3D3B] rounded-3xl p-6 relative overflow-hidden flex flex-col justify-between h-40 shadow-xs border border-[#CFE4E3] dark:border-[#145250]">
            <div className="flex justify-between items-start">
-             <div className="w-8 h-8 bg-black/10 rounded-full flex items-center justify-center">
-               <Users size={16} className="text-black dark:text-white/60" />
+             <div className="w-9 h-9 bg-[#D7F1EA] dark:bg-[#0E4A47] rounded-2xl flex items-center justify-center">
+               <Users size={16} className="text-[#0E7673] dark:text-[#38B794]" />
              </div>
-             <button className="text-black dark:text-white/40 hover:text-black dark:text-white/60"><MoreHorizontal size={20} /></button>
+             <button className="text-[#5C807F] dark:text-[#9FC8C7] hover:text-[#0A3D3B] dark:hover:text-white"><MoreHorizontal size={20} /></button>
            </div>
            <div>
-             <p className="text-black dark:text-white/60 text-sm font-medium mb-1">{t('admin_system_users', "System Users")}</p>
-             <h3 className="text-3xl font-bold text-black dark:text-white/80">{stats.patientsCount + stats.driversCount + stats.pharmaciesCount}</h3>
-             <p className="text-[10px] text-indigo-800 font-bold mt-1"> {t('total_platform_accounts', 'Total platform accounts')} </p>
+             <p className="text-[#5C807F] dark:text-[#9FC8C7] text-sm font-medium mb-1">{t('admin_system_users', "System Users")}</p>
+             <h3 className="text-3xl font-extrabold text-[#0A3D3B] dark:text-white tabular-nums">{stats.patientsCount + stats.driversCount + stats.pharmaciesCount}</h3>
+             <p className="text-[11px] text-[#0E7673] dark:text-[#38B794] font-bold mt-1"> {t('total_platform_accounts', 'Total platform accounts')} </p>
            </div>
            <div className="absolute right-6 bottom-6 flex items-end gap-1 opacity-20">
-             <div className="w-2 h-10 bg-black rounded-full"></div>
-             <div className="w-2 h-6 bg-black rounded-full"></div>
-             <div className="w-2 h-12 bg-black rounded-full"></div>
+             <div className="w-2 h-10 bg-[#0E7673] dark:bg-[#38B794] rounded-full"></div>
+             <div className="w-2 h-6 bg-[#0E7673] dark:bg-[#38B794] rounded-full"></div>
+             <div className="w-2 h-12 bg-[#0E7673] dark:bg-[#38B794] rounded-full"></div>
            </div>
          </div>
       </div>
 
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
-         <div className="lg:col-span-2 bg-white dark:bg-zinc-950 rounded-3xl p-6 shadow-sm border border-gray-100 flex flex-col">
+         <div className="lg:col-span-2 bg-white dark:bg-[#0A3D3B] rounded-3xl p-6 shadow-xs border border-[#CFE4E3] dark:border-[#145250] flex flex-col">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="font-bold text-slate-800 dark:text-slate-100">{t('admin_order_status_report', 'Order Status Report')}</h3>
-              <button className="w-8 h-8 border border-gray-200 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-600">
+              <h3 className="font-bold text-[#0A3D3B] dark:text-white">{t('admin_order_status_report', 'Order Status Report')}</h3>
+              <button className="w-8 h-8 border border-[#CFE4E3] dark:border-[#145250] rounded-full flex items-center justify-center text-[#5C807F] dark:text-[#9FC8C7] hover:text-[#0A3D3B] dark:hover:text-white">
                  <MoreHorizontal size={16} />
               </button>
             </div>
@@ -228,25 +227,25 @@ export function AdminHome() {
                  </PieChart>
                </ResponsiveContainer>
                <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                  <p className="text-xs text-slate-400"> {t('total_orders', 'Total Orders')} </p>
-                  <p className="text-2xl font-bold text-slate-800 dark:text-slate-100">{stats.activeOrders + stats.pieData[0].value + stats.pieData[2].value + stats.pieData[3].value}</p>
+                  <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7]"> {t('total_orders', 'Total Orders')} </p>
+                  <p className="text-2xl font-extrabold text-[#0A3D3B] dark:text-white tabular-nums">{stats.activeOrders + stats.pieData[0].value + stats.pieData[2].value + stats.pieData[3].value}</p>
                </div>
             </div>
             
-            <div className="flex justify-center gap-4 mt-4">
+            <div className="flex justify-center flex-wrap gap-4 mt-4">
                {stats.pieData.map(item => (
                  <div key={item.name} className="flex items-center gap-1.5">
                    <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: item.color }}></div>
-                   <span className="text-[10px] text-slate-500 font-medium">{item.name}</span>
+                   <span className="text-[11px] text-[#5C807F] dark:text-[#9FC8C7] font-medium">{item.name}</span>
                  </div>
                ))}
             </div>
          </div>
 
-         <div className="lg:col-span-3 bg-white dark:bg-zinc-950 rounded-3xl p-6 shadow-sm border border-gray-100">
+         <div className="lg:col-span-3 bg-white dark:bg-[#0A3D3B] rounded-3xl p-6 shadow-xs border border-[#CFE4E3] dark:border-[#145250]">
             <div className="flex justify-between items-center mb-6">
-              <h3 className="font-bold text-slate-800 dark:text-slate-100">{t('admin_total_revenue_overview', 'Total Revenue Overview')}</h3>
-              <button className="w-8 h-8 border border-gray-200 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-600">
+              <h3 className="font-bold text-[#0A3D3B] dark:text-white">{t('admin_total_revenue_overview', 'Total Revenue Overview')}</h3>
+              <button className="w-8 h-8 border border-[#CFE4E3] dark:border-[#145250] rounded-full flex items-center justify-center text-[#5C807F] dark:text-[#9FC8C7] hover:text-[#0A3D3B] dark:hover:text-white">
                  <MoreHorizontal size={16} />
               </button>
             </div>
@@ -254,10 +253,10 @@ export function AdminHome() {
             <div className="h-[250px] w-full">
               <ResponsiveContainer width="100%" height={250}>
                 <BarChart data={barData} margin={{ top: 10, right: 0, left: -20, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                  <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#94a3b8' }} dy={10} />
-                  <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#94a3b8' }} tickFormatter={(val) => `${val / 1000}K`} />
-                  <RechartsTooltip cursor={{fill: '#f8fafc'}} contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }} />
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#CFE4E3" strokeOpacity={0.5} />
+                  <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#5C807F' }} dy={10} />
+                  <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#5C807F' }} tickFormatter={(val) => `${val / 1000}K`} />
+                  <RechartsTooltip cursor={{fill: 'rgba(14, 118, 115, 0.08)'}} contentStyle={{ borderRadius: '14px', border: '1px solid #CFE4E3', boxShadow: '0 4px 12px rgba(10, 61, 59, 0.12)' }} />
                   <Bar dataKey="uv" radius={[10, 10, 10, 10]} barSize={24}>
                     {barData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.color} />
@@ -270,15 +269,15 @@ export function AdminHome() {
       </div>
 
       {/* Recent Orders List */}
-      <div className="bg-white dark:bg-zinc-950 rounded-3xl p-6 shadow-sm border border-gray-100">
-         <div className="flex items-center justify-between mb-6">
-            <h3 className="font-bold text-slate-800 dark:text-slate-100">{t('admin_recent_platform_orders', 'Recent Platform Orders')}</h3>
+      <div className="bg-white dark:bg-[#0A3D3B] rounded-3xl p-6 shadow-xs border border-[#CFE4E3] dark:border-[#145250]">
+         <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+            <h3 className="font-bold text-[#0A3D3B] dark:text-white">{t('admin_recent_platform_orders', 'Recent Platform Orders')}</h3>
             <div className="flex items-center gap-3">
                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
-                  <input type="text" placeholder={t('search', 'Search...')} className="pl-9 pr-4 py-2 bg-slate-50 border border-slate-100 rounded-full text-xs outline-none focus:ring-2 focus:ring-slate-900" />
+                  <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#5C807F] dark:text-[#9FC8C7]" size={14} />
+                  <input type="text" placeholder={t('search', 'Search...')} className="pl-9 pr-4 py-2 bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] rounded-full text-xs text-[#0A3D3B] dark:text-white placeholder:text-[#5C807F] dark:placeholder:text-[#9FC8C7] outline-none focus:border-[#0E7673] dark:focus:border-[#38B794]" />
                </div>
-               <button className="px-3 py-2 bg-slate-50 border border-slate-100 rounded-full text-xs font-medium text-slate-600 flex items-center gap-1">
+               <button className="px-4 py-2 bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] rounded-full text-xs font-semibold text-[#0A3D3B] dark:text-white flex items-center gap-1.5 hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47] transition">
                   {t('filter', 'Filter')} <span className="text-[10px]">▼</span>
                </button>
             </div>
@@ -286,7 +285,7 @@ export function AdminHome() {
 
          <div className="overflow-x-auto">
             <table className="w-full text-sm text-left">
-               <thead className="text-xs text-slate-500 border-b border-gray-100">
+               <thead className="text-xs text-[#5C807F] dark:text-[#9FC8C7] border-b border-[#CFE4E3] dark:border-[#145250]">
                   <tr>
                      <th className="pb-4 font-semibold px-4"> {t('order_id', 'Order ID')} </th>
                      <th className="pb-4 font-semibold px-4"> {t('pharmacy', 'Pharmacy')} </th>
@@ -295,33 +294,33 @@ export function AdminHome() {
                      <th className="pb-4 font-semibold px-4"> {t('date', 'Date')} </th>
                   </tr>
                </thead>
-               <tbody>
+               <tbody className="divide-y divide-[#E7F1F1] dark:divide-[#145250]">
                   {recentOrders.length > 0 ? recentOrders.map((order, idx) => (
-                     <tr key={idx} className="border-b border-gray-50 last:border-0 hover:bg-slate-50">
-                        <td className="py-4 px-4 font-medium text-slate-800 dark:text-slate-100">{order.id?.slice(0, 8)}...</td>
-                        <td className="py-4 px-4 text-slate-600">{order.pharmacyId?.slice(0, 8)}</td>
+                     <tr key={idx} className="hover:bg-[#F5FAFA] dark:hover:bg-[#0E4A47]/50 transition">
+                        <td className="py-4 px-4 font-bold text-[#0A3D3B] dark:text-white">{order.id?.slice(0, 8)}...</td>
+                        <td className="py-4 px-4 text-[#5C807F] dark:text-[#9FC8C7]">{order.pharmacyId?.slice(0, 8)}</td>
                         <td className="py-4 px-4">
-                           <span className="px-2.5 py-1 bg-teal-50 text-teal-700 rounded-full text-[10px] font-bold uppercase">{order.status || 'Pending'}</span>
+                           <span className="px-3 py-1 bg-[#D7F1EA] dark:bg-[#0E4A47] text-[#0E7673] dark:text-[#38B794] rounded-full text-[10px] font-bold uppercase border border-[#CFE4E3] dark:border-[#145250]">{order.status || 'Pending'}</span>
                         </td>
-                        <td className="py-4 px-4 text-slate-800 dark:text-slate-100 font-medium">{formatCurrency(Number(order.totalPrice || 0))}</td>
-                        <td className="py-4 px-4 text-slate-500 text-xs"> {t('recently', 'Recently')} </td>
+                        <td className="py-4 px-4 text-[#0A3D3B] dark:text-white font-bold tabular-nums">{formatCurrency(Number(order.totalPrice || 0))}</td>
+                        <td className="py-4 px-4 text-[#5C807F] dark:text-[#9FC8C7] text-xs"> {t('recently', 'Recently')} </td>
                      </tr>
                   )) : (
                      <tr>
-                        <td colSpan={5} className="py-8 text-center text-slate-400 text-sm"> {t('no_recent_orders', 'No recent orders.')} </td>
+                        <td colSpan={5} className="py-8 text-center text-[#5C807F] dark:text-[#9FC8C7] text-sm"> {t('no_recent_orders', 'No recent orders.')} </td>
                      </tr>
                   )}
                </tbody>
             </table>
          </div>
          
-         <div className="flex items-center justify-between mt-6 pt-4 border-t border-gray-50">
-            <p className="text-xs text-slate-500"> {t('showing_recent_orders', 'Showing recent orders')} </p>
+         <div className="flex items-center justify-between mt-6 pt-4 border-t border-[#E7F1F1] dark:border-[#145250]">
+            <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7]"> {t('showing_recent_orders', 'Showing recent orders')} </p>
             <div className="flex items-center gap-1">
-               <button className="px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-slate-700"> {t('prev', 'Prev')} </button>
-               <button className="w-8 h-8 rounded-full bg-slate-900 text-white text-xs font-bold flex items-center justify-center">1</button>
-               <button className="w-8 h-8 rounded-full text-slate-500 text-xs font-bold flex items-center justify-center hover:bg-slate-100">2</button>
-               <button className="px-3 py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900 dark:text-white"> {t('next', 'Next')} </button>
+               <button className="px-3 py-1.5 text-xs font-medium text-[#5C807F] dark:text-[#9FC8C7] hover:text-[#0A3D3B] dark:hover:text-white"> {t('prev', 'Prev')} </button>
+               <button className="w-8 h-8 rounded-full bg-[#0E7673] text-white text-xs font-bold flex items-center justify-center">1</button>
+               <button className="w-8 h-8 rounded-full text-[#5C807F] dark:text-[#9FC8C7] text-xs font-bold flex items-center justify-center hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47]">2</button>
+               <button className="px-3 py-1.5 text-xs font-medium text-[#5C807F] dark:text-[#9FC8C7] hover:text-[#0A3D3B] dark:hover:text-white"> {t('next', 'Next')} </button>
             </div>
          </div>
       </div>

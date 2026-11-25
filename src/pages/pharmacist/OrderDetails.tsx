@@ -21,8 +21,8 @@ import { useGoogleMapsStatus } from '../../hooks/useGoogleMapsStatus';
 // Google Maps Custom Marker Components
 const DriverMotoMarkerUI = () => (
   <div style={{
-    width: 44, height: 44, background: '#194B4B', border: '3px solid #ffffff', borderRadius: '50%',
-    boxShadow: '0 8px 20px rgba(25, 75, 75, 0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#FACC15'
+    width: 44, height: 44, background: '#0E7673', border: '3px solid #ffffff', borderRadius: '50%',
+    boxShadow: '0 8px 20px rgba(14, 118, 115, 0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#FACC15'
   }}>
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="15" cy="5" r="1"/><path d="M12 17.5V14l-3-3 4-3 2 3h2"/>
@@ -32,8 +32,8 @@ const DriverMotoMarkerUI = () => (
 
 const PharmacyMarkerUI = () => (
   <div style={{
-    width: 40, height: 40, background: '#194B4B', border: '3px solid #ffffff', borderRadius: '50%',
-    boxShadow: '0 6px 18px rgba(25, 75, 75, 0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ffffff'
+    width: 40, height: 40, background: '#0A3D3B', border: '3px solid #ffffff', borderRadius: '50%',
+    boxShadow: '0 6px 18px rgba(10, 61, 59, 0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ffffff'
   }}>
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
       <path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/>
@@ -206,8 +206,8 @@ export function PharmacistOrderDetails() {
     }
   };
 
-  if (loading) return <div className="p-8 text-center text-sm text-gray-500 animate-pulse"> Chargement de la commande... </div>;
-  if (!order) return <div className="p-8 text-center text-sm text-gray-500"> Commande introuvable </div>;
+  if (loading) return <div className="p-8 text-center text-sm text-[#5C807F] dark:text-[#9FC8C7] animate-pulse"> Chargement de la commande... </div>;
+  if (!order) return <div className="p-8 text-center text-sm text-[#5C807F] dark:text-[#9FC8C7]"> Commande introuvable </div>;
 
   // Calcul des coordonnées GPS pour la carte (Strictement Officine <-> Livreur)
   const pharmacyLat = Number(order.pharmacyLat || order.pharmacyLatitude || 4.0511);
@@ -232,12 +232,12 @@ export function PharmacistOrderDetails() {
       {/* HEADER */}
       <div className="px-8 pt-8 pb-4 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-4">
-          <button onClick={() => navigate(-1)} className="w-10 h-10 bg-white dark:bg-slate-800 rounded-full border border-gray-100 dark:border-slate-700 shadow-sm flex items-center justify-center hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-slate-700 transition-colors">
-            <ArrowLeft size={20} className="text-gray-700 dark:text-gray-300" />
+          <button onClick={() => navigate(-1)} className="w-10 h-10 bg-white dark:bg-[#0A3D3B] rounded-full border border-[#CFE4E3] dark:border-[#145250] shadow-sm flex items-center justify-center hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47] transition-colors">
+            <ArrowLeft size={20} className="text-[#0A3D3B] dark:text-[#D7F1EA]" />
           </button>
           <div>
-            <h1 className="font-bold text-gray-900 dark:text-white text-2xl tracking-tight"> Commande #{order.id.slice(0, 8).toUpperCase()}</h1>
-            <p className="text-xs text-gray-500">Détails et suivi logistique en temps réel</p>
+            <h1 className="font-bold text-[#0A3D3B] dark:text-white text-2xl tracking-tight"> Commande #{order.id.slice(0, 8).toUpperCase()}</h1>
+            <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7]">Détails et suivi logistique en temps réel</p>
           </div>
         </div>
         
@@ -248,7 +248,7 @@ export function PharmacistOrderDetails() {
               const targetId = String(order?.id || id || '');
               navigate(`/pharmacist/messages/${targetId}`);
             }}
-            className="px-5 py-2.5 bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 text-gray-700 dark:text-gray-300 rounded-full text-sm font-bold shadow-sm hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-slate-700 transition flex items-center gap-2"
+            className="px-5 py-2.5 bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] text-[#0A3D3B] dark:text-[#D7F1EA] rounded-full text-sm font-bold shadow-sm hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47] transition flex items-center gap-2"
           >
             <MessageCircle size={16} />
             Chat Patient
@@ -256,7 +256,7 @@ export function PharmacistOrderDetails() {
           {driver?.phone && (
             <a 
               href={`tel:${driver.phone}`}
-              className="px-4 py-2.5 bg-[var(--app-primary-color)] text-white rounded-full text-sm font-bold shadow-sm hover:bg-[#133a3a] transition flex items-center gap-2"
+              className="px-4 py-2.5 bg-[#0E7673] text-white rounded-full text-sm font-bold shadow-sm hover:bg-[#0A5A58] transition flex items-center gap-2"
             >
               <Phone size={16} />
               Appeler Livreur
@@ -274,17 +274,17 @@ export function PharmacistOrderDetails() {
           <>
             {/* Phase 1: Avant ramassage du colis -> Carte d'approche du coursier vers la pharmacie */}
             {!isPickedUp ? (
-              <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-sm border border-gray-100 dark:border-slate-700 space-y-4">
+              <div className="bg-white dark:bg-[#0A3D3B] rounded-3xl p-6 shadow-sm border border-[#CFE4E3] dark:border-[#145250] space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-9 h-9 rounded-full bg-teal-50 dark:bg-slate-700 flex items-center justify-center text-[var(--app-primary-color)] dark:text-teal-400">
+                    <div className="w-9 h-9 rounded-full bg-[#D7F1EA] dark:bg-[#0E4A47] flex items-center justify-center text-[#0E7673] dark:text-[#38B794]">
                       <Navigation size={18} />
                     </div>
                     <div>
-                      <h3 className="font-bold text-gray-900 dark:text-white text-base">
+                      <h3 className="font-bold text-[#0A3D3B] dark:text-white text-base">
                         Livreur en approche de l'officine
                       </h3>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7]">
                         Suivi GPS en temps réel du coursier jusqu'à votre pharmacie
                       </p>
                     </div>
@@ -292,16 +292,16 @@ export function PharmacistOrderDetails() {
 
                   <div className="flex items-center gap-2">
                     <span className={`px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1.5 ${
-                      hasDriverAssigned ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300' : 'bg-amber-100 text-amber-800'
+                      hasDriverAssigned ? 'bg-[#D7F1EA] text-[#0E7673] dark:bg-[#0E4A47] dark:text-[#38B794]' : 'bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300'
                     }`}>
-                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                      <span className={`w-2 h-2 rounded-full animate-pulse ${hasDriverAssigned ? 'bg-[#38B794]' : 'bg-amber-500'}`}></span>
                       {hasDriverAssigned ? 'En route vers la pharmacie' : 'En attente d\'attribution'}
                     </span>
                   </div>
                 </div>
 
                 {/* Carte interactive Livreur -> Pharmacie */}
-                <div className="w-full h-80 rounded-2xl overflow-hidden border border-gray-200 dark:border-slate-700 relative shadow-inner z-0 bg-slate-900">
+                <div className="w-full h-80 rounded-2xl overflow-hidden border border-[#CFE4E3] dark:border-[#145250] relative shadow-inner z-0 bg-[#062625]">
                   {mapsAvailable && mapsApiKey ? (
                     <APIProvider 
                       apiKey={mapsApiKey}
@@ -334,7 +334,7 @@ export function PharmacistOrderDetails() {
                       {hasDriverAssigned && (
                         <Polyline
                           path={routePositions.map((c: any) => ({lat: c[0], lng: c[1]}))}
-                          strokeColor="#194B4B"
+                          strokeColor="#0E7673"
                           strokeWeight={4}
                           strokeOpacity={0.8}
                         />
@@ -347,29 +347,29 @@ export function PharmacistOrderDetails() {
                     </Map>
                     </APIProvider>
                   ) : (
-                    <div className="w-full h-full flex flex-col items-center justify-center p-6 text-center relative overflow-hidden bg-slate-900">
-                      <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#2dd4bf_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                    <div className="w-full h-full flex flex-col items-center justify-center p-6 text-center relative overflow-hidden bg-[#062625]">
+                      <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#38B794_1px,transparent_1px)] [background-size:16px_16px]"></div>
                       <div className="relative z-10 flex items-center justify-center gap-6 mb-4">
                         <div className="flex flex-col items-center gap-1.5">
                           <div className="w-12 h-12 rounded-2xl bg-amber-400/10 border border-amber-400/30 flex items-center justify-center text-amber-400">
                             <Bike size={24} className={hasDriverAssigned ? "animate-pulse" : ""} />
                           </div>
-                          <span className="text-[11px] font-bold text-slate-300">
+                          <span className="text-[11px] font-bold text-[#D7F1EA]">
                             {hasDriverAssigned ? (driver?.name || order.driverName || "Livreur assigné") : "En attente d'un coursier"}
                           </span>
                         </div>
                         <div className="flex flex-col items-center">
-                          <div className="w-16 border-t-2 border-dashed border-teal-500/50 my-auto"></div>
-                          <span className="text-[10px] font-mono text-teal-400 mt-1">{hasDriverAssigned ? "En route" : "Assignation"}</span>
+                          <div className="w-16 border-t-2 border-dashed border-[#38B794]/60 my-auto"></div>
+                          <span className="text-[10px] font-mono text-[#38B794] mt-1">{hasDriverAssigned ? "En route" : "Assignation"}</span>
                         </div>
                         <div className="flex flex-col items-center gap-1.5">
-                          <div className="w-12 h-12 rounded-2xl bg-[var(--app-primary-color)]/20 border border-[var(--app-primary-color)]/50 flex items-center justify-center text-teal-400">
+                          <div className="w-12 h-12 rounded-2xl bg-[#0E7673]/30 border border-[#38B794]/40 flex items-center justify-center text-[#38B794]">
                             <Store size={24} />
                           </div>
-                          <span className="text-[11px] font-bold text-slate-300">Votre Pharmacie</span>
+                          <span className="text-[11px] font-bold text-[#D7F1EA]">Votre Pharmacie</span>
                         </div>
                       </div>
-                      <p className="text-xs text-slate-400 relative z-10 font-medium">
+                      <p className="text-xs text-[#9FC8C7] relative z-10 font-medium">
                         {order.pharmacyName || "Officine partenaire"} • Position & itinéraire en direct
                       </p>
                     </div>
@@ -377,20 +377,20 @@ export function PharmacistOrderDetails() {
                 </div>
 
                 {/* Infos Livreur */}
-                <div className="bg-gray-50 dark:bg-slate-900 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-4 border border-gray-100 dark:border-slate-700">
+                <div className="bg-[#F5FAFA] dark:bg-[#062625] rounded-2xl p-4 flex flex-wrap items-center justify-between gap-4 border border-[#CFE4E3] dark:border-[#145250]">
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden flex items-center justify-center font-bold text-slate-700 dark:text-slate-200 shrink-0 border border-slate-300">
+                    <div className="w-12 h-12 rounded-full bg-[#E7F1F1] dark:bg-[#0E4A47] overflow-hidden flex items-center justify-center font-bold text-[#0A3D3B] dark:text-[#D7F1EA] shrink-0 border border-[#CFE4E3] dark:border-[#145250]">
                       {driver?.photoURL || driver?.avatar_url || order.driverPhoto ? (
                         <img src={driver?.photoURL || driver?.avatar_url || order.driverPhoto} alt="" className="w-full h-full object-cover" />
                       ) : (
-                        <Bike size={22} className="text-[var(--app-primary-color)] dark:text-teal-400" />
+                        <Bike size={22} className="text-[#0E7673] dark:text-[#38B794]" />
                       )}
                     </div>
                     <div>
-                      <p className="font-bold text-gray-900 dark:text-white text-sm">
+                      <p className="font-bold text-[#0A3D3B] dark:text-white text-sm">
                         {driver?.name || order.driverName || (hasDriverAssigned ? "Livreur Assigné" : "Recherche d'un coursier...")}
                       </p>
-                      <p className="text-xs text-gray-500 flex items-center gap-1.5 mt-0.5">
+                      <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7] flex items-center gap-1.5 mt-0.5">
                         <Bike size={13} />
                         {driver?.vehicle_plate ? `Moto / ${driver.vehicle_plate}` : (driver?.vehicle_type || "Deux-roues motorisé")}
                       </p>
@@ -401,15 +401,15 @@ export function PharmacistOrderDetails() {
                     {driver?.phone && (
                       <a
                         href={`tel:${driver.phone}`}
-                        className="px-4 py-2 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-gray-800 dark:text-gray-200 rounded-xl text-xs font-bold hover:bg-gray-100 dark:bg-zinc-800 flex items-center gap-1.5 transition shadow-sm"
+                        className="px-4 py-2 bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] text-[#0A3D3B] dark:text-[#D7F1EA] rounded-full text-xs font-bold hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47] flex items-center gap-1.5 transition shadow-sm"
                       >
-                        <Phone size={14} className="text-emerald-600" />
+                        <Phone size={14} className="text-[#0E7673] dark:text-[#38B794]" />
                         {driver.phone}
                       </a>
                     )}
                     <div className="text-right">
-                      <span className="text-xs text-gray-500 block">Mission</span>
-                      <span className="text-xs font-bold text-[var(--app-primary-color)] dark:text-teal-400 block">
+                      <span className="text-xs text-[#5C807F] dark:text-[#9FC8C7] block">Mission</span>
+                      <span className="text-xs font-bold text-[#0E7673] dark:text-[#38B794] block">
                         Ramassage au comptoir
                       </span>
                     </div>
@@ -418,43 +418,43 @@ export function PharmacistOrderDetails() {
               </div>
             ) : (
               /* Phase 2: Après ramassage du colis -> La course s'arrête pour l'officine */
-              <div className="bg-emerald-50/60 dark:bg-slate-800 rounded-3xl p-6 shadow-sm border border-emerald-100 dark:border-slate-700 space-y-4">
+              <div className="bg-[#D7F1EA]/50 dark:bg-[#0A3D3B] rounded-3xl p-6 shadow-sm border border-[#CFE4E3] dark:border-[#145250] space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-950/50 flex items-center justify-center text-emerald-700 dark:text-emerald-400">
+                    <div className="w-10 h-10 rounded-full bg-[#D7F1EA] dark:bg-[#0E4A47] flex items-center justify-center text-[#0E7673] dark:text-[#38B794]">
                       <CheckCircle size={22} />
                     </div>
                     <div>
-                      <h3 className="font-bold text-gray-900 dark:text-white text-base">
+                      <h3 className="font-bold text-[#0A3D3B] dark:text-white text-base">
                         Colis récupéré par le coursier
                       </h3>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7]">
                         Prise en charge à l'officine validée — Le coursier assure la livraison
                       </p>
                     </div>
                   </div>
 
-                  <span className="px-3.5 py-1.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 flex items-center gap-1.5">
+                  <span className="px-3.5 py-1.5 rounded-full text-xs font-bold bg-[#D7F1EA] text-[#0E7673] dark:bg-[#0E4A47] dark:text-[#38B794] flex items-center gap-1.5">
                     <CheckCircle size={14} />
                     {order.status === 'delivered' ? 'Livraison effectuée' : 'Remis au livreur'}
                   </span>
                 </div>
 
                 {hasDriverAssigned && (
-                  <div className="bg-white dark:bg-slate-900 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-4 border border-emerald-100/50 dark:border-slate-700">
+                  <div className="bg-white dark:bg-[#062625] rounded-2xl p-4 flex flex-wrap items-center justify-between gap-4 border border-[#CFE4E3] dark:border-[#145250]">
                     <div className="flex items-center gap-3">
-                      <div className="w-11 h-11 rounded-full bg-slate-100 dark:bg-slate-700 overflow-hidden flex items-center justify-center font-bold text-slate-700 shrink-0">
+                      <div className="w-11 h-11 rounded-full bg-[#E7F1F1] dark:bg-[#0E4A47] overflow-hidden flex items-center justify-center font-bold text-[#0A3D3B] dark:text-[#D7F1EA] shrink-0">
                         {driver?.photoURL || driver?.avatar_url || order.driverPhoto ? (
                           <img src={driver?.photoURL || driver?.avatar_url || order.driverPhoto} alt="" className="w-full h-full object-cover" />
                         ) : (
-                          <Bike size={20} className="text-[var(--app-primary-color)]" />
+                          <Bike size={20} className="text-[#0E7673] dark:text-[#38B794]" />
                         )}
                       </div>
                       <div>
-                        <p className="font-bold text-gray-900 dark:text-white text-sm">
+                        <p className="font-bold text-[#0A3D3B] dark:text-white text-sm">
                           {driver?.name || order.driverName || "Livreur"}
                         </p>
-                        <p className="text-xs text-gray-500 flex items-center gap-1.5 mt-0.5">
+                        <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7] flex items-center gap-1.5 mt-0.5">
                           <Bike size={13} />
                           {driver?.vehicle_plate ? `Moto / ${driver.vehicle_plate}` : (driver?.vehicle_type || "Deux-roues motorisé")}
                         </p>
@@ -464,9 +464,9 @@ export function PharmacistOrderDetails() {
                     {driver?.phone && (
                       <a
                         href={`tel:${driver.phone}`}
-                        className="px-4 py-2 bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-gray-300 rounded-xl text-xs font-bold hover:bg-gray-100 dark:bg-zinc-800 flex items-center gap-1.5 transition"
+                        className="px-4 py-2 bg-[#F5FAFA] dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] text-[#0A3D3B] dark:text-[#D7F1EA] rounded-full text-xs font-bold hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47] flex items-center gap-1.5 transition"
                       >
-                        <Phone size={14} className="text-emerald-600" />
+                        <Phone size={14} className="text-[#0E7673] dark:text-[#38B794]" />
                         {driver.phone}
                       </a>
                     )}
@@ -478,30 +478,30 @@ export function PharmacistOrderDetails() {
         )}
 
         {/* Détails Commande Card */}
-        <div className="bg-white dark:bg-slate-800 rounded-3xl p-8 shadow-sm border border-gray-100 dark:border-slate-700">
+        <div className="bg-white dark:bg-[#0A3D3B] rounded-3xl p-8 shadow-sm border border-[#CFE4E3] dark:border-[#145250]">
           {/* Badge */}
           <div className={`inline-block px-5 py-1.5 rounded-full text-sm font-bold mb-5 ${
-            order.status === 'pending' ? 'bg-[#c5ead5] text-[#2c8d50]' :
-            order.status === 'preparing' ? 'bg-blue-100 text-blue-700' :
-            (order.status === 'ready' || order.status === 'ready_for_pickup') ? 'bg-[#D3F5A8] text-[#0B3B3C]' :
-            (order.status === 'cancelled' || order.status === 'rejected') ? 'bg-red-100 text-red-700' :
-            order.status === 'delivered' ? 'bg-emerald-100 text-emerald-800' :
-            'bg-[#FAFBFC] border border-gray-200 text-gray-700'
+            order.status === 'pending' ? 'bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300' :
+            order.status === 'preparing' ? 'bg-[#D7F1EA] text-[#0E7673] dark:bg-[#0E4A47] dark:text-[#38B794]' :
+            (order.status === 'ready' || order.status === 'ready_for_pickup') ? 'bg-[#38B794] text-[#0A3D3B]' :
+            (order.status === 'cancelled' || order.status === 'rejected') ? 'bg-red-100 text-red-700 dark:bg-red-950/60 dark:text-red-300' :
+            order.status === 'delivered' ? 'bg-[#D7F1EA] text-[#0A3D3B] dark:bg-[#0E4A47] dark:text-[#D7F1EA]' :
+            'bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] text-[#0A3D3B] dark:text-[#D7F1EA]'
           }`}>
             {order.status === 'pending' ? 'Nouveau' : order.status.charAt(0).toUpperCase() + order.status.slice(1)}
           </div>
           
-          <h2 className="text-2xl font-bold text-[#0B3B3C] dark:text-white mb-2">Commande #{order.id.slice(0, 6).toUpperCase()}</h2>
-          <p className="text-sm text-gray-500 font-medium mb-8">
+          <h2 className="text-2xl font-bold text-[#0A3D3B] dark:text-white mb-2">Commande #{order.id.slice(0, 6).toUpperCase()}</h2>
+          <p className="text-sm text-[#5C807F] dark:text-[#9FC8C7] font-medium mb-8">
             {parseDate(order.createdAt) ? parseDate(order.createdAt)!.toLocaleString('fr-FR', { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' }) : 'récemment'}
           </p>
 
           {/* Order Summary */}
-          <div className="bg-[#FAFBFC] dark:bg-slate-900 border border-transparent dark:border-slate-700 rounded-2xl p-6 mb-6">
-            <h3 className="font-bold text-gray-900 dark:text-white text-base mb-4">Résumé Client</h3>
-            <div className="text-sm font-medium text-gray-500 flex flex-wrap gap-x-8 gap-y-4">
+          <div className="bg-[#F5FAFA] dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] rounded-2xl p-6 mb-6">
+            <h3 className="font-bold text-[#0A3D3B] dark:text-white text-base mb-4">Résumé Client</h3>
+            <div className="text-sm font-medium text-[#5C807F] dark:text-[#9FC8C7] flex flex-wrap gap-x-8 gap-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden flex items-center justify-center font-bold text-slate-700 dark:text-slate-200 text-xs shrink-0 border border-slate-200 dark:border-slate-700">
+                <div className="w-10 h-10 rounded-full bg-[#E7F1F1] dark:bg-[#0E4A47] overflow-hidden flex items-center justify-center font-bold text-[#0A3D3B] dark:text-[#D7F1EA] text-xs shrink-0 border border-[#CFE4E3] dark:border-[#145250]">
                   {order.patientPhoto ? (
                     <img src={order.patientPhoto} alt="" className="w-full h-full object-cover" />
                   ) : (
@@ -509,88 +509,88 @@ export function PharmacistOrderDetails() {
                   )}
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-xs text-gray-500">Client</span>
-                  <span className="text-gray-900 dark:text-white font-bold dark:text-gray-300">{order.patientName || 'Client'}</span>
+                  <span className="text-xs text-[#5C807F] dark:text-[#9FC8C7]">Client</span>
+                  <span className="text-[#0A3D3B] dark:text-white font-bold">{order.patientName || 'Client'}</span>
                 </div>
               </div>
 
               <div className="flex flex-col justify-center">
-                <span className="text-xs text-gray-500">Articles</span>
-                <span className="text-gray-900 dark:text-white font-bold dark:text-gray-300">{order.items?.length || 0} médicament(s)</span>
+                <span className="text-xs text-[#5C807F] dark:text-[#9FC8C7]">Articles</span>
+                <span className="text-[#0A3D3B] dark:text-white font-bold tabular-nums">{order.items?.length || 0} médicament(s)</span>
               </div>
 
               <div className="flex flex-col justify-center">
-                <span className="text-xs text-gray-500">Mode</span>
-                <span className="text-gray-900 dark:text-white font-bold dark:text-gray-300">{order.deliveryMethod === 'pickup' ? 'Retrait en Pharmacie' : 'Livraison à Domicile'}</span>
+                <span className="text-xs text-[#5C807F] dark:text-[#9FC8C7]">Mode</span>
+                <span className="text-[#0A3D3B] dark:text-white font-bold">{order.deliveryMethod === 'pickup' ? 'Retrait en Pharmacie' : 'Livraison à Domicile'}</span>
               </div>
             </div>
           </div>
 
           {/* Medicines List */}
           <div className="space-y-4 mb-8">
-            <h3 className="font-bold text-gray-900 dark:text-white text-base mb-4 px-1">Médicaments Commandés</h3>
+            <h3 className="font-bold text-[#0A3D3B] dark:text-white text-base mb-4 px-1">Médicaments Commandés</h3>
             {(order.items || []).map((item: any, index: number) => (
-              <div key={index} className="bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 p-5 rounded-2xl flex justify-between items-center shadow-sm">
+              <div key={index} className="bg-white dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] p-5 rounded-2xl flex justify-between items-center shadow-sm">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-[#E2EBE9] dark:bg-slate-900 rounded-xl flex flex-col items-center justify-center text-[#0B3B3C] dark:text-gray-300 font-bold shrink-0">
+                  <div className="w-12 h-12 bg-[#E7F1F1] dark:bg-[#0E4A47] rounded-xl flex flex-col items-center justify-center text-[#0A3D3B] dark:text-[#D7F1EA] font-bold shrink-0 tabular-nums">
                     <span className="text-[10px] opacity-70">x</span>{item.quantity}
                   </div>
                   <div>
-                    <p className="font-bold text-gray-900 dark:text-white text-sm">{item.name}</p>
-                    {item.dosage && <p className="text-xs text-gray-500 mt-1">{item.dosage}</p>}
+                    <p className="font-bold text-[#0A3D3B] dark:text-white text-sm">{item.name}</p>
+                    {item.dosage && <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7] mt-1">{item.dosage}</p>}
                   </div>
                 </div>
-                <div className="text-right">
-                  <p className="font-bold text-gray-900 dark:text-white text-sm">{formatCurrency(item.price * item.quantity)}</p>
-                  {item.quantity > 1 && <p className="text-xs text-gray-500 mt-1">{formatCurrency(item.price)} l'unité</p>}
+                <div className="text-right tabular-nums">
+                  <p className="font-bold text-[#0E7673] dark:text-[#38B794] text-sm">{formatCurrency(item.price * item.quantity)}</p>
+                  {item.quantity > 1 && <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7] mt-1">{formatCurrency(item.price)} l'unité</p>}
                 </div>
               </div>
             ))}
-            {!(order.items?.length > 0) && <div className="bg-[#FAFBFC] p-4 rounded-2xl border border-gray-100 text-center text-gray-500 text-sm">Aucun article</div>}
+            {!(order.items?.length > 0) && <div className="bg-[#F5FAFA] dark:bg-[#062625] p-4 rounded-2xl border border-[#CFE4E3] dark:border-[#145250] text-center text-[#5C807F] dark:text-[#9FC8C7] text-sm">Aucun article</div>}
           </div>
 
           {/* Ordonnance DPML Validation */}
           {(order.hasPrescription || order.prescriptionUrl) && (
-            <div className="bg-red-50/50 dark:bg-red-900/10 border border-red-100 dark:border-red-900/30 rounded-2xl p-6 mb-6 space-y-4">
+            <div className="bg-red-50/60 dark:bg-red-900/15 border border-red-200 dark:border-red-900/30 rounded-2xl p-6 mb-6 space-y-4">
               <div className="flex items-center gap-2">
                 <AlertTriangle size={20} className="text-red-500 shrink-0" />
                 <h3 className="font-bold text-red-900 dark:text-red-400 text-sm">Validation DPML (Ordonnance Obligatoire)</h3>
               </div>
               
               {order.prescriptionUrl ? (
-                <div className="bg-white dark:bg-slate-800 border border-red-50 rounded-2xl p-4 flex justify-between items-center shadow-sm">
+                <div className="bg-white dark:bg-[#062625] border border-red-100 dark:border-red-900/40 rounded-2xl p-4 flex justify-between items-center shadow-sm">
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center text-red-600">
+                    <div className="w-10 h-10 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center text-red-600 dark:text-red-400">
                       <FileText size={18} />
                     </div>
                     <div>
-                      <p className="font-bold text-gray-900 dark:text-white text-sm">Ordonnance Téléchargée</p>
-                      <p className="text-xs text-gray-500 font-medium mt-0.5">Vérifiez la signature et validité</p>
+                      <p className="font-bold text-[#0A3D3B] dark:text-white text-sm">Ordonnance Téléchargée</p>
+                      <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7] font-medium mt-0.5">Vérifiez la signature et validité</p>
                     </div>
                   </div>
-                  <button onClick={() => window.open(order.prescriptionUrl, '_blank')} className="bg-red-600/10 text-red-700 px-5 py-2.5 rounded-full text-xs font-bold hover:bg-red-600 hover:text-white transition-colors">
+                  <button onClick={() => window.open(order.prescriptionUrl, '_blank')} className="bg-red-600/10 text-red-700 dark:text-red-400 px-5 py-2.5 rounded-full text-xs font-bold hover:bg-red-600 hover:text-white transition-colors">
                     Ouvrir le document
                   </button>
                 </div>
               ) : (
-                <div className="bg-white dark:bg-slate-800 rounded-2xl p-5 shadow-sm border-l-4 border-red-500">
-                  <p className="font-bold text-gray-900 dark:text-white text-sm">Document Manquant</p>
-                  <p className="text-xs text-gray-500 mt-1">Le patient n'a pas encore transmis d'ordonnance valide.</p>
+                <div className="bg-white dark:bg-[#062625] rounded-2xl p-5 shadow-sm border-l-4 border-red-500">
+                  <p className="font-bold text-[#0A3D3B] dark:text-white text-sm">Document Manquant</p>
+                  <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7] mt-1">Le patient n'a pas encore transmis d'ordonnance valide.</p>
                 </div>
               )}
             </div>
           )}
 
           {/* Total */}
-          <div className="bg-[#FAFBFC] dark:bg-slate-900 rounded-2xl p-6 flex justify-between items-center border border-gray-100 dark:border-slate-700 mb-6">
-            <h3 className="font-bold text-gray-900 dark:text-white text-base">Total Commande :</h3>
-            <span className="font-bold text-gray-900 dark:text-white text-lg">{formatCurrency(order.total)}</span>
+          <div className="bg-[#F5FAFA] dark:bg-[#062625] rounded-2xl p-6 flex justify-between items-center border border-[#CFE4E3] dark:border-[#145250] mb-6">
+            <h3 className="font-bold text-[#0A3D3B] dark:text-white text-base">Total Commande :</h3>
+            <span className="font-black text-[#0E7673] dark:text-[#38B794] text-lg tabular-nums">{formatCurrency(order.total)}</span>
           </div>
 
           {/* Timeline */}
-          <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-gray-100 dark:border-slate-700">
-            <h3 className="font-bold text-gray-900 dark:text-white text-base mb-6">Historique & Timeline</h3>
-            <div className="relative border-l-2 border-gray-100 dark:border-slate-700 ml-3 space-y-6">
+          <div className="bg-white dark:bg-[#062625] rounded-2xl p-6 border border-[#CFE4E3] dark:border-[#145250]">
+            <h3 className="font-bold text-[#0A3D3B] dark:text-white text-base mb-6">Historique & Timeline</h3>
+            <div className="relative border-l-2 border-[#CFE4E3] dark:border-[#145250] ml-3 space-y-6">
               {[
                 { status: 'pending', timestamp: order.createdAt },
                 ...(order.statusHistory || (order.status !== 'pending' ? [{ status: order.status, timestamp: order.updatedAt || undefined }] : []))
@@ -613,12 +613,12 @@ export function PharmacistOrderDetails() {
                 };
                 return (
                   <div key={index} className="relative pl-6">
-                    <div className={`absolute -left-[9px] top-1 w-4 h-4 rounded-full border-2 border-white dark:border-slate-800 ${isLast ? 'bg-[#0B3B3C] ring-4 ring-teal-50 dark:ring-slate-700' : 'bg-gray-300 dark:bg-gray-600'}`} />
+                    <div className={`absolute -left-[9px] top-1 w-4 h-4 rounded-full border-2 border-white dark:border-[#0A3D3B] ${isLast ? 'bg-[#0E7673] ring-4 ring-[#D7F1EA] dark:ring-[#0E4A47]' : 'bg-[#CFE4E3] dark:bg-[#145250]'}`} />
                     <div>
-                      <p className={`text-sm font-bold ${isLast ? 'text-[#0B3B3C] dark:text-teal-400' : 'text-gray-900 dark:text-gray-300'}`}>
+                      <p className={`text-sm font-bold ${isLast ? 'text-[#0E7673] dark:text-[#38B794]' : 'text-[#0A3D3B] dark:text-[#D7F1EA]'}`}>
                         {getStatusLabel(update.status)}
                       </p>
-                      <p className="text-xs text-gray-500 mt-1">
+                      <p className="text-xs text-[#5C807F] dark:text-[#9FC8C7] mt-1">
                         {update.timestamp ? (parseDate(update.timestamp) ? parseDate(update.timestamp)!.toLocaleString('fr-FR', { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) : 'En attente') : 'Heure inconnue'}
                       </p>
                     </div>
@@ -633,19 +633,19 @@ export function PharmacistOrderDetails() {
 
       {/* Action Buttons Fixed Footer */}
       <div className="absolute bottom-0 left-0 right-0 bg-transparent px-8 pb-8 pt-4 flex flex-col gap-4 z-20 pointer-events-none">
-        <div className="flex gap-4 w-full justify-end pointer-events-auto">
+        <div className="flex flex-wrap gap-3 w-full justify-end pointer-events-auto">
           {order.status === 'pending' && !isRejecting && (
             <>
-              <button disabled={processing} onClick={handlePrintInvoice} className="px-5 py-3.5 bg-white dark:bg-zinc-950 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-gray-300 rounded-full font-bold shadow-sm transition-all focus:outline-none flex items-center gap-2">
+              <button disabled={processing} onClick={handlePrintInvoice} className="px-5 py-3.5 bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] text-[#0A3D3B] dark:text-[#D7F1EA] hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47] rounded-full font-bold shadow-sm transition-all focus:outline-none flex items-center gap-2">
                 <Download size={18} /> Imprimer
               </button>
-              <button disabled={processing} onClick={() => setIsRejecting(true)} className="px-6 py-3.5 bg-white dark:bg-zinc-950 border border-red-100 text-red-600 hover:bg-red-50 rounded-full font-bold shadow-sm transition-all focus:outline-none">
+              <button disabled={processing} onClick={() => setIsRejecting(true)} className="px-6 py-3.5 bg-white dark:bg-[#0A3D3B] border border-red-200 dark:border-red-900/40 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-full font-bold shadow-sm transition-all focus:outline-none">
                 Refuser
               </button>
               <button 
                 disabled={processing} 
                 onClick={() => handleUpdateStatus('validated_awaiting_payment')} 
-                className="px-6 py-3.5 bg-amber-500 hover:bg-amber-600 text-zinc-950 rounded-full font-black shadow-md transition-all focus:outline-none flex items-center justify-center gap-2 disabled:opacity-75"
+                className="px-6 py-3.5 bg-[#38B794] hover:bg-[#2fa584] text-[#0A3D3B] rounded-full font-black shadow-md transition-all focus:outline-none flex items-center justify-center gap-2 disabled:opacity-75"
               >
                 {processing && actionLoading === 'validated_awaiting_payment' ? (
                   <>
@@ -659,7 +659,7 @@ export function PharmacistOrderDetails() {
               <button 
                 disabled={processing} 
                 onClick={() => handleUpdateStatus('preparing')} 
-                className="px-6 py-3.5 bg-[#0B3B3C] hover:bg-[#082a2b] text-white rounded-full font-bold shadow-md transition-all focus:outline-none flex items-center justify-center gap-2 disabled:opacity-75"
+                className="px-6 py-3.5 bg-[#0E7673] hover:bg-[#0A5A58] text-white rounded-full font-bold shadow-md transition-all focus:outline-none flex items-center justify-center gap-2 disabled:opacity-75"
               >
                 {processing && actionLoading === 'preparing' ? (
                   <>
@@ -681,17 +681,17 @@ export function PharmacistOrderDetails() {
           )}
           
           {order.status !== 'pending' && (
-            <button disabled={processing} onClick={handlePrintInvoice} className="px-5 py-3.5 bg-white dark:bg-zinc-950 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-gray-300 rounded-full font-bold shadow-sm hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-slate-700 transition-all focus:outline-none flex items-center gap-2">
+            <button disabled={processing} onClick={handlePrintInvoice} className="px-5 py-3.5 bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] text-[#0A3D3B] dark:text-[#D7F1EA] rounded-full font-bold shadow-sm hover:bg-[#E7F1F1] dark:hover:bg-[#0E4A47] transition-all focus:outline-none flex items-center gap-2">
               <Download size={18} /> Imprimer Facture
             </button>           
           )}
           
           {isRejecting && (
-            <div className="bg-white dark:bg-slate-800 p-6 rounded-3xl shadow-xl border border-gray-100 flex flex-col gap-4 w-full max-w-sm ml-auto pointer-events-auto animate-in slide-in-from-bottom-5">
+            <div className="bg-white dark:bg-[#0A3D3B] p-6 rounded-3xl shadow-xl border border-[#CFE4E3] dark:border-[#145250] flex flex-col gap-4 w-full max-w-sm ml-auto pointer-events-auto animate-in slide-in-from-bottom-5">
               <div>
-                <label className="text-sm font-bold text-gray-700 dark:text-gray-300 block mb-2"> Motif du refus : </label>
+                <label className="text-sm font-bold text-[#0A3D3B] dark:text-white block mb-2"> Motif du refus : </label>
                 <select 
-                  className="w-full border border-gray-200 dark:border-slate-700 p-3 rounded-xl bg-[#FAFBFA] dark:bg-slate-900 text-sm focus:border-red-300 outline-none transition-all shadow-sm" 
+                  className="w-full border border-[#CFE4E3] dark:border-[#145250] p-3 rounded-xl bg-[#F5FAFA] dark:bg-[#062625] text-[#0A3D3B] dark:text-white text-sm focus:border-red-300 outline-none transition-all shadow-sm" 
                   value={rejectReason} 
                   onChange={(e) => setRejectReason(e.target.value)}
                 >
@@ -706,12 +706,12 @@ export function PharmacistOrderDetails() {
                 <input 
                   type="text" 
                   placeholder="Tapez le motif..." 
-                  className="w-full border border-gray-200 dark:border-slate-700 p-3 rounded-xl bg-[#FAFBFA] dark:bg-slate-900 text-sm focus:border-red-300 outline-none transition-all shadow-sm"
+                  className="w-full border border-[#CFE4E3] dark:border-[#145250] p-3 rounded-xl bg-[#F5FAFA] dark:bg-[#062625] text-[#0A3D3B] dark:text-white text-sm focus:border-red-300 outline-none transition-all shadow-sm"
                   onChange={(e) => setRejectReason(e.target.value)}
                 />
               )}
               <div className="flex gap-3 mt-2">
-                <button disabled={processing} onClick={() => setIsRejecting(false)} className="flex-1 py-3 bg-white dark:bg-zinc-950 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-gray-300 rounded-full font-bold transition-colors"> Annuler </button>
+                <button disabled={processing} onClick={() => setIsRejecting(false)} className="flex-1 py-3 bg-white dark:bg-[#062625] border border-[#CFE4E3] dark:border-[#145250] text-[#0A3D3B] dark:text-[#D7F1EA] rounded-full font-bold transition-colors"> Annuler </button>
                 <button 
                   disabled={processing || !rejectReason} 
                   onClick={() => handleUpdateStatus('rejected')} 
@@ -734,7 +734,7 @@ export function PharmacistOrderDetails() {
             <button 
               disabled={processing} 
               onClick={() => handleUpdateStatus(order.deliveryMethod === 'pickup' ? 'ready_for_pickup' : 'ready')} 
-              className="px-8 py-3.5 bg-[#0B3B3C] hover:bg-[#082a2b] text-white rounded-full font-bold shadow-md transition-all ml-auto focus:outline-none pointer-events-auto flex items-center justify-center gap-2 disabled:opacity-75"
+              className="px-8 py-3.5 bg-[#0E7673] hover:bg-[#0A5A58] text-white rounded-full font-bold shadow-md transition-all ml-auto focus:outline-none pointer-events-auto flex items-center justify-center gap-2 disabled:opacity-75"
             >
               {processing ? (
                 <>
@@ -751,7 +751,7 @@ export function PharmacistOrderDetails() {
             <button 
               disabled={processing} 
               onClick={() => handleUpdateStatus('delivered')} 
-              className="px-8 py-3.5 bg-[#0B3B3C] hover:bg-[#082a2b] text-white rounded-full font-bold shadow-md transition-all ml-auto focus:outline-none pointer-events-auto flex items-center justify-center gap-2 disabled:opacity-75"
+              className="px-8 py-3.5 bg-[#0E7673] hover:bg-[#0A5A58] text-white rounded-full font-bold shadow-md transition-all ml-auto focus:outline-none pointer-events-auto flex items-center justify-center gap-2 disabled:opacity-75"
             >
               {processing ? (
                 <>

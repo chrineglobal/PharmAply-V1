@@ -37,7 +37,7 @@ export function GooglePlacesAddressInput({
   const dropdownRef = useRef<HTMLDivElement>(null);
   const debounceTimerRef = useRef<any>(null);
   const theme = useTheme();
-  const primaryColor = theme.primaryColor || "#194B4B";
+  const primaryColor = theme.primaryColor || "#0E7673";
 
   // Request user's rough geolocation on mount to prioritize local suggestions
   useEffect(() => {
@@ -261,13 +261,13 @@ export function GooglePlacesAddressInput({
             if (suggestions.length > 0) setShowDropdown(true);
           }}
           placeholder={placeholder}
-          className="w-full pl-10 pr-20 py-3.5 rounded-xl border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-gray-900 dark:text-white text-xs sm:text-sm outline-none transition focus:border-opacity-100 shadow-xs"
+          className="w-full pl-10 pr-20 py-3.5 rounded-2xl border border-[#CFE4E3] dark:border-[#145250] bg-white dark:bg-[#062625] text-[#0A3D3B] dark:text-white text-xs sm:text-sm outline-none transition focus:border-[#0E7673] shadow-xs"
           style={{
             borderColor: showDropdown ? primaryColor : undefined
           }}
         />
         <div className="absolute right-3.5 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
-          {loading && <Loader2 size={16} className="animate-spin text-gray-400" />}
+          {loading && <Loader2 size={16} className="animate-spin text-[#5C807F]" />}
           {query.length > 0 && !loading && (
             <button
               type="button"
@@ -277,7 +277,7 @@ export function GooglePlacesAddressInput({
                 setSuggestions([]);
                 setShowDropdown(false);
               }}
-              className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 p-0.5 rounded-full"
+              className="text-[#5C807F] hover:text-[#0A3D3B] dark:hover:text-white p-0.5 rounded-full"
             >
               <X size={15} />
             </button>
@@ -287,7 +287,7 @@ export function GooglePlacesAddressInput({
               type="button"
               onClick={handleUseCurrentLocation}
               disabled={locating}
-              className="p-1.5 bg-gray-100 dark:bg-zinc-800 hover:bg-gray-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-[var(--app-primary-color)] dark:text-teal-400 rounded-lg transition"
+              className="p-1.5 bg-[#E7F1F1] dark:bg-[#0E4A47] hover:bg-[#D7F1EA] dark:hover:bg-[#145250] text-[#0E7673] dark:text-[#38B794] rounded-xl transition"
               title="Utiliser ma position GPS actuelle"
             >
               {locating ? <Loader2 size={14} className="animate-spin" /> : <Crosshair size={14} />}
@@ -298,8 +298,8 @@ export function GooglePlacesAddressInput({
 
       {/* Suggestions Dropdown with Location Bias */}
       {showDropdown && suggestions.length > 0 && (
-        <div className="absolute left-0 right-0 top-full mt-1.5 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-2xl shadow-xl z-50 overflow-hidden max-h-60 overflow-y-auto">
-          <div className="px-3 py-2 bg-gray-50 dark:bg-zinc-800/60 border-b border-gray-100 dark:border-zinc-800 flex items-center justify-between text-[11px] font-bold text-gray-500 uppercase tracking-wider">
+        <div className="absolute left-0 right-0 top-full mt-1.5 bg-white dark:bg-[#0A3D3B] border border-[#CFE4E3] dark:border-[#145250] rounded-2xl shadow-xl z-50 overflow-hidden max-h-60 overflow-y-auto">
+          <div className="px-3 py-2 bg-[#F5FAFA] dark:bg-[#062625] border-b border-[#CFE4E3] dark:border-[#145250] flex items-center justify-between text-[11px] font-bold text-[#5C807F] dark:text-[#9FC8C7] uppercase tracking-wider">
             <span className="flex items-center gap-1">
               <Search size={12} style={{ color: primaryColor }} />
               Suggestions géolocalisées ({userCoords ? "Zone locale" : "Cameroun"})
@@ -307,36 +307,35 @@ export function GooglePlacesAddressInput({
             <button
               type="button"
               onClick={handleUseCurrentLocation}
-              className="text-[10px] text-[var(--app-primary-color)] dark:text-teal-400 hover:underline flex items-center gap-1 normal-case font-bold"
+              className="text-[10px] text-[#0E7673] dark:text-[#38B794] hover:underline flex items-center gap-1 normal-case font-bold"
             >
               <Navigation size={10} /> Ma position GPS
             </button>
           </div>
 
-          <div className="divide-y divide-gray-100 dark:divide-zinc-800/60">
+          <div className="divide-y divide-[#CFE4E3] dark:divide-[#145250]">
             {suggestions.map((item, idx) => (
               <div
                 key={`${item.description}-${idx}`}
                 onClick={() => handleSelect(item)}
-                className="px-3.5 py-2.5 flex items-start gap-3 hover:bg-gray-50 dark:bg-zinc-900 dark:hover:bg-zinc-800/80 cursor-pointer transition-colors"
+                className="px-3.5 py-2.5 flex items-start gap-3 hover:bg-[#F5FAFA] dark:hover:bg-[#0E4A47] cursor-pointer transition-colors"
               >
                 <div 
-                  className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 mt-0.5"
-                  style={{ backgroundColor: `${primaryColor}15`, color: primaryColor }}
+                  className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 mt-0.5 bg-[#D7F1EA] dark:bg-[#0E4A47] text-[#0E7673] dark:text-[#38B794]"
                 >
                   <MapPin size={14} />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs font-bold text-gray-900 dark:text-white line-clamp-1">
+                  <p className="text-xs font-bold text-[#0A3D3B] dark:text-white line-clamp-1">
                     {item.mainText}
                   </p>
                   {item.secondaryText && (
-                    <p className="text-[11px] text-gray-500 dark:text-gray-400 line-clamp-1 mt-0.5">
+                    <p className="text-[11px] text-[#5C807F] dark:text-[#9FC8C7] line-clamp-1 mt-0.5">
                       {item.secondaryText}
                     </p>
                   )}
                 </div>
-                <Check size={14} className="text-emerald-500 shrink-0 mt-1 opacity-0 hover:opacity-100" />
+                <Check size={14} className="text-[#0E7673] dark:text-[#38B794] shrink-0 mt-1 opacity-0 hover:opacity-100" />
               </div>
             ))}
           </div>

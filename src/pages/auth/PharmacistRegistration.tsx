@@ -7,6 +7,7 @@ import { doc, setDoc, serverTimestamp, addDoc, collection } from '../../lib/fire
 import { ref, uploadBytesResumable, getDownloadURL } from '../../lib/firebase';
 import toast from 'react-hot-toast';
 import { useTranslation } from "react-i18next";
+import { PharmAplyLogo } from '../../components/common/PharmAplyLogo';
 
 export function PharmacistRegistration() {
     const { t } = useTranslation();
@@ -148,32 +149,35 @@ export function PharmacistRegistration() {
   };
 
   return (
-    <div className="flex-1 bg-slate-50 flex flex-col h-full overflow-hidden">
-      <div className="bg-white dark:bg-zinc-950 px-6 pt-12 pb-4 shadow-sm z-10 flex items-center gap-4">
-        <button onClick={() => step > 1 && step < 4 ? prevStep() : navigate(-1)} className="p-2 hover:bg-gray-100 dark:bg-zinc-800 rounded-full transition-colors">
-          <ArrowLeft size={24} className="text-gray-900 dark:text-white" />
-        </button>
-        <h1 className="font-bold text-gray-900 dark:text-white text-lg"> {t('pharmacy_registration', 'Pharmacy Registration')} </h1>
+    <div className="flex-1 bg-[#E7F1F1] dark:bg-[#062625] flex flex-col h-full overflow-hidden">
+      <div className="bg-[#0E7673] px-6 pt-12 pb-5 shadow-sm z-10 flex items-center justify-between text-white">
+        <div className="flex items-center gap-3">
+          <button onClick={() => step > 1 && step < 4 ? prevStep() : navigate(-1)} className="p-2 -ml-2 hover:bg-white/15 rounded-full transition-colors">
+            <ArrowLeft size={24} className="text-white" />
+          </button>
+          <h1 className="font-bold text-white text-lg"> {t('pharmacy_registration', 'Pharmacy Registration')} </h1>
+        </div>
+        <PharmAplyLogo variant="symbol" tone="white" size="sm" />
       </div>
 
       <div className="flex-1 overflow-y-auto w-full flex flex-col pt-6 pb-20">
          {/* Step Indicator */}
          {step < 4 && (
-            <div className="flex items-center justify-center gap-2 mb-8 px-6">
+            <div className="flex items-center justify-center gap-2 mb-6 px-6">
               {[1, 2, 3].map((s) => (
                 <div key={s} className="flex items-center">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${step >= s ? 'bg-[var(--app-primary-color)] text-white' : 'bg-gray-200 text-gray-500'}`}>
+                  <div className={`w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm transition ${step >= s ? 'bg-[#0E7673] text-white shadow-sm' : 'bg-white dark:bg-[#0A3D3B] text-[#6EADAB] border border-[#CFE4E3] dark:border-[#145250]'}`}>
                     {s}
                   </div>
-                  {s < 3 && <div className={`w-10 h-1 rounded-full mx-1 ${step > s ? 'bg-[var(--app-primary-color)]' : 'bg-gray-200'}`}></div>}
+                  {s < 3 && <div className={`w-10 h-1 rounded-full mx-1 ${step > s ? 'bg-[#0E7673]' : 'bg-[#CFE4E3] dark:bg-[#145250]'}`}></div>}
                 </div>
               ))}
             </div>
          )}
          
-         <div className="bg-white dark:bg-zinc-950 mx-6 p-6 rounded-2xl shadow-sm border border-gray-100 mb-6">
+         <div className="bg-white dark:bg-[#0A3D3B] mx-4 sm:mx-auto sm:w-full sm:max-w-lg p-6 rounded-3xl shadow-sm border border-[#CFE4E3] dark:border-[#145250] mb-6">
             {error && (
-              <div className="p-3 mb-4 bg-red-100 text-red-700 text-sm rounded-xl">
+              <div className="p-3.5 mb-4 bg-red-50 dark:bg-red-950/40 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-900/50 text-sm rounded-2xl">
                 {error}
               </div>
             )}
@@ -181,88 +185,88 @@ export function PharmacistRegistration() {
             {step === 1 && (
               <div className="space-y-4 animate-in fade-in slide-in-from-right-4">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-12 h-12 bg-indigo-50 text-[var(--app-primary-color)] rounded-xl flex items-center justify-center"><Store size={24} /></div>
+                  <div className="w-12 h-12 bg-[#E7F1F1] dark:bg-[#062625] text-[#0E7673] dark:text-[#38B794] rounded-2xl flex items-center justify-center"><Store size={24} /></div>
                   <div>
-                    <h2 className="font-bold text-gray-900 dark:text-white text-lg"> {t('account_pharmacy_details', 'Account & Pharmacy Details')} </h2>
-                    <p className="text-xs text-gray-500"> {t('basic_information', 'Basic information')} </p>
+                    <h2 className="font-bold text-[#0A3D3B] dark:text-white text-lg"> {t('account_pharmacy_details', 'Account & Pharmacy Details')} </h2>
+                    <p className="text-xs text-[#0E7673] dark:text-[#9FC8C7]"> {t('basic_information', 'Basic information')} </p>
                   </div>
                 </div>
 
                 <div>
-                   <label className="block text-sm font-medium text-gray-700 mb-1"> {t('email_address', 'Email Address')} </label>
-                   <input type="email" name="email" value={formData.email} onChange={handleInputChange} className="w-full border border-gray-200 rounded-xl p-3 bg-gray-50 dark:bg-zinc-900 focus:bg-white dark:bg-zinc-950 focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none" placeholder={t('pharmacy_example_com', 'pharmacy@example.com')} />
+                   <label className="block text-sm font-bold text-[#0A3D3B] dark:text-[#E7F1F1] mb-1.5"> {t('email_address', 'Email Address')} </label>
+                   <input type="email" name="email" value={formData.email} onChange={handleInputChange} className="w-full border border-[#CFE4E3] dark:border-[#145250] rounded-2xl p-3.5 bg-[#F5FAFA] dark:bg-[#062625] text-[#0A3D3B] dark:text-white focus:bg-white dark:focus:bg-[#062625] focus:ring-2 focus:ring-[#0E7673] outline-none placeholder:text-[#6EADAB]" placeholder={t('pharmacy_example_com', 'pharmacy@pharmaply.com')} />
                 </div>
                 <div>
-                   <label className="block text-sm font-medium text-gray-700 mb-1"> {t('password', 'Password')} </label>
-                   <input type="password" name="password" value={formData.password} onChange={handleInputChange} className="w-full border border-gray-200 rounded-xl p-3 bg-gray-50 dark:bg-zinc-900 focus:bg-white dark:bg-zinc-950 focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none" placeholder="••••••••" />
+                   <label className="block text-sm font-bold text-[#0A3D3B] dark:text-[#E7F1F1] mb-1.5"> {t('password', 'Password')} </label>
+                   <input type="password" name="password" value={formData.password} onChange={handleInputChange} className="w-full border border-[#CFE4E3] dark:border-[#145250] rounded-2xl p-3.5 bg-[#F5FAFA] dark:bg-[#062625] text-[#0A3D3B] dark:text-white focus:bg-white dark:focus:bg-[#062625] focus:ring-2 focus:ring-[#0E7673] outline-none placeholder:text-[#6EADAB]" placeholder="••••••••" />
                 </div>
                 <div>
-                   <label className="block text-sm font-medium text-gray-700 mb-1"> {t('pharmacy_name', 'Pharmacy Name')} </label>
-                   <input type="text" name="pharmacyName" value={formData.pharmacyName} onChange={handleInputChange} className="w-full border border-gray-200 rounded-xl p-3 bg-gray-50 dark:bg-zinc-900 focus:bg-white dark:bg-zinc-950 focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none" placeholder={t('e_g_healthfirst_pharmacy', 'e.g. HealthFirst Pharmacy')} />
+                   <label className="block text-sm font-bold text-[#0A3D3B] dark:text-[#E7F1F1] mb-1.5"> {t('pharmacy_name', 'Pharmacy Name')} </label>
+                   <input type="text" name="pharmacyName" value={formData.pharmacyName} onChange={handleInputChange} className="w-full border border-[#CFE4E3] dark:border-[#145250] rounded-2xl p-3.5 bg-[#F5FAFA] dark:bg-[#062625] text-[#0A3D3B] dark:text-white focus:bg-white dark:focus:bg-[#062625] focus:ring-2 focus:ring-[#0E7673] outline-none placeholder:text-[#6EADAB]" placeholder={t('e_g_healthfirst_pharmacy', 'e.g. HealthFirst Pharmacy')} />
                 </div>
                 
-                <button onClick={nextStep} disabled={!formData.email || !formData.password || !formData.pharmacyName} className="w-full py-4 mt-4 bg-[var(--app-primary-color)] text-white rounded-xl font-bold hover:bg-[var(--app-primary-color)] disabled:opacity-50 transition"> {t('continue', 'Continue')} </button>
+                <button onClick={nextStep} disabled={!formData.email || !formData.password || !formData.pharmacyName} className="w-full py-4 mt-4 bg-[#0E7673] hover:bg-[#0A5A58] text-white rounded-full font-bold disabled:opacity-50 transition shadow-sm"> {t('continue', 'Continue')} </button>
               </div>
             )}
 
             {step === 2 && (
               <div className="space-y-4 animate-in fade-in slide-in-from-right-4">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-12 h-12 bg-indigo-50 text-[var(--app-primary-color)] rounded-xl flex items-center justify-center"><Store size={24} /></div>
+                  <div className="w-12 h-12 bg-[#E7F1F1] dark:bg-[#062625] text-[#0E7673] dark:text-[#38B794] rounded-2xl flex items-center justify-center"><Store size={24} /></div>
                   <div>
-                    <h2 className="font-bold text-gray-900 dark:text-white text-lg"> {t('owner_location_info', 'Owner & Location Info')} </h2>
-                    <p className="text-xs text-gray-500"> {t('contact_details', 'Contact details')} </p>
+                    <h2 className="font-bold text-[#0A3D3B] dark:text-white text-lg"> {t('owner_location_info', 'Owner & Location Info')} </h2>
+                    <p className="text-xs text-[#0E7673] dark:text-[#9FC8C7]"> {t('contact_details', 'Contact details')} </p>
                   </div>
                 </div>
 
                 <div>
-                   <label className="block text-sm font-medium text-gray-700 mb-1"> {t('owner_full_name', 'Owner Full Name')} </label>
-                   <input type="text" name="ownerName" value={formData.ownerName} onChange={handleInputChange} className="w-full border border-gray-200 rounded-xl p-3 bg-gray-50 dark:bg-zinc-900 focus:bg-white dark:bg-zinc-950 focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none" placeholder={t('john_doe', 'John Doe')} />
+                   <label className="block text-sm font-bold text-[#0A3D3B] dark:text-[#E7F1F1] mb-1.5"> {t('owner_full_name', 'Owner Full Name')} </label>
+                   <input type="text" name="ownerName" value={formData.ownerName} onChange={handleInputChange} className="w-full border border-[#CFE4E3] dark:border-[#145250] rounded-2xl p-3.5 bg-[#F5FAFA] dark:bg-[#062625] text-[#0A3D3B] dark:text-white focus:bg-white dark:focus:bg-[#062625] focus:ring-2 focus:ring-[#0E7673] outline-none placeholder:text-[#6EADAB]" placeholder={t('john_doe', 'John Doe')} />
                 </div>
                 <div>
-                   <label className="block text-sm font-medium text-gray-700 mb-1"> {t('pharmacy_address', 'Pharmacy Address')} </label>
-                   <input type="text" name="address" value={formData.address} onChange={handleInputChange} className="w-full border border-gray-200 rounded-xl p-3 bg-gray-50 dark:bg-zinc-900 focus:bg-white dark:bg-zinc-950 focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none" placeholder={t('e_g_makepe_douala', 'e.g. Makepe, Douala')} />
+                   <label className="block text-sm font-bold text-[#0A3D3B] dark:text-[#E7F1F1] mb-1.5"> {t('pharmacy_address', 'Pharmacy Address')} </label>
+                   <input type="text" name="address" value={formData.address} onChange={handleInputChange} className="w-full border border-[#CFE4E3] dark:border-[#145250] rounded-2xl p-3.5 bg-[#F5FAFA] dark:bg-[#062625] text-[#0A3D3B] dark:text-white focus:bg-white dark:focus:bg-[#062625] focus:ring-2 focus:ring-[#0E7673] outline-none placeholder:text-[#6EADAB]" placeholder={t('e_g_makepe_douala', 'e.g. Makepe, Douala')} />
                 </div>
                 <div>
-                   <label className="block text-sm font-medium text-gray-700 mb-1"> {t('phone_number', 'Phone Number')} </label>
-                   <input type="text" name="phoneNumber" value={formData.phoneNumber} onChange={handleInputChange} className="w-full border border-gray-200 rounded-xl p-3 bg-gray-50 dark:bg-zinc-900 focus:bg-white dark:bg-zinc-950 focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none" placeholder={t('237_6xx_xxx_xxx', '+237 6XX XXX XXX')} />
+                   <label className="block text-sm font-bold text-[#0A3D3B] dark:text-[#E7F1F1] mb-1.5"> {t('phone_number', 'Phone Number')} </label>
+                   <input type="text" name="phoneNumber" value={formData.phoneNumber} onChange={handleInputChange} className="w-full border border-[#CFE4E3] dark:border-[#145250] rounded-2xl p-3.5 bg-[#F5FAFA] dark:bg-[#062625] text-[#0A3D3B] dark:text-white focus:bg-white dark:focus:bg-[#062625] focus:ring-2 focus:ring-[#0E7673] outline-none placeholder:text-[#6EADAB]" placeholder={t('237_6xx_xxx_xxx', '+237 6XX XXX XXX')} />
                 </div>
                 
-                <button onClick={nextStep} disabled={!formData.ownerName || !formData.address || !formData.phoneNumber} className="w-full py-4 mt-4 bg-[var(--app-primary-color)] text-white rounded-xl font-bold hover:bg-[var(--app-primary-color)] disabled:opacity-50 transition"> {t('continue_to_kyc', 'Continue to KYC')} </button>
+                <button onClick={nextStep} disabled={!formData.ownerName || !formData.address || !formData.phoneNumber} className="w-full py-4 mt-4 bg-[#0E7673] hover:bg-[#0A5A58] text-white rounded-full font-bold disabled:opacity-50 transition shadow-sm"> {t('continue_to_kyc', 'Continue to KYC')} </button>
               </div>
             )}
 
             {step === 3 && (
               <div className="space-y-4 animate-in fade-in slide-in-from-right-4">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-12 h-12 bg-indigo-50 text-[var(--app-primary-color)] rounded-xl flex items-center justify-center"><FileText size={24} /></div>
+                  <div className="w-12 h-12 bg-[#E7F1F1] dark:bg-[#062625] text-[#0E7673] dark:text-[#38B794] rounded-2xl flex items-center justify-center"><FileText size={24} /></div>
                   <div>
-                    <h2 className="font-bold text-gray-900 dark:text-white text-lg"> {t('kyc_verification', 'KYC & Verification')} </h2>
-                    <p className="text-xs text-gray-500"> {t('cameroon_official_documents', 'Cameroon Official Documents')} </p>
+                    <h2 className="font-bold text-[#0A3D3B] dark:text-white text-lg"> {t('kyc_verification', 'KYC & Verification')} </h2>
+                    <p className="text-xs text-[#0E7673] dark:text-[#9FC8C7]"> {t('cameroon_official_documents', 'Cameroon Official Documents')} </p>
                   </div>
                 </div>
 
                 <div>
-                   <label className="block text-sm font-medium text-gray-700 mb-1">Business Registration Number (RCCM)</label>
-                   <input type="text" name="registrationNumber" value={formData.registrationNumber} onChange={handleInputChange} className="w-full border border-gray-200 rounded-xl p-3 bg-gray-50 dark:bg-zinc-900 focus:bg-white dark:bg-zinc-950 focus:ring-2 focus:ring-[var(--app-primary-color)] outline-none" placeholder={t('rc_dla_xxxx_b_xxxx', 'RC/DLA/xxxx/B/xxxx')} />
+                   <label className="block text-sm font-bold text-[#0A3D3B] dark:text-[#E7F1F1] mb-1.5">Business Registration Number (RCCM)</label>
+                   <input type="text" name="registrationNumber" value={formData.registrationNumber} onChange={handleInputChange} className="w-full border border-[#CFE4E3] dark:border-[#145250] rounded-2xl p-3.5 bg-[#F5FAFA] dark:bg-[#062625] text-[#0A3D3B] dark:text-white focus:bg-white dark:focus:bg-[#062625] focus:ring-2 focus:ring-[#0E7673] outline-none placeholder:text-[#6EADAB]" placeholder={t('rc_dla_xxxx_b_xxxx', 'RC/DLA/xxxx/B/xxxx')} />
                 </div>
                 
                 <div className="pt-2">
-                   <p className="block text-sm font-medium text-gray-700 mb-2">Upload Operating License (Ordre National des Pharmaciens)</p>
-                   <label className="border-2 border-dashed border-gray-300 rounded-xl p-6 flex flex-col items-center justify-center text-gray-500 bg-gray-50 dark:bg-zinc-900 hover:bg-indigo-50 hover:border-indigo-300 cursor-pointer transition">
-                      <Upload size={24} className="mb-2 text-[var(--app-primary-color)]" />
+                   <p className="block text-sm font-bold text-[#0A3D3B] dark:text-[#E7F1F1] mb-2">Upload Operating License (Ordre National des Pharmaciens)</p>
+                   <label className="border-2 border-dashed border-[#9FC8C7] dark:border-[#145250] rounded-2xl p-6 flex flex-col items-center justify-center text-[#0A3D3B] dark:text-[#CFE4E3] bg-[#F5FAFA] dark:bg-[#062625] hover:bg-[#E7F1F1] dark:hover:bg-[#0E7673]/20 hover:border-[#0E7673] cursor-pointer transition">
+                      <Upload size={24} className="mb-2 text-[#0E7673] dark:text-[#38B794]" />
                       <span className="text-xs font-medium text-center">
                         {files.operatingLicense ? files.operatingLicense.name : 'Tap to upload Document (PDF/JPG)'}
                       </span>
                       <input type="file" className="hidden" accept=".pdf,image/jpeg,image/png" onChange={(e) => handleFileChange(e, 'operatingLicense')} />
                    </label>
-                   <p className="text-[10px] text-gray-400 mt-2 text-center"> {t('required_for_approval', 'Required for approval')} </p>
+                   <p className="text-[11px] text-[#0E7673] dark:text-[#9FC8C7] mt-2 text-center"> {t('required_for_approval', 'Required for approval')} </p>
                 </div>
 
                 <div className="pt-2">
-                   <p className="block text-sm font-medium text-gray-700 mb-2">Upload Taxpayer Card (Carte de Contribuable)</p>
-                   <label className="border-2 border-dashed border-gray-300 rounded-xl p-6 flex flex-col items-center justify-center text-gray-500 bg-gray-50 dark:bg-zinc-900 hover:bg-indigo-50 hover:border-indigo-300 cursor-pointer transition">
-                      <Upload size={24} className="mb-2 text-[var(--app-primary-color)]" />
+                   <p className="block text-sm font-bold text-[#0A3D3B] dark:text-[#E7F1F1] mb-2">Upload Taxpayer Card (Carte de Contribuable)</p>
+                   <label className="border-2 border-dashed border-[#9FC8C7] dark:border-[#145250] rounded-2xl p-6 flex flex-col items-center justify-center text-[#0A3D3B] dark:text-[#CFE4E3] bg-[#F5FAFA] dark:bg-[#062625] hover:bg-[#E7F1F1] dark:hover:bg-[#0E7673]/20 hover:border-[#0E7673] cursor-pointer transition">
+                      <Upload size={24} className="mb-2 text-[#0E7673] dark:text-[#38B794]" />
                       <span className="text-xs font-medium text-center">
                         {files.taxpayerCard ? files.taxpayerCard.name : 'Tap to upload Document (PDF/JPG)'}
                       </span>
@@ -270,7 +274,7 @@ export function PharmacistRegistration() {
                    </label>
                 </div>
                 
-                <button onClick={handleSubmit} disabled={loading || !formData.registrationNumber || !files.operatingLicense || !files.taxpayerCard} className="w-full py-4 mt-6 bg-[var(--app-primary-color)] text-white rounded-xl font-bold hover:bg-[var(--app-primary-color)] disabled:opacity-50 transition flex justify-center items-center gap-2">
+                <button onClick={handleSubmit} disabled={loading || !formData.registrationNumber || !files.operatingLicense || !files.taxpayerCard} className="w-full py-4 mt-6 bg-[#0E7673] hover:bg-[#0A5A58] text-white rounded-full font-bold disabled:opacity-50 transition flex justify-center items-center gap-2 shadow-sm">
                   {loading ? 'Submitting...' : 'Submit Application'}
                 </button>
               </div>
@@ -278,12 +282,12 @@ export function PharmacistRegistration() {
 
             {step === 4 && (
               <div className="flex flex-col items-center justify-center text-center py-8 space-y-4 animate-in zoom-in-95">
-                 <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-4">
-                    <CheckCircle size={40} className="fill-current text-white" />
+                 <div className="w-20 h-20 bg-[#D7F1EA] text-[#0E7673] rounded-full flex items-center justify-center mb-4">
+                    <CheckCircle size={40} />
                  </div>
-                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white"> {t('application_submitted', 'Application Submitted!')} </h2>
-                 <p className="text-gray-500 max-w-xs"> {t('your_pharmacy_registration_is_', 'Your pharmacy registration is under review. Our team will verify your KYC documents within 24-48 hours according to Cameroon regulations.')} </p>
-                 <button onClick={() => navigate('/pharmacist')} className="w-full py-4 mt-8 bg-[var(--app-primary-color)] text-white rounded-xl font-bold hover:bg-[var(--app-primary-color)] transition">
+                 <h2 className="text-2xl font-bold text-[#0A3D3B] dark:text-white"> {t('application_submitted', 'Application Submitted!')} </h2>
+                 <p className="text-[#0E7673] dark:text-[#CFE4E3] max-w-xs text-sm leading-relaxed"> {t('your_pharmacy_registration_is_', 'Your pharmacy registration is under review. Our team will verify your KYC documents within 24-48 hours according to Cameroon regulations.')} </p>
+                 <button onClick={() => navigate('/pharmacist')} className="w-full py-4 mt-8 bg-[#0E7673] hover:bg-[#0A5A58] text-white rounded-full font-bold transition shadow-sm">
                      {t('go_to_dashboard', 'Go to Dashboard')} </button>
               </div>
             )}
